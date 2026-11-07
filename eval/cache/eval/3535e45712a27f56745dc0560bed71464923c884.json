@@ -1,0 +1,172 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Егор. Пока приказ не отправлен, откройте «Настройки приказа» и снимите галочку «Использовать маржу»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, как убрать конкретную галочку в окне покупки."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации по настройке, идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил настройку приказа, не сообщая данные счёта и не выполняя защищённое действие."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оба вопроса получили ответ по существу, и клиент подтвердил выполнение инструкции.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Егор. Пока приказ не отправлен, откройте «Настройки приказа» и снимите галочку «Использовать маржу»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Убрал. А это не закрывает то, что уже было куплено?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Эта настройка относится к приказу, который вы сейчас заполняете. Вопрос об уже открытой позиции нужно рассматривать отдельно."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге нет грубости или проигнорированного недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Егор. Пока приказ не отправлен, откройте «Настройки приказа» и снимите галочку «Использовать маржу»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Заметных сбоев в ведении диалога нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Егор. Пока приказ не отправлен, откройте «Настройки приказа» и снимите галочку «Использовать маржу»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Эта настройка относится к приказу, который вы сейчас заполняете. Вопрос об уже открытой позиции нужно рассматривать отдельно."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике нет итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Егор. Пока приказ не отправлен, откройте «Настройки приказа» и снимите галочку «Использовать маржу»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел отключить использование маржи в окне покупки и уточнить влияние настройки на уже купленное.",
+  "operator_actions": "Оператор объяснил, как снять галочку, и уточнил, что настройка относится к текущему приказу.",
+  "outcome": "Клиент отключил галочку и получил ответ на дополнительный вопрос."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как убрать галочку «Использовать маржу» в окне покупки?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Подключить оператора, чтобы убедиться до отправки приказа.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, влияет ли отключение маржи на уже купленное.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "new_topic"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 29070,
+ "usage": {
+  "prompt_tokens": 4979,
+  "completion_tokens": 2954,
+  "cost": 0.001975
+ }
+}

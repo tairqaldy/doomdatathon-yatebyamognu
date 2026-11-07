@@ -1,0 +1,172 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор не представился в первом ответе.",
+   "deduction_reason": "В первой реплике отсутствует представление.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Привет, где именно ищете?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не учёл уже сообщённую клиентом информацию и повторно запросил её.",
+   "deduction_reason": "Оператор переспросил, на каком сайте клиент ищет вход.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "На сайте Freedom Finance Global. Дайте оператора, я запутался."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Привет, где именно ищете?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации на сайте и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о том, где найти вход в личный кабинет."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретную инструкцию и подтвердил, что вошёл.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Понял. Это информационный сайт. Для доступа к счёту откройте tradernet.global или мобильное приложение Freedom Broker."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Зашёл. Спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор дал конкретное разъяснение по проблеме клиента и не был груб или пренебрежителен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "На сайте Freedom Finance Global. Дайте оператора, я запутался."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Понял. Это информационный сайт. Для доступа к счёту откройте tradernet.global или мобильное приложение Freedom Broker."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить ранее сообщённую информацию из-за вопроса оператора.",
+   "deduction_reason": "Снижение за повторный вопрос о том, где клиент ищет вход.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Привет, где именно ищете?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Я уже писал, на сайте компании, не в приложении."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Заключительная реплика содержит только прощание.",
+   "deduction_reason": "Не было итога или предложения дальнейшей помощи перед завершением.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход в личный кабинет на сайте Freedom Finance Global.",
+  "operator_actions": "Оператор указал сайт tradernet.global и приложение Freedom Broker.",
+  "outcome": "Клиент зашёл в личный кабинет и поблагодарил."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где находится вход в личный кабинет на сайте компании.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором, так как клиент запутался.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_asked_known_info"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   4
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 26336,
+ "usage": {
+  "prompt_tokens": 4940,
+  "completion_tokens": 2728,
+  "cost": 0.001858
+ }
+}

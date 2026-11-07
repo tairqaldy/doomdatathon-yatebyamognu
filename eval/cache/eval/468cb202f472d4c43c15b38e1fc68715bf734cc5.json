@@ -1,0 +1,177 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор алғашқы репликасында амандасып, есімін айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент сұрағын нақты қойған, қолда бар мәлімет жауап беруге жеткілікті болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Бұл жалпы өнім туралы сұрақ болды; сәйкестендіруді қажет ететін әрекет болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Сұрау жалпы өнім ақпараты туралы, нақты шотқа қатысты мәлімет не әрекет жоқ."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиенттің екі сұрағына да нақты жауап берілді, клиент жауапты түсінгенін білдірді [12].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Жақсы."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта дөрекілік байқалмайды және клиенттің наразылығы болмаған.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиентке переспрашивать не пришлось; оператордың жауаптары сұрақтарға сәйкес болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Жүйе оқиғасы операторға диалогты аяқтауға мүмкіндік бермей, байланысты үзді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Клиентпен байланыс үзілді."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Диалогта дөрекілік, жеке ақылы қызмет ұсыну немесе құпия ақпаратты жариялау жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент D-шот пен сауда шотының айырмасын және D-шоттағы қаражатпен акция сатып алу тәртібін сұрады.",
+  "operator_actions": "Оператор D-шоттан акцияны тікелей сатып алуға болмайтынын айтып, өтінімде сауда шотын таңдау керегін түсіндірді.",
+  "outcome": "Сұрақтар жауапталды, кейін байланыс үзілді."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Сұрақ: D-шот пен сауда шотының айырмасы қандай?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "D-шоттағы ақшамен бірден акция сатып алуға бола ма?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Акцияға өтінім бергенде сауда шотын таңдау керек пе?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "connection_lost",
+  "cut_before_operator_could_close": true
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 25775,
+ "usage": {
+  "prompt_tokens": 5013,
+  "completion_tokens": 2321,
+  "cost": 0.001662
+ }
+}

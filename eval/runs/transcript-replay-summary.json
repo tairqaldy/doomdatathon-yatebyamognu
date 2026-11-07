@@ -1,0 +1,459 @@
+{
+  "created_at": "2026-11-07T14:08:25.650Z",
+  "commit": "b38d35797ca7f48760482c6ed3b19c4c990b46a0",
+  "paid_calls": 0,
+  "network_calls_in_replay": 0,
+  "source_kind": "local saved DEV; not an admin browser localStorage export",
+  "exports": [
+    {
+      "source": "data/datasets/DEV.json",
+      "sha256": "e386aa2d8e5ac362af62c144f7e1cd6f2fe0a64fae0aa10a4892225ac22d1566",
+      "count": 65
+    },
+    {
+      "source": "data/evaluations/DEV.json",
+      "sha256": "2eadbe3cf5a38a338fc06772962722efc422e020e5f7c1ea3ee6ae986706216e",
+      "count": 65,
+      "prompt_version": "eval-v4"
+    }
+  ],
+  "admin_probe": {
+    "checked_on": "2026-11-07",
+    "endpoint": "/api/sessions",
+    "postgres": false,
+    "sessions": 0,
+    "limitation": "Browser localStorage sessions are not accessible through this endpoint."
+  },
+  "gold": {
+    "count": 19,
+    "reviewed": 19,
+    "review_provenance": "Existing repository metadata; no new human or audio review performed.",
+    "files": [
+      {
+        "file": "eval/gold/p1-en-006.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-en-009.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-en-013.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-en-014.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-en-015.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-kz-003.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-kz-008.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-kz-011.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-kz-013.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-kz-015.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-003.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-006.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-009.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-012.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-018.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-022.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-025.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p1-ru-029.json",
+        "reviewed_by": "lane-c/human-review"
+      },
+      {
+        "file": "eval/gold/p4-ru-001.json",
+        "reviewed_by": "lane-c/human-review"
+      }
+    ]
+  },
+  "historical_replays": [
+    {
+      "version": "v1",
+      "source": "eval/runs/2026-11-07T09-48-01-230Z-DEV-openai_gpt-6-luna.evaluations.json",
+      "source_sha256": "800bf1e22121f6536992082020de52839e64404df2554c1129729ea9fb035b4e",
+      "scored": 19,
+      "strict": 86.18,
+      "lenient": 94.74,
+      "gross": {
+        "tp": 6,
+        "fn": 1,
+        "fp": 0,
+        "recall": 85.71,
+        "precision": 100
+      },
+      "total": {
+        "mae": 7.83,
+        "dialogs": 19,
+        "null_mismatch": 0
+      },
+      "evidence": {
+        "hit_rate": 95.5,
+        "checked": 111,
+        "invalid_refs": 0,
+        "refs": 160
+      }
+    },
+    {
+      "version": "v2",
+      "source": "eval/runs/2026-11-07T13-06-35-972Z-DEV-openai_gpt-6-luna.evaluations.json",
+      "source_sha256": "82132bb7aa979dfa19e8e1af312fc67a856679f9e44768930199ffad18d304e5",
+      "scored": 19,
+      "strict": 89.47,
+      "lenient": 96.71,
+      "gross": {
+        "tp": 7,
+        "fn": 0,
+        "fp": 0,
+        "recall": 100,
+        "precision": 100
+      },
+      "total": {
+        "mae": 6.97,
+        "dialogs": 19,
+        "null_mismatch": 0
+      },
+      "evidence": {
+        "hit_rate": 98.18,
+        "checked": 110,
+        "invalid_refs": 0,
+        "refs": 159
+      }
+    },
+    {
+      "version": "v3",
+      "source": "eval/runs/2026-11-07T13-08-56-812Z-DEV-openai_gpt-6-luna.evaluations.json",
+      "source_sha256": "497b88c37c70252f86a0c8a1019fe9b14bb1a5294088c6b07c29480bc5f920a8",
+      "scored": 19,
+      "strict": 92.76,
+      "lenient": 96.71,
+      "gross": {
+        "tp": 7,
+        "fn": 0,
+        "fp": 0,
+        "recall": 100,
+        "precision": 100
+      },
+      "total": {
+        "mae": 5.98,
+        "dialogs": 19,
+        "null_mismatch": 0
+      },
+      "evidence": {
+        "hit_rate": 95.5,
+        "checked": 111,
+        "invalid_refs": 0,
+        "refs": 158
+      }
+    },
+    {
+      "version": "v4",
+      "source": "eval/runs/2026-11-07T13-13-37-546Z-DEV-openai_gpt-6-luna.evaluations.json",
+      "source_sha256": "8099b949f9259b3f05242d43fc2a65b706981105020537eb193cd4dc48d2ab4c",
+      "scored": 19,
+      "strict": 91.45,
+      "lenient": 96.71,
+      "gross": {
+        "tp": 7,
+        "fn": 0,
+        "fp": 0,
+        "recall": 100,
+        "precision": 100
+      },
+      "total": {
+        "mae": 6.06,
+        "dialogs": 19,
+        "null_mismatch": 0
+      },
+      "evidence": {
+        "hit_rate": 92.79,
+        "checked": 111,
+        "invalid_refs": 0,
+        "refs": 163
+      }
+    }
+  ],
+  "current": {
+    "run": "eval/runs/2026-11-07T13-16-16-814Z-DEV-openai_gpt-6-luna.evaluations.json",
+    "meta": {
+      "evaluator": "openai:gpt-6-luna",
+      "prompt_version": "eval-v4",
+      "dataset": "DEV",
+      "checklist": "freedom-chat@v1",
+      "created_at": "2026-11-07T13:16:16.814Z",
+      "count": 65
+    },
+    "gold_dialogs": 19,
+    "scored_dialogs": 19,
+    "draft_gold": 0,
+    "missing": [],
+    "overall": {
+      "n": 152,
+      "strict": 91.45,
+      "lenient": 96.71,
+      "scale_within_1": 91.89
+    },
+    "per_criterion": {
+      "c01": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c02": {
+        "n": 19,
+        "strict": 84.21,
+        "lenient": 94.74,
+        "scale_within_1": null
+      },
+      "c03": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c04": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": 100
+      },
+      "c05": {
+        "n": 19,
+        "strict": 94.74,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c06": {
+        "n": 19,
+        "strict": 57.89,
+        "lenient": 78.95,
+        "scale_within_1": 84.21
+      },
+      "c07": {
+        "n": 19,
+        "strict": 94.74,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c08": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      }
+    },
+    "per_language": {
+      "EN": {
+        "n": 40,
+        "strict": 97.5,
+        "lenient": 97.5
+      },
+      "KZ": {
+        "n": 40,
+        "strict": 92.5,
+        "lenient": 97.5
+      },
+      "RU": {
+        "n": 72,
+        "strict": 87.5,
+        "lenient": 95.83
+      }
+    },
+    "na": {
+      "precision": 96.43,
+      "recall": 96.43,
+      "gold": 28,
+      "model": 28
+    },
+    "gross_error": {
+      "tp": 7,
+      "fn": 0,
+      "fp": 0,
+      "recall": 100,
+      "precision": 100
+    },
+    "evidence": {
+      "hit_rate": 92.79,
+      "checked": 111,
+      "invalid_refs": 0,
+      "refs": 163
+    },
+    "total": {
+      "mae": 6.06,
+      "dialogs": 19,
+      "null_mismatch": 0
+    },
+    "disagreements": [
+      {
+        "conversation_id": "p1-en-013",
+        "criterion_id": "c06",
+        "gold": 10,
+        "model": 4,
+        "note": ""
+      },
+      {
+        "conversation_id": "p1-kz-015",
+        "criterion_id": "c06",
+        "gold": 4,
+        "model": 10,
+        "note": "Client had to ask for the reason again."
+      },
+      {
+        "conversation_id": "p1-ru-006",
+        "criterion_id": "c06",
+        "gold": 10,
+        "model": 7,
+        "note": ""
+      },
+      {
+        "conversation_id": "p1-ru-022",
+        "criterion_id": "c06",
+        "gold": 10,
+        "model": 4,
+        "note": "Replies are clear, just improper (graded in c08)."
+      },
+      {
+        "conversation_id": "p1-ru-029",
+        "criterion_id": "c02",
+        "gold": "na",
+        "model": "no",
+        "note": "The request was clear from the start; nothing needed clarifying."
+      }
+    ]
+  },
+  "c01_negative_cases": [
+    {
+      "id": "p1-ru-014",
+      "channel": "agent chat",
+      "index": 9,
+      "explanation": "Оператор поздоровался, но не представился в первом ответе.",
+      "probe": "not_supported"
+    },
+    {
+      "id": "p1-kz-008",
+      "channel": "agent chat",
+      "index": 9,
+      "explanation": "Оператор поздоровался, но не представился в первом ответе.",
+      "probe": "not_supported"
+    },
+    {
+      "id": "p1-en-015",
+      "channel": "agent chat",
+      "index": 9,
+      "explanation": "В первом ответе оператор не поздоровался и не представился.",
+      "probe": "not_supported"
+    },
+    {
+      "id": "p4-ru-002",
+      "channel": "voice call",
+      "index": 2,
+      "explanation": "Оператор представился, но в первом ответе не поздоровался.",
+      "probe": "needs_review"
+    },
+    {
+      "id": "p4-ru-005",
+      "channel": "voice call",
+      "index": 16,
+      "explanation": "Оператор поздоровался, но не представился; первая реплика не содержит его имени или понятного представления.",
+      "probe": "needs_review"
+    }
+  ],
+  "candidate_policy": {
+    "mode": "offline sidecar, not integrated into production or re-inferred",
+    "publishable_count": 62,
+    "pending": [
+      {
+        "conversation_id": "p4-ru-002",
+        "policy_version": "eval-v4-transcript-fairness-candidate-1",
+        "official_result_changed": false,
+        "pending_review": [
+          {
+            "criterion_id": "c01",
+            "reason": "transcript_uncertainty",
+            "turn_index": 2
+          }
+        ],
+        "publishable": false,
+        "provisional_total": 85.5,
+        "confirmed_total": null,
+        "gross_error": false,
+        "display": "Предварительная оценка · требуется проверка записи"
+      },
+      {
+        "conversation_id": "p4-ru-005",
+        "policy_version": "eval-v4-transcript-fairness-candidate-1",
+        "official_result_changed": false,
+        "pending_review": [
+          {
+            "criterion_id": "c01",
+            "reason": "transcript_uncertainty",
+            "turn_index": 16
+          }
+        ],
+        "publishable": false,
+        "provisional_total": 61,
+        "confirmed_total": null,
+        "gross_error": false,
+        "display": "Предварительная оценка · требуется проверка записи"
+      },
+      {
+        "conversation_id": "p4-ru-004",
+        "policy_version": "eval-v4-transcript-fairness-candidate-1",
+        "official_result_changed": false,
+        "pending_review": [
+          {
+            "criterion_id": "c01",
+            "reason": "transcript_uncertainty",
+            "turn_index": 14
+          }
+        ],
+        "publishable": false,
+        "provisional_total": 64.22,
+        "confirmed_total": null,
+        "gross_error": false,
+        "display": "Предварительная оценка · требуется проверка записи"
+      }
+    ]
+  }
+}

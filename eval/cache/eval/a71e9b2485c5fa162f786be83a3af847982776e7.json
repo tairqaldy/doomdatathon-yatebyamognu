@@ -1,0 +1,166 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал себя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мадина. Профильге кіріңіз де, тапсырмалардан іздеңіз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент сразу спросил, куда зайти для обновления данных; уточнять дополнительные детали не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Деректерді жаңартайын деп едім, қай жерге кірем?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации по приложению и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "«Меню → Поручения → Персональные данные → Изменение сведений»"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Запрос решён конкретной инструкцией, и клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, нақты жолы «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Енді таптым."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо уточнил инструкцию и ответил на возникшую проблему.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Профильде ондай бөлім жоқ қой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, нақты жолы «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Неясная первая инструкция вызвала необходимость дополнительного уточнения со стороны клиента.",
+   "deduction_reason": "Снижено за неясную первоначальную подсказку, из-за которой клиенту пришлось уточнять.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мадина. Профильге кіріңіз де, тапсырмалардан іздеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Профильде ондай бөлім жоқ қой."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике нет прощания и итога, следующего шага или предложения помощи.",
+   "deduction_reason": "Не соблюдено требование завершить диалог прощанием и итогом либо предложением помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, нақты жолы «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, где обновить данные в приложении.",
+  "operator_actions": "Оператор сначала дал общую подсказку, затем указал точный путь в меню.",
+  "outcome": "Клиент нашёл раздел, но оператор не попрощался."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, куда зайти, чтобы обновить данные.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Уточнить меню и подключить оператора, поскольку клиент не понял подсказку бота.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 38229,
+ "usage": {
+  "prompt_tokens": 5002,
+  "completion_tokens": 3830,
+  "cost": 0.002415
+ }
+}

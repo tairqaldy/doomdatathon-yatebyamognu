@@ -1,0 +1,167 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала: клиент спрашивал, с какого счёта покупать акции.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос был общим и не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил, для какого счёта предназначены средства."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос о счёте для покупки акций закрыт, клиент подтвердил, что понял ответ [12].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался корректно; недовольства клиента в диалоге нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиент уточнил уже данный ответ в форме подтверждения [10], а не из-за непонятной или противоречивой реплики.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания без итога или предложения помощи недостаточно для выполнения критерия.",
+   "deduction_reason": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оператор сообщил только общие сведения о счетах и не допустил грубых нарушений.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, с какого счёта покупать акции, если деньги отображаются на D-счёте.",
+  "operator_actions": "Оператор объяснил назначение D-счёта и рекомендовал ориентироваться на торговый счёт.",
+  "outcome": "Клиент подтвердил, что понял ответ; оператор попрощался."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Уточнить, с какого счёта покупать акции.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Уточнить, можно ли использовать деньги, видимые на D-счёте, для покупки бумаг.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 22677,
+ "usage": {
+  "prompt_tokens": 4953,
+  "completion_tokens": 2580,
+  "cost": 0.001785
+ }
+}

@@ -70,6 +70,12 @@ interface Evaluation {
 }
 ```
 
+**Additive, eval-v5.1 (2026-11-07).** The raw AI result (`lib/evaluator.js` `evaluate()` → `data/evaluations/<group>.json` `results[id]`) also carries, all optional for readers:
+- `answers[criterion_id].agreement`: share of self-consistency samples that voted for the chosen answer (0–1); low values go to a human first.
+- `facts`: dialog facts the model filled before answering (requests, first operator turn, verification turn, disclosure / insult / off-company turns, client re-asks with cause, ending type, goodbye / summary / offer turns).
+- `samples`: how many samples were voted over; `derived`: answers set by the deterministic rules (C7 closing, C3→C8 disclosure) for unchanged built-in criteria.
+- `evaluate(conv, checklist, { model, promptVersion, samples, deadlineMs })`; env `CQA_EVAL_SAMPLES` (default 3 for the default eval model), `CQA_EVAL_DEADLINE_MS` (Vercel votes over samples finished within it, default 45 s).
+
 ## 4. Appeal and review
 ```ts
 interface Appeal {
@@ -86,7 +92,7 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 
 | Method | Path | Request | Response |
 |---|---|---|---|
-| GET | `/api/health` | none | `{ ok, openrouter, openai, organizer_api, shared_cache, postgres, models: { eval, transcribe }, prompt_version, commit, branch }` (booleans only, never keys) |
+| GET | `/api/health` | none | `{ ok, openrouter, openai, organizer_api, shared_cache, postgres, models: { eval, transcribe }, prompt_version, voice: { asr, asr_formats, tts, voice }, commit, branch }` (booleans only, never keys; `voice.tts` null = browser speechSynthesis) |
 | POST | `/api/evaluate` | `{ conversation_id, group?: "DEV", checklist: Checklist (§2, at least criteria), model?, force?: bool }` | `AIResult` below. `force` bypasses the cache (re-bills) |
 | POST | `/api/transcribe` | `{ conversation_id, group?, language? }` | `{ conversation_id, cached, text, segments?, language, duration, latency_ms, usage, model }` (calls only) |
 | GET | `/api/audio?id=<conversation_id>&group=DEV` | none | `302` → fresh mp3 (organizer links expire in ~1h). Use directly as `<audio src>` |
@@ -95,7 +101,9 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 | POST | `/api/insights` | `Authorization: Bearer <admin token>`, `{ question, stats }` | `{ answer, findings[], actions[{title, detail, impact}], risks[], follow_up_questions[], cached, model, latency_ms }` (`lib/insights.js`) |
 | POST · GET | `/api/admin-login` | `{ passcode }` · GET with Bearer | `{ token, expires_in }` · `200 {ok:true}` / `401` (`lib/auth.js`, `ADMIN_PASSCODE`, demo `freedom`) |
 | POST | `/api/agent` | `{ messages: [{speaker, text}], language: "RU"\|"KZ"\|"EN", page: { screen, catalog: [{ id, title, summary?, targets: [{ id, label, kind: "field"\|"button"\|"section", protected?, options? }] }], dom: [{ id, tag, type, label, value?, protected? }], text } }` | `{ reply, steps: string[], needs_consent, direct, done_reply, language, handoff, handoff_reason (RU), actions: NavAction[], raw_actions, cached, model, latency_ms, usage, prompt_version }`, the `/broker` navigation agent (`lib/nav-agent.js`, prompt `nav-v6`). Actions are validated server-side against `page`. **Consent first (#15):** when `needs_consent` the page shows `reply` + numbered `steps` + a yes/no question and runs `actions` only after the client says yes, then shows `done_reply`. Handoff turns return no actions. **`direct` (#19):** the client explicitly asked AIM to do it («открой за меня», "take me there", «ашып беріңіз»), so the page runs `actions` at once and shows `done_reply`; `needs_consent` is then false |
-| POST | `/api/agent-voice` | `{ audio: base64, format: "wav"\|"webm"\|"mp4"\|"ogg"\|"mp3", language }` (≤ ~2 MB) | `{ text, language, cached, latency_ms, model }`: push-to-talk via Nemotron 3.5 Transcribe, cached in the gitignored `asr` namespace |
+| POST | `/api/agent-voice` | `{ audio: base64, format: "wav"\|"webm"\|"mp4"\|"m4a"\|"ogg"\|"mp3", language }` (≤ ~2 MB) | `{ text, language, cached, latency_ms, server_ms, model }`: push-to-talk for AIM (`/support`, `/broker`, `/phone`). OpenAI Whisper when `OPENAI_API_KEY` is set (any listed format), else Nemotron 3.5 Transcribe (send 16 kHz WAV; see `GET /api/speak` `asr_formats`). Cached in the gitignored `asr` namespace; `text` is PII-masked and empty for silence |
+| GET | `/api/speak` | none | `{ asr, asr_formats: string[], tts: string\|null, voice, max_chars, version }`: which engines serve AIM's voice; `tts: null` → use the browser's speechSynthesis |
+| POST | `/api/speak` | `{ text (≤ 600 chars, send one chunk at a time), language?: "RU"\|"KZ"\|"EN", ui?: true }` | `{ audio: base64 mp3, mime, format, chars, cached, tier, latency_ms, server_ms, model, voice, cost_usd }`, or **501** `{ code: "tts_unavailable" }` without `OPENAI_API_KEY`. Cached by model + voice + tone + text: `tts` (gitignored) or `tts-ui` (committed, fixed UI phrases ≤ 240 chars). Client: `shared/voice.js` |
 | GET · PUT · DELETE | `/api/sessions` | GET list / GET `?id=` / PUT `{id,…}` / DELETE `?id=` | `{ postgres: bool, sessions?: LiveSession[], session?: LiveSession }`. `postgres: false` and empty list when `DATABASE_URL` is unset (UI keeps localStorage) |
 
 ```ts

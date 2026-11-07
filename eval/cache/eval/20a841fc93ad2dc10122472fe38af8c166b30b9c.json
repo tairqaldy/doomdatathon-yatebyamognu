@@ -1,0 +1,176 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был достаточно понятен с самого начала, поэтому уточнение недостающих данных не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Почему опять не могу найти вход? На вашем сайте всё перелопатил."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по сайту и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Откройте tradernet.global, там вход в веб-версию."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос решён: оператор указал сайт, и клиент смог войти.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Откройте tradernet.global, там вход в веб-версию."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Вошёл. Но со мной так говорить не надо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор был груб, а на возражение клиента по поводу обращения не отреагировал по существу.",
+   "deduction_reason": "Снижено за оскорбительную реплику и игнорирование возражения клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Вошёл. Но со мной так говорить не надо."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "До свидания."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторно уточнять вопрос после того, как оператор вместо ответа сослался на бота.",
+   "deduction_reason": "Снижено за необходимость переспрашивать из-за проигнорированного вопроса.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Не понимаю, на какой сайт перейти."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно: в финальной реплике нет итога или предложения помощи.",
+   "deduction_reason": "Снижено за отсутствие итога или предложения дальнейшей помощи при завершении.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено оскорбление клиента.",
+   "deduction_reason": "Грубая ошибка: оскорбление клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход на торговую платформу.",
+  "operator_actions": "Оператор сначала отослал клиента к ответу бота, затем указал сайт tradernet.global.",
+  "outcome": "Клиент вошёл, но пожаловался на грубое обращение."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": 9,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где найти вход на торговую платформу.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с человеком.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, на какой сайт перейти для входа.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   0,
+   4,
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 27238,
+ "usage": {
+  "prompt_tokens": 4936,
+  "completion_tokens": 2767,
+  "cost": 0.001877
+ }
+}

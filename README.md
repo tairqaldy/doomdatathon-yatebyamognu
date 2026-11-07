@@ -93,6 +93,18 @@ Caveats:
 - The ASR reference is the organizer transcript, which is itself machine output with IVR prompts. WER/CER here measure agreement, not accuracy. Calls are graded on the organizer transcripts.
 - The cost figure was measured before the bounded repair call was added; a repaired dialog costs up to two calls.
 
+### AIM's voice (`/support`, `/broker`, `/phone`)
+
+Hold or tap the mic: the browser's own recording (webm or mp4) goes to **OpenAI Whisper** (`whisper-1`). AIM's reply is read aloud with **OpenAI `gpt-4o-mini-tts`**, voice `sage`, with a calm, warm tone instruction. The reply is split into chunks, all fetched in parallel and played in order, so speech starts once the first sentence is ready. Every phrase is cached (`lib/cache.js`, plus a text → audio map in the browser), so a repeated reply plays with no API call. Without `OPENAI_API_KEY` the mic falls back to Nemotron and replies to the browser's `speechSynthesis`.
+
+| Step | Cold p50 · p95 | Cached p50 · p95 | Cost |
+|---|---|---|---|
+| Speech-to-text, `/api/agent-voice` (Whisper) | 1197 · 2515 ms | 3 · 5 ms | $0.006 per audio minute ≈ $0.0005 per 5 s question |
+| Text-to-speech, `/api/speak` (gpt-4o-mini-tts) | 1374 · 1750 ms | 3 · 4 ms | ≈ $0.015 per spoken minute ≈ $0.0015 per 100-character reply (estimated) |
+| Time to first audio, 3-sentence reply | first sentence ≈ 1.1–1.5 s, whole reply 2.6–3.0 s | instant | |
+
+12 synthetic RU/KZ/EN phrases per row, local dev server → OpenAI; [`eval/runs/voice-bench-http-*.json`](eval/runs/) and [`voice-bench-models-*.json`](eval/runs/), rerun with `node scripts/voice-bench.mjs --models` or `--http <base url>`. On the same clips `gpt-4o-transcribe` was faster than Whisper (p50 844 ms · p95 1166 ms, same price, CER 0.056 vs 0.064); switch with `CQA_OPENAI_ASR_MODEL=gpt-4o-transcribe`. `gpt-4o-mini-tts` beat `tts-1` (p50 1383 vs 1973 ms).
+
 ## Architecture
 
 ```mermaid
@@ -105,7 +117,7 @@ flowchart TB
     end
     UI --> API
     API --> LLM["lib/llm.js router"]
-    LLM --> OAI["OpenAI API<br/>GPT-6 Luna"]
+    LLM --> OAI["OpenAI API<br/>GPT-6 Luna · Whisper · TTS"]
     LLM --> OR["OpenRouter<br/>Nemotron 3.5 Transcribe"]
     API --> CACHE["lib/cache.js<br/>memory → eval/cache files → Upstash (optional)"]
     API --> ORG["Organizers' dataset API"]
@@ -115,7 +127,7 @@ flowchart TB
 - **UI:** plain static files, one root element, relative paths, Freedom design tokens from fbroker.kz ([`design/`](design/), [design system](docs/research/design-system.md)). Works in a ~800 px iframe for a Dynamics 365 web resource.
 - **Scoring:** one pure function, [`prototype/scoring.js`](prototype/scoring.js), used by the UI, the API and the eval scripts.
 - **Models:** all calls go through [`lib/llm.js`](lib/llm.js) and are cached by model + prompt version + full input, so a repeated request is free. Paid answers are committed in `eval/cache/` for teammates and Vercel.
-- **API:** `GET /api/health` · `POST /api/evaluate` · `POST /api/transcribe` · `GET /api/audio?id=` (organizer audio links expire after ~1 h) · `GET /api/dataset?group_id=` · `POST /api/chat` · `POST /api/agent` · `POST /api/agent-voice` · `POST /api/insights` · `POST /api/admin-login` · `GET/PUT/DELETE /api/sessions`. Shapes: [CONTRACTS.md](docs/CONTRACTS.md).
+- **API:** `GET /api/health` · `POST /api/evaluate` · `POST /api/transcribe` · `GET /api/audio?id=` (organizer audio links expire after ~1 h) · `GET /api/dataset?group_id=` · `POST /api/chat` · `POST /api/agent` · `POST /api/agent-voice` · `GET/POST /api/speak` · `POST /api/insights` · `POST /api/admin-login` · `GET/PUT/DELETE /api/sessions`. Shapes: [CONTRACTS.md](docs/CONTRACTS.md).
 
 Repo map: `landing-tair/` · `support/` · `admin/` · `broker/` · `prototype/` · `shared/` · `design/` · `api/` · `lib/` · `data/` · `eval/` · `scripts/` · `docs/` · team and agent rules in [AGENTS.md](AGENTS.md).
 
