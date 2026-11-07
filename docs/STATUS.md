@@ -10,6 +10,11 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 19:25 · lane-c · claude · #16 · branch c/16-widget-polish
+Done: AIM widget polish on /broker. The «Спросить AIM» launcher had dark text on a dark pill because `.br button { color: inherit }` out-ranked `.ag-fab`; the reset is now `:where(.br)` so component colours apply, and the launcher was restyled (white text, halo dot, 52 px). Overflow audit with a stress conversation at 1024 / 800 / 375 px: system lines with long words stuck out of the panel → wrapping and min-width fixes; floating panel kept down to 601 px (D365 iframe), bottom sheet only on phones (dvh, safe area, 16 px input); shorter placeholders; no idle scrollbar in the input; round controls stay round on keyboard focus.
+Contracts touched: none.
+How verify: https://freedom-cqa.vercel.app/broker/ at desktop, ~800 px and phone width; open «Спросить AIM».
+
 ### 2026-11-07 19:00 · lane-c · claude · #15 · branch c/15-nav-consent
 Done: the `/broker` navigation agent now **explains first and acts only with consent** (user request). AIM answers with a short intro, numbered steps (new `steps[]` field) and «Хотите, я открою нужный экран и заполню поля за вас?» with **Да, помогите / Нет, я сам(а)** buttons (RU/KZ/EN, in the language AIM answered in). Proposed actions wait in `st.pending` (survive reload) and run only after yes, by button or typed «да / давай / иә / yes»; then `done_reply` is shown. «Нет» leaves the page untouched. Any other message drops the offer and goes to AIM. Handoff turns return no actions and hand off immediately. Prompt `nav-v5`; `maxTokens` 700 → 1500 (longer replies were truncating the JSON); checkbox actions read «Снял галочку …» instead of `off`.
 Verified locally (browser pane, port 3017): deposit 50 000 ₸ → steps + question, page unchanged → typed «давай» → filled method/currency/amount; bonds → «Нет» → page unchanged; bonds → yes → filled, Buy only pointed to, no order; KZ broker-report question → KZ steps + KZ buttons; withdrawal-blocked → immediate handoff, no navigation.
