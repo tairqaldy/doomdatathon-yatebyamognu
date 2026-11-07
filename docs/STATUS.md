@@ -15,6 +15,13 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 21:15 · lane-a · claude · #24 · branch a/24-expo-go
+Done: `mobile/`, an Expo SDK 58 Expo Go wrapper that shows `/phone/` full screen as a native app (WebView, edge to edge on iOS, loading and error screens, mic allowed, outside links open in the browser). Run: `cd mobile && npm install && npx expo start`, scan the QR with Expo Go. README, TOOLING and DECISIONS updated.
+Verified: `tsc --noEmit` clean, `expo-doctor` 20/20, page checked in the iOS 26 Simulator WebKit. On a real iPhone, Metro logged `iOS Bundled index.ts` after Expo Go first asked for an Expo CLI login (`npx expo login`). The simulator Expo Go download was too slow over a hotspot, so there's no simulator run.
+In progress: not merged yet; waiting for a confirmed run on the phone.
+Contracts touched: none.
+How to verify: `cd mobile && npx expo start` → scan → Меню → Поддержка → «AIM · ответ сразу».
+
 ### 2026-11-07 21:00 · lane-c/a · tair/claude · fast OpenAI voice for AIM · branch c/openai-voice (no issue: `gh` logged out, plan under Requests / Plans)
 Done: AIM talks and listens with OpenAI. Mic (tap, or hold and release) → `/api/agent-voice` → **Whisper** (`whisper-1`, browser webm/mp4 sent as is); replies → `/api/speak` → **`gpt-4o-mini-tts` voice `sage`** with a calm-tone instruction. `shared/voice.js` splits a reply into chunks (short first sentence, then groups), fetches them in parallel and plays them in order; text → blob-URL map in the browser, `lib/cache.js` on the server (`tts` gitignored, greetings' first chunk committed in `tts-ui`). Starting to talk or sending stops AIM. No `OPENAI_API_KEY` → Nemotron for the mic (WAV) and the browser's `speechSynthesis` for replies. `/support` got a mic in the composer and a speaker toggle in the header (`support/voice-ui.js` + `voice.css`, no `support.js` changes); `/broker` and `/phone` swapped `speechSynthesis` for the shared module.
 **@Nazar (lane C, `broker/agent.js` is yours):** minimal change: `speak()` and the mic now go through `shared/voice.js` (`vox`), `toWav16k` moved there, toggle and consent-first flow untouched, greeting prefetched/spoken when the speaker is on, `agent.css` +1 line (hold-to-talk). Shout if you want it shaped differently.
