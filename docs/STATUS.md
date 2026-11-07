@@ -8,6 +8,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-c · audit publication · audit/evaluator-readiness
+Authorization: user explicitly requested push and pull; this supersedes the earlier local-only restrictions for publishing this branch. No main merge or PR requested.
+Done: committed gold audit and evaluator diagnostics separately, pulled/rebased onto origin/main 2e90055 without conflicts. Preserved the team's reviewed/reviewed_by metadata on all 19 gold files and retained audit evidence/notes; answers and alternatives match upstream. Reports now distinguish historical audit snapshots from the newer evaluator integrated by the team.
+Verification: 131 tracked JSON files parse via Node; gold validator reports zero structural errors and five existing rounding discrepancies. Mock suite 13/20 pass (seven known misses), contract suite 11/19 pass (eight known defects). Full check.sh still fails its Python-based JSON step because python3 is unavailable; results are not described as a green gate. No application/source-data edits relative to upstream, no paid calls.
+Next: push audit/evaluator-readiness and verify upstream tracking/clean working tree. Evaluator owners can consume the diagnostics; known red tests remain explicit.
+
 ### 2026-11-07 15:10 · lane-c/b/d · tair/claude · branch c/full-dev-eval-hub
 Done:
 - Verified Akanov's OpenAI + OpenRouter router (#7) end to end with real keys (both valid; OpenRouter $14.97 left of $15). No duplicate implementation.
