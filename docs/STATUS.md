@@ -7,6 +7,14 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
+Done: saved Gooey Nav and Card Nav links and pinned upstream sources in docs/research/navigation-references.md. Retrieved source and license locally; no landing implementation or dependencies added.
+In progress: none.
+Next: team can consult the references if needed.
+Blocked by / Requests: local GitHub access is network-restricted; automated repo checks have not been run.
+Contracts touched: none.
+How to verify: open the pinned source links and upstream license in the reference document.
+
 ### 2026-11-07 · lane-c · claude · #3 · branch c/3-gold-set
 Done:
 - `eval/gold/`: 19 DEV dialogs labeled on all 8 criteria (9 RU incl. 1 voice call, 5 KZ, 5 EN) with evidence turn indices, `also_acceptable` for borderline cases, notes and tags. **All `draft`: a human must review them** (README "How to review").
