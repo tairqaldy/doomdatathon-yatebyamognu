@@ -14,6 +14,7 @@ Built in 24 hours for the Freedom Broker case at the NU DataSci datathon 2026. R
 | Support chat | [/support/](https://freedom-cqa.vercel.app/support/) | AIM, the AI assistant, with an honest handoff to a live operator |
 | Admin console | [/admin/](https://freedom-cqa.vercel.app/admin/) | Live operator queue, QA dashboard, AI analyst. Passcode: ask the team |
 | Client app with agent | [/broker/](https://freedom-cqa.vercel.app/broker/) | A demo broker app where AIM explains steps and fills forms only after the client agrees |
+| Phone demo | [/phone/](https://freedom-cqa.vercel.app/phone/) | AIM inside a copy of the official Freedom Broker iOS app; also as a native app through Expo Go ([mobile/](mobile/README.md)) |
 | Analyst workspace | [/prototype/](https://freedom-cqa.vercel.app/prototype/) | The QA workspace: dialog list, evaluation card, appeals, checklist editor |
 | Preview hub | [/preview-hub/](https://freedom-cqa.vercel.app/preview-hub/) | Build info, AI status, accuracy, every surface on phone, tablet and laptop |
 
