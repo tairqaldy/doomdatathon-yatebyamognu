@@ -8,6 +8,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 19:00 · lane-c · claude · #15 · branch c/15-nav-consent
+Done: the `/broker` navigation agent now **explains first and acts only with consent** (user request). AIM answers with a short intro, numbered steps (new `steps[]` field) and «Хотите, я открою нужный экран и заполню поля за вас?» with **Да, помогите / Нет, я сам(а)** buttons (RU/KZ/EN, in the language AIM answered in). Proposed actions wait in `st.pending` (survive reload) and run only after yes, by button or typed «да / давай / иә / yes»; then `done_reply` is shown. «Нет» leaves the page untouched. Any other message drops the offer and goes to AIM. Handoff turns return no actions and hand off immediately. Prompt `nav-v5`; `maxTokens` 700 → 1500 (longer replies were truncating the JSON); checkbox actions read «Снял галочку …» instead of `off`.
+Verified locally (browser pane, port 3017): deposit 50 000 ₸ → steps + question, page unchanged → typed «давай» → filled method/currency/amount; bonds → «Нет» → page unchanged; bonds → yes → filled, Buy only pointed to, no order; KZ broker-report question → KZ steps + KZ buttons; withdrawal-blocked → immediate handoff, no navigation.
+Contracts touched: CONTRACTS §5 `/api/agent` additive (`steps`, `needs_consent`, `done_reply`).
+How to verify: https://freedom-cqa.vercel.app/broker/ → «Спросить AIM» → «Хочу пополнить счёт на 50 000 ₸ переводом из банка» → nothing moves until you press «Да, помогите».
+
 ### 2026-11-07 18:40 · lane-c · claude · #14 · branch c/14-broker-agent
 Done: **client navigation agent on a mock Freedom Broker app**, our own BariWeb-style experience written from scratch.
 - `/broker/`: demo client app (portfolio with trading vs D account, quotes with bond search + "Использовать маржу", deposit by card / Kaspi / bank details, withdraw, tariffs, documents incl. 1042-S, profile), RU/KZ/EN, design tokens, phone layout. Each screen declares agent targets; money / order / request buttons are `protected`.
