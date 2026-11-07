@@ -1,19 +1,20 @@
 // Offline integration candidate. Production evaluator and API do not import it.
 import { readFileSync } from 'node:fs';
-import { buildMessages } from '../../lib/evaluator.js';
+import { buildMessages, PROMPT_VERSION } from '../../lib/evaluator.js';
 import { score } from '../../prototype/scoring.js';
 import { fingerprint, validateEvaluation, validateProbe } from './validation.mjs';
 import { VALIDATION_VERSION, LEGACY_VERSIONS, riskStatus, isBlocking, finding, classifyEvaluation, classifyTranscript } from './policy.mjs';
 
-export const CANDIDATE_VERSION = 'eval-v4-transcript-fairness-candidate-2';
+// Independent of the base evaluator version; record both when preparing a comparison.
+export const CANDIDATE_VERSION = 'transcript-fairness-addendum-v1';
 const addendum = readFileSync(new URL('./prompt-addendum.txt', import.meta.url), 'utf8');
 const officialCriteria = JSON.parse(readFileSync(new URL('../../data/checklists/freedom-chat-v1.json', import.meta.url), 'utf8')).criteria;
 const officialContact = officialCriteria.find(c => c.id === 'c01');
 const sameContactRule = criterion => criterion?.id === officialContact.id
   && fingerprint(criterion) === fingerprint(officialContact);
 
-export function buildFairnessMessages(conversation, checklist) {
-  const messages = buildMessages(conversation, checklist);
+export function buildFairnessMessages(conversation, checklist, baseVersion = PROMPT_VERSION) {
+  const messages = buildMessages(conversation, checklist, baseVersion);
   const applicableAddendum = checklist.criteria.some(sameContactRule) ? addendum
     : addendum.split('\n').filter(line => !line.startsWith('1. ')).join('\n');
   return messages.map((message, i) => i === 0

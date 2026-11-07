@@ -1,0 +1,21 @@
+{
+  "record_type": "pending_policy_review_not_an_authorization",
+  "exception_id": "legacy_c08_no_without_original_anchor",
+  "validation_version": "transcript-validation-v3",
+  "technical_owner": "Nazar Akanov (lane C)",
+  "qa_security_approver": null,
+  "approval_status": "pending",
+  "approved_by": null,
+  "approved_at": null,
+  "decision_reason": null,
+  "production_deployment_approved": false,
+  "legacy_example": "p1-en-003 in the frozen eval-v4 report",
+  "risk": "A structurally valid no-violation verdict without a source anchor is not independent evidence that no serious violation occurred.",
+  "unchanged_safeguards": [
+    "No positive c08 or positive identity-verification exception",
+    "Transcript uncertainty affecting the critical verdict requires review",
+    "Original flags, transcripts and cache are preserved",
+    "Warnings remain visible; automated validation is not human verification"
+  ],
+  "required_review": "An authorized QA/security owner must explicitly decide whether this legacy exception is acceptable before production integration. This file does not enforce a production gate because the candidate is not integrated."
+}

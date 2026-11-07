@@ -1,0 +1,53 @@
+[
+  {
+    "status": "proposed_for_owner_review",
+    "reviewer_type": "assistant_text_review_not_human_QA",
+    "conversation_id": "p1-ru-010",
+    "criterion_id": "c08",
+    "original_answer": "no",
+    "transcript_sha256": "7a5a6ca00d0aef4e2850d0ec9ccca4fa58d969f3373ddf71bb47288fff76f114",
+    "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+    "result_sha256": "945b5d85e6b6885d3d053c84072ab8eeb6551dcdbe18a449671dbce5ee99dfad",
+    "source_cache_file": "eval/cache/eval/5947d4572144220ba4fa27ea48ee2067c9699d99.json",
+    "source_prompt_version": "eval-v4",
+    "evidence": [
+      {
+        "kind": "range",
+        "range": [
+          10,
+          31
+        ]
+      }
+    ],
+    "note": "Evidence-only in-memory proposal after reading the original transcript; no cache changes or score overrides.",
+    "dry_run_status": "valid",
+    "answer_preserved": true
+  },
+  {
+    "status": "proposed_for_owner_review",
+    "reviewer_type": "assistant_text_review_not_human_QA",
+    "conversation_id": "p1-en-010",
+    "criterion_id": "c06",
+    "original_answer": 10,
+    "transcript_sha256": "6934d4e8e899ac18e4d4a655f9073c24649bbeeb96d7f732120b586af44c212c",
+    "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+    "result_sha256": "0796744f8d9e41fcfb90328bc292e4cc83a18444f2db83b838a89f4a7a4f64cf",
+    "source_cache_file": "eval/cache/eval/3ebb29d28f8ee2e94e7a20db68a6c1260064ce12.json",
+    "source_prompt_version": "eval-v4",
+    "evidence": [
+      {
+        "kind": "message",
+        "turn_index": 9,
+        "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+      },
+      {
+        "kind": "message",
+        "turn_index": 10,
+        "quote": "Understood, thanks."
+      }
+    ],
+    "note": "Evidence-only in-memory proposal after reading the original transcript; no cache changes or score overrides.",
+    "dry_run_status": "valid",
+    "answer_preserved": true
+  }
+]

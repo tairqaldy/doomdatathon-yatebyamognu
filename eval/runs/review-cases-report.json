@@ -1,0 +1,352 @@
+{
+  "checked_at": "2026-11-07T15:38:55.486Z",
+  "commit": "cdd19544d60bf9a71368964b92bb7e6572a5a32c",
+  "paid_calls": 0,
+  "current_prompt_version": "eval-v5.1",
+  "source_result_sha256": "21644a936782f347bdb77e48f126e6489f8b23b70738ef813c4cfb5b7b6eaf22",
+  "historical_report_scope": "transcript-compat-* describes frozen v4, not current v5.1.",
+  "cases": [
+    {
+      "id": "p1-ru-010",
+      "criterion_id": "c08",
+      "current_prompt_version": "eval-v5.1",
+      "transcript_sha256": "7a5a6ca00d0aef4e2850d0ec9ccca4fa58d969f3373ddf71bb47288fff76f114",
+      "current_answer": "no",
+      "evidence": [
+        {
+          "kind": "range",
+          "range": [
+            10,
+            31
+          ]
+        }
+      ],
+      "current_publication_status": "valid",
+      "current_diagnostics": [],
+      "case_status": "resolved_upstream_text_checked",
+      "human_verified": false,
+      "independent_audio_review": false,
+      "text_review_basis": "All operator turns 10..31 were read. Identity is confirmed by system turn 14 before the protected check; no insult, private paid offer or unverified account disclosure is present in these turns.",
+      "legacy_evidence": [
+        {
+          "kind": "na_condition",
+          "quote": "Грубых нарушений в репликах оператора не выявлено."
+        }
+      ],
+      "legacy_proposal_status": "prepared_not_applied",
+      "legacy_proposal_dry_run_status": "valid"
+    },
+    {
+      "id": "p1-en-010",
+      "criterion_id": "c06",
+      "current_prompt_version": "eval-v5.1",
+      "transcript_sha256": "6934d4e8e899ac18e4d4a655f9073c24649bbeeb96d7f732120b586af44c212c",
+      "current_answer": 10,
+      "evidence": [
+        {
+          "kind": "message",
+          "turn_index": 9,
+          "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+        },
+        {
+          "kind": "message",
+          "turn_index": 10,
+          "quote": "Understood, thanks."
+        }
+      ],
+      "current_publication_status": "valid",
+      "current_diagnostics": [],
+      "case_status": "resolved_upstream_text_checked",
+      "human_verified": false,
+      "independent_audio_review": false,
+      "text_review_basis": "Operator turn 9 directly answers the account-use question; client turn 10 confirms understanding. Clear and ordered answer supports c06=10. Closing quality is evaluated separately.",
+      "legacy_evidence": [
+        {
+          "kind": "message",
+          "turn_index": 10,
+          "quote": "Understood, thanks."
+        }
+      ],
+      "legacy_proposal_status": "prepared_not_applied",
+      "legacy_proposal_dry_run_status": "valid"
+    },
+    {
+      "id": "p4-ru-002",
+      "criterion_id": "c01",
+      "current_prompt_version": "eval-v5.1",
+      "transcript_sha256": "beb49cf150b1769a2328af3a29a7dc7fa8ddde2da42859f983c1e98794e92b3b",
+      "current_answer": "no",
+      "evidence": [
+        {
+          "kind": "message",
+          "turn_index": 2,
+          "quote": "Да компания федеброкер меня зовут [Имя скрыто], [Имя скрыто], мы с вами ранее разговаривали."
+        }
+      ],
+      "current_publication_status": "needs_review",
+      "current_diagnostics": [],
+      "case_status": "awaiting_human_audio_review",
+      "human_verified": false,
+      "independent_audio_review": false,
+      "first_operator_index": 2,
+      "source_timestamp": "2026-11-03T13:49:47.2615709+00:00",
+      "original_transcript": "Да компания федеброкер меня зовут [Имя скрыто], [Имя скрыто], мы с вами ранее разговаривали.",
+      "audio_link": "https://freedom-cqa.vercel.app/api/audio?id=p4-ru-002",
+      "verified_audio_wording": null,
+      "corrected_transcript": null,
+      "human_verdict": null,
+      "score_effect": null,
+      "recording_start_complete": null,
+      "audio_availability": {
+        "resolver_http_status": 302,
+        "audio_http_status": 405,
+        "content_type": "application/json; charset=utf-8",
+        "content_length": "73",
+        "get_http_status": 206,
+        "get_content_type": "audio/mpeg",
+        "content_range": "bytes 0-0/3339792"
+      }
+    },
+    {
+      "id": "p4-ru-005",
+      "criterion_id": "c01",
+      "current_prompt_version": "eval-v5.1",
+      "transcript_sha256": "b4bff05197d8d7b18dbdbe159d86d33676262a7e8489693498609b84c631e411",
+      "current_answer": "no",
+      "evidence": [
+        {
+          "kind": "message",
+          "turn_index": 16,
+          "quote": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?"
+        }
+      ],
+      "current_publication_status": "needs_review",
+      "current_diagnostics": [
+        "s2 c02: quote not found in turn 63",
+        "s2 c02: quote not found in turn 66",
+        "s2 c04: quote not found in turn 43",
+        "s2 c08: quote not found in turn 28"
+      ],
+      "case_status": "awaiting_human_audio_review",
+      "human_verified": false,
+      "independent_audio_review": false,
+      "first_operator_index": 16,
+      "source_timestamp": "2026-11-03T15:29:21.2631163+00:00",
+      "original_transcript": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?",
+      "audio_link": "https://freedom-cqa.vercel.app/api/audio?id=p4-ru-005",
+      "verified_audio_wording": null,
+      "corrected_transcript": null,
+      "human_verdict": null,
+      "score_effect": null,
+      "recording_start_complete": null,
+      "audio_availability": {
+        "resolver_http_status": 302,
+        "audio_http_status": 405,
+        "content_type": "application/json; charset=utf-8",
+        "content_length": "73",
+        "get_http_status": 206,
+        "get_content_type": "audio/mpeg",
+        "content_range": "bytes 0-0/2125656"
+      }
+    },
+    {
+      "id": "p4-ru-004",
+      "criterion_id": "c01",
+      "current_prompt_version": "eval-v5.1",
+      "transcript_sha256": "2d3e20b8c30b2d05b46677c3d6ad0b97251abd61a485fbf57bb4376ec17a6c56",
+      "current_answer": "yes",
+      "evidence": [
+        {
+          "kind": "message",
+          "turn_index": 14,
+          "quote": "Фридом брокера [Имя скрыто] Здравствуйте, чем могу вам помочь?"
+        }
+      ],
+      "current_publication_status": "needs_review",
+      "current_diagnostics": [
+        "s1 c02: quote not found in turn 33",
+        "s1 c03: quote not found in turn 78",
+        "s1 c04: quote not found in turn 111",
+        "s1 c05: quote not found in turn 90",
+        "s1 c08: quote not found in turn 78",
+        "s2 c03: quote not found in turn 78",
+        "s2 c05: quote not found in turn 90",
+        "s2 c08: quote not found in turn 78",
+        "s3 c02: quote not found in turn 33",
+        "s3 c02: quote not found in turn 37",
+        "s3 c03: quote not found in turn 78",
+        "s3 c03: quote not found in turn 70",
+        "s3 c05: quote not found in turn 90"
+      ],
+      "case_status": "awaiting_human_audio_review",
+      "human_verified": false,
+      "independent_audio_review": false,
+      "first_operator_index": 14,
+      "source_timestamp": "2026-11-03T12:50:10.7436505+00:00",
+      "original_transcript": "Фридом брокера [Имя скрыто] Здравствуйте, чем могу вам помочь?",
+      "audio_link": "https://freedom-cqa.vercel.app/api/audio?id=p4-ru-004",
+      "verified_audio_wording": null,
+      "corrected_transcript": null,
+      "human_verdict": null,
+      "score_effect": null,
+      "recording_start_complete": null,
+      "audio_availability": {
+        "resolver_http_status": 302,
+        "audio_http_status": 405,
+        "content_type": "application/json; charset=utf-8",
+        "content_length": "73",
+        "get_http_status": 206,
+        "get_content_type": "audio/mpeg",
+        "content_range": "bytes 0-0/2527056"
+      }
+    }
+  ],
+  "legacy_cache_modified": false,
+  "production_modified": false,
+  "security_approval": {
+    "technical_owner": "Nazar Akanov (lane C)",
+    "approver": null,
+    "status": "pending",
+    "exception": "legacy c08=no without original transcript anchor",
+    "production_deployment_approved": false
+  },
+  "audio_review_status": "not_performed_by_a_human",
+  "current_metrics": {
+    "run": "eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV-openai_gpt-6-luna.evaluations.json",
+    "meta": {
+      "evaluator": "openai:gpt-6-luna",
+      "prompt_version": "eval-v5.1",
+      "samples": null,
+      "dataset": "DEV",
+      "checklist": "freedom-chat@v1",
+      "created_at": "2026-11-07T15:00:49.475Z",
+      "count": 65
+    },
+    "gold_dialogs": 19,
+    "scored_dialogs": 19,
+    "draft_gold": 0,
+    "missing": [],
+    "overall": {
+      "n": 152,
+      "strict": 96.05,
+      "lenient": 98.68,
+      "scale_within_1": 97.3
+    },
+    "per_criterion": {
+      "c01": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c02": {
+        "n": 19,
+        "strict": 94.74,
+        "lenient": 94.74,
+        "scale_within_1": null
+      },
+      "c03": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c04": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": 100
+      },
+      "c05": {
+        "n": 19,
+        "strict": 89.47,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c06": {
+        "n": 19,
+        "strict": 84.21,
+        "lenient": 94.74,
+        "scale_within_1": 94.74
+      },
+      "c07": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c08": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      }
+    },
+    "per_language": {
+      "EN": {
+        "n": 40,
+        "strict": 100,
+        "lenient": 100
+      },
+      "KZ": {
+        "n": 40,
+        "strict": 97.5,
+        "lenient": 100
+      },
+      "RU": {
+        "n": 72,
+        "strict": 93.06,
+        "lenient": 97.22
+      }
+    },
+    "na": {
+      "precision": 96.55,
+      "recall": 100,
+      "gold": 28,
+      "model": 29
+    },
+    "gross_error": {
+      "tp": 7,
+      "fn": 0,
+      "fp": 0,
+      "recall": 100,
+      "precision": 100
+    },
+    "evidence": {
+      "hit_rate": 99.1,
+      "checked": 111,
+      "invalid_refs": 0,
+      "refs": 216
+    },
+    "total": {
+      "mae": 3.41,
+      "dialogs": 19,
+      "null_mismatch": 0
+    },
+    "disagreements": [
+      {
+        "conversation_id": "p1-ru-009",
+        "criterion_id": "c02",
+        "gold": "yes",
+        "model": "na",
+        "note": "Asked what message the app shows."
+      },
+      {
+        "conversation_id": "p1-ru-022",
+        "criterion_id": "c06",
+        "gold": 10,
+        "model": 4,
+        "note": "Replies are clear, just improper (graded in c08)."
+      }
+    ]
+  },
+  "source_run_answer_differences": [],
+  "independent_test": {
+    "status": "not_available_as_new_human_reviewed_unseen_data",
+    "note": "Existing 12/7 split was already known during earlier work; blind-24 metadata alone does not establish human provenance."
+  },
+  "controlled_comparison": {
+    "status": "not_executed",
+    "note": "Full v5.1 architecture, schema, samples, effective generation settings and validation must be shared between arms."
+  }
+}
