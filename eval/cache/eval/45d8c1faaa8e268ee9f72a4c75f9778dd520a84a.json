@@ -1,0 +1,128 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на языке клиента (английском) и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос о поиске облигаций в приложении был понятен с самого начала, уточнять не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, как найти облигации в приложении."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос был общим вопросом о работе приложения и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "I'm trying to figure out how to find bonds in the app."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основной вопрос о поиске решён: клиент увидел строку поиска. Не объяснено, как определить название или тикер облигации.",
+   "deduction_reason": "Не дано, как найти нужную облигацию по названию или тикеру, если клиент их не знает.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I see the search bar now."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Клиент отметил, что не пользовался разделом, но оператор не отреагировал на это и не был вежлив.",
+   "deduction_reason": "Нет вежливости и реакции на неопытность клиента, вместо этого оператор навязал платную услугу.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Can I speak to an agent? I haven't used this section before."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Ответ о поиске ясный, но внезапное предложение платной консультации выбило диалог из контекста, клиенту пришлось уточнять, что ему нужна только помощь с приложением.",
+   "deduction_reason": "Резкий переход к платной консультации без связи с запросом сбил ход диалога.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор не подвёл итог, не предложил дальнейшую помощь и не попрощался, чат закрыт системой.",
+   "deduction_reason": "Нет итога, предложения дальнейшей помощи и прощания от оператора.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Agent closed the chat."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор предложил платную частную консультацию с личным номером, что является грубой ошибкой.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, как найти облигации в приложении, и попросил агента.",
+  "operator_actions": "Оператор поздоровался, объяснил поиск через Quotes по названию или тикеру, затем предложил платную личную консультацию с выбором облигаций и запросил личный номер.",
+  "outcome": "Клиент отказался от платной консультации, оператор не завершил диалог, чат закрыт агентом."
+ },
+ "problems": [],
+ "model": "anthropic/claude-haiku-5.5",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 3336,
+  "completion_tokens": 2784,
+  "cost": 0.0017256
+ },
+ "latency_ms": 13404,
+ "attempts": 1
+}
