@@ -1,0 +1,132 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском и представился как Tyler.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не уточнил недостающие детали (например, данные для проверки счёта), а сразу перешёл к отправке в команду.",
+   "deduction_reason": "Не уточнены недостающие детали для проверки блокировки.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      12
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Запрос касался счёта клиента, личность не подтверждена, а оператор сообщил данные о ограничении и предложил пропустить проверку.",
+   "deduction_reason": "Проверка личности не подтверждена, данные о счёте раскрыты до идентификации.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "How do you know it's my account? I haven't verified anything."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Вопрос передан в команду, но причина блокировки не выяснена и клиент не получил объяснения.",
+   "deduction_reason": "Основной вопрос о причине блокировки остался открытым.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор проигнорировал обеспокоенность клиента по проверке и не ответил на его вопрос о связи.",
+   "deduction_reason": "Не отреагировал на опасения клиента и его вопрос о сроках ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "How do you know it's my account? I haven't verified anything."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Ответы в целом понятны, но фраза «We can skip that» неясна, а вопрос клиента о связи остался без ответа.",
+   "deduction_reason": "Оставлен без ответа вопрос клиента о том, получит ли он ответ в чате.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Will I hear back here?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор не подвёл итог и не предложил дальнейшую помощь, только попрощался.",
+   "deduction_reason": "Нет итога и предложения дальнейшей помощи перед прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор раскрыл информацию о ограничении счёта до проверки личности, что является раскрытием конфиденциальных данных.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, почему заблокированы выводы средств на его счёте.",
+  "operator_actions": "Оператор представился, сообщил о ограничении вывода без проверки личности, отправил вопрос в команду и попрощался без итога.",
+  "outcome": "Причина блокировки не выяснена, личность не подтверждена, ответ на вопрос клиента о сроках не дан."
+ },
+ "problems": [],
+ "model": "anthropic/claude-haiku-5.5",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 3337,
+  "completion_tokens": 2737,
+  "cost": 0.0017022
+ },
+ "latency_ms": 12378,
+ "attempts": 1
+}
