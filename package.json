@@ -11,6 +11,6 @@
     "asr": "node scripts/asr-run.mjs",
     "test": "node scripts/test-scoring.mjs",
     "pg:ping": "node scripts/pg-ping.mjs",
-    "results": "node scripts/results.mjs"
+    "results": "node eval/control-run.mjs"
   }
 }
