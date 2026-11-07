@@ -311,7 +311,7 @@ Every agent acts as a **judge** for the product, not just a coder:
 ---
 
 ## 9.1 Deploys, previews and agent tools
-- **Push early, push often.** Vercel builds every pushed branch into its own preview URL and `main` into production. After pushing, open your preview, click through what you changed, and paste the URL into your issue.
+- **Push early, push often.** Vercel builds every pushed branch into its own preview URL and `main` into production (https://freedom-cqa.vercel.app). Previews are **public** (no Vercel login). Stable URL per branch: `https://freedom-cqa-git-<branch-with-slashes-as-dashes>-tairqaldy-projects.vercel.app`, e.g. `a/8-card-evaluation-ux` → `freedom-cqa-git-a-8-card-evaluation-ux-tairqaldy-projects.vercel.app`. After pushing, open your preview, click through what you changed, and paste the URL into your issue.
 - `npm run dev` = exact local mirror of Vercel (static + `/api`). `npm test` = scoring rules. `scripts/check.sh` before every merge.
 - **graphify** (context map of the repo): run `graphify update .` after pulling big changes, then read `graphify-out/GRAPH_REPORT.md` before exploring unfamiliar code (`graphify explain "<symbol>"`). The output is gitignored, so each laptop builds its own. Install: `uv tool install --python 3.12 graphifyy && graphify install --platform claude` (or `codex`).
 - **unslop** (de-AI writing): use it on README, pitch and slide text before publishing (`/unslop cleanup`). Installed as a local skill only (`~/dev/unslop`, symlinked into `~/.claude/skills`); **do not copy it into this repo** (no LICENSE file, IP rule).
