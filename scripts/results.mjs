@@ -19,7 +19,12 @@ const conc = Number(arg('concurrency', 6));
 const { loadDataset, fetchDataset, loadChecklist } = await import('../lib/data.js');
 const { score } = await import('../prototype/scoring.js');
 const fmt = JSON.parse(await readFile('results/format.json', 'utf8'));
-const checklist = arg('checklist') ? JSON.parse(await readFile(arg('checklist'), 'utf8')) : await loadChecklist();
+// Checklist per channel unless --checklist is given: chats → freedom-chat-v1, calls → freedom-call-v1 (speech-adapted).
+const forced = arg('checklist') ? JSON.parse(await readFile(arg('checklist'), 'utf8')) : null;
+const chatChecklist = forced || await loadChecklist('freedom-chat-v1');
+const callChecklist = forced || await loadChecklist('freedom-call-v1').catch(() => chatChecklist);
+const checklistFor = (c) => (c.channel === 'voice call' ? callChecklist : chatChecklist);
+const checklist = chatChecklist;
 
 // Dataset: DEV from the repo; any other group fetched live and saved for the UI.
 let ds;
@@ -36,12 +41,12 @@ console.log(`${group}: ${convs.length} dialogs · checklist ${checklist.id} v${c
 let evaluate; let MODEL = 'mock';
 if (flag('mock')) {
   const { mockEvaluate } = await import('../prototype/mock-evaluator.js');
-  evaluate = async (c) => ({ value: { answers: mockEvaluate(c, checklist), summary: null, model: 'mock', usage: { cost: 0 } }, cached: false });
+  evaluate = async (c) => ({ value: { answers: mockEvaluate(c, checklistFor(c)), summary: null, model: 'mock', usage: { cost: 0 } }, cached: false });
 } else {
   const ev = await import('../lib/evaluator.js');
   const { MODELS } = await import('../lib/llm.js');
   MODEL = arg('model', MODELS.eval);
-  evaluate = (c) => ev.evaluate(c, checklist, { model: MODEL });
+  evaluate = (c) => ev.evaluate(c, checklistFor(c), { model: MODEL });
 }
 
 const toValue = (crit, a) => {
@@ -57,14 +62,15 @@ async function worker() {
     const c = convs[next++];
     try {
       const r = await evaluate(c);
-      const answers = Object.fromEntries(checklist.criteria.map((k) => [k.id, r.value.answers[k.id]?.answer ?? null]));
-      const s = score(checklist, answers);
+      const cl = checklistFor(c);
+      const answers = Object.fromEntries(cl.criteria.map((k) => [k.id, r.value.answers[k.id]?.answer ?? null]));
+      const s = score(cl, answers);
       const row = { conversation_id: c.conversation_id };
-      for (const k of checklist.criteria) row[fmt.criterion_keys[k.id] || k.id] = toValue(k, answers[k.id]);
+      for (const k of cl.criteria) row[fmt.criterion_keys[k.id] || k.id] = toValue(k, answers[k.id]);
       if (fmt.include.total) row[fmt.include.total] = s.total;
       if (fmt.include.gross) row[fmt.include.gross] = s.gross_error;
       out.push(row);
-      details[c.conversation_id] = { answers: r.value.answers, summary: r.value.summary, total: s.total, gross_error: s.gross_error,
+      details[c.conversation_id] = { checklist_id: cl.id, answers: r.value.answers, summary: r.value.summary, total: s.total, gross_error: s.gross_error,
         sections: s.sections, model: r.value.model, usage: r.value.usage, problems: r.value.problems || [] };
       if (!r.cached) { fresh++; cost += r.value.usage?.cost || 0; }
       process.stdout.write(`${r.cached ? '·' : '✓'} ${c.conversation_id} ${s.total ?? '—'}${s.gross_error ? ' ⚑ gross' : ''}\n`);
