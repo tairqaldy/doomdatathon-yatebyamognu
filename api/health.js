@@ -1,6 +1,7 @@
 // GET /api/health: what's configured (never returns secret values).
 import { send } from '../lib/http.js';
 import { sharedBackend, logicFingerprint, LOGIC } from '../lib/cache.js';
+import { backend as sessionsBackend } from '../lib/kv.js';
 import { MODELS } from '../lib/openrouter.js';
 import { PROMPT_VERSION } from '../lib/evaluator.js';
 
@@ -13,6 +14,7 @@ export default function handler(req, res) {
     shared_cache: sharedBackend(),            // 'redis' | 'cloudflare-kv' | null
     logic: Object.fromEntries(Object.keys(LOGIC).map((n) => [n, logicFingerprint(n)])), // cache keys change when these change
     postgres: Boolean(process.env.DATABASE_URL || process.env.POSTGRES_URL),
+    sessions_store: sessionsBackend(),        // 'postgres' | 'redis' | null (null = live chats stay in one browser)
     admin_passcode_set: Boolean(process.env.ADMIN_PASSCODE),
     models: MODELS, prompt_version: PROMPT_VERSION,
     commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || null, branch: process.env.VERCEL_GIT_COMMIT_REF || null,
