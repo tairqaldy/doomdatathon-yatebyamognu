@@ -28,6 +28,7 @@ function diffOf(cl, d) {
     const o = old.get(c.id);
     if (!o) { const r = replaced.get(c.id); out.push(r ? `заменён «${r.oldTitle}» на «${c.title}»` : `добавлен «${c.title}»`); continue; }
     if (o.title !== c.title) out.push(`переименован «${o.title}» в «${c.title}»`);
+    if ((o.input || 'text') !== (c.input || 'text')) out.push(`«${c.title}» теперь оценивается ${c.input === 'audio' ? 'по записи звонка' : 'по расшифровке'}`);
     if (Number(o.weight) !== Number(c.weight)) out.push(`вес «${c.title}»: ${o.weight} → ${c.weight}`);
     if ((o.description || '') !== (c.description || '')) out.push(`формулировка «${c.title}»`);
     if (o.type !== c.type) out.push(`тип ответа «${c.title}»: ${TYPES[o.type]} → ${TYPES[c.type]}`);
@@ -40,7 +41,8 @@ function diffOf(cl, d) {
   if (ord(cl.criteria) !== ord(d.criteria)) out.push('порядок критериев');
   return out;
 }
-const weightSum = (d) => d.criteria.filter((c) => c.type !== 'flag').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const weightSum = (d) => d.criteria.filter((c) => c.type !== 'flag' && c.input !== 'audio').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const audioWeight = (d) => d.criteria.filter((c) => c.type !== 'flag' && c.input === 'audio').reduce((s, c) => s + (Number(c.weight) || 0), 0);
 const devAvg = (k) => compute(rows().filter((r) => r.source === 'DEV' && r.E.kind === k)).avg;
 
 export function viewChecklist(view, _arg, query) {
@@ -101,6 +103,7 @@ export function viewChecklist(view, _arg, query) {
             <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description">${esc(c.description || '')}</textarea></label>
             ${c.na_allowed ? `<label class="field"><span class="field__label">Когда ставить N/A</span><input class="input" data-k="na_condition" value="${esc(c.na_condition || '')}" placeholder="Например: клиент сам дал все данные"></label>` : ''}
             ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((s) => s.value).join(', ')}"></label>` : ''}
+            ${kind === 'call' ? `<label class="field"><span class="field__label">Как оценивать</span><select class="input" data-k="input"><option value="text" ${c.input !== 'audio' ? 'selected' : ''}>По расшифровке</option><option value="audio" ${c.input === 'audio' ? 'selected' : ''}>По записи звонка (тон, темп, паузы)</option></select></label>` : ''}
             ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((s) => `<option value="${s.id}" ${s.id === c.section_id ? 'selected' : ''}>${esc(s.title)}</option>`).join('')}</select></label>` : ''}
           </div>
         </article>`).join('')}</div>
@@ -114,7 +117,7 @@ export function viewChecklist(view, _arg, query) {
     $('#reset', view).hidden = !dirty;
     $('#cl-summary', view).innerHTML = `
       <div class="cl-sum">
-        <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100</span>
+        <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100${audioWeight(draft) ? ` + ${fmt(audioWeight(draft), 2)} по записи звонка` : ''}</span>
         <span class="muted small">${ws === 100 ? 'Итог считается из 100 баллов.' : 'Итог всё равно нормируется до 100, но лучше выровнять веса.'} N/A перераспределяет вес между применимыми критериями. Округление до 2 знаков.</span>
       </div>
       ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}`;
@@ -136,6 +139,7 @@ export function viewChecklist(view, _arg, query) {
     if (['title', 'description', 'na_condition'].includes(k)) { c[k] = e.target.value; summary(); return; }
     if (k === 'na_allowed') { c.na_allowed = e.target.checked; if (!c.na_allowed) delete c.na_condition; }
     else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).map(Number).filter(Number.isFinite); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
+    else if (k === 'input') { if (e.target.value === 'audio') c.input = 'audio'; else delete c.input; }
     else if (k === 'type') { c.type = e.target.value; if (c.type === 'scale' && !c.scale) c.scale = [10, 5, 0].map((v) => ({ value: v, label: String(v) })); if (c.type === 'flag') { c.weight = 0; c.na_allowed = false; delete c.na_condition; } }
     else c[k] = e.target.value;
     viewChecklist(view);
@@ -148,7 +152,7 @@ export function viewChecklist(view, _arg, query) {
     if (b.hasAttribute('data-replace')) {
       const id = `c${uid()}`; const prev = replaced.get(c.id);
       replaced.delete(c.id); replaced.set(id, prev || { oldId: c.id, oldTitle: c.title });
-      Object.assign(c, { id, title: '', description: '', type: 'binary', na_allowed: false }); delete c.na_condition; delete c.scale;
+      Object.assign(c, { id, title: '', description: '', type: 'binary', na_allowed: false }); delete c.na_condition; delete c.scale; delete c.input;
       if (!(Number(c.weight) > 0)) c.weight = 10;
       newId = id;
     }
