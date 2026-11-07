@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Freedom · Поддержка</title>
+  <meta name="description" content="Поддержка Freedom Broker. Ассистент отвечает за пару секунд на русском, казахском или английском, а когда нужен человек, зовёт специалиста и говорит, когда он ответит.">
+  <meta name="theme-color" content="#0f1011">
+  <meta property="og:title" content="Freedom · Поддержка">
+  <meta property="og:description" content="Спросите. Ответим по-человечески.">
+  <meta property="og:image" content="assets/hero-meadow.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/hero-meadow.webp" fetchpriority="high">
+  <link rel="stylesheet" href="/shared/theme.css">
+  <link rel="stylesheet" href="landing.css">
+  <script type="module" src="landing.js"></script>
+</head>
+<body class="g" id="top">
+  <a class="skip" href="#main">Перейти к содержанию</a>
+
+  <header class="bar">
+    <a class="bar__mark" href="#top" aria-label="Freedom · Поддержка, в начало страницы">
+      <span class="g-dot" aria-hidden="true"></span>
+      <span>Freedom <span class="bar__sep">·</span> Поддержка</span>
+    </a>
+    <a class="bar__link" href="/support/">Написать</a>
+  </header>
+
+  <main id="main">
+
+    <!-- 0 · HERO: meadow, Ken Burns, settles into a rounded frame on exit -->
+    <section class="stage stage--hero" data-stage aria-labelledby="hero-title">
+      <div class="stage__sticky g-grain">
+        <div class="layer fx-hero" data-range="0 0 0 1">
+          <div class="layer__media">
+            <img src="assets/hero-meadow.webp" width="1536" height="1024" fetchpriority="high" decoding="async"
+                 alt="Васильковый луг под ярким солнцем, вдали на холме стоит маленькая фигура человека">
+            <div class="scrim scrim--bottom"></div>
+          </div>
+          <div class="copy copy--hero" data-range="0 0 0 .7">
+            <p class="g-label copy__label">Freedom Broker · поддержка</p>
+            <h1 id="hero-title" class="g-display h1" data-words>Спросите.<br>Ответим по-человечески.</h1>
+            <p class="lead">Ассистент Freedom отвечает за пару секунд. Когда вопрос касается денег или счёта, к разговору подключается живой специалист.</p>
+            <div class="actions">
+              <a class="g-btn g-btn--primary" href="/support/">Написать в поддержку</a>
+              <a class="textlink" href="#story">Как это устроено <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1–3 · CUSTOMER STORY: bird (circle reveal) → door (doorway reveal) → horse (cross-fade + drift) -->
+    <section class="stage stage--story" id="story" data-stage aria-label="Как это работает для клиента">
+      <div class="stage__sticky g-grain">
+
+        <div class="layer fx-circle fx-shade" data-range="0 .13 .30 .40">
+          <div class="layer__media">
+            <img src="assets/bird.webp" width="1024" height="1536" loading="lazy" decoding="async"
+                 alt="Белый голубь летит в синем небе сквозь круг из листьев, вид снизу">
+            <div class="scrim scrim--right"></div>
+          </div>
+          <div class="layer__shade"></div>
+          <div class="copy copy--right" data-range=".06 .13 .24 .30">
+            <p class="g-label copy__label">01 · Ассистент</p>
+            <h2 class="g-display h2" data-words>Отвечает только то, что знает.</h2>
+            <p class="body">Он учился на том, как отвечают настоящие операторы Freedom. Если точного ответа нет, ассистент не будет угадывать и позовёт человека.</p>
+            <dl class="facts">
+              <div><dt class="g-label">Языки</dt><dd>Русский, казахский, английский</dd></div>
+              <div><dt class="g-label">Ответ</dt><dd>Примерно за 2 секунды</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="layer fx-door fx-shade" data-range=".30 .44 .62 .72">
+          <div class="layer__media">
+            <img src="assets/door.webp" width="1024" height="1536" loading="lazy" decoding="async"
+                 alt="Открытая белая дверь стоит в зеркально спокойном море, за ней светлое небо">
+            <div class="scrim scrim--left"></div>
+          </div>
+          <div class="layer__shade"></div>
+          <div class="copy copy--left" data-range=".41 .48 .58 .63">
+            <p class="g-label copy__label">02 · Специалист</p>
+            <h2 class="g-display h2" data-words>Дверь к человеку открыта.</h2>
+            <p class="body">Деньги, счёт или просто надоело говорить с ботом. В этот момент разговор переходит к специалисту. Он видит всю переписку, так что повторять ничего не придётся.</p>
+          </div>
+        </div>
+
+        <div class="layer fx-fade fx-drift" data-range=".62 .72 1 1">
+          <div class="layer__media">
+            <img src="assets/horse.webp" width="1536" height="1024" loading="lazy" decoding="async"
+                 alt="Конь скачет по высокогорному плато, вдали вулкан со светлым ореолом">
+            <div class="scrim scrim--top"></div>
+          </div>
+          <div class="copy copy--top" data-range=".73 .81 2 2">
+            <p class="g-label copy__label">03 · Срок</p>
+            <h2 class="g-display h2" data-words>Вы знаете, когда вам ответят.</h2>
+            <p class="body">Раньше было «Я передам вопрос специалистам», и дальше тишина. Теперь вы видите срок. Обычно специалист отвечает меньше чем через две минуты.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4 · FOR FREEDOM: clouds pivot → rest fades in → shrinks into a window in the dark gallery -->
+    <section class="stage stage--quality" data-stage aria-labelledby="quality-title">
+      <div class="stage__sticky g-grain">
+
+        <div class="layer fx-fade fx-fadeout" data-range="0 .12 .42 .44">
+          <div class="layer__media">
+            <img src="assets/clouds.webp" width="1536" height="1024" loading="lazy" decoding="async"
+                 alt="Мягкие облака, небо переходит от бледно-голубого к персиковому">
+          </div>
+          <div class="copy copy--center" data-range=".05 .14 .25 .31">
+            <p class="g-label copy__label copy__label--dark">Для Freedom</p>
+            <p class="g-display h2 h2--dark" data-words>Теперь о том, что видит Freedom.</p>
+          </div>
+        </div>
+
+        <div class="layer fx-fade fx-window" data-range=".30 .42 .56 .74">
+          <div class="layer__media">
+            <img src="assets/rest.webp" width="1536" height="1024" loading="lazy" decoding="async"
+                 alt="Человек лежит на цветущем горном лугу, вдали снежные вершины и облака">
+          </div>
+          <div class="copy copy--gallery" data-range=".68 .78 2 2">
+            <p class="g-label copy__label">04 · Качество</p>
+            <h2 id="quality-title" class="g-display h2" data-words>Каждый разговор проверяется.</h2>
+            <p class="body">Чаты и звонки сверяются с чек-листом Freedom из восьми пунктов. У каждой оценки есть цитата из разговора. Последнее слово остаётся за проверяющим.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4b · evidence + checklist + numbers, plain flow in the dark gallery -->
+    <section class="gallery" aria-label="Как выглядит оценка">
+      <div class="wrap evidence">
+        <article class="slip" data-rise>
+          <p class="g-label">Пункт 06 · Ведение диалога</p>
+          <blockquote class="slip__quote">«Я передам вопрос специалистам.»</blockquote>
+          <p class="slip__note">Оператор не сказал, когда ждать ответа. Клиенту пришлось переспросить.</p>
+          <div class="slip__foot">
+            <span class="g-label">Оценка 4 / 10</span>
+            <span class="g-label slip__review"><span class="g-dot" aria-hidden="true"></span>Проверяющий может изменить</span>
+          </div>
+        </article>
+
+        <div class="evidence__text" data-rise>
+          <p class="body body--gallery">Оценка всегда показывает строку, на которой она основана. Если пункт к разговору не относится, ставится N/A. Грубые ошибки отмечаются отдельно от баллов.</p>
+          <ol class="criteria" aria-label="Восемь пунктов чек-листа Freedom">
+            <li><span class="g-label">01</span>Установление контакта</li>
+            <li><span class="g-label">02</span>Выявление потребности</li>
+            <li><span class="g-label">03</span>Идентификация</li>
+            <li><span class="g-label">04</span>Консультация</li>
+            <li><span class="g-label">05</span>Эмпатия</li>
+            <li><span class="g-label">06</span>Ведение диалога</li>
+            <li><span class="g-label">07</span>Завершение</li>
+            <li><span class="g-label">08</span>Грубые ошибки</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="wrap numbers">
+        <header class="numbers__head" data-rise>
+          <p class="g-label">05 · Проверено</p>
+          <h2 class="g-display h2" data-words>65 настоящих разговоров.</h2>
+          <p class="body body--gallery">Диалоги на русском, казахском и английском. Оценки системы сравнили с оценками проверяющих.</p>
+        </header>
+        <dl class="stats">
+          <div class="stat" data-rise><dt class="g-label">Совпадение с проверяющими</dt><dd class="g-display">86%</dd></div>
+          <div class="stat" data-rise><dt class="g-label">Грубых ошибок найдено</dt><dd class="g-display">6 из 7</dd></div>
+          <div class="stat" data-rise><dt class="g-label">Ложных тревог</dt><dd class="g-display">0</dd></div>
+          <div class="stat" data-rise><dt class="g-label">Стоимость одной проверки</dt><dd class="g-display">$0,001</dd></div>
+        </dl>
+      </div>
+
+      <!-- 6 · DEMO VIDEO placeholder -->
+      <div class="wrap demo" id="demo">
+        <div class="demo__head" data-rise>
+          <p class="g-label">Демо · 2 мин</p>
+          <h2 class="g-display h2" data-words>Посмотрите, как это работает.</h2>
+        </div>
+        <figure class="demo__frame g-grain" data-rise>
+          <!--
+            SWAP FOR THE REAL VIDEO: replace everything inside .demo__frame with ONE of these
+            (keep the .demo__frame wrapper, it gives the 16:9 ratio and rounded corners):
+              <video controls playsinline preload="metadata" poster="assets/shore.webp" src="assets/demo.mp4"></video>
+              <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Демо Freedom CQA"
+                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+            Then delete the .demo__play button handler in landing.js (initDemo) if you like; it is harmless without the button.
+          -->
+          <img class="demo__poster" src="assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="Белый стул стоит в мелкой воде у берега в золотой час">
+          <button class="demo__play" type="button" aria-describedby="demo-note">
+            <span class="demo__icon" aria-hidden="true"></span>
+            <span class="sr-only">Воспроизвести демо</span>
+          </button>
+          <figcaption class="demo__caption">
+            <span class="g-label">Демо · 2 мин</span>
+            <span id="demo-note" class="demo__note" aria-live="polite">Видео скоро появится здесь.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 7 · FINAL: blue hour, light opens from the lamp -->
+    <section class="stage stage--final" data-stage aria-labelledby="final-title">
+      <div class="stage__sticky g-grain">
+        <div class="layer fx-lamp" data-range="0 .55 2 2">
+          <div class="layer__media">
+            <img src="assets/bluehour.webp" width="1536" height="1024" loading="lazy" decoding="async"
+                 alt="Поле в синий час, посреди горит один тёплый фонарь">
+            <div class="scrim scrim--final"></div>
+          </div>
+          <div class="copy copy--final" data-range=".45 .62 2 2">
+            <h2 id="final-title" class="g-display h2 h2--final" data-words>Напишите, когда будет удобно.</h2>
+            <p class="lead">Ассистент ответит сразу. Если понадобится человек, он тоже придёт.</p>
+            <div class="actions actions--center">
+              <a class="g-btn g-btn--primary" href="/support/">Написать в поддержку</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="g-label">Прототип для Freedom Broker · NU Datathon 2026</p>
+    <p class="foot__small">Все изображения оригинальные и созданы для этого проекта.</p>
+  </footer>
+
+</body>
+</html>
