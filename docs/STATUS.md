@@ -22,7 +22,7 @@ How to verify: `npm run dev` → http://localhost:3000/phone/ ; Меню → П�
 ### 2026-11-07 20:55 · lane-c · claude · #22 · branch c/22-results-export
 Done: the graded deliverable. Appendix «Как сдать результаты» transcribed to `docs/case/results-format.md`. `eval/export-results.mjs` maps our c01–c08 to the official codes (contact, discovery, identification, consultation, empathy, dialogue, closure, critical), yes/no/na → true/false/null, **evidence turns +1 (format is 1-based)**, totals half-up via `prototype/scoring.js`, failed dialogs → `status: "error"` with the reason; N/A without cited turns points at the client's request or the system end event. `eval/validate-results.mjs` checks every rule and recomputes final_score from the values with the official weights (a corrupted copy: all 9 planted errors caught). `eval/control-run.mjs` = one command: fetch + save set → evaluate (concurrency 8, cached) → retry failures once → export → validate → `--push`. **`results/dev/results.json` committed: 65/65 ok, valid.**
 Rehearsal on DEV with a live fetch: identical data, export + validation in ~1 s (cached); fresh 10 chats ≈ 1 min.
-**Before T+23h (needs a human):** this laptop's `.env` has the placeholder `CQA_API_URL` from `.env.example`. The run falls back to our Vercel proxy `/api/dataset` (which has the real link), but put the real URL in `.env` too.
+**CQA_API_URL:** real link now in this laptop's `.env` and verified (65 DEV dialogs). The URL may include or omit `&group_id=…` (it is replaced). If it's missing or a placeholder, the run falls back to our Vercel proxy `/api/dataset`.
 Control-set runbook (from an up-to-date `main`):
 ```bash
 node eval/control-run.mjs --group <CONTROL_GROUP_ID> --out results/prod/results.json --expect 10 --push
