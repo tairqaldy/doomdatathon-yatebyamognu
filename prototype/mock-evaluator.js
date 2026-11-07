@@ -15,7 +15,9 @@ const RX = {
   complaint: /(не работает|ужас|плохо|долго|недовол|жалоб|проблем|нашар|ұзақ|not working|terrible|annoy|complain|frustrat|slow)/i,
   bye: /(до свидания|хорошего (дня|вечера)|всего доброго|обращайтесь|чем[- ]?(то|нибудь)? ещё|сау болыңыз|күніңіз|тағы сұрақ|goodbye|bye|have a (nice|good)|anything else)/i,
   abrupt: /(клиент завершил|связь прервал|байланыс үзілді|client (left|disconnected)|connection lost)/i,
-  gross: /(переведите (мне|на мою)|на мою (личную )?карту|мой личный номер|напишите мне в (whatsapp|телеграм)|личн(ую|ая) консультаци|my personal (number|account)|send (it|money) to me|дурак|идиот|тупой|stupid|idiot)/i,
+  gross: /(переведите (мне|на мою)|на мою (личную )?карту|деньги мне на карту|скиньте (мне )?деньги|я (сам|лично) (их )?вложу|лично предлагаю|через компанию (оформлять )?не надо|мой личный номер|ваш личный номер|напишите мне в (whatsapp|телеграм)|личн(ую|ая) консультаци|жеке нөмір|ақылы түрде|personal number|my personal (number|account)|charge for private|private advice|send (it|money) to me|читать умеете|дурак|идиот|тупой|stupid|idiot)/i,
+  // account facts revealed by the operator (gross only if identity was not confirmed before that line)
+  disclose: /(на вашем сч[её]те есть|на вашем сч[её]те .{0,30}ограничени|ограничение на вывод|restriction on your account|your account (has|shows)|шотыңызда .{0,40}шектеу|шектеу қойылған)/i,
   wait: /(минут|подождите|ожидайте|уточню|секунд|күте тұрыңыз|минут|one moment|please wait|let me check)/i,
 };
 
@@ -135,9 +137,11 @@ export function mockEvaluate(conv, checklist) {
       }
       case 'c08': {
         const g = op.find((i) => RX.gross.test(t[i].text));
-        r = g != null
-          ? { answer: 'yes', explanation: 'Обнаружено грубое нарушение в реплике оператора.', evidence: [ev(t, g)] }
-          : { answer: 'no', explanation: 'Оскорблений, предложений услуг в обход компании и раскрытия конфиденциальных данных не обнаружено.', evidence: [] };
+        const firstIdOk = [...sys, ...op].filter((i) => RX.idOk.test(t[i].text) || RX.idCheck.test(t[i].text)).sort((a, b) => a - b)[0];
+        const d = op.find((i) => RX.disclose.test(t[i].text) && (firstIdOk == null || i < firstIdOk));
+        if (g != null) r = { answer: 'yes', explanation: 'Обнаружено грубое нарушение в реплике оператора.', evidence: [ev(t, g)] };
+        else if (d != null) r = { answer: 'yes', explanation: 'Оператор раскрыл данные о счёте до подтверждения личности клиента.', evidence: [ev(t, d)] };
+        else r = { answer: 'no', explanation: 'Оскорблений, предложений услуг в обход компании и раскрытия конфиденциальных данных не обнаружено.', evidence: [] };
         break;
       }
       default: {
