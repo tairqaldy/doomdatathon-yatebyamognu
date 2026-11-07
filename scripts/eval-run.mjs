@@ -48,5 +48,21 @@ const report = { group, model, prompt_version: PROMPT_VERSION, checklist: checkl
 await mkdir('data/evaluations', { recursive: true }); await mkdir('eval/runs', { recursive: true });
 let prev = {}; try { prev = JSON.parse(await readFile(`data/evaluations/${group}.json`, 'utf8')).results || {}; } catch {}
 await writeFile(`data/evaluations/${group}.json`, JSON.stringify({ group, model, prompt_version: PROMPT_VERSION, checklist_id: checklist.id, checklist_version: checklist.version, generated_at: report.at, results: { ...prev, ...results } }, null, 1));
-await writeFile(`eval/runs/${report.at.replace(/[:.]/g, '-')}-${group}.json`, JSON.stringify(report, null, 2));
+const stamp = report.at.replace(/[:.]/g, '-');
+await writeFile(`eval/runs/${stamp}-${group}.json`, JSON.stringify(report, null, 2));
+// Evaluation[] run file (CONTRACTS §3) for Akanov's harness: node eval/accuracy.ts <file>
+const evaluations = Object.entries(results).map(([id, r]) => {
+  const answers = Object.fromEntries(Object.entries(r.answers).map(([k, v]) => [k, v.answer]));
+  const s = score(checklist, answers);
+  return {
+    id: `${model}-${id}`, conversation_id: id, checklist_id: checklist.id, checklist_version: checklist.version, created_at: report.at,
+    model: { name: r.model || model, prompt_version: PROMPT_VERSION, latency_ms: r.latency_ms ?? null, cost_usd: r.usage?.cost ?? null },
+    criteria: s.criteria.map((row) => ({ criterion_id: row.criterion_id, answer: row.answer, points: row.points, effective_weight: row.effective_weight,
+      explanation: r.answers[row.criterion_id]?.explanation || '', evidence: r.answers[row.criterion_id]?.evidence || [] })),
+    sections: s.sections.map((x) => ({ section_id: x.section_id, score: x.score })), total: s.total, gross_error: s.gross_error,
+  };
+});
+const runFile = `eval/runs/${stamp}-${group}-${model.replace(/[^a-z0-9.-]+/gi, '_')}.evaluations.json`;
+await writeFile(runFile, JSON.stringify({ meta: { evaluator: model, prompt_version: PROMPT_VERSION, dataset: group, checklist: `${checklist.id}@v${checklist.version}`, created_at: report.at, count: evaluations.length }, evaluations }, null, 1));
+console.log(`accuracy: node eval/accuracy.ts ${runFile}`);
 console.log(`\n${rows.length} dialogs · ${report.cached} from cache · ${fresh.length} model calls · $${report.cost_usd_total} total · $${report.cost_usd_per_eval ?? 0}/eval · p50 ${report.latency_ms_p50}ms p95 ${report.latency_ms_p95}ms · errors ${report.errors}`);
