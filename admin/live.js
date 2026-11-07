@@ -151,6 +151,7 @@ export function viewLive(view, id) {
     const j = e.target.closest('[data-jump]');
     if (j) { const el = $(`#msg-${j.dataset.jump}`, view); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.remove('is-hl'); void el.offsetWidth; el.classList.add('is-hl'); } return; }
     if (e.target.closest('#l-eval')) {
+      if (evaluating.has(s.id)) return; // one paid evaluation per chat at a time
       evaluating.add(s.id); evalErrors.delete(s.id); drawDetail();
       try {
         const r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation: live.toConversation(s), checklist: checklist(), force: !!s.evaluation }) });
