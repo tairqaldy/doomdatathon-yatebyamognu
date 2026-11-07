@@ -7,6 +7,14 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 13:10 · lane-d · product/pitch
+Done: drafted a product acceptance checklist and five-minute demo script from the official brief (issue #1).
+In progress: features and demo are not yet verified.
+Next: test working increments, choose representative conversations and rehearse; update when judging criteria arrive.
+Blocked by / Requests: official start time and judging criteria still need confirmation.
+Contracts touched: none.
+How to verify: read docs/product-acceptance.md and pitch/demo-script.md against docs/case/brief.md.
+
 ### 2026-11-07 13:05 · lane-b · tair/claude
 Done: fetched DEV dataset → `data/datasets/DEV.json` (65 records, matches brief). API URL moved to `.env` (gitignored, template in `.env.example`); how to re-fetch / fetch control set in `data/README.md`.
 Next: Lane B builds the proxy/cache endpoint on top of this; Lane C can start prompts against the local file now.
