@@ -7,7 +7,9 @@ import * as live from '/shared/live-store.js';
 const KEY = 'cqa-admin-dialog-filters-v2';
 const EMPTY = { q: '', lang: '', channel: '', band: '', crit: '', range: '', gross: '', sort: 'order' };
 const loadF = () => { try { return { ...EMPTY, ...JSON.parse(sessionStorage.getItem(KEY) || '{}') }; } catch { return { ...EMPTY }; } };
-const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify(f)); } catch {} };
+// The gross-error list is a mode reached by link (#/dialogs?gross=1), not a sticky filter: it lives in the URL only,
+// so opening «Диалоги» from the menu shows every dialog again.
+const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify({ ...f, gross: '' })); } catch {} };
 const SORTS = { order: 'По порядку', low: 'Сначала низкие', high: 'Сначала высокие' };
 
 const chanCell = (r) => `<span class="chan">${icon(r.channel === 'call' ? 'phone' : 'chat')}${CHAN[r.channel]}</span>`;
@@ -110,6 +112,9 @@ export function viewDialogs(view, _arg, query) {
   const tb = view.querySelector('.toolbar');
   tb.addEventListener('input', (e) => { if (e.target.id === 'f-q') { f.q = e.target.value; syncUrl(); draw(); } });
   tb.addEventListener('change', (e) => {
+    // the search box already filters on 'input'; its 'change' fires on blur, i.e. on the mousedown of the click the
+    // user is making on a result, and a redraw there swallows that click
+    if (e.target.id === 'f-q') return;
     if (e.target.id === 'f-band') f.band = e.target.value;
     if (e.target.id === 'f-sort') f.sort = e.target.value;
     syncUrl(); draw();

@@ -119,7 +119,7 @@ async function apiHealth() {
 async function aiEvaluate(convId, { force = false } = {}) {
   const cl = checklist();
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 45000);
+  const timeout = setTimeout(() => controller.abort(), 280000); // server allows 300 s (api/evaluate.js)
   let r;
   try { r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal }); }
   finally { clearTimeout(timeout); }

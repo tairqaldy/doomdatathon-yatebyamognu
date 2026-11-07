@@ -109,7 +109,7 @@ export function viewCard(view, convId, query) {
       </section>
 
       <div class="side">
-        ${finalScore.gross_error ? (() => { const g = crits.find((c) => c.type === 'flag' && finalAnswers[c.id] === 'yes'); const i = g ? evidenceIdx(E, g) : null; return `<div class="banner banner--bad">${icon('alert')}<div><b>Грубая ошибка: ${esc(g?.title || '')}</b><p>${esc(reasonOf(E, g))}</p>${i != null ? evChip(conv, i, answers[g.id]?.evidence?.find((e) => e.turn_index === i)?.quote) : ''}</div></div>`; })() : ''}
+        ${finalScore.gross_error ? (() => { const g = crits.find((c) => c.type === 'flag' && finalAnswers[c.id] === 'yes'); const i = g ? evidenceIdx(E, g) : null; return `<div class="banner banner--bad">${icon('alert')}<div><b>${esc(g && !/груб/i.test(g.title) ? `Грубая ошибка: ${g.title}` : 'Грубая ошибка')}</b><p>${esc(reasonOf(E, g))}</p>${i != null ? evChip(conv, i, answers[g.id]?.evidence?.find((e) => e.turn_index === i)?.quote) : ''}</div></div>`; })() : ''}
 
         <section class="card score-card" aria-labelledby="score-h">
           <header class="card__head"><h2 id="score-h">Итоговая оценка</h2><span class="l-chip ${E.src === 'ai' ? 'l-chip--ok' : ''}">${E.src === 'ai' ? 'AI' : 'Без AI'}</span></header>
@@ -135,7 +135,7 @@ export function viewCard(view, convId, query) {
             ${reviewer && open.length ? `<button class="btn btn--primary" type="button" data-review="${open[0].id}">Рассмотреть апелляцию</button>` : `<button class="btn btn--primary" type="button" id="appeal-main">Оспорить оценку</button>`}
             <button class="btn" type="button" id="reeval" ${single?.pending ? 'disabled aria-busy="true"' : ''} ${aiReady() ? '' : 'title="AI недоступен на сервере"'}>${icon('refresh')}Оценить заново</button>
           </div>
-          ${single?.pending ? `<div class="run run--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает диалог: ${esc(clLabel)}</b><span class="muted small">Запрос к /api/evaluate · <span class="num" id="run-t">0,0</span> с. Текущая оценка остаётся на экране.</span></div></div>`
+          ${single?.pending ? `<div class="run run--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает диалог: ${esc(clLabel)}</b><span class="muted small">Запрос к /api/evaluate · <span class="num" id="run-t">0,0</span> с (обычно 30–60 с, звонок до 2,5 мин: 3 независимые оценки и голосование). Текущая оценка остаётся на экране.</span></div></div>`
             : single?.error ? `<div class="run run--error" role="alert">${icon('alert')}<div><b>Не удалось оценить</b><span class="small">${esc(single.error)} Текущая оценка сохранена.</span></div></div>`
             : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ''}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>

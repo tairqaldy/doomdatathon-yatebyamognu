@@ -164,7 +164,8 @@ export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a 
 /* ---------- AI calls ---------- */
 export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.byId[convId]), save = true } = {}) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000);
+  // 3 votes run in parallel: chats ≈ 30–60 s, calls up to ≈ 2.5 min; the server allows 300 s (api/evaluate.js)
+  const timeout = setTimeout(() => controller.abort(), 280000);
   const t0 = performance.now();
   let r;
   try {
