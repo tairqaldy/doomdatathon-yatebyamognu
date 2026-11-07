@@ -1,6 +1,6 @@
-// AI-аналитик: the admin asks GPT about aggregated QA data (POST /api/insights). History lives in sessionStorage.
-import { $, esc, fmt, icon } from './ui.js';
-import { compute, statsForAI } from './data.js';
+// AI-аналитик: the admin asks about aggregated QA data (POST /api/insights). History lives in sessionStorage.
+import { $, esc, fmt, icon, setHead } from './ui.js';
+import { compute, statsForAI } from './store.js';
 import { api } from './auth.js';
 
 const KEY = 'cqa-admin-analyst';
@@ -16,38 +16,39 @@ const list = (a) => (Array.isArray(a) ? a.filter((x) => x != null && x !== '') :
 let busy = false;
 
 function answerHTML(item, i) {
-  if (item.pending) return `<article class="qa qa--pending" aria-busy="true"><p class="qa__q">${esc(item.q)}</p>
-    <div class="qa__a"><div class="g-label">Аналитик изучает данные</div><span class="shimmer" style="width:92%"></span><span class="shimmer" style="width:78%"></span><span class="shimmer" style="width:84%"></span><span class="shimmer" style="width:46%"></span></div></article>`;
-  if (item.error) return `<article class="qa"><p class="qa__q">${esc(item.q)}</p><div class="qa__a"><p class="err" role="alert">${esc(item.error)}</p><button class="g-btn g-btn--ghost btn-s" type="button" data-ask="${esc(item.q)}">Повторить</button></div></article>`;
+  if (item.pending) return `<article class="qa card" aria-busy="true"><p class="qa__q">${esc(item.q)}</p>
+    <div class="qa__a"><span class="kicker">Аналитик изучает данные</span><span class="skel" style="width:92%"></span><span class="skel" style="width:78%"></span><span class="skel" style="width:46%"></span></div></article>`;
+  if (item.error) return `<article class="qa card"><p class="qa__q">${esc(item.q)}</p><div class="qa__a"><p class="field__err" role="alert">${esc(item.error)}</p><button class="btn btn--s" type="button" data-ask="${esc(item.q)}">Повторить</button></div></article>`;
   const r = item.res || {};
   const actions = list(r.actions).filter((a) => typeof a === 'object');
-  return `<article class="qa" aria-labelledby="qa-q-${i}">
+  return `<article class="qa card" aria-labelledby="qa-q-${i}">
     <p class="qa__q" id="qa-q-${i}">${esc(item.q)}</p>
     <div class="qa__a">
       <p class="qa__answer">${esc(r.answer || 'Ответ пустой.')}</p>
-      ${list(r.findings).length ? `<section><h3 class="g-label">Наблюдения</h3><ol class="findings">${list(r.findings).map((f, k) => `<li><span class="mono">${String(k + 1).padStart(2, '0')}</span><span>${esc(f)}</span></li>`).join('')}</ol></section>` : ''}
-      ${actions.length ? `<section><h3 class="g-label">Что сделать</h3><div class="actions">${actions.map((a, k) => `<div class="action"><span class="g-label">Шаг ${k + 1}</span><h4>${esc(a.title)}</h4><p>${esc(a.detail)}</p>${a.impact ? `<p class="action__impact"><span class="g-label">Эффект</span>${esc(a.impact)}</p>` : ''}</div>`).join('')}</div></section>` : ''}
-      ${list(r.risks).length ? `<section><h3 class="g-label">Риски оценки</h3><ul class="risks">${list(r.risks).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></section>` : ''}
-      ${list(r.follow_up_questions).length ? `<section><h3 class="g-label">Спросить дальше</h3><div class="chips">${list(r.follow_up_questions).map((q) => `<button class="chip-btn" type="button" data-ask="${esc(q)}">${esc(q)}</button>`).join('')}</div></section>` : ''}
-      <p class="qa__meta mono">${esc(String(r.model || '').replace('openai:', ''))} · ${fmt((item.ms || r.latency_ms || 0) / 1000, 1)} с${r.cached ? ' · из кэша' : ''}${r.usage?.cost ? ` · $${Number(r.usage.cost).toFixed(4)}` : ''} · ${esc(new Date(item.at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }))}</p>
+      ${list(r.findings).length ? `<section><h3 class="kicker">Наблюдения</h3><ol class="findings">${list(r.findings).map((f) => `<li>${esc(f)}</li>`).join('')}</ol></section>` : ''}
+      ${actions.length ? `<section><h3 class="kicker">Что сделать</h3><div class="actions">${actions.map((a, k) => `<div class="action"><span class="action__n num">${k + 1}</span><div><b>${esc(a.title)}</b><p>${esc(a.detail)}</p>${a.impact ? `<p class="muted small">Эффект: ${esc(a.impact)}</p>` : ''}</div></div>`).join('')}</div></section>` : ''}
+      ${list(r.risks).length ? `<section><h3 class="kicker">Ограничения данных</h3><ul class="risks">${list(r.risks).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></section>` : ''}
+      ${list(r.follow_up_questions).length ? `<section><h3 class="kicker">Спросить дальше</h3><div class="chips">${list(r.follow_up_questions).map((q) => `<button class="chip-btn" type="button" data-ask="${esc(q)}">${esc(q)}</button>`).join('')}</div></section>` : ''}
+      <p class="qa__meta mono">${esc(String(r.model || '').replace('openai:', ''))} · ${fmt((item.ms || r.latency_ms || 0) / 1000, 1)} с${r.usage?.cost ? ` · $${Number(r.usage.cost).toFixed(4)}` : ''} · ${esc(new Date(item.at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }))}</p>
     </div></article>`;
 }
 
 export function viewAnalyst(view) {
+  setHead('AI-аналитик', 'Вопросы к сводным данным оценки. Тексты диалогов не передаются');
   const hist = load();
   view.innerHTML = `
     <div class="analyst">
-      <section class="analyst__intro">
-        <p class="lead">Спросите о качестве поддержки. Аналитик видит только агрегаты: средние баллы, потери по критериям, языки, каналы, частые причины снижения, живые сессии и апелляции. Тексты диалогов не передаются.</p>
+      <section class="card analyst__intro">
+        <p>Аналитик видит только сводные цифры: средние баллы, потери по критериям, языки, каналы, частые причины снижения, живые чаты и апелляции.</p>
         <div class="chips" aria-label="Примеры вопросов">${SUGGESTED.map((q) => `<button class="chip-btn" type="button" data-ask="${esc(q)}">${esc(q)}</button>`).join('')}</div>
       </section>
       <div class="thread" id="a-thread" aria-live="polite"></div>
-      <form class="ask" id="a-form">
+      <form class="ask card" id="a-form">
         <label class="sr-only" for="a-q">Вопрос аналитику</label>
         <textarea id="a-q" class="input" rows="2" maxlength="600" placeholder="Например: какие критерии стоит пересмотреть в чек-листе?"></textarea>
         <div class="ask__row">
-          <details class="ask__data"><summary class="g-label">Что видит аналитик</summary><pre id="a-stats"></pre></details>
-          <div class="ask__btns"><button class="g-btn g-btn--ghost btn-s" type="button" id="a-clear" ${hist.length ? '' : 'hidden'}>Очистить</button><button class="g-btn g-btn--primary btn-s" type="submit" id="a-send">Спросить ${icon('arrow')}</button></div>
+          <details class="ask__data"><summary>Какие данные получит аналитик</summary><pre id="a-stats"></pre></details>
+          <div class="btn-row"><button class="btn btn--s btn--ghost" type="button" id="a-clear" ${hist.length ? '' : 'hidden'}>Очистить</button><button class="btn btn--s btn--primary" type="submit" id="a-send">Спросить ${icon('arrow')}</button></div>
         </div>
       </form>
     </div>`;
@@ -77,7 +78,7 @@ export function viewAnalyst(view) {
     busy = false; save(hist);
     if (!view.isConnected) return;
     draw();
-    const last = $('#a-thread', view).lastElementChild; last?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('#a-thread', view).lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   view.addEventListener('click', (e) => {

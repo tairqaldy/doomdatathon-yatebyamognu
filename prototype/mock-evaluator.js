@@ -145,13 +145,10 @@ export function mockEvaluate(conv, checklist) {
         break;
       }
       default: {
-        // Custom criteria added in the editor: deterministic placeholder until the LLM is connected.
-        const h = hash(conv.conversation_id + c.id);
-        let answer = c.type === 'scale' ? c.scale[h % c.scale.length].value : h % 4 === 0 ? 'no' : 'yes';
-        if (c.na_allowed && h % 7 === 0) answer = 'na';
-        if (c.type === 'flag') answer = 'no';
-        r = { answer, explanation: `MOCK: ответ сгенерирован заглушкой. Подключите LLM-оценщик (Lane C), чтобы оценить «${c.title}».`,
-          evidence: firstOp != null && answer !== 'na' ? [ev(t, firstOp)] : [naEv(c.na_condition || 'условие N/A')] };
+        // Criteria added in the editor have no offline rules. We don't guess: the answer stays empty, the criterion is left
+        // out of the total (scoring.js treats null like "not evaluated"), and the card asks for an AI re-evaluation.
+        r = { answer: null, explanation: `Без AI новый критерий «${c.title}» не оценивается и в итог не входит. Нажмите «Оценить заново», чтобы его оценил AI с цитатой.`,
+          evidence: [], deduction_reason: '' };
       }
     }
     if (!('deduction_reason' in r)) {

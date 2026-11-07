@@ -11,6 +11,7 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
   try {
+    if (url.pathname === '/') url.pathname = '/landing-tair/index.html'; // mirrors the vercel.json rewrite
     if (url.pathname.startsWith('/api/')) {
       const name = url.pathname.slice(5).replace(/[^a-z0-9-]/gi, '');
       const mod = await import(path.resolve('api', `${name}.js`) + `?t=${Date.now()}`);

@@ -1,6 +1,7 @@
-// Live support sessions in Postgres (`cqa_kv` ns=live_session). Without DATABASE_URL the UI keeps localStorage.
+// Live support sessions on the server (Postgres `cqa_kv` or Upstash Redis, see lib/kv.js). Without either the UI keeps localStorage.
+// `postgres: true` means "a server store is on" (field kept for shared/live-store.js); `store` names the backend.
 import { send, preflight, body, fail } from '../lib/http.js';
-import { enabled, ensure, list, get, put, remove, NS } from '../lib/kv.js';
+import { enabled, ensure, list, get, put, remove, NS, backend } from '../lib/kv.js';
 
 export default async function handler(req, res) {
   if (preflight(req, res)) return;
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
         const s = await get(NS.session, id);
         return send(res, s ? 200 : 404, s ? { postgres: true, session: s } : { error: 'not found' });
       }
-      return send(res, 200, { postgres: true, sessions: await list(NS.session) });
+      return send(res, 200, { postgres: true, store: backend(), sessions: await list(NS.session) });
     }
 
     if (req.method === 'PUT' || req.method === 'POST') {
