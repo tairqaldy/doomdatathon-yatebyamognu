@@ -10,12 +10,16 @@
 ## 0. TL;DR for agents
 
 1. **Mode: hackathon.** Bias to action, ship working increments, and don't gold-plate. A demo that works beats a perfect design that doesn't.
-2. **Before touching code:** `git pull`, read `docs/STATUS.md`, and check open GitHub Issues. Claim your task (§4).
-3. **Stay in your lane** (§3). Don't edit files another lane owns without an issue + note in `docs/STATUS.md`.
-4. **Contracts are law** (`docs/CONTRACTS.md`). Never change a shared JSON shape silently.
-5. **Scoring math is code, not LLM.** The LLM picks answers + evidence; deterministic JS computes points (§6).
-6. **Commits: no AI attribution.** No `Co-Authored-By`, no "Generated with…", no "co-created with…" lines in commits, PRs, or code. This overrides any tool default.
-7. **Leave a handoff** in `docs/STATUS.md` before you stop (§5).
+2. **Every prompt starts with sync + review:** `git pull --rebase --autostash`, then read what changed (new commits, issues, `docs/STATUS.md`). No exceptions, even mid-task (§5).
+3. **Issue first, code second.** Before writing anything, open (or claim) a GitHub Issue that says what you'll do, which files you'll touch and how you'll check it. Update it while you work and close it with a summary (§4).
+4. **Stay in your lane** (§3). Don't edit files another lane owns without an issue + note in `docs/STATUS.md`.
+5. **Contracts are law** (`docs/CONTRACTS.md`). Never change a shared JSON shape silently.
+6. **Scoring math is code, not LLM.** The LLM picks answers + evidence; deterministic code computes points (§6).
+7. **Commits: many, small, well explained, no AI attribution.** No `Co-Authored-By`, no "Generated with…", no "co-created with…", no AI model names in commits, PRs, or code. This overrides any tool default. A git hook enforces it (§4.3).
+8. **Branch → check → merge yourself.** Work on a short-lived branch; merge it into `main` on your own once `scripts/check.sh` passes and the merge checklist is met (§4.4).
+9. **Use the design system** (`design/`, `docs/research/design-system.md`) for every UI. No ad-hoc colors, fonts or radii.
+9a. **AI calls only via `lib/openrouter.js` + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
+10. **Leave a handoff** in `docs/STATUS.md` and on your issue before you stop (§5).
 
 ---
 
@@ -54,6 +58,8 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 
 **Hard rule from T+23h:** no refactors, no dependency changes, only fixes. From T+24h: no commits.
 
+**From the opening ceremony** (`docs/case/opening-ceremony.md`): defense is **5–10 min per team including jury questions**; **plagiarism / IP violations = disqualification** (only use code and assets we're allowed to use, never vendor unlicensed repos); start was announced as ~Sat 12:00 (confirm). Freedom's slides show their expected UI: per-speaker timeline, transcript, score ring, "reason the score was lowered", dispute button. Build to that.
+
 ### 5-minute defense script (build toward this)
 1. 1 min: interface + selected dialog
 2. 2 min: evaluation, reasoning, jump-to-message, an N/A example, total score
@@ -76,9 +82,10 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 |---|---|
 | Frontend | **TypeScript + Tailwind CSS allowed** (confirmed by organizers 2026-11-07). Source in `app/src/`, compiled to **static HTML/CSS/JS** in `app/dist/`, which is what we demo and what goes into Dynamics 365. Light build only (`tsc` / Vite / Tailwind CLI); no heavy SPA framework unless logged in DECISIONS |
 | Design | Freedom design language (research in `docs/research/design-system.md`); tokens as Tailwind theme + CSS custom properties |
-| Backend | Thin service: API proxy (CORS) + LLM calls + storage. Runtime TBD by Backend lane → log in DECISIONS |
-| Storage | JSON files / SQLite / localStorage fallback. Keep it simple |
-| LLM | TBD by AI lane. Must handle RU/KZ/EN. Record model, temperature, cost/eval |
+| Backend | **Vercel serverless functions** in `api/` (plain Node ESM, zero deps), shared code in `lib/`. Same code runs locally via `npm run dev` |
+| Storage | Committed JSON (`data/`), AI cache files (`eval/cache/`), browser localStorage for appeals/checklist versions; optional Upstash Redis |
+| LLM | **OpenRouter** via `lib/openrouter.js` only. Eval default `anthropic/claude-haiku-5.5`; ASR `nvidia/nemotron-3.5-transcribe`. Model, prompt version, cost and latency logged in `eval/runs/` |
+| Hosting / CI/CD | **Vercel Git integration**: every push to any branch = preview URL, `main` = production. GitHub Actions runs `scripts/check.sh` |
 | Target host | Dynamics 365 web resource (later); standalone browser now |
 
 Secrets: `.env` only, never committed. Provide `.env.example`.
@@ -96,6 +103,8 @@ Four lanes, one per person. Fill in names at kickoff. Each person's agents work 
 | **C. AI / Evaluation** | _TBD_ | `eval/`, `app/src/scoring.ts` | Prompts, model selection, LLM→evidence pipeline, deterministic scoring engine, gold labels, accuracy metrics, cost/latency, voice/ASR experiments |
 | **D. Product / Research / Pitch** | _TBD_ | `docs/` (except CONTRACTS ownership is shared), `README.md`, `pitch/` | TL;DR, research, design system notes, test cases, README, presentation, demo video, bot→human handoff concept, judging the product |
 
+`design/` (tokens, components, motion, Tailwind preset) is co-owned by **A + D**: additive changes only, announce in the issue. `prototype/` is the clickable reference prototype (Lane A); the real app copies its patterns.
+
 Shared files (edit with care, announce in STATUS): `AGENTS.md`, `docs/CONTRACTS.md`, `docs/DECISIONS.md`, `docs/STATUS.md`, `.gitignore`, root config.
 
 ### Target repo layout
@@ -110,7 +119,13 @@ app/                 # Lane A: TS + Tailwind source
 server/              # Lane B
 data/                # Lane B: cached datasets, checklists/*.json, results/
 eval/                # Lane C: prompts/, gold/, runs/, metrics
+design/              # A+D: tokens.css, components.css, motion.css, tailwind.preset.js, theme.css
+prototype/           # A: clickable no-build prototype of the full CQA flow
+scripts/             # check.sh (pre-merge), setup-labels.sh
+.githooks/           # commit-msg hook (no AI attribution)
+.github/             # issue/PR templates, CI workflow
 docs/
+  TOOLING.md         # registry of every tool/skill/agent/model/approach we use (everyone)
   STATUS.md          # live handoff log (everyone)
   CONTRACTS.md       # shared data shapes (everyone, change via issue)
   DECISIONS.md       # decision log (everyone)
@@ -127,42 +142,100 @@ Create folders as needed; don't create empty scaffolding for its own sake.
 
 ## 4. Collaboration protocol (how agents talk to each other)
 
-Agents don't share memory. **The repo is the shared brain.** Communicate only through:
+Agents on different laptops don't share memory. **The repo + GitHub Issues are the shared brain.** If it isn't in an issue, a commit, or `docs/`, it didn't happen.
 
-1. **GitHub Issues**: the task board.
-   - One issue per task. Title: `[lane-X] short imperative`. Labels: `lane:a|b|c|d`, `P0|P1|P2`, `blocked`, `contract-change`, `bug`.
-   - **Claim** by assigning yourself / commenting `claimed by <person>/<agent>` before starting.
-   - Cross-lane request → open an issue in the other lane with label `needs:<lane>` and exact ask + acceptance criteria.
-   - If `gh` CLI isn't available, write the same thing as an entry in `docs/STATUS.md` under **Requests**; a human will mirror it.
-2. **`docs/STATUS.md`**: live log. Append-only per session (§5).
-3. **`docs/CONTRACTS.md`**: JSON shapes between lanes. To change: open `contract-change` issue, update the doc **in the same PR** as the code, note it in STATUS. Prefer additive changes (new optional fields) over breaking ones.
-4. **`docs/DECISIONS.md`**: one line per decision: date, decision, why, who. Don't relitigate a logged decision without new info.
-5. **GitHub Wiki**: optional, for long research. Anything that affects code goes in `docs/`, not wiki.
-6. **Code comments**: `// TODO(lane-b): …` for cross-lane notes in code. Keep rare.
+### 4.0 One-time setup per laptop
+```bash
+git clone https://github.com/tairqaldy/doomdatathon-yatebyamognu.git && cd doomdatathon-yatebyamognu
+git config core.hooksPath .githooks        # enables the no-AI-attribution commit hook
+gh auth login                               # GitHub CLI: needed for issues/PRs (brew install gh / winget install GitHub.cli)
+cp .env.example .env                        # then paste real values from the team chat
+```
+Set `git config user.name` / `user.email` to **your own** name. Commits are authored by humans.
 
-### Git rules
-- `main` must always run. **Never force-push. Never rewrite shared history.**
-- Branch: `<lane>/<short-desc>` e.g. `a/appeal-ui`, `c/scoring-engine`.
-- Small PRs, merge often (≤ ~2h of work per PR). Rebase/merge `main` before opening.
-- Merge: owner of the lane self-merges if it touches only their lane and runs; cross-lane or contract changes need one other human (or their agent) to review.
-- If the team agrees to commit straight to `main` under time pressure: pull first, commit small, push immediately, never leave `main` broken.
-- Commit message: `<lane>: <what changed>` e.g. `c: redistribute N/A weights in scoring`. **No AI attribution trailers** (see §0.6).
-- Never commit: secrets, `.env`, `node_modules/`, huge audio files, personal data beyond the provided dataset.
-- Don't delete or rewrite another lane's files. If something of theirs is broken and blocking you, make the minimal fix, note it in STATUS, ping in issue.
+### 4.1 Issue-first workflow (mandatory)
+**Before writing code or docs**, every agent:
+1. Searches open issues (`gh issue list`) for an existing one. If found, comments `claimed by <person>/<agent>`; otherwise creates one:
+   ```bash
+   gh issue create --title "[lane-x] <short imperative>" --label "lane:x,P1" --body-file <plan.md>
+   ```
+   Body = template in `.github/ISSUE_TEMPLATE/task.md`: **Goal · Plan (steps) · Files I'll touch · Contracts affected · How I'll verify · Branch name**.
+2. Works on the branch named in the issue.
+3. **Comments on the issue at each milestone** (what's done, what's next, blockers). Short, factual, with commit SHAs.
+4. Closes it via the merge (`Closes #N` in the merge/PR body) with a final comment: what changed, how to use it, known gaps.
+
+Cross-lane request → new issue labeled `needs:lane-y` with the exact ask + acceptance criteria. The other lane's agent must reply in the issue before starting.
+
+No `gh` available? Write the same plan as an entry under **Requests / Plans** in `docs/STATUS.md`, commit it first, and ask a human to mirror it to Issues. The rule still applies: plan is pushed **before** the work.
+
+Labels: `lane:a|b|c|d`, `P0|P1|P2`, `blocked`, `needs:lane-x`, `contract-change`, `bug`, `design`, `research`. Create them once with `scripts/setup-labels.sh`.
+
+### 4.2 Other shared channels
+- **`docs/TOOLING.md`**: **log everything you use**: every tool, CLI, library, MCP server, skill, sub-agent, AI model, prompt strategy, dev approach, research source and external doc. Add a row **before or in the same commit** as you start relying on it (name, what for, who, how to install/use, cost/limits, status). Also mention it in your issue. If a teammate's agent can't reproduce your setup from TOOLING.md, it's not logged well enough.
+- **`docs/STATUS.md`**: live handoff log. Append-only per session (§5).
+- **`docs/CONTRACTS.md`**: JSON shapes between lanes. To change: `contract-change` issue, update the doc **in the same commit** as the code, note in STATUS. Prefer additive changes.
+- **`docs/DECISIONS.md`**: one line per decision. Don't relitigate without new info.
+- **`docs/LESSONS.md`**: mistakes → rules. Read every session.
+- **GitHub Wiki**: optional for long research. Anything that affects code lives in `docs/`.
+- Code comments `// TODO(lane-b): …` only for small cross-lane notes.
+
+### 4.3 Commits: many, small, explained
+We want a **rich, readable history**: lots of small commits, each one meaningful. Commit every time one logical step works (a component, a fix, a doc section). Never batch a whole feature into one commit, and never make empty/junk commits.
+
+Format:
+```
+<type>(<lane>): <what changed, imperative, ≤72 chars>
+
+Why: <the reason / problem>
+What: <key changes, bullet list if several>
+How verified: <command run, screen checked, test name>
+Refs #<issue>
+```
+`type` ∈ `feat | fix | docs | design | refactor | test | data | chore | perf`. `lane` ∈ `a | b | c | d | team`.
+Example: `feat(c): redistribute N/A weights in scoring engine`.
+
+**Forbidden in commits, PRs, issues and code:** `Co-Authored-By:` lines, "Generated with/by …", "co-created with …", or naming an AI model/tool as an author. The commit author is the human whose laptop it is. `.githooks/commit-msg` rejects these; don't bypass it (`--no-verify` is banned).
+
+### 4.4 Branch strategy and self-merge
+- **`main`** = always runnable and demoable. Protected by habit: no direct commits except tiny docs/STATUS fixes. Never force-push `main`, never rewrite shared history.
+- **Work branches**: `<lane>/<issue#>-<slug>`, e.g. `a/12-appeal-ui`, `c/7-scoring-engine`. Short-lived (≤ ~2h). One issue per branch.
+- Keep your branch fresh: `git pull --rebase origin main` before every prompt and before merging. Rebase **your own unpushed** commits only. Once a branch is shared, merge `main` into it instead.
+- **Agents decide on their own when to merge**, but only after this checklist passes:
+  1. Branch rebased on the latest `origin/main`, no conflicts.
+  2. `scripts/check.sh` passes locally (JSON valid, no secrets, no AI attribution, build/tests if present).
+  3. The 5-minute demo flow (§1) still works for the parts you touched (open it and click through).
+  4. Contracts/docs updated in the same branch if shapes changed. Issue has a final comment.
+  5. Touched another lane's files or a contract? Then the owning lane must 👍 in the issue/PR first, or 30 min passed with no objection and it's announced in STATUS.
+- How to merge (keep the commit history, **no squash**):
+  ```bash
+  git switch main && git pull --rebase && git merge --no-ff <branch> -m "merge(<lane>): <summary> (Closes #N)" && scripts/check.sh && git push
+  ```
+  or open a PR (`gh pr create --fill`) and merge with **"Create a merge commit"** once CI is green. Delete the branch after.
+- If `main` breaks after your merge: fix forward within 15 min or `git revert -m 1 <merge-sha>`, and say so in STATUS + the issue.
+- From **T+23h**: only fixes merge. At **T+24h**: tag `stop-code` on `main`, no more commits.
+
+### 4.5 Don't break each other's code
+- Don't delete or rewrite another lane's files. If something of theirs blocks you, make the minimal fix on your branch, explain it in the issue, and ping the owner.
+- Shared components (`design/`, `app/src/scoring.ts`, `app/src/types.ts`) change additively. Add a variant instead of changing an existing one.
+- Never commit: secrets, `.env`, `node_modules/`, big audio files.
 
 ---
 
-## 5. Session start / end ritual (mandatory)
+## 5. Every-prompt ritual (mandatory, every agent, every laptop)
 
-**Start**
-1. `git pull` (or sync with base).
-2. Read `docs/STATUS.md` (latest entries), `docs/DECISIONS.md`, open issues for your lane.
-3. Read `docs/LESSONS.md`; don't repeat logged mistakes.
-4. Confirm current time vs T+23h / T+24h. Adjust ambition.
-
-**End** (or every ~2h on long runs), append to `docs/STATUS.md`:
+**At the start of EVERY prompt** (not just every session):
+```bash
+git pull --rebase --autostash            # on your work branch also: git pull --rebase origin main
+git log --oneline -15 --graph --all      # what landed since last time?
+gh issue list --limit 20                 # who is doing what? anything assigned/needs your lane?
 ```
-### <YYYY-MM-DD HH:MM> · lane-<x> · <person>/<agent>
+Then skim `docs/STATUS.md` (newest entries), `docs/DECISIONS.md`, `docs/LESSONS.md`. If someone else changed files you're about to touch, read their diff (`git log -p -3 -- <path>`) before editing. Confirm the current time vs T+23h / T+24h and adjust ambition.
+
+If the pull hits conflicts: resolve them keeping **both** sides' intent, re-run `scripts/check.sh`, and note it in your issue. Never resolve by deleting the other person's work.
+
+**At the end** (or every ~2h on long runs): push your commits, comment on your issue, and append to `docs/STATUS.md`:
+```
+### <YYYY-MM-DD HH:MM> · lane-<x> · <person>/<agent> · #<issue>
 Done: …
 In progress: …
 Next: …
@@ -217,6 +290,15 @@ The checklist is **data** (JSON), never hard-coded logic. The live "replace one 
 
 ---
 
+### 8.1 AI call rules (all lanes)
+- Call models **only** through `lib/openrouter.js` and **always** behind `lib/cache.js` (`cached(ns, keyParts, fn)`). The key must include model + prompt version + full input. A repeated request must never cost money twice.
+- Bump `PROMPT_VERSION` in `lib/evaluator.js` whenever the prompt or schema changes (invalidates the cache on purpose).
+- **Commit `eval/cache/`** after paid runs so teammates, CI and Vercel reuse answers. Never commit keys; keys live in `.env` / Vercel env.
+- Budget: the team's OpenRouter credit is small (~$9.5). Prefer cached runs, `--limit`, and cheap models; log every paid run's cost (`eval/runs/`).
+- Calls: organizer `audio_url` is an HTML page whose mp3 link expires after ~1h. Use `/api/audio?id=` or `lib/audio.js`, never the raw URL.
+
+---
+
 ## 9. Self-improvement and judging loop
 
 Every agent acts as a **judge** for the product, not just a coder:
@@ -225,6 +307,14 @@ Every agent acts as a **judge** for the product, not just a coder:
 - Lane D runs a judge pass every ~4h: score the product against the must-have list and the criteria (when published), and log gaps as issues.
 - Prefer fixing over adding. Prefer the jury's checklist over our ideas.
 - Judging criteria from the organizers will arrive later → put them in `docs/case/judging.md` and re-prioritize.
+
+---
+
+## 9.1 Deploys, previews and agent tools
+- **Push early, push often.** Vercel builds every pushed branch into its own preview URL and `main` into production. After pushing, open your preview, click through what you changed, and paste the URL into your issue.
+- `npm run dev` = exact local mirror of Vercel (static + `/api`). `npm test` = scoring rules. `scripts/check.sh` before every merge.
+- **graphify** (context map of the repo): run `graphify update .` after pulling big changes, then read `graphify-out/GRAPH_REPORT.md` before exploring unfamiliar code (`graphify explain "<symbol>"`). The output is gitignored, so each laptop builds its own. Install: `uv tool install --python 3.12 graphifyy && graphify install --platform claude` (or `codex`).
+- **unslop** (de-AI writing): use it on README, pitch and slide text before publishing (`/unslop cleanup`). Installed as a local skill only (`~/dev/unslop`, symlinked into `~/.claude/skills`); **do not copy it into this repo** (no LICENSE file, IP rule).
 
 ---
 
@@ -243,5 +333,8 @@ Context changes fast (new files, new criteria, organizer announcements). When it
 - Don't let the LLM compute totals.
 - Don't commit API keys or put them in frontend code.
 - Don't add AI attribution to commits/PRs.
+- Don't use a tool, model, skill or library without logging it in `docs/TOOLING.md`.
+- Don't write code before your plan is pushed to an issue (or STATUS fallback).
+- Don't invent UI styles; use `design/` tokens and components.
 - Don't start "nice-to-haves" while any must-have (1–6) is broken.
 - Don't make large refactors after T+20h.

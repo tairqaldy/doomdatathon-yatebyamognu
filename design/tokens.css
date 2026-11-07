@@ -1,0 +1,108 @@
+/* Freedom CQA design tokens. Spec: docs/research/design-system.md
+   Single source of truth for values. tailwind.preset.js and theme.css point at these variables.
+   Scoped to .cqa / #cqa-root so it never leaks into a Dynamics 365 host page. */
+
+.cqa, #cqa-root {
+  /* Brand */
+  --cqa-brand-primary: #00B323;
+  --cqa-brand-secondary: #13AD64;
+  --cqa-brand-additional: #00E183;
+  --cqa-brand-accent: #FFA700;
+  --cqa-brand-tertiary: #FF3A38;
+
+  /* Text */
+  --cqa-text-primary: #323335;
+  --cqa-text-tertiary: #6A788A;   /* AA on white */
+  --cqa-text-secondary: #B2BCC8;  /* placeholder / disabled only */
+  --cqa-text-neutral: #E7E7EA;
+  --cqa-text-inverse: #FFFFFF;
+  --cqa-link: #0066CC;
+
+  /* Surfaces & lines */
+  --cqa-bg-page: #FFFFFF;
+  --cqa-bg-white: #FFFFFF;
+  --cqa-bg-primary: #F3F8FF;
+  --cqa-bg-secondary: #DFF5EC;
+  --cqa-bg-warning: #FFF8D5;
+  --cqa-bg-hover: #EDF4FF;
+  --cqa-bg-dark: #1D1D1B;
+  --cqa-bg-cell: #424245;
+  --cqa-dark-primary: #0C1411;
+  --cqa-gray-primary: #C6DCFF;
+  --cqa-gray-secondary: #F5F5F5;
+  --cqa-divider: #F0F2F5;
+  --cqa-divider-strong: #E7E7EA;
+  --cqa-overlay: rgba(0, 0, 0, .4);
+  --cqa-icon-primary: #323335;
+  --cqa-icon-secondary: #B2BCC8;
+
+  /* States (+ text-safe "ink" variants, CQA addition) */
+  --cqa-success: #4FB446;   --cqa-success-ink: #00801F;  --cqa-success-bg: #E6F6E4;
+  --cqa-error:   #EE5555;   --cqa-error-ink:   #C93A3A;  --cqa-error-bg:   #FDECEC;
+  --cqa-notify:  #F9B000;   --cqa-notify-ink:  #8A6200;  --cqa-notify-bg:  #FFF8D5;
+  --cqa-na:      #B2BCC8;   --cqa-na-ink:      #6A788A;  --cqa-na-bg:      #F5F5F5;
+  --cqa-gross:   #FF3A38;   --cqa-gross-ink:   #C93A3A;  --cqa-gross-bg:   #FFE9E8;
+
+  /* Gradients */
+  --cqa-gradient-brand: linear-gradient(91deg, #7D8DEE -1.79%, #1CCC9E 25.51%, #1AE276 82.98%);
+  --cqa-gradient-brand-alt: linear-gradient(91deg, #99A6F9 -2%, #1CCC9E 26%, #1AE276 62%, #80FF61 90%);
+  --cqa-gradient-brand-light: linear-gradient(90deg, #00F26029, #04D4C829);
+  --cqa-gradient-overlay: linear-gradient(90.64deg, #7EAFE50D -11.43%, #1CCC9E0D 30.66%, #1AE2760D 72.75%, #4BD6290D 108.83%);
+  --cqa-glow-conic: conic-gradient(from 180deg, #00CF60, #3586EA 50.63deg, #23C5FF 187.5deg, #13DB4B 311.25deg, #00CF60 1turn);
+
+  /* Typography */
+  --cqa-font-sans: "CoFo Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --cqa-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --cqa-fs-display-1: 84px; --cqa-fs-display-2: 60px; --cqa-fs-h3: 36px; --cqa-fs-h4: 28px; --cqa-fs-sub: 24px;
+  --cqa-fs-title: 28px; --cqa-fs-h2: 20px; --cqa-fs-h3-app: 16px; --cqa-fs-body: 14px; --cqa-fs-small: 12px; --cqa-fs-score: 40px;
+  --cqa-lh-tight: 1.2; --cqa-lh-snug: 1.3; --cqa-lh-normal: 1.4; --cqa-lh-relaxed: 1.5;
+
+  /* Spacing (4px base, literal px like the site) */
+  --cqa-space-1: 4px; --cqa-space-2: 8px; --cqa-space-3: 12px; --cqa-space-4: 16px; --cqa-space-5: 20px;
+  --cqa-space-6: 24px; --cqa-space-7: 28px; --cqa-space-8: 32px; --cqa-space-10: 40px; --cqa-space-12: 48px; --cqa-space-16: 64px;
+
+  /* Radii */
+  --cqa-radius-4: 4px; --cqa-radius-8: 8px; --cqa-radius-12: 12px; --cqa-radius-16: 16px; --cqa-radius-20: 20px;
+  --cqa-radius-24: 24px; --cqa-radius-32: 32px; --cqa-radius-full: 9999px;
+
+  /* Elevation */
+  --cqa-shadow-sm: 0 1px 2px #0000000d;
+  --cqa-shadow-default: 0 5px 15px #00000014;
+  --cqa-shadow-elevated: 8px 12px 40px rgba(3, 9, 17, .2);
+  --cqa-shadow-glow: 8px 12px 40px rgba(45, 213, 119, .2);
+  --cqa-ring: 0 0 0 2px #fff, 0 0 0 4px var(--cqa-brand-primary);
+
+  /* Motion */
+  --cqa-dur-fast: 150ms; --cqa-dur-base: 200ms; --cqa-dur-medium: 300ms; --cqa-dur-slow: 500ms; --cqa-dur-score: 1000ms;
+  --cqa-ease-out: cubic-bezier(0, 0, .2, 1);
+  --cqa-ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --cqa-ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+
+  /* Layout */
+  --cqa-container: 1340px;
+  --cqa-gutter: 40px;
+  --cqa-sidebar: 248px;
+}
+
+/* Dark surfaces (footer/hero on the site). App is light by default. */
+.cqa[data-theme="dark"], #cqa-root[data-theme="dark"] {
+  --cqa-text-primary: #FFFFFF;
+  --cqa-text-tertiary: #B2BCC8;
+  --cqa-text-secondary: #6A788A;
+  --cqa-bg-page: #0C1411;
+  --cqa-bg-white: #1D1D1B;
+  --cqa-bg-primary: rgba(243, 248, 255, .05);
+  --cqa-bg-secondary: rgba(19, 173, 100, .2);
+  --cqa-bg-hover: rgba(255, 255, 255, .1);
+  --cqa-divider: #424245;
+  --cqa-divider-strong: #424245;
+  --cqa-icon-primary: #FFFFFF;
+  --cqa-success-ink: #00E183;
+  --cqa-error-ink: #FF8A8A;
+  --cqa-notify-ink: #FFC94D;
+  --cqa-na-ink: #B2BCC8;
+}
+
+@media (width <= 991px) {
+  .cqa, #cqa-root { --cqa-gutter: 16px; --cqa-fs-display-1: 48px; --cqa-fs-display-2: 32px; --cqa-fs-h3: 32px; --cqa-fs-h4: 24px; --cqa-fs-sub: 20px; }
+}

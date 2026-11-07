@@ -11,3 +11,9 @@ __pycache__/
 # large audio downloads
 data/audio/
 # app/dist/ is intentionally NOT ignored, see AGENTS.md §7
+
+# Vercel
+.vercel
+
+# graphify knowledge graph (rebuild locally: graphify update .)
+graphify-out/

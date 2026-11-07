@@ -1,0 +1,91 @@
+{
+  "conversation_id": "p1-en-014",
+  "language": "EN",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "reviewed",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": "lane-c/human-review",
+  "tags": [
+    "identification-violation",
+    "confidential-disclosure"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        10
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c02": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "The request was clear from the start; nothing needed clarifying."
+    },
+    "c03": {
+      "answer": "no",
+      "evidence": [
+        10,
+        11,
+        12
+      ],
+      "also_acceptable": [],
+      "note": "Disclosed the restriction unverified, then \"we can skip that\"."
+    },
+    "c04": {
+      "answer": 5,
+      "evidence": [
+        12
+      ],
+      "also_acceptable": [
+        10
+      ],
+      "note": ""
+    },
+    "c05": {
+      "answer": "no",
+      "evidence": [
+        11,
+        12
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c06": {
+      "answer": 4,
+      "evidence": [
+        13,
+        14
+      ],
+      "also_acceptable": [
+        0
+      ],
+      "note": "Client's question answered with \"Goodbye.\""
+    },
+    "c07": {
+      "answer": "no",
+      "evidence": [
+        13,
+        14
+      ],
+      "also_acceptable": [],
+      "note": "Ignored the client's question and left with a bare goodbye."
+    },
+    "c08": {
+      "answer": "yes",
+      "evidence": [
+        10
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "Account restriction disclosed to an unverified person."
+    }
+  }
+}

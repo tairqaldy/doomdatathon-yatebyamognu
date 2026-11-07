@@ -1,0 +1,31 @@
+/* Freedom CQA motion. Spec: docs/research/design-system.md §6 */
+
+@keyframes cqa-rise   { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes cqa-fade   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cqa-slide-in-right { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes cqa-flash  { 0% { background-color: rgba(0, 242, 96, .28); } 100% { background-color: transparent; } }
+@keyframes cqa-pulse  { 50% { opacity: .5; } }
+@keyframes cqa-spin   { to { transform: rotate(1turn); } }
+@keyframes cqa-pop    { 0% { transform: scale(.9); opacity: 0; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: none; } }
+
+.cqa .cqa-anim-rise  { animation: cqa-rise var(--cqa-dur-slow) var(--cqa-ease-out) both; }
+.cqa .cqa-anim-fade  { animation: cqa-fade var(--cqa-dur-medium) var(--cqa-ease-out) both; }
+.cqa .cqa-anim-pop   { animation: cqa-pop var(--cqa-dur-medium) var(--cqa-ease-out) both; }
+.cqa .cqa-stagger > * { animation: cqa-rise var(--cqa-dur-slow) var(--cqa-ease-out) both; }
+.cqa .cqa-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.cqa .cqa-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.cqa .cqa-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.cqa .cqa-stagger > *:nth-child(4) { animation-delay: 180ms; }
+.cqa .cqa-stagger > *:nth-child(5) { animation-delay: 240ms; }
+.cqa .cqa-stagger > *:nth-child(6) { animation-delay: 300ms; }
+.cqa .cqa-stagger > *:nth-child(7) { animation-delay: 360ms; }
+.cqa .cqa-stagger > *:nth-child(n+8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cqa *, .cqa *::before, .cqa *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
