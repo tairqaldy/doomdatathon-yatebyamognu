@@ -260,7 +260,10 @@ const rec = {
   clock() { return this.base + (this.since == null ? 0 : performance.now() - this.since); },
   add(b64, force = false) {
     if (this.since == null) return;
-    const t = this.clock(); if (!force && t - this.lastT < 30) return;
+    const t = this.clock(); const last = this.frames.at(-1);
+    // Cap at ~33 fps by overwriting, never by dropping: a still screen sends no more frames, so the newest image
+    // must survive (otherwise a half-faded caption could stay on screen for the whole hold).
+    if (!force && last && t - this.lastT < 30) { writeFileSync(path.join(this.dir, last.f), Buffer.from(b64, 'base64')); return; }
     const f = `${String(++this.n).padStart(6, '0')}.jpg`;
     writeFileSync(path.join(this.dir, f), Buffer.from(b64, 'base64'));
     this.frames.push({ t: Math.round(t), f }); this.lastT = t;
@@ -633,7 +636,8 @@ async function sceneEnd() {
   await sleep(300);
   await goto(`${BASE}/scripts/demo/end-card.html`);
   await js(() => window.__demo.hide(true));
-  await sleep(6500);
+  await sleep(150); await rec.grab();
+  await sleep(6400);
 }
 
 /* ── main ────────────────────────────────────────────────────────────────────────────────────────────── */
