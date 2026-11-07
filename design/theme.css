@@ -1,0 +1,72 @@
+/* Freedom CQA theme for Tailwind v4. Spec: docs/research/design-system.md
+   Usage:  @import "tailwindcss";  @import "../design/tokens.css";  @import "../design/theme.css";
+   Same names as tailwind.preset.js (v3). Values reference design/tokens.css variables. */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1280px;
+
+  --color-brand-primary: var(--cqa-brand-primary);
+  --color-brand-secondary: var(--cqa-brand-secondary);
+  --color-brand-additional: var(--cqa-brand-additional);
+  --color-brand-accent: var(--cqa-brand-accent);
+  --color-brand-tertiary: var(--cqa-brand-tertiary);
+  --color-text-primary: var(--cqa-text-primary);
+  --color-text-tertiary: var(--cqa-text-tertiary);
+  --color-text-secondary: var(--cqa-text-secondary);
+  --color-text-neutral: var(--cqa-text-neutral);
+  --color-bg-page: var(--cqa-bg-page);
+  --color-bg-primary: var(--cqa-bg-primary);
+  --color-bg-secondary: var(--cqa-bg-secondary);
+  --color-bg-warning: var(--cqa-bg-warning);
+  --color-bg-hover: var(--cqa-bg-hover);
+  --color-bg-dark: var(--cqa-bg-dark);
+  --color-bg-cell: var(--cqa-bg-cell);
+  --color-dark-primary: var(--cqa-dark-primary);
+  --color-divider-primary: var(--cqa-divider);
+  --color-divider-strong: var(--cqa-divider-strong);
+  --color-icon-primary: var(--cqa-icon-primary);
+  --color-icon-secondary: var(--cqa-icon-secondary);
+  --color-link-blue: var(--cqa-link);
+  --color-state-success: var(--cqa-success);
+  --color-state-error: var(--cqa-error);
+  --color-state-notify: var(--cqa-notify);
+  --color-ink-success: var(--cqa-success-ink);
+  --color-ink-error: var(--cqa-error-ink);
+  --color-ink-notify: var(--cqa-notify-ink);
+  --color-ink-na: var(--cqa-na-ink);
+  --color-tint-success: var(--cqa-success-bg);
+  --color-tint-error: var(--cqa-error-bg);
+  --color-tint-notify: var(--cqa-notify-bg);
+  --color-tint-na: var(--cqa-na-bg);
+  --color-tint-gross: var(--cqa-gross-bg);
+
+  --font-sans: var(--cqa-font-sans);
+  --font-mono: var(--cqa-font-mono);
+
+  --radius-8: 8px; --radius-12: 12px; --radius-16: 16px; --radius-20: 20px; --radius-24: 24px; --radius-32: 32px;
+
+  --shadow-default: var(--cqa-shadow-default);
+  --shadow-elevated: var(--cqa-shadow-elevated);
+  --shadow-glow: var(--cqa-shadow-glow);
+
+  --ease-out: cubic-bezier(0, 0, .2, 1);
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+
+  --animate-rise: cqa-rise 500ms cubic-bezier(0, 0, .2, 1) both;
+  --animate-flash: cqa-flash 1200ms cubic-bezier(0, 0, .2, 1);
+}
+
+/* Site breakpoint names (max-width ones need custom variants in v4) */
+@custom-variant mb (@media (width <= 500px));
+@custom-variant tb (@media (501px <= width <= 991px));
+@custom-variant sm (@media (width <= 991px));
+@custom-variant md (@media (992px <= width <= 1200px));
+
+@utility bg-gradient-brand { background-image: var(--cqa-gradient-brand); }
+@utility bg-gradient-brand-alt { background-image: var(--cqa-gradient-brand-alt); }
+@utility bg-gradient-brand-light { background-image: var(--cqa-gradient-brand-light); }
+@utility bg-gradient-overlay { background-image: var(--cqa-gradient-overlay); }

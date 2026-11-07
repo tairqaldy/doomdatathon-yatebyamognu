@@ -1,0 +1,42 @@
+/* Prototype-only layout glue. Reusable styles belong in design/components.css. */
+.cqa .cqa-brand-block { display: flex; align-items: center; gap: 10px; padding: 4px 8px 20px; }
+.cqa .logo-mark { width: 36px; height: 36px; border-radius: 12px; background: var(--cqa-gradient-brand); box-shadow: var(--cqa-shadow-glow); flex: none; }
+.cqa .cqa-sidebar__foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding: 12px 8px 0; }
+
+.cqa .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+.cqa .kpi__value { font-size: 32px; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 8px; }
+.cqa .bars { display: flex; flex-direction: column; gap: 10px; }
+.cqa .bar { display: grid; grid-template-columns: 220px 1fr 56px; align-items: center; gap: 12px; font-size: 13px; }
+.cqa .bar .cqa-progress > span.is-bad { background: var(--cqa-error); }
+.cqa .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 16px 0; }
+.cqa .filters .cqa-input { max-width: 260px; }
+.cqa .filters .cqa-select { width: auto; min-width: 140px; }
+
+.cqa .card-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.cqa .pane { background: var(--cqa-bg-white); border: 1px solid var(--cqa-divider); border-radius: var(--cqa-radius-20); overflow: hidden; }
+.cqa .pane__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--cqa-divider); }
+.cqa .pane .cqa-transcript { max-height: calc(100vh - 230px); background: linear-gradient(180deg, var(--cqa-bg-white), var(--cqa-bg-primary)); }
+.cqa .result-panel { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 16px; }
+.cqa .result-head { display: flex; gap: 20px; align-items: center; }
+.cqa .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+.cqa .section-chip { padding: 10px 12px; border-radius: var(--cqa-radius-12); background: var(--cqa-bg-primary); font-size: 12px; }
+.cqa .section-chip b { display: block; font-size: 16px; font-variant-numeric: tabular-nums; }
+.cqa .crit-list { display: flex; flex-direction: column; gap: 10px; }
+.cqa .delta { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+.cqa .delta.up { background: var(--cqa-success-bg); color: var(--cqa-success-ink); }
+.cqa .delta.down { background: var(--cqa-error-bg); color: var(--cqa-error-ink); }
+
+.cqa .editor-row { display: grid; grid-template-columns: 36px minmax(0, 2fr) 120px 90px 110px auto; gap: 10px; align-items: start; padding: 14px; border-radius: var(--cqa-radius-16); border: 1px solid var(--cqa-divider); background: var(--cqa-bg-white); }
+.cqa .editor-row.is-new { border-color: var(--cqa-brand-primary); box-shadow: var(--cqa-shadow-glow); }
+.cqa .editor-row .full { grid-column: 2 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cqa .order-btns { display: flex; flex-direction: column; gap: 4px; }
+.cqa .weight-total { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+.cqa .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.cqa .swatch { border-radius: var(--cqa-radius-16); overflow: hidden; border: 1px solid var(--cqa-divider); font-size: 12px; }
+.cqa .swatch > div:first-child { height: 64px; }
+.cqa .swatch > div:last-child { padding: 8px 10px; }
+.cqa .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+
+@media (width <= 1200px) { .cqa .card-layout { grid-template-columns: 1fr; } .cqa .result-panel { position: static; } .cqa .kpis { grid-template-columns: repeat(2, 1fr); } }
+@media (width <= 991px) { .cqa .bar { grid-template-columns: 1fr 1fr 48px; } .cqa .editor-row { grid-template-columns: 1fr; } .cqa .editor-row .full { grid-column: 1; grid-template-columns: 1fr; } }
