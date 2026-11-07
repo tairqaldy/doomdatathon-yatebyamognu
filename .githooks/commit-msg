@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Rejects AI attribution in commit messages (AGENTS.md §4.3).
+# Enable once per clone: git config core.hooksPath .githooks
+msg_file="$1"
+pattern='^[[:space:]]*co-authored-by:|(generated|co-created|created|written) (with|by|using) \[?(claude|codex|chatgpt|gpt|openai|anthropic|copilot|cursor|gemini)|🤖|noreply@anthropic\.com|noreply@openai\.com'
+if grep -Eiq "$pattern" "$msg_file"; then
+  echo "✖ commit rejected: AI attribution found in the message (AGENTS.md §4.3)." >&2
+  grep -Ein "$pattern" "$msg_file" >&2
+  echo "  Remove those lines and commit again. The human on this laptop is the author." >&2
+  exit 1
+fi
+first=$(head -n1 "$msg_file")
+case "$first" in Merge*|merge*|Revert*) exit 0;; esac
+if ! printf '%s' "$first" | grep -Eq '^(feat|fix|docs|design|refactor|test|data|chore|perf)\((a|b|c|d|team)\): .+'; then
+  echo "⚠ commit subject should look like: feat(a): add appeal drawer   (AGENTS.md §4.3)" >&2
+  echo "  got: $first" >&2
+  # warning only, not blocking
+fi
+exit 0
