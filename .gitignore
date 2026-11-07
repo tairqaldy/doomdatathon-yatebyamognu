@@ -21,6 +21,9 @@ graphify-out/
 # Our own ASR transcripts of real calls can contain names the organizers masked → never commit text
 data/transcripts/
 eval/cache/asr/
+# Spoken AIM replies (OpenAI TTS audio) can repeat what a client said → never commit. Fixed UI phrases (greetings)
+# live in eval/cache/tts-ui/ and are committed so a deploy plays them at once.
+eval/cache/tts/
 
 # Live client chats with the /broker agent (may contain what visitors typed) → never commit
 eval/cache/nav/

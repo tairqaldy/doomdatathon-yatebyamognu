@@ -15,7 +15,9 @@ const RX = {
   complaint: /(не работает|ужас|плохо|долго|недовол|жалоб|проблем|нашар|ұзақ|not working|terrible|annoy|complain|frustrat|slow)/i,
   bye: /(до свидания|хорошего (дня|вечера)|всего доброго|обращайтесь|чем[- ]?(то|нибудь)? ещё|сау болыңыз|күніңіз|тағы сұрақ|goodbye|bye|have a (nice|good)|anything else)/i,
   abrupt: /(клиент завершил|связь прервал|байланыс үзілді|client (left|disconnected)|connection lost)/i,
-  gross: /(переведите (мне|на мою)|на мою (личную )?карту|мой личный номер|напишите мне в (whatsapp|телеграм)|личн(ую|ая) консультаци|my personal (number|account)|send (it|money) to me|дурак|идиот|тупой|stupid|idiot)/i,
+  gross: /(переведите (мне|на мою)|на мою (личную )?карту|деньги мне на карту|скиньте (мне )?деньги|я (сам|лично) (их )?вложу|лично предлагаю|через компанию (оформлять )?не надо|мой личный номер|ваш личный номер|напишите мне в (whatsapp|телеграм)|личн(ую|ая) консультаци|жеке нөмір|ақылы түрде|personal number|my personal (number|account)|charge for private|private advice|send (it|money) to me|читать умеете|дурак|идиот|тупой|stupid|idiot)/i,
+  // account facts revealed by the operator (gross only if identity was not confirmed before that line)
+  disclose: /(на вашем сч[её]те есть|на вашем сч[её]те .{0,30}ограничени|ограничение на вывод|restriction on your account|your account (has|shows)|шотыңызда .{0,40}шектеу|шектеу қойылған)/i,
   wait: /(минут|подождите|ожидайте|уточню|секунд|күте тұрыңыз|минут|one moment|please wait|let me check)/i,
 };
 
@@ -135,19 +137,18 @@ export function mockEvaluate(conv, checklist) {
       }
       case 'c08': {
         const g = op.find((i) => RX.gross.test(t[i].text));
-        r = g != null
-          ? { answer: 'yes', explanation: 'Обнаружено грубое нарушение в реплике оператора.', evidence: [ev(t, g)] }
-          : { answer: 'no', explanation: 'Оскорблений, предложений услуг в обход компании и раскрытия конфиденциальных данных не обнаружено.', evidence: [] };
+        const firstIdOk = [...sys, ...op].filter((i) => RX.idOk.test(t[i].text) || RX.idCheck.test(t[i].text)).sort((a, b) => a - b)[0];
+        const d = op.find((i) => RX.disclose.test(t[i].text) && (firstIdOk == null || i < firstIdOk));
+        if (g != null) r = { answer: 'yes', explanation: 'Обнаружено грубое нарушение в реплике оператора.', evidence: [ev(t, g)] };
+        else if (d != null) r = { answer: 'yes', explanation: 'Оператор раскрыл данные о счёте до подтверждения личности клиента.', evidence: [ev(t, d)] };
+        else r = { answer: 'no', explanation: 'Оскорблений, предложений услуг в обход компании и раскрытия конфиденциальных данных не обнаружено.', evidence: [] };
         break;
       }
       default: {
-        // Custom criteria added in the editor: deterministic placeholder until the LLM is connected.
-        const h = hash(conv.conversation_id + c.id);
-        let answer = c.type === 'scale' ? c.scale[h % c.scale.length].value : h % 4 === 0 ? 'no' : 'yes';
-        if (c.na_allowed && h % 7 === 0) answer = 'na';
-        if (c.type === 'flag') answer = 'no';
-        r = { answer, explanation: `MOCK: ответ сгенерирован заглушкой. Подключите LLM-оценщик (Lane C), чтобы оценить «${c.title}».`,
-          evidence: firstOp != null && answer !== 'na' ? [ev(t, firstOp)] : [naEv(c.na_condition || 'условие N/A')] };
+        // Criteria added in the editor have no offline rules. We don't guess: the answer stays empty, the criterion is left
+        // out of the total (scoring.js treats null like "not evaluated"), and the card asks for an AI re-evaluation.
+        r = { answer: null, explanation: `Без AI новый критерий «${c.title}» не оценивается и в итог не входит. Нажмите «Оценить заново», чтобы его оценил AI с цитатой.`,
+          evidence: [], deduction_reason: '' };
       }
     }
     if (!('deduction_reason' in r)) {

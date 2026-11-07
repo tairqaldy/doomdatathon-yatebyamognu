@@ -1,0 +1,169 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор қазақша амандасып, өзін Әсел деп таныстырды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Есеп өткен жылға керек екені бастапқыдан белгілі болды; оператор сол кезеңді таңдау жөнінде жауап берді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Жауап беру үшін деректер басынан жеткілікті болды: «Өткен жылға брокер есебі керек» [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Оператор жалпы есепті жүктеу жолын көрсетті; идентификацияны қажет ететін әрекет болған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Сұрау шотқа қатысты қорғалған әрекет емес, есепті жүктеу навигациясы болды [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор нақты қадамдарды түсіндірді, ал клиент есепті жүктегенін растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Дайын болды. Рақмет!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта дөрекілік немесе клиенттің мәселесіне немқұрайлы қарау байқалмайды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог түсінікті өтті, клиент нұсқауды орындап, нәтижесін растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Дайын болды. Рақмет!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор қоштасты, бірақ қорытынды жасамады және қосымша көмек ұсынбады.",
+   "deduction_reason": "Қоштасу бар, алайда қорытынды не келесі қадам және әрі қарай көмек ұсыну жоқ.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      11,
+      11
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубая ошибка байқалмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиентке өткен жылға брокер есебі қажет болды.",
+  "operator_actions": "Оператор есеп бөлімін ашып, өткен жылдың басы мен соңын таңдап, жүктеуді нұсқады.",
+  "outcome": "Клиент есепті дайындағанын растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Өткен жылға брокер есебін алу.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Есептің күндерін қалай қоюды білу және операторға қосылу.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 27208,
+ "usage": {
+  "prompt_tokens": 4973,
+  "completion_tokens": 2858,
+  "cost": 0.001926
+ }
+}

@@ -19,7 +19,7 @@
         10
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (10) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "yes",
@@ -37,7 +37,7 @@
         12
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Identity verification is requested before account checks; source system turn 12 confirms verification."
     },
     "c04": {
       "answer": 20,
@@ -48,7 +48,7 @@
         27
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Transfer escalated with currency and timing (15,20); report navigation and dates answered (25,27)."
     },
     "c05": {
       "answer": "yes",
@@ -57,7 +57,7 @@
         22
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Acknowledges anxiety about the transfer (10) and reassures that details remain in the case (22)."
     },
     "c06": {
       "answer": 10,
@@ -67,7 +67,7 @@
         22
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Clear escalation, request for timing and explanation of case continuity (15,18,22)."
     },
     "c07": {
       "answer": "yes",
@@ -75,11 +75,21 @@
         29
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Turn 29 states the follow-up/summary and says goodbye."
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        10,
+        13,
+        15,
+        18,
+        20,
+        22,
+        25,
+        27,
+        29
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }

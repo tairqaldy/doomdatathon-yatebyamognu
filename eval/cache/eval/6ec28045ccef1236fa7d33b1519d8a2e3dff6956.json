@@ -1,0 +1,165 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Полина. Как называется скачанный документ?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Недостающую деталь о документе оператор уточнил до ответа и учёл, что клиент находится на второй странице.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Полина. Как называется скачанный документ?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Перейдите на первую и найдите блок «Информация о счёте». Название тарифа будет там."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для помощи с поиском тарифа в отчёте идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос — общая навигация по брокерскому отчёту; защищённого действия или раскрытия данных счёта нет."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал конкретную инструкцию, и клиент подтвердил, что нашёл нужную информацию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Перейдите на первую и найдите блок «Информация о счёте». Название тарифа будет там."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Да, вижу теперь."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался корректно, а повода отдельно реагировать на недовольство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Полина. Как называется скачанный документ?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Перейдите на первую и найдите блок «Информация о счёте». Название тарифа будет там."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор уточнил документ, затем дал понятную инструкцию; клиент смог продолжить и подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Перейдите на первую и найдите блок «Информация о счёте». Название тарифа будет там."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Да, вижу теперь."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание есть, однако одной вежливой формулы «Спасибо за обращение» недостаточно для выполнения условия завершения.",
+   "deduction_reason": "В заключительной реплике нет итога, следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Отлично. Спасибо за обращение, до свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти тариф в скачанном отчёте и проверить, тот ли документ открыл.",
+  "operator_actions": "Оператор уточнил название документа и указал, где смотреть тариф.",
+  "outcome": "Клиент нашёл нужную информацию и подтвердил это."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где в скачанном отчёте смотреть тариф.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором и проверить, тот ли документ открыт.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 23428,
+ "usage": {
+  "prompt_tokens": 4954,
+  "completion_tokens": 2511,
+  "cost": 0.001751
+ }
+}

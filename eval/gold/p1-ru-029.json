@@ -32,7 +32,12 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        9,
+        11,
+        13
+      ],
       "also_acceptable": [],
       "note": "General / navigation question: no account data disclosed, no protected action."
     },
@@ -64,7 +69,7 @@
         10,
         4
       ],
-      "note": ""
+      "note": "Initial insult and dismissal (9) precede clear login guidance (11); severity of the management failure remains disputed."
     },
     "c07": {
       "answer": "no",

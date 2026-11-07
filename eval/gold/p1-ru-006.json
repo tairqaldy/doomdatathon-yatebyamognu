@@ -18,7 +18,7 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (9) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "yes",
@@ -26,7 +26,7 @@
         12
       ],
       "also_acceptable": [],
-      "note": "Asked the transfer currency before passing the case on."
+      "note": "Asked the transfer currency in 12 after saying the case had already been forwarded, then added it in 14. The earlier note incorrectly claimed clarification preceded referral; whether this meets c02 requires human review."
     },
     "c03": {
       "answer": "yes",
@@ -62,7 +62,7 @@
         14
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Cited operator replies are understandable and ordered; no explicit operator hold requiring a warning is visible."
     },
     "c07": {
       "answer": "yes",
@@ -74,7 +74,11 @@
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        9,
+        12,
+        14
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }

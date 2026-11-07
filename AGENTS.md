@@ -17,9 +17,11 @@
 6. **Scoring math is code, not LLM.** The LLM picks answers + evidence; deterministic code computes points (§6).
 7. **Commits: many, small, well explained, no AI attribution.** No `Co-Authored-By`, no "Generated with…", no "co-created with…", no AI model names in commits, PRs, or code. This overrides any tool default. A git hook enforces it (§4.3).
 8. **Branch → check → merge yourself.** Work on a short-lived branch; merge it into `main` on your own once `scripts/check.sh` passes and the merge checklist is met (§4.4).
-9. **Use the design system** (`design/`, `docs/research/design-system.md`) for every UI. No ad-hoc colors, fonts or radii.
+9. **Use the design system.** v2 surfaces (landing, support, admin) use **`shared/theme-light.css`** (bright, Onest, Freedom logo greens) and the real logo in `shared/brand/`; `design/` + `docs/research/design-system.md` remain the token reference. No ad-hoc colors, fonts or radii.
 9a. **AI calls only via `lib/llm.js` (→ `lib/openai.js` for `openai:<id>`, else `lib/openrouter.js`) + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
 10. **Leave a handoff** in `docs/STATUS.md` and on your issue before you stop (§5).
+11. **Accuracy decides the top 50.** Organizers compare our **per-criterion answers** with experts on **10 unseen control chats** (`docs/case/telegram-qa.md`). Follow `docs/playbook/scoring-playbook.md`; never trade accuracy for features. Results go to `results/dev/results.json` + `results/prod/results.json` via `npm run results` = `eval/control-run.mjs` (§1.1).
+12. **Never stash or switch branches in a working tree other agents are writing to**; use `git worktree add ../<dir> <branch>` (LESSONS).
 
 ---
 
@@ -28,6 +30,22 @@
 **Conversation Quality Analytics (CQA)** prototype for Freedom Broker: automated QA of operator conversations (chat + voice calls) against a configurable checklist, with explanations, evidence links, appeals and reviewer decisions.
 
 Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw notes from the in-person briefing: `docs/case/briefing-notes.md`.
+
+### 1.1 How we are judged and what to submit (organizer Q&A, `docs/case/telegram-qa.md`)
+- **Top 50 = mainly per-criterion agreement with expert labels on 10 unseen control chats**, plus functionality, UX, a system that really evaluates new dialogs (no replayed results), architecture diversity. No public formula: don't game it, be sensible; **never invent facts when information is missing**.
+- **Submit** `results/dev/results.json` (DEV) and `results/prod/results.json` (control) in the official "Формат JSON 1.0" (`docs/case/results-format.md`, from `CQA_Student_Guide_Appendix_Results.pdf`). Control procedure at **Sun 11:00 → 12:00**, from an up-to-date `main` with keys in `.env`: `npm run results -- --group <CONTROL_ID> --push` (fetch → evaluate → retry → export → validate → commit + push; `--expect 10` is the default for a control group). Check any file with `node eval/validate-results.mjs results/prod/results.json --expect 10`.
+- **Rulings:** C2 complete request → N/A · C7 literal (summary or offer of help **and** goodbye) · C1 on calls without recorded greeting → N/A · identification needed for protected actions/personal data (omnichannel; being in the app ≠ verified) · data shown before identification: C3 "Нет" (C8 is our call) · half-up rounding to 2 decimals · replacing a criterion → re-evaluate everything · calls use the same logic adapted to speech.
+- **Live demo asks:** list all dialogs with gross errors + why; send a result to appeal; change the checklist (add, edit, change a weight) and re-evaluate; justify one dialog's score. No video required. Corporate look.
+
+### Product surfaces (production https://freedom-cqa.vercel.app)
+| Path | What | Owner |
+|---|---|---|
+| `/` (= `/landing-tair/`) | Bright landing → CTA to support | tair (A/D) |
+| `/support/` | Customer chat: AIM bot → honest handoff → CSAT → auto QA | tair (A) |
+| `/broker/` | Mock Freedom Broker client app + AIM navigation agent (consent-first, voice) | Nazar (C) |
+| `/admin/` | Light admin: overview, dialogs + analysis card, appeals, checklist editor, live chats, AI analyst (passcode) | tair (A) |
+| `/prototype/` | Original analyst workspace (kept in sync via localStorage `cqa-prototype-v2`) | Dameli (A) |
+| `/preview-hub/` | Team tool: every surface on phone/tablet/laptop, build + AI status | tair |
 
 ### Must-haves (graded, from the official guide)
 
@@ -98,10 +116,10 @@ Four lanes, one per person. Fill in names at kickoff. Each person's agents work 
 
 | Lane | Owner | Owns (paths) | Scope |
 |---|---|---|---|
-| **A. Frontend / UX** | _TBD_ | `app/` (except `app/src/scoring.ts`), `landing/` | Checklist editor, dialog list, card, transcript view, evidence jump, audio player, appeal + reviewer UI, Freedom styling, Dynamics-ready structure |
-| **B. Backend / Data** | _TBD_ | `server/`, `data/` | Organizers' API proxy (`group_id`), dataset cache, storage of checklists/results/appeals, endpoints in CONTRACTS |
-| **C. AI / Evaluation** | _TBD_ | `eval/`, `app/src/scoring.ts` | Prompts, model selection, LLM→evidence pipeline, deterministic scoring engine, gold labels, accuracy metrics, cost/latency, voice/ASR experiments |
-| **D. Product / Research / Pitch** | _TBD_ | `docs/` (except CONTRACTS ownership is shared), `README.md`, `pitch/` | TL;DR, research, design system notes, test cases, README, presentation, demo video, bot→human handoff concept, judging the product |
+| **A. Frontend / UX** | Dameli Kalikhanova (prototype UX), tair (landing/support/admin) | `app/` (except `app/src/scoring.ts`), `landing/` | Checklist editor, dialog list, card, transcript view, evidence jump, audio player, appeal + reviewer UI, Freedom styling, Dynamics-ready structure |
+| **B. Backend / Data** | Amina Aktayeva (omodotori: Postgres/KV, audits), tair | `server/`, `data/` | Organizers' API proxy (`group_id`), dataset cache, storage of checklists/results/appeals, endpoints in CONTRACTS |
+| **C. AI / Evaluation** | Nazar Akanov (Akanov-Kanta: evaluator, gold set, AIM agent) | `eval/`, `app/src/scoring.ts` | Prompts, model selection, LLM→evidence pipeline, deterministic scoring engine, gold labels, accuracy metrics, cost/latency, voice/ASR experiments |
+| **D. Product / Research / Pitch** | Tair Kaldybayev + all | `docs/` (except CONTRACTS ownership is shared), `README.md`, `pitch/` | TL;DR, research, design system notes, test cases, README, presentation, demo video, bot→human handoff concept, judging the product |
 
 `design/` (tokens, components, motion, Tailwind preset) is co-owned by **A + D**: additive changes only, announce in the issue. `prototype/` is the clickable reference prototype (Lane A); the real app copies its patterns.
 
@@ -292,7 +310,8 @@ The checklist is **data** (JSON), never hard-coded logic. The live "replace one 
 
 ### 8.1 AI call rules (all lanes)
 - Call chat models **only** through `lib/llm.js` (it routes `openai:<id>` to `lib/openai.js`, everything else to `lib/openrouter.js`; transcription uses `lib/openrouter.js` `transcribe()`) and **always** behind `lib/cache.js` (`cached(ns, keyParts, fn)`). The key must include model + prompt version + full input. A repeated request must never cost money twice.
-- Bump `PROMPT_VERSION` in `lib/evaluator.js` whenever the prompt or schema changes (invalidates the cache on purpose).
+- Bump `PROMPT_VERSION` in `lib/evaluator.js` whenever the prompt or schema changes. **Cache keys also include a fingerprint of the logic file** (`LOGIC` in `lib/cache.js`: eval → `lib/evaluator.js`, chat → `lib/support-bot.js`, insights → `lib/insights.js`, nav → `lib/nav-agent.js`), so any edit there regenerates answers automatically; unchanged logic + same input = free. New AI feature → add its file to `LOGIC`.
+- Shared cache/store: **one Upstash Redis** (Vercel → Storage → "Upstash for Redis", injects `KV_REST_API_*`) serves the AI cache **and** cross-device live chats (`lib/kv.js`); Postgres (`DATABASE_URL`) is optional and preferred for sessions if set; Cloudflare Workers KV is an alternative cache backend (`CF_*`). `/api/health` shows `shared_cache`, `sessions_store` and `logic` fingerprints.
 - **Commit `eval/cache/`** after paid runs so teammates, CI and Vercel reuse answers. Never commit keys; keys live in `.env` / Vercel env.
 - Budget: the team's OpenRouter credit is small (~$9.5). Prefer cached runs, `--limit`, and cheap models; log every paid run's cost (`eval/runs/`).
 - Calls: organizer `audio_url` is an HTML page whose mp3 link expires after ~1h. Use `/api/audio?id=` or `lib/audio.js`, never the raw URL.

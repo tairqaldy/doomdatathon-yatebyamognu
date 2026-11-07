@@ -19,7 +19,7 @@
         10
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (10) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "yes",
@@ -37,7 +37,7 @@
         12
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Identity verification is requested before account checks; source system turn 12 confirms verification."
     },
     "c04": {
       "answer": 20,
@@ -56,7 +56,7 @@
         10
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Acknowledges anxiety about missing money in the first operator reply (10)."
     },
     "c06": {
       "answer": 10,
@@ -68,7 +68,7 @@
       "also_acceptable": [
         7
       ],
-      "note": ""
+      "note": "Instructions and questions are understandable (16,21,23); possible repetition of timing already known from 0 remains borderline."
     },
     "c07": {
       "answer": "yes",
@@ -76,11 +76,19 @@
         25
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Turn 25 states the follow-up/summary and says goodbye."
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        10,
+        13,
+        16,
+        18,
+        21,
+        23,
+        25
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }

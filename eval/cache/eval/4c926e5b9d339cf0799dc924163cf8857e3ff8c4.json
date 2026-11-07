@@ -1,0 +1,165 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Первый ответ содержит приветствие и имя оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Для ответа хватало исходного запроса и контекста переписки с ботом; уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент искал вход, бот предложил торговую платформу."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался поиска входа на веб-платформу и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общая навигационная помощь, без данных по счёту или защищённых действий."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос решён конкретной инструкцией, результат клиент подтвердил.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Откройте tradernet.global, там вход в веб-версию."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Вошёл. Но со мной так говорить не надо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор использовал унизительную фразу и вместо реакции на возражение только попрощался.",
+   "deduction_reason": "Грубость и отсутствие реакции на жалобу клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    },
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Оператор не ответил на первоначальный вопрос, поэтому клиенту пришлось переспросить; затем нужная инструкция была дана.",
+   "deduction_reason": "Клиенту пришлось повторить вопрос из-за игнорирования первоначального запроса.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      10
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно для выполнения критерия завершения.",
+   "deduction_reason": "В заключительной реплике есть только прощание.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено оскорбление клиента.",
+   "deduction_reason": "Оскорбление клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход на торговую платформу и попросил соединить его с оператором.",
+  "operator_actions": "Оператор грубо ответил, затем указал адрес веб-версии.",
+  "outcome": "Клиент вошёл, но пожаловался на тон общения; оператор не отреагировал на жалобу."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": 9,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Помочь найти вход на сайт или торговую платформу.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   0,
+   4,
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 32170,
+ "usage": {
+  "prompt_tokens": 4936,
+  "completion_tokens": 3197,
+  "cost": 0.002092
+ }
+}

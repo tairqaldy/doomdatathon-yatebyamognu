@@ -6,10 +6,18 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 - **2026-11-07 · lane-c · N/A/cache compatibility · branch `audit/na-cache-compatibility`:** User requests replacing over-strict source-anchor gating with separate schema/evidence/transcription/publication checks, explicit valid/unsupported/invalid N/A, versioned legacy cache risk and all-65 replay. `gh` unavailable; local plan. Touch `eval/fairness/validation.mjs`, `evaluator-candidate.mjs`, regression tests/new compatibility runner and `eval/runs/transcript-compat-*`, handoff docs. Preserve strict historical outputs, dataset/gold/cache and production/UI. No paid inference, deploy, commit/push/PR/merge. Audio decisions and independent human labels remain pending rather than invented.
 - **2026-11-07 · lane-c · validation hardening · branch `audit/transcript-validation`:** User requested P0 false-introduction fixes, fail-closed missing-probe/schema/evidence validation, cache revalidation and expanded regression coverage. `gh` unavailable; local plan, no publishing authorized. Touch only `eval/transcript_guard.py`, `eval/fairness/*`, new `eval/runs/transcript-validation-*`, and handoff docs. Preserve historical reports, original dataset, gold, production evaluator/UI/scoring. Run adversarial tests and all-65 saved-result audit without inference; provide an unfilled audio review queue, not invented human labels. Inspect newer main voice-checklist work before recommending integration. No paid calls, commit, push, PR or merge.
 - **2026-11-07 · lane-c · transcript fairness · branch `audit/transcript-fairness`:** Diagnose ASR-related unfair deductions using local DEV/evaluation exports and read-only admin sessions. `gh` unavailable; local plan only, no commit/push/PR/merge authorized. Touch `eval/transcript_guard.py`, new `eval/fairness/`, `eval/runs/transcript-*`, `docs/TRANSCRIPT_FAIRNESS.md` and append-only team logs. Preserve datasets, gold, UI and running evaluator; provide a tested prompt/integration candidate separately. Run baseline, two offline guard iterations and a held-out synthetic check; distinguish guard tests from fresh LLM accuracy. No paid calls. Open #18 overlaps product/evaluator regeneration; do not edit its production files.
+- **2026-11-07 · lane-c/a · tair/claude · fast OpenAI voice for AIM · branch `c/openai-voice` (`gh` logged out on this laptop: someone with `gh` please mirror this to an issue):** Goal: Whisper speech-to-text and OpenAI text-to-speech for the AIM agent, cached so a repeated phrase is free and instant. Plan: `lib/openai.js` gets `transcribe()` (`/v1/audio/transcriptions`, `whisper-1`, env `CQA_OPENAI_ASR_MODEL`) and `speak()` (`/v1/audio/speech`, env `CQA_TTS_MODEL` / `CQA_TTS_VOICE`) with prices; `lib/llm.js` routes ASR/TTS to OpenAI when `OPENAI_API_KEY` is set, else Nemotron (ASR) / browser `speechSynthesis` (TTS); `api/agent-voice.js` uses the router; new `api/speak.js` behind `cached('tts', …)`; shared client `shared/voice.js` (sentence-by-sentence TTS fetched in parallel and played in order, text → blob-URL map, greeting prefetch, stop on mic); wire into `/broker` (minimal change in Nazar's `broker/agent.js`, toggle and consent-first kept) and `/support` (mic in composer, speaker toggle in header, light theme). Files: `lib/openai.js`, `lib/llm.js`, `api/agent-voice.js`, `api/speak.js`, `api/health.js`, `shared/voice.js`, `broker/agent.js`, `support/*`, `scripts/voice-bench.mjs`, `eval/runs/voice-*`, `.gitignore`, `.env.example`, README, TOOLING, DECISIONS, CONTRACTS (additive `/api/speak`). Not touching `lib/evaluator.js`, `admin/`, `prototype/`. Verify: `npm run dev`, mic in `/support` and `/broker`, repeat reply → `cached: true`, no `OPENAI_API_KEY` → fallback, latency bench p50/p95 cold vs cached, `scripts/check.sh`, `npm test`.
 - **2026-11-07 · lane-b · postgres store · branch `b/postgres-store` (no `gh` on this laptop):** Goal: connect optional Postgres so `/support` and `/admin` share live sessions across devices. Plan: zero-dep `lib/postgres.js` (Neon HTTP + TCP), `cqa_kv` JSON table, `GET/PUT/DELETE /api/sessions`, live-store hydrate/poll with localStorage fallback. Files: `lib/postgres.js`, `lib/kv.js`, `api/sessions.js`, `shared/live-store.js`, `.env.example`, CONTRACTS/DECISIONS/TOOLING/AGENTS. Contracts: additive `/api/sessions` + `health.postgres`. Verify: `node scripts/pg-ping.mjs`, `/api/sessions` without URL returns `{postgres:false}`, `/api/health` shows the flag. Needs a human: paste Neon/Vercel `DATABASE_URL` into `.env` and Vercel env.
+ - **2026-11-07 · final integration QA · audit/integration-readiness:** User requests local-only QA, minimal scoring patch artifact and docs/INTEGRATION_READINESS.md; no commit/push/PR/merge or paid inference. Base audit c760733, fetched main 2e90055; published audit ref matches local HEAD. Inspect PR #9 and scoring branch; add only eval/integration/*, eval/runs/integration-* and shared handoff/tooling entries. Test existing API handlers with cached results and blocked networking/provider doubles; compare scoring before/after an in-memory application of a proposed patch. Do not edit app/server/prototype/lib/api/data/gold. gh absent: public GitHub REST read succeeds, plan stays local per user restriction.
+ - **2026-11-07 · evaluator readiness · audit/evaluator-readiness (local only):** Goal: inspect actual LLM path and reproduce c08 failures without paid calls. Plan: add seven fixed c08 cases, offline regression tests for mock and LLM normalization/retry boundaries, fresh mock metrics and `eval/EVALUATOR_READINESS.md`. Files: new `eval/readiness/*`, `eval/runs/readiness-*`, report, append-only STATUS/TOOLING. Contracts: none. Verify: Node test runner, existing accuracy harness, protected-file hashes. Existing audit edits remain untouched. `git pull` fetched `origin/main` c30a86a but cannot rebase without upstream; explicit rebase would mix remote gold review metadata into the user's preserved local gold, so inspection uses remote diffs instead. Evaluator implementation matches origin/main. gh absent; no issue publication, commit, push or PR under user restrictions.
 - **tair/claude (no `gh` on this laptop yet):** plan for branch `d/design-system-and-team-rules` was: rules (issue-first, every-prompt pull-rebase, commits, branching, self-merge), TOOLING registry, enforcement (hook, check.sh, CI, templates), design system from fbroker.kz, clickable prototype. Done and merged, see the log entry below. **Someone with `gh`: please run `scripts/setup-labels.sh` and open issues for the lane tasks in "Next".**
 
 ## Log
+
+### 2026-11-07 · lane-c · local conflict resolution · branch audit/na-cache-compatibility
+Done: user requested conflict resolution against main. Prepared merge without commit; resolved both STATUS.md conflict blocks by retaining all entries from both sides. Other incoming files merged automatically; no manual production-code changes.
+Next: review staged merge and validation results; no commit or push performed. main branch unchanged.
+Contracts touched: no manual edits.
 
 ### 2026-11-07 · lane-c · N/A/cache compatibility · branch audit/na-cache-compatibility
 Done: policy transcript-validation-v3 separates schema/verdict/evidence/transcription/provenance/publication. Documented NA no longer requires a direct quote; unsupported NA needs review, prohibited NA stays invalid, bound applicability contradiction requests correction. Replayed all 65 saved results + 65 file-cache hits: 55 valid / 5 warning / 5 needs_review / 0 invalid, publishable 60/65 (v2 4/65). Same answers: no LLM accuracy claim. All 99 NA reasons passed documentation policy, not independent semantic verification.
@@ -34,6 +42,67 @@ Next: audio review p4-ru-002:2, p4-ru-005:16, p4-ru-004:14; voice-checklist N/A 
 Blocked by / Requests: no fresh paid calls authorized; browser-local admin sessions unavailable. Inspected newer main@3197760 in memory: rounding fixed, 11 checks + 19 gold totals passed; did not duplicate production edits.
 Contracts touched: none; optional sidecar candidate only. No commit/push/PR/merge.
 How to verify: python -m unittest discover -s eval/fairness -p test_guard.py; node --test eval/fairness/candidate.test.mjs; node eval/fairness/replay.mjs; node eval/fairness/verify-upstream.mjs.
+### 2026-11-07 21:00 · lane-c/a · tair/claude · fast OpenAI voice for AIM · branch c/openai-voice (no issue: `gh` logged out, plan under Requests / Plans)
+Done: AIM talks and listens with OpenAI. Mic (tap, or hold and release) → `/api/agent-voice` → **Whisper** (`whisper-1`, browser webm/mp4 sent as is); replies → `/api/speak` → **`gpt-4o-mini-tts` voice `sage`** with a calm-tone instruction. `shared/voice.js` splits a reply into chunks (short first sentence, then groups), fetches them in parallel and plays them in order; text → blob-URL map in the browser, `lib/cache.js` on the server (`tts` gitignored, greetings' first chunk committed in `tts-ui`). Starting to talk or sending stops AIM. No `OPENAI_API_KEY` → Nemotron for the mic (WAV) and the browser's `speechSynthesis` for replies. `/support` got a mic in the composer and a speaker toggle in the header (`support/voice-ui.js` + `voice.css`, no `support.js` changes); `/broker` and `/phone` swapped `speechSynthesis` for the shared module.
+**@Nazar (lane C, `broker/agent.js` is yours):** minimal change: `speak()` and the mic now go through `shared/voice.js` (`vox`), `toWav16k` moved there, toggle and consent-first flow untouched, greeting prefetched/spoken when the speaker is on, `agent.css` +1 line (hold-to-talk). Shout if you want it shaped differently.
+Measured (`eval/runs/voice-bench-*`, 12 synthetic RU/KZ/EN phrases): TTS cold p50 1374 / p95 1750 ms → cached 3 / 4 ms; Whisper cold p50 1197 / p95 2515 ms → cached 3 / 5 ms; first sentence of a 3-sentence reply ≈ 1.1–1.5 s vs 2.6–3.0 s for the whole reply. `gpt-4o-transcribe` was faster than Whisper at the same price (p50 844 / p95 1166 ms, CER 0.056 vs 0.064): set `CQA_OPENAI_ASR_MODEL=gpt-4o-transcribe` to switch. Cost ≈ $0.0005 per 5 s question + ≈ $0.0015 per 100-character reply, $0 when cached. Bench spend ≈ $0.15.
+Verified locally: /support (v2 light, desktop + 375 px, no overflow) toggle → greeting spoken; typed question → spoken reply; synthetic mic stream → webm → Whisper → «Как вывести деньги на карту.» → /api/chat → spoken reply with the toggle off; /broker same flow; repeat reply → 0 requests (client map) and `cached: true` (server); fresh process serves a greeting from `tts-ui` file in 2 ms; server without the key → GET /api/speak `tts: null`, POST 501, mic → WAV → Nemotron, reply → speechSynthesis. Real microphones were not available in the test browser (blocked): try a real mic on a phone.
+Preview: https://freedom-cqa-git-c-openai-voice-tairqaldy-projects.vercel.app (`/api/health` commit 8aa3a37). Preview env has **no AI keys**, so it shows the fallback (`/api/speak` → 501, browser voice); production has `OPENAI_API_KEY`, so the OpenAI voice runs on main. Production also has **no shared Redis** (`shared_cache: null`): server TTS cache = per-instance memory + committed `tts-ui` greetings; repeats inside one visit come from the browser map.
+Next: streaming TTS (play while the first chunk is still being generated) if first audio needs to drop under ~1 s; real-speaker KZ test; connect Upstash so spoken replies are shared across instances.
+Contracts touched: CONTRACTS §5 (additive): `/api/agent-voice` formats + `server_ms`, `GET/POST /api/speak`, `voice` in `/api/health`.
+How to verify: `npm run dev` → `/support/` (speaker toggle, mic) and `/broker/` (Спросить AIM → speaker, mic); `curl localhost:3000/api/speak`; `node scripts/voice-bench.mjs --http http://localhost:3000`.
+
+### 2026-11-07 20:11 · lane-c · claude · #25 · branch c/25-aim-fresh-chat
+Done: AIM (`broker/agent.js`, used by `/broker/` and `/phone/`) starts a clean chat on every fresh page load (reload, reopened URL or tab). On load only the `speak` preference is kept from sessionStorage; `messages`, `open`, `sid`, `pending` start empty and the stale entry is overwritten. Within one page life nothing changed: consent, handoff, voice, language switch. A handoff `sid` from before the reload is only dropped client-side; the live store is untouched.
+New optional host field `keepHistory: true` (in `window.AIM_HOST` or `broker/agent-host.js`) restores the old behaviour; documented in the agent-host.js comment block. Default false.
+Verified: headless browser on the dev server: `/phone/` open AIM → hello; seeded an old open chat + reload → panel closed, no old message; `/broker/` with `AIM_HOST.keepHistory` restores, default does not; `/broker/` console clean. No paid AI calls.
+Contracts touched: none (AIM host adapter: one optional field).
+How to verify: `npm run dev` → http://localhost:3000/phone/ → open AIM, write something, reload → chat is closed and empty.
+
+### 2026-11-07 21:00 · lane-a · claude · #21 · branch a/21-phone-demo
+Done: **`/phone/`**, AIM inside a copy of the official Freedom Broker iOS app (from `docs/research/freedom-app.md`). On a laptop it shows an iPhone frame, scaled to fit; ≤500 px wide the app fills the screen. All 6 tabs plus Пополнение, Вывод, Обмен, Отчеты и документы, Настройки (language RU/KZ/EN), the Поддержка sheet, the ticket form, Контакты and FAQ. Mock data only.
+AIM entry points: the first row of the Поддержка sheet («AIM · ответ сразу»), the chat icon on Котировки/Идеи, the round launcher above the tab bar, and FAQ items (they ask AIM). AIM is the unchanged `broker/agent.js`, mounted inside the phone through `window.AIM_HOST` and re-themed dark through scoped overrides in `phone/phone.css`.
+Small cross-lane changes (announced in #21): `broker/agent.js` gets an optional `host.compact()` (minimise while acting inside the frame; default unchanged); `lib/nav-agent.js` `sanitizeActions` also accepts an exact target **label** when the model returns «Сумма» instead of `dep-amount` (it was silently dropping prefills).
+Verified: desktop frame + 375 px mobile; real AIM run «пополнить через Kaspi 50 000» → opens Пополнение, fills Kaspi / KZT / 50 000, protected button left to the client; KZ switch; console clean; `npm test`, `scripts/check.sh`.
+Note: another session was working uncommitted on `c/23-call-tone` in the main checkout, so this branch was built in a separate worktree. Their uncommitted changes make one scoring test fail there (not on main).
+Contracts touched: none (AIM host adapter: one optional field).
+How to verify: `npm run dev` → http://localhost:3000/phone/ ; Меню → Поддержка → «AIM · ответ сразу».
+
+### 2026-11-07 20:55 · lane-c · claude · #22 · branch c/22-results-export
+Done: the graded deliverable. Appendix «Как сдать результаты» transcribed to `docs/case/results-format.md`. `eval/export-results.mjs` maps our c01–c08 to the official codes (contact, discovery, identification, consultation, empathy, dialogue, closure, critical), yes/no/na → true/false/null, **evidence turns +1 (format is 1-based)**, totals half-up via `prototype/scoring.js`, failed dialogs → `status: "error"` with the reason; N/A without cited turns points at the client's request or the system end event. `eval/validate-results.mjs` checks every rule and recomputes final_score from the values with the official weights (a corrupted copy: all 9 planted errors caught). `eval/control-run.mjs` = one command: fetch + save set → evaluate (concurrency 8, cached) → retry failures once → export → validate → `--push`. **`results/dev/results.json` committed: 65/65 ok, valid.**
+Rehearsal on DEV with a live fetch: identical data, export + validation in ~1 s (cached); fresh 10 chats ≈ 1 min.
+**CQA_API_URL:** real link now in this laptop's `.env` and verified (65 DEV dialogs). The URL may include or omit `&group_id=…` (it is replaced). If it's missing or a placeholder, the run falls back to our Vercel proxy `/api/dataset`.
+Control-set runbook (from an up-to-date `main`):
+```bash
+node eval/control-run.mjs --group <CONTROL_GROUP_ID> --out results/prod/results.json --expect 10 --push
+```
+Contracts touched: none (new output files only). Team name in the file: `YaTebyaMognu` (override with `--team` or `CQA_TEAM_NAME`); model: `OpenAI gpt-6-luna (OpenAI API)`, mode `external_api`.
+How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65`
+
+### 2026-11-07 20:40 · lane-d · claude · #20 · branch d/20-freedom-app-research
+Done: captured the live **Freedom Broker iOS app v32.23.17** through iPhone Mirroring (28 frames, all 6 tabs, read-only) and wrote `docs/research/freedom-app.md`: app shell, 6-tab nav, palette (mostly Tailwind defaults on navy `#171D2D`, accent blue-500), type scale, components, screen inventory, where AIM goes (chat icon + Меню → Поддержка), phone-demo plan. **The app is dark navy + blue, not the light green fbroker.kz look**, so the phone demo must use this file, not `design-system.md`.
+Raw frames stay out of git (real client name, account numbers, balances).
+Second capture added Поддержка: bottom sheet (Написать в поддержку · FAQ · Контакты · Оцените приложение) and the ticket form. **Support today is an async ticket form, with no instant answers**, so AIM goes at the top of that sheet and hands off to the ticket form pre-filled (bot → human).
+Next: lane-A phone-frame demo page with mock data (Expo Go wrapper optional). Not captured: instrument page, what the Котировки chat icon opens.
+Contracts touched: none.
+How to verify: read `docs/research/freedom-app.md`; method in its §0 and TOOLING §6.
+
+### 2026-11-07 20:20 · lane-c · claude · #19 · branch c/19-nav-direct
+Done: AIM now **acts right away when the client explicitly asks** («открой за меня», «перекинь меня на вывод», "take me to the tariffs page", «Тарифтерді ашып беріңізші»), even after an earlier «нет». Prompt `nav-v6` returns `direct`; the server also checks the last client message against an act-phrase pattern (`ACT_RE`) so it doesn't depend on the model alone. Widget: while a yes/no offer is open, act words count as yes and win over a leading «нет»; `direct` responses run without a question. Plain «нет» still declines; normal questions still get steps + the question.
+Verified locally: the reported chat (offer → «Нет» → «нет, открой за меня» → opened «Пополнение»), act words during an open offer, plain «нет», direct first message (RU), EN and KZ direct requests, normal question still asks.
+Planned (not done): Redis cache for frequent AIM questions via the shared `lib/cache.js` tier (#18); the `nav` key is the whole conversation + page context today, so first-turn questions need a narrower key to get hits.
+Contracts touched: CONTRACTS §5 `/api/agent` adds `direct` (additive).
+
+### 2026-11-07 19:55 · lane-c · claude · #17 · branch c/17-widget-isolation
+Done: the AIM widget is now **self-contained**, so it survives the switch to a Freedom-designed demo page. Own stylesheet `broker/agent.css` (scoped under `#aim-widget`, `all: initial` root + element reset, its own Freedom colour values, optional `--aim-*` theming), loaded by `agent.js` itself and hidden until loaded. Mounted on `<body>` outside `#cqa-root`, with its own toast. All page knowledge moved into `broker/agent-host.js` (or `window.AIM_HOST`); generic defaults (language from `<html lang>`, DOM scan of `<main>`, wrapped-label detection) work on any page. Widget rules removed from `broker/broker.css`; no other app changes.
+Verified: /broker flow (ask → steps → yes → fields filled + highlight) unchanged; hostile page CSS (global button/p/li/textarea/body/`.br button` rules) → 0 computed-style differences across 11 widget parts; bare test page without the broker app → widget in English, scan finds Amount / Pay [protected] / Help and skips the widget itself; 375 px: no overflow, no overlap.
+To embed on a new page: include `/broker/agent.js` (and `/shared/live-store.js` stays available for handoff); write an adapter only if you want typed screens/targets.
+Contracts touched: CONTRACTS §5 note on embedding (no shape change).
+
+### 2026-11-07 19:25 · lane-c · claude · #16 · branch c/16-widget-polish
+Done: AIM widget polish on /broker. The «Спросить AIM» launcher had dark text on a dark pill because `.br button { color: inherit }` out-ranked `.ag-fab`; the reset is now `:where(.br)` so component colours apply, and the launcher was restyled (white text, halo dot, 52 px). Overflow audit with a stress conversation at 1024 / 800 / 375 px: system lines with long words stuck out of the panel → wrapping and min-width fixes; floating panel kept down to 601 px (D365 iframe), bottom sheet only on phones (dvh, safe area, 16 px input); shorter placeholders; no idle scrollbar in the input; round controls stay round on keyboard focus.
+Contracts touched: none.
+How verify: https://freedom-cqa.vercel.app/broker/ at desktop, ~800 px and phone width; open «Спросить AIM».
 
 ### 2026-11-07 19:00 · lane-c · claude · #15 · branch c/15-nav-consent
 Done: the `/broker` navigation agent now **explains first and acts only with consent** (user request). AIM answers with a short intro, numbered steps (new `steps[]` field) and «Хотите, я открою нужный экран и заполню поля за вас?» with **Да, помогите / Нет, я сам(а)** buttons (RU/KZ/EN, in the language AIM answered in). Proposed actions wait in `st.pending` (survive reload) and run only after yes, by button or typed «да / давай / иә / yes»; then `done_reply` is shown. «Нет» leaves the page untouched. Any other message drops the offer and goes to AIM. Handoff turns return no actions and hand off immediately. Prompt `nav-v5`; `maxTokens` 700 → 1500 (longer replies were truncating the JSON); checkbox actions read «Снял галочку …» instead of `off`.
@@ -90,6 +159,11 @@ Next:
 - demo video for the landing placeholder (record the 5-min flow)
 Contracts touched: CONTRACTS §5 (additive: chat/insights/admin-login, LiveSession fields).
 How to verify: open /support/ and /admin/#/live in two windows of the same browser; hand off from the chat, accept and reply from admin, close, rate, then see the evaluation in admin.
+### 2026-11-07 · lane-c · audit publication · audit/evaluator-readiness
+Authorization: user explicitly requested push and pull; this supersedes the earlier local-only restrictions for publishing this branch. No main merge or PR requested.
+Done: committed gold audit and evaluator diagnostics separately, pulled/rebased onto origin/main 2e90055 without conflicts. Preserved the team's reviewed/reviewed_by metadata on all 19 gold files and retained audit evidence/notes; answers and alternatives match upstream. Reports now distinguish historical audit snapshots from the newer evaluator integrated by the team.
+Verification: 131 tracked JSON files parse via Node; gold validator reports zero structural errors and five existing rounding discrepancies. Mock suite 13/20 pass (seven known misses), contract suite 11/19 pass (eight known defects). Full check.sh still fails its Python-based JSON step because python3 is unavailable; results are not described as a green gate. No application/source-data edits relative to upstream, no paid calls.
+Next: push audit/evaluator-readiness and verify upstream tracking/clean working tree. Evaluator owners can consume the diagnostics; known red tests remain explicit.
 
 ### 2026-11-07 15:10 · lane-c/b/d · tair/claude · branch c/full-dev-eval-hub
 Done:
@@ -117,6 +191,13 @@ Remaining weak spots (prompt v2): c06 rated 10 on the disclosure dialogs where t
 Requests: **tair (Vercel access): add `OPENAI_API_KEY` to Vercel → freedom-cqa → Environment Variables** (until then prod uses the OpenRouter fallback, same model). Lane D: README model line = "OpenAI GPT-6 Luna, ≈$0.0011 per evaluation".
 Contracts touched: none. Shared files: AGENTS.md §0/§2/§8.1 (AI-call rule now names `lib/llm.js`), one additive line in `api/health.js` (lane-b).
 How to verify: `node eval/accuracy.ts eval/runs/2026-11-07T09-48-01-230Z-DEV-openai_gpt-6-luna.evaluations.json --reviewed-only` · `curl <preview>/api/health` shows `openai`
+### 2026-11-07 · lane-a · product/design · #8 · branch a/8-card-evaluation-ux
+Done: moved deduction reasons and evidence ahead of the full criteria list, prioritized the evaluation panel at narrow widths, and added single-evaluation progress, timeout and retry feedback.
+In progress: preview and a real model response have not been verified.
+Next: check the deployed preview and an actual evaluation before merging.
+Blocked by / Requests: Vercel team access is unavailable for deployment inspection.
+Contracts touched: none.
+How to verify: open a conversation, follow an evidence link and appeal; start evaluation and check waiting/error states.
 
 ### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
 Done: saved Gradient ASCII reference and pinned source locally, plus a proposed Freedom neon-green direction using existing tokens.
@@ -230,3 +311,57 @@ How to verify: read AGENTS.md.
 
 ---
 **Official start time T = _fill in_** → control data at T+23h = _fill in_ · STOP CODE at T+24h = _fill in_
+
+### 2026-11-07 · lane-c · independent gold audit · audit/gold-dataset-review
+Goal: independently check all 19 gold dialogs against DEV and the official checklist.
+Plan: read every transcript and label; correct definite errors; record ambiguities; add isolated validator and report; run existing scoring/accuracy checks.
+Files: eval/gold/*.json, eval/audit-gold.mjs, eval/GOLD_AUDIT_REPORT.md, docs/STATUS.md, docs/TOOLING.md.
+Contracts affected: none. Verification: JSON/shape/reference checks, independent total calculation, accuracy harness and npm test.
+Publication: local only per explicit user instruction; no commits, push, PR or main merge. gh unavailable; issue/PR state cannot be confirmed. Existing lane-c drafts (#3) are the requested audit scope. Human review requirement remains in force.
+
+### 2026-11-07 14:35 +05:00 · lane-c · independent gold audit · local branch audit/gold-dataset-review
+Done: all 19 source conversations and 152 gold labels audited; 32 empty evidence fields anchored, 50 empty notes filled, 2 misleading notes corrected. All answers/alternatives preserved; all files remain draft pending human review. Report: eval/GOLD_AUDIT_REPORT.md (per-file changes, all 54 alternatives, source indices, totals).
+In progress: none within authorized audit scope.
+Next: human QA resolves ambiguous labels; scoring owner fixes total rounding (5 discrepancies of 0.01, including 99.99 instead of 100 for p1-ru-025); evaluator owner investigates mock gross-error recall 0/7.
+Blocked by / Requests: gh absent, live Issues/PR unavailable; Python unavailable makes scripts/check.sh fail JSON step. No commits/push/PR/merge permitted by user, all changes remain local. Official T still unconfirmed in STATUS.
+Contracts touched: none. No app/prototype/backend/source-data changes.
+How to verify: node eval/audit-gold.mjs (0 structural errors, exit 2 for existing engine rounding); node eval/accuracy.ts eval/runs/gold-audit-self.json (compatibility only); npm test (7/7). Node parses all 26 tracked JSON; fresh mock metrics in eval/runs/gold-audit-mock.metrics.json. Full check.sh FAILED due to Python, not reported as passing.
+
+### 2026-11-07 · lane-c · evaluator readiness · audit/evaluator-readiness · local only
+Milestone: remote refs advanced during inspection. Frozen main snapshot 8feeb26 now includes #6's saved Haiku 5.5 eval-v1 run and 19 cache entries. Rescored the saved run without inference: strict 75.66%, lenient 92.11%, c08 recall 6/7 (85.71%), FP 0, total MAE 14.06. All 19 cache/export answers and evidence match; 182 message/range refs valid. Missing case is p1-kz-015: c03 recognizes unverified disclosure, c08 says no and cites only turn 13, omitting disclosure in 9. Local gold and all production/source inputs remain unchanged. origin/c/7-openai-direct b43b67d is active; not modified or executed. No prompt tuning or paid calls.
+
+### 2026-11-07 · lane-c · evaluator readiness handoff · audit/evaluator-readiness
+Done: eval/EVALUATOR_READINESS.md, seven fixed c08 cases, isolated c08 and LLM contract suites, offline runners and six readiness JSON artifacts. Mock c08 suite: 13/20 pass, 7 failures; saved LLM c08: 19/20 pass, p1-kz-015 fails; contract suite: 11/19 pass, 8 failures (empty evidence, quote diagnostics, N/A evidence, duplicates, invalid-evidence retry, invalid-JSON retry, partial success, retry-cost aggregation). Existing scoring tests: 7/7. All 19 saved LLM caches match exports; actual inference calls/cost in this task: 0/$0.
+In progress: none within diagnostic-only scope.
+Next: evaluator owner fixes validation/retry/cost, resolves the KZ c03/c08 inconsistency, then checks active provider-router branch. Treat the inspected gold as a development/regression benchmark after any tuning; freeze a separate holdout for independent accuracy. Do not substitute c08 lenient=100% for critical recall=6/7.
+Blocked by / Requests: live provider configuration, direct OpenAI branch behavior, fresh inference, UI/Vercel and unseen data are untested. New paid calls require user authorization. No commits/push/PR allowed. Local gold remains draft while remote metadata says reviewed; answers/alternatives match exactly, preserved without merging.
+Contracts touched: none. Gold, production code, source data and earlier audit artifacts unchanged in this task.
+How to verify: node eval/readiness/run-offline.mjs; node eval/readiness/review-saved-run.mjs 8feeb262cccacd0541ddb5fcec6379cd15fa33b9 eval/runs/2026-11-07T09-36-59-522Z-DEV-anthropic_claude-haiku-5.5.evaluations.json. Both exit 1 because regressions remain; detailed logs and summaries under eval/runs/readiness-*. Full scripts/check.sh not rerun (known missing Python from preceding audit); no green overall gate claimed.
+
+### 2026-11-07 20:10 +05:00 · team · tair/claude · #18 · v2 merged to main
+Done: `team/v2-bright-product` merged into main (`--no-ff`) and pushed → production https://freedom-cqa.vercel.app. Includes: bright landing at `/` (hub moved to `/preview-hub/`, now also links `/phone/`), light admin with the analyst workspace, light `/support/`, results exporter (`npm run results`), logic-fingerprinted cache with Upstash Redis / Cloudflare KV, Redis option for live sessions, evaluator accuracy guards (eval-v4), offline evaluator no longer guesses on new criteria, blind double-labeled check set `eval/blind/`.
+In progress: eval-v5.x (facts-first prompt, deterministic C7/C3→C8, self-consistency) is still being measured on tair's laptop and is NOT on main; production evaluates with eval-v4. On the blind set v5 matches the labelers' consensus on 94.6% vs v4 91.9%; C2/C4/C6 rule fixes are being tested on the held-out gold split before adoption. Voice (Whisper STT + OpenAI TTS for the AIM agent) is a separate branch in progress.
+Next for Nazar / Amina: pull main (`git pull --rebase`) before pushing your updates; branch from the new main and merge with `--no-ff` after `scripts/check.sh`. Don't edit `lib/evaluator.js` until eval-v5 lands (tell tair first), it would change every eval cache key.
+Blocked by / Requests: `gh` is logged out on tair's laptop (issue comments pending). CQA_Student_Guide_Appendix_Results.pdf still needed to finalise `results/format.json`.
+Contracts touched: none (results/format.json is provisional).
+How to verify: open `/`, `/support/`, `/admin/` (demo code on the login page), `/preview-hub/`, `/api/health` on production.
+
+### 2026-11-07 20:25 +05:00 · team · tair/claude · #18 #22 · one results pipeline
+Done: correction to the entry above. Nazar's official exporter (#22: `eval/control-run.mjs`, `eval/export-results.mjs`, `eval/validate-results.mjs`, format in `docs/case/results-format.md`) is THE pipeline. `npm run results` now runs it; my provisional `scripts/results.mjs` + `results/format.json` are removed so nobody exports the wrong shape at control time. AGENTS.md §1.1, README, TOOLING and research pages point to `npm run results -- --group <CONTROL_ID> --push`.
+How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65` → valid, 65 ok.
+
+### 2026-11-07 20:45 +05:00 · lane-c · tair/claude · #18 · eval-v5.1 on main
+Done: evaluator **eval-v5.1** is the default on main and production: facts-first prompt, per-criterion playbook procedures (`docs/playbook/scoring-playbook.md`), deterministic C7 closing + C3→C8 disclosure for unchanged built-ins, 3 samples with majority vote. `data/evaluations/DEV.json` and `results/dev/results.json` regenerated from it (65/65 valid, 47 of 520 answers changed vs v4). eval-v4 stays selectable (`--prompt eval-v4`).
+| | v4 | eval-v5.1 |
+|---|---|---|
+| held-out gold strict / lenient | 92.9·91.1 / 96.4·98.2 | 94.6 / 98.2 |
+| all 19 gold strict | 91.5·94.7 | 96.1 |
+| C6 strict (all gold) | 57.9·79.0 | 84.2 |
+| blind consensus (`eval/blind/`, 185 answers) | 170 | 179 |
+| gross errors | 7/7, 0 FP | 7/7, 0 FP |
+| cost / chat · p50 / p95 | $0.0012 · 15 / 26 s | $0.0070 · 32 / 62 s |
+eval-v5.2 (rules from the blind labels) was measured and rejected: blind +2 but held-out gold −2 strict (`docs/playbook/eval-v5.2-candidate.diff`).
+Judgment call on record: C7 literal closing («Пожалуйста. Хорошего дня!» = no); flip `closingAnswer()` in `lib/evaluator.js` if organizers say otherwise.
+Next: control run Sun 11:00 with `npm run results -- --group <CONTROL_ID> --push` (10 chats ≈ 3 min, ≈ $0.07). Any change to `lib/evaluator.js` invalidates every eval cache entry; re-measure with `node eval/accuracy.ts <run> --reviewed-only` and `python3 -I eval/blind/compare.py eval/blind/blind-24.json new=<run>` before merging.
+Contracts touched: additive evaluation fields (CONTRACTS §3 note).
+How to verify: `/api/health` → `prompt_version: eval-v5.1`; full report `eval/runs/2026-11-07T15-15-00Z-v5-report.md`.

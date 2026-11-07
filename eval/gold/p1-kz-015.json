@@ -18,11 +18,15 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (9) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        4,
+        6
+      ],
       "also_acceptable": [
         "no"
       ],
@@ -57,7 +61,7 @@
       "also_acceptable": [
         "yes"
       ],
-      "note": ""
+      "note": "Client raises lack of verification (10); operator says verification is unnecessary (11)."
     },
     "c06": {
       "answer": 4,

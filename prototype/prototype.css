@@ -155,3 +155,14 @@
   .cqa .timeline { --lab: 72px; } .cqa .track { grid-template-columns: 60px 1fr; } .cqa .player-row { padding-left: 0; flex-wrap: wrap; } .cqa .player-hint { display: none; }
   .cqa .tx-row { grid-template-columns: 44px 1fr; } .cqa .tx-row .tx-text { grid-column: 1 / -1; } .cqa .tx-row .tx-idx { display: none; }
 }
+
+
+/* Evaluation feedback and reading order */
+.cqa .panel--reasons { border-top: 3px solid var(--cqa-brand-primary); }
+.cqa .panel--criteria .crit-table { margin-top: 0 !important; border-top: 0; }
+.cqa .eval-feedback { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; padding: 12px; border-radius: var(--cqa-radius-12); font-size: 13px; line-height: 1.45; }
+.cqa .eval-feedback--pending { background: var(--cqa-bg-secondary); color: var(--cqa-text-primary); }
+.cqa .eval-feedback--error { background: var(--cqa-error-bg); color: var(--cqa-error-ink); }
+.cqa .eval-feedback .spinner { flex: none; margin-top: 2px; }
+@media (width <= 1100px) { .cqa .analysis .side { order: -1; } }
+@media (prefers-reduced-motion: reduce) { .cqa .eval-feedback .spinner { animation: none; } }

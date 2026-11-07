@@ -6,19 +6,46 @@
 // Consent first (#15): AIM explains the steps and asks; proposed actions wait in st.pending and run only after the
 // client presses «Да» or types yes / да / иә. «Нет» leaves the page untouched. No extra model call for the answer.
 // Handoff: copies the chat into a LiveSession (shared/live-store.js) → /admin/#/live operator console → QA on close.
-// Voice: push-to-talk → POST /api/agent-voice (Nemotron) → text; replies read aloud with the browser's speechSynthesis.
-import * as app from '/broker/app.js';
+// Voice (shared/voice.js): push-to-talk (tap or hold) → POST /api/agent-voice (OpenAI Whisper, Nemotron fallback) → text;
+// replies read aloud sentence by sentence via POST /api/speak (OpenAI TTS, cached), or speechSynthesis without a server voice.
 import * as store from '/shared/live-store.js';
+import { createVoice, toWav16k } from '/shared/voice.js';
+
+// Self-contained widget (#17): own stylesheet (broker/agent.css), mounted on <body> outside the page root, and every
+// page-specific call goes through one host adapter (broker/agent-host.js, or window.AIM_HOST if the page sets it).
+const DEFAULT_HOST = {
+  getLang: () => ({ kk: 'KZ', kz: 'KZ', en: 'EN' })[(document.documentElement.lang || 'ru').slice(0, 2).toLowerCase()] || 'RU',
+  onLang: () => {},
+  currentScreen: () => location.hash.replace(/^#\/?/, '') || location.pathname,
+  catalog: () => [],
+  go: async () => false,
+  findTarget: (id) => document.querySelector(`[data-target="${CSS.escape(id)}"]`),
+  contentRoot: () => document.querySelector('main') || document.body,
+  apiBase: '',
+  checklistUrl: '/data/checklists/freedom-chat-v1.json',
+};
+const app = { ...DEFAULT_HOST, ...(window.AIM_HOST || (await import('./agent-host.js').then((m) => m.default).catch(() => ({})))) };
+const api = (path) => `${app.apiBase || ''}${path}`;
+const vox = createVoice({ apiBase: app.apiBase, getLang: () => app.getLang() }); // `vox`: send() has a `voice` flag
+
+// The widget brings its own stylesheet; it stays invisible until the CSS is in, so it never flashes unstyled.
+const cssReady = new Promise((resolve) => {
+  const existing = document.querySelector('link[data-aim-css]');
+  if (existing) { if (existing.sheet) resolve(); else { existing.addEventListener('load', resolve); existing.addEventListener('error', resolve); } return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet'; css.href = new URL('./agent.css', import.meta.url).href; css.dataset.aimCss = '';
+  css.addEventListener('load', resolve); css.addEventListener('error', resolve);
+  document.head.append(css);
+});
 
 const KEY = 'cqa-broker-agent-v1';
-const CHECKLIST_URL = '/data/checklists/freedom-chat-v1.json';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
 const S = {
   RU: { open: 'Спросить AIM', title: 'AIM · ассистент', sub_bot: 'Подскажу и помогу в приложении', sub_wait: 'Ждём специалиста', sub_op: '{name} на связи', sub_closed: 'Разговор завершён',
     hello: 'Здравствуйте! Я AIM, ассистент Freedom. Скажите, что нужно сделать: я объясню, как это сделать, а если захотите, открою нужный экран и заполню поля за вас. Деньги и заявки подтверждаете только вы.',
     ask_help: 'Хотите, я открою нужный экран и заполню поля за вас?', consent_yes: 'Да, помогите', consent_no: 'Нет, я сам(а)', done_default: 'Готово, всё подготовил на экране. Проверьте данные и нажмите кнопку сами.', declined: 'Хорошо, тогда по шагам выше. Если понадобится помощь, напишите.',
-    placeholder: 'Например: хочу пополнить счёт на 50 000 ₸', send: 'Отправить', mic: 'Сказать голосом', mic_stop: 'Остановить запись', listening: 'Слушаю… нажмите ещё раз, чтобы закончить',
+    placeholder: 'Например: пополнить счёт', send: 'Отправить', mic: 'Сказать голосом', mic_stop: 'Остановить запись', listening: 'Слушаю… нажмите ещё раз, чтобы закончить',
     transcribing: 'Распознаю речь…', speak_on: 'Озвучивать ответы', speak_off: 'Не озвучивать', close: 'Свернуть', thinking: 'AIM думает…', human: 'Позвать специалиста',
     chips: ['Как пополнить счёт?', 'Где мой отчёт брокера?', 'Как найти облигации?', 'Как убрать маржу?'],
     a_open: 'Открыл «{x}»', a_hl: 'Подсветил «{x}»', a_fill: 'Заполнил «{x}»: {v}', a_on: 'Поставил галочку «{x}»', a_off: 'Снял галочку «{x}»', a_click: 'Нажал «{x}»', a_hl_el: 'Подсветил «{x}», нажмите сами',
@@ -28,7 +55,7 @@ const S = {
   KZ: { open: 'AIM-нен сұрау', title: 'AIM · көмекші', sub_bot: 'Қосымшада түсіндіріп, көмектесемін', sub_wait: 'Маманды күтеміз', sub_op: '{name} байланыста', sub_closed: 'Сөйлесу аяқталды',
     hello: 'Сәлеметсіз бе! Мен AIM, Freedom көмекшісімін. Не істеу керек екенін айтыңыз: қалай істеуді түсіндіремін, ал қаласаңыз, керекті экранды ашып, өрістерді өзім толтырамын. Ақша мен өтінімдерді тек сіз растайсыз.',
     ask_help: 'Керекті экранды ашып, өрістерді өзім толтырайын ба?', consent_yes: 'Иә, көмектесіңіз', consent_no: 'Жоқ, өзім', done_default: 'Дайын, экранда бәрін дайындадым. Деректерді тексеріп, батырманы өзіңіз басыңыз.', declined: 'Жарайды, онда жоғарыдағы қадамдар бойынша жасаңыз. Көмек керек болса, жазыңыз.',
-    placeholder: 'Мысалы: шотты 50 000 ₸-ге толықтырғым келеді', send: 'Жіберу', mic: 'Дауыспен айту', mic_stop: 'Жазуды тоқтату', listening: 'Тыңдап тұрмын… аяқтау үшін қайта басыңыз',
+    placeholder: 'Мысалы: шотты толықтыру', send: 'Жіберу', mic: 'Дауыспен айту', mic_stop: 'Жазуды тоқтату', listening: 'Тыңдап тұрмын… аяқтау үшін қайта басыңыз',
     transcribing: 'Сөзді танып жатырмын…', speak_on: 'Жауаптарды дыбыстау', speak_off: 'Дыбыстамау', close: 'Жию', thinking: 'AIM ойланып жатыр…', human: 'Маманды шақыру',
     chips: ['Шотты қалай толықтырамын?', 'Брокер есебі қайда?', 'Облигацияларды қалай табамын?', 'Маржаны қалай алып тастаймын?'],
     a_open: '«{x}» ашылды', a_hl: '«{x}» белгіленді', a_fill: '«{x}» толтырылды: {v}', a_on: '«{x}» белгісі қойылды', a_off: '«{x}» белгісі алынды', a_click: '«{x}» басылды', a_hl_el: '«{x}» белгіленді, өзіңіз басыңыз',
@@ -38,7 +65,7 @@ const S = {
   EN: { open: 'Ask AIM', title: 'AIM · assistant', sub_bot: 'I\'ll explain and help in the app', sub_wait: 'Waiting for a specialist', sub_op: '{name} is here', sub_closed: 'Conversation ended',
     hello: 'Hi! I\'m AIM, Freedom\'s assistant. Tell me what you need: I\'ll explain how to do it and, if you want, open the right screen and fill in the fields for you. Only you confirm money and orders.',
     ask_help: 'Want me to open the right screen and fill in the fields for you?', consent_yes: 'Yes, help me', consent_no: 'No, I\'ll do it', done_default: 'Done, it\'s all set up on screen. Check the details and press the button yourself.', declined: 'Okay, just follow the steps above. Write if you need help.',
-    placeholder: 'For example: I want to add 50,000 ₸ to my account', send: 'Send', mic: 'Speak', mic_stop: 'Stop recording', listening: 'Listening… tap again to finish',
+    placeholder: 'For example: add funds', send: 'Send', mic: 'Speak', mic_stop: 'Stop recording', listening: 'Listening… tap again to finish',
     transcribing: 'Transcribing…', speak_on: 'Read replies aloud', speak_off: 'Don\'t read aloud', close: 'Minimise', thinking: 'AIM is thinking…', human: 'Talk to a specialist',
     chips: ['How do I add funds?', 'Where is my broker report?', 'How do I find bonds?', 'How do I turn off margin?'],
     a_open: 'Opened "{x}"', a_hl: 'Highlighted "{x}"', a_fill: 'Filled "{x}": {v}', a_on: 'Ticked "{x}"', a_off: 'Unticked "{x}"', a_click: 'Clicked "{x}"', a_hl_el: 'Highlighted "{x}", press it yourself',
@@ -51,9 +78,15 @@ const tr = (k, vars = {}) => String(S[app.getLang()][k] ?? S.RU[k] ?? k).replace
 const trIn = (lang, k) => String((S[lang] || S[app.getLang()])[k] ?? S.RU[k] ?? k);
 
 // ---------- state ----------
+// Every fresh page load (reload, reopened URL or tab) starts a clean chat (#25): only the voice preference survives.
+// A handoff link from before the reload is just dropped here; the shared live session itself is left untouched.
+// A host that wants the old behaviour (chat restored after reload) sets keepHistory: true in its adapter.
 const load = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch { return null; } };
-let st = load() || { open: false, messages: [], sid: null, speak: false, pending: null };
+const fresh = (speak = false) => ({ open: false, messages: [], sid: null, speak: !!speak, pending: null });
+const saved = load();
+let st = (app.keepHistory && saved) || fresh(saved?.speak);
 const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+if (!(app.keepHistory && saved)) save(); // overwrite the old chat so nothing stale lingers in storage
 let busy = false; let voiceTurn = false;
 
 const maskPII = (s) => String(s).replace(/\b(\d{4})[ -]?\d{4}[ -]?\d{4}[ -]?(\d{1,7})\b/g, (m, a, b) => (m.replace(/\D/g, '').length >= 13 ? `${a} **** **** ${String(b).slice(-4)}` : m)).replace(/\b\d{12}\b/g, '************');
@@ -71,7 +104,9 @@ const ICON = {
   speak: '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M4 8v4h3l4 3V5L7 8H4Zm10-.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   close: '<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
 };
-const root = document.getElementById('cqa-root');
+const root = document.getElementById('aim-widget') || Object.assign(document.createElement('div'), { id: 'aim-widget' });
+root.setAttribute('lang', { RU: 'ru', KZ: 'kk', EN: 'en' }[app.getLang()] || 'ru');
+const toastEl = h('div', { class: 'ag-toast', role: 'status', hidden: true });
 const fab = h('button', { type: 'button', class: 'ag-fab', 'aria-expanded': 'false', 'aria-controls': 'ag-panel' }, h('span', { class: 'ag-fab-dot', 'aria-hidden': 'true' }), h('span', { class: 'ag-fab-text' }));
 const panel = h('section', { class: 'ag-panel', id: 'ag-panel', role: 'dialog', 'aria-labelledby': 'ag-title', hidden: true });
 const head = h('header', { class: 'ag-head' });
@@ -88,7 +123,12 @@ const micBtn = h('button', { type: 'button', class: 'ag-icon ag-mic', 'aria-pres
 const sendBtn = h('button', { type: 'submit', class: 'ag-icon ag-send' }); sendBtn.innerHTML = ICON.send;
 form.append(input, micBtn, sendBtn);
 panel.append(head, list, chipsEl, statusEl, form);
-root.append(fab, panel);
+root.append(fab, panel, toastEl);
+root.style.visibility = 'hidden';
+if (!root.isConnected) document.body.append(root);
+cssReady.then(() => { root.style.visibility = ''; list.scrollTop = list.scrollHeight; });
+let toastTimer = null;
+function toast(text) { toastEl.textContent = text; toastEl.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toastEl.hidden = true; }, 3600); }
 
 // ---------- rendering ----------
 const session = () => (st.sid ? store.get(st.sid) : null);
@@ -103,7 +143,7 @@ function renderChrome() {
   subEl.textContent = sub; subEl.dataset.state = s?.status || 'bot';
   speakBtn.setAttribute('aria-pressed', String(st.speak)); speakBtn.setAttribute('aria-label', st.speak ? tr('speak_off') : tr('speak_on')); speakBtn.title = speakBtn.getAttribute('aria-label');
   closeBtn.setAttribute('aria-label', tr('close')); closeBtn.title = tr('close');
-  micBtn.setAttribute('aria-label', recording ? tr('mic_stop') : tr('mic')); micBtn.title = micBtn.getAttribute('aria-label'); micBtn.setAttribute('aria-pressed', String(Boolean(recording)));
+  micBtn.setAttribute('aria-label', mic.recording() ? tr('mic_stop') : tr('mic')); micBtn.title = micBtn.getAttribute('aria-label'); micBtn.setAttribute('aria-pressed', String(mic.recording()));
   sendBtn.setAttribute('aria-label', tr('send'));
   input.placeholder = tr('placeholder'); input.setAttribute('aria-label', tr('placeholder'));
   const closed = s?.status === 'closed';
@@ -139,12 +179,14 @@ const VISIBLE = (el) => el.offsetParent !== null || el.getClientRects().length >
 function labelOf(el) {
   const aria = el.getAttribute('aria-label'); if (aria) return aria;
   if (el.id) { const l = document.querySelector(`label[for="${CSS.escape(el.id)}"] span`) || document.querySelector(`label[for="${CSS.escape(el.id)}"]`); if (l) return l.textContent.trim(); }
+  const wrap = el.closest('label'); // <label>Amount <input></label> on hosts without for= ids
+  if (wrap && wrap !== el) { const txt = [...wrap.childNodes].filter((n) => n !== el && !n.contains?.(el)).map((n) => n.textContent).join(' ').trim().replace(/\s+/g, ' '); if (txt) return txt.slice(0, 60); }
   return (el.textContent || el.getAttribute('placeholder') || el.getAttribute('title') || '').trim().replace(/\s+/g, ' ').slice(0, 60);
 }
 let autoN = 0;
 function scanDom() {
-  const main = document.getElementById('br-main');
-  return [...main.querySelectorAll('a[href], button, input, select, textarea')].filter(VISIBLE).slice(0, 60).map((el) => {
+  const main = app.contentRoot();
+  return [...main.querySelectorAll('a[href], button, input, select, textarea')].filter((el) => VISIBLE(el) && !el.closest('#aim-widget')).slice(0, 60).map((el) => {
     let id = el.dataset.target || el.dataset.agentAuto;
     if (!id) { id = `el-${++autoN}`; el.dataset.agentAuto = id; }
     const tag = el.tagName.toLowerCase();
@@ -152,12 +194,14 @@ function scanDom() {
     return { id, tag, type: el.type || tag, label: labelOf(el), ...(value ? { value: maskPII(String(value).slice(0, 40)) } : {}), ...(el.dataset.protected === 'true' || el.type === 'submit' ? { protected: true } : {}) };
   });
 }
-const pageContext = () => ({ screen: app.currentScreen(), catalog: app.catalog(), dom: scanDom(), text: maskPII(document.getElementById('br-main').innerText.slice(0, 1500)) });
+// Visible page text without the widget itself (the DOM-scan fallback may use the whole <body>).
+function pageText() { const r = app.contentRoot(); if (!r.contains(root)) return r.innerText || ''; const c = r.cloneNode(true); c.querySelector('#aim-widget')?.remove(); return c.textContent.replace(/\s+/g, ' '); }
+const pageContext = () => ({ screen: app.currentScreen(), catalog: app.catalog(), dom: scanDom(), text: maskPII(pageText().slice(0, 1500)) });
 
 // ---------- actions ----------
 function elFor(a) {
   if (a.target) return app.findTarget(a.target);
-  if (a.element_id) return document.querySelector(`#br-main [data-target="${CSS.escape(a.element_id)}"], #br-main [data-agent-auto="${CSS.escape(a.element_id)}"]`);
+  if (a.element_id) return app.contentRoot().querySelector(`[data-target="${CSS.escape(a.element_id)}"], [data-agent-auto="${CSS.escape(a.element_id)}"]`);
   return null;
 }
 function flash(el) {
@@ -184,7 +228,7 @@ function setValue(el, raw) {
   return true;
 }
 const titleOf = (screen) => app.catalog().find((s) => s.id === screen)?.title || screen;
-const targetLabel = (a) => app.catalog().flatMap((s) => s.targets).find((x) => x.id === a.target)?.label || labelOf(elFor(a) || document.body) || a.target || a.element_id;
+const targetLabel = (a) => app.catalog().flatMap((s) => s.targets || []).find((x) => x.id === a.target)?.label || labelOf(elFor(a) || document.body) || a.target || a.element_id;
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? 0 : ms));
 
 async function runActions(actions) {
@@ -208,11 +252,13 @@ async function runActions(actions) {
 // ---------- talking to AIM ----------
 async function send(text, { voice = false } = {}) {
   const clean = maskPII(text.trim()); if (!clean || busy) return;
-  voiceTurn = voice;
+  voiceTurn = voice; vox.stop(); vox.unlock(); // the client talks: AIM stops
   const s = session();
   if (s) { if (s.status !== 'closed') store.addMessage(st.sid, 'client', clean); return renderAll(); }
   if (st.pending) {
     // A typed answer to «Хотите, я помогу?» is handled locally; anything else drops the offer and goes to AIM.
+    // «нет, открой за меня» is a request to act, not a refusal: act words win over a leading «нет» (#19).
+    if (ACT.test(clean) && clean.length <= 80) return accept(clean);
     if (YES.test(clean) && clean.length <= 40) return accept(clean);
     if (NO.test(clean) && clean.length <= 40) return decline(clean);
     dropPending();
@@ -220,12 +266,19 @@ async function send(text, { voice = false } = {}) {
   st.messages.push({ speaker: 'client', text: clean, at: new Date().toISOString() }); save(); renderAll();
   busy = true; setStatus(tr('thinking')); sendBtn.disabled = true;
   try {
-    const res = await fetch('/api/agent', { method: 'POST', headers: { 'content-type': 'application/json' },
+    const res = await fetch(api('/api/agent'), { method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ messages: st.messages.map(({ speaker, text: tx }) => ({ speaker, text: tx })), page: pageContext(), language: app.getLang() }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     const msg = { speaker: 'bot', text: data.reply || '…', actions: [], at: new Date().toISOString() };
-    // Nothing runs yet: show how to do it yourself, ask, and keep the proposed actions until the client says yes (#15).
+    // The client explicitly asked AIM to do it («открой за меня»): run now, no question (#19).
+    if (data.direct && data.actions?.length && !data.handoff) {
+      msg.text = data.done_reply || data.reply || trIn(data.language, 'done_default');
+      st.messages.push(msg); save(); renderAll(); setStatus('');
+      await runFor(msg, data.actions, data.language);
+      return;
+    }
+    // Otherwise nothing runs yet: show how to do it yourself, ask, and keep the proposed actions until the client says yes (#15).
     if (data.actions?.length && !data.handoff) {
       const steps = (data.steps || []).map((x, i) => `${i + 1}. ${String(x).replace(/^\s*\d+[.)]\s*/, '')}`);
       msg.text = [data.reply, ...steps, trIn(data.language, 'ask_help')].filter(Boolean).join('\n');
@@ -242,6 +295,8 @@ async function send(text, { voice = false } = {}) {
 
 const YES = /^(да|ага|угу|давай|давайте|помоги|помогите|конечно|хочу|ок|окей|ok|okay|yes|yeah|yep|sure|please|иә|ия|йә|жарайды|көмектес)/i;
 const NO = /^(нет|не надо|не нужно|не хочу|сам|сама|no|nope|not now|жоқ|керек емес|өзім)/i;
+// Keep in sync with ACT_RE in lib/nav-agent.js (the server applies the same check).
+const ACT = /(откро[йи]|откройте|открыть за|перейд[иь]|перейдите|перекин|переведи меня|отведи|перенаправ|заполни|заполните|сделай за|сделайте за|сделай сам|за меня|сразу открой|давай сразу|open (it|the|that)|take me|bring me|go to the|do it for me|fill (it|them|in)|for me\b|ашып бер|ашыңыз|ашшы|өтіп бер|апарыңыз|апар|толтырып бер|толтырыңыз|мен үшін)/i;
 
 function dropPending() {
   const m = st.messages.find((x) => x.at === st.pending?.at); if (m) m.consent = 'skipped';
@@ -255,14 +310,16 @@ async function accept(said) {
   const msg = { speaker: 'bot', text: p.done_reply || trIn(p.language, 'done_default'), actions: [], at: new Date().toISOString() };
   st.messages.push(msg); save(); renderAll();
   busy = true;
-  try {
-    // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
-    const narrow = matchMedia('(max-width: 860px)').matches;
-    if (narrow) { st.open = false; save(); renderChrome(); }
-    msg.actions = await runActions(p.actions); save(); renderList();
-    if (narrow && msg.actions.length) app.toast(`AIM: ${msg.actions.join(' · ')}`);
-    if (st.speak || voiceTurn) speak(msg.text, p.language);
-  } finally { busy = false; }
+  try { await runFor(msg, p.actions, p.language); } finally { busy = false; }
+}
+async function runFor(msg, actions, language) {
+  // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
+  // A host whose app is phone-sized inside a wide page (the /phone demo frame) says so through host.compact().
+  const narrow = app.compact?.() ?? matchMedia('(max-width: 860px)').matches;
+  if (narrow) { st.open = false; save(); renderChrome(); }
+  msg.actions = await runActions(actions); save(); renderList();
+  if (narrow && msg.actions.length) toast(`AIM: ${msg.actions.join(' · ')}`);
+  if (st.speak || voiceTurn) speak(msg.text, language);
 }
 function decline(said) {
   const p = st.pending; if (!p) return;
@@ -296,8 +353,8 @@ async function evaluateIfClosed() {
   const s = session(); if (!s || s.status !== 'closed' || s.evaluation || s.evaluation_status === 'pending' || evaluating.has(s.id)) return;
   evaluating.add(s.id); store.update(s.id, { evaluation_status: 'pending' });
   try {
-    const checklist = await fetch(CHECKLIST_URL).then((r) => r.json());
-    const res = await fetch('/api/evaluate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ conversation: store.toConversation(store.get(s.id)), checklist }) });
+    const checklist = await fetch(app.checklistUrl).then((r) => r.json());
+    const res = await fetch(api('/api/evaluate'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ conversation: store.toConversation(store.get(s.id)), checklist }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     store.update(s.id, { evaluation: data, evaluation_status: 'done', evaluated_at: new Date().toISOString(), checklist_id: checklist.id, checklist_version: checklist.version });
@@ -308,76 +365,32 @@ async function evaluateIfClosed() {
 function restart() { st = { open: true, messages: [{ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }], sid: null, speak: st.speak, pending: null }; save(); renderAll(); input.focus(); }
 
 // ---------- voice ----------
-let recording = null; let chunks = []; let stopTimer = null;
-function pickMime() { for (const m of ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus']) if (window.MediaRecorder?.isTypeSupported?.(m)) return m; return ''; }
-async function toggleMic() {
-  if (recording) { recording.stop(); return; }
-  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) { setStatus(tr('mic_denied')); return; }
-  let stream;
-  try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { setStatus(tr('mic_denied')); return; }
-  const mime = pickMime(); chunks = [];
-  recording = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
-  recording.ondataavailable = (e) => e.data.size && chunks.push(e.data);
-  recording.onstop = async () => {
-    clearTimeout(stopTimer); stream.getTracks().forEach((t) => t.stop());
-    const type = recording.mimeType || mime || 'audio/webm'; recording = null; renderChrome();
-    const blob = new Blob(chunks, { type }); if (blob.size < 1200) { setStatus(''); return; }
-    setStatus(tr('transcribing'));
-    try {
-      // Browsers record webm/opus (Chrome) or mp4/aac (Safari); we always send 16 kHz mono WAV, which Nemotron accepts.
-      const wav = await toWav16k(blob).catch(() => null);
-      const sendBlob = wav || blob;
-      const b64 = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1]); fr.onerror = rej; fr.readAsDataURL(sendBlob); });
-      const format = wav ? 'wav' : type.includes('mp4') ? 'mp4' : type.includes('ogg') ? 'ogg' : 'webm';
-      const r = await fetch('/api/agent-voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ audio: b64, format, language: app.getLang() }) });
-      const data = await r.json().catch(() => ({}));
-      if (!r.ok || data.error || !data.text) throw new Error(data.error || 'empty');
-      setStatus(''); send(data.text, { voice: true });
-    } catch (e) { console.warn('[broker-agent voice]', e); setStatus(tr('voice_err')); }
-  };
-  recording.start(); setStatus(tr('listening')); renderChrome();
-  stopTimer = setTimeout(() => recording?.state === 'recording' && recording.stop(), 30_000);
-}
-/** Decode any recorded blob and re-encode it as 16 kHz mono 16-bit PCM WAV (≈ 32 KB per second). */
-async function toWav16k(blob) {
-  const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx || !window.OfflineAudioContext) throw new Error('no WebAudio');
-  const ctx = new Ctx(); const decoded = await ctx.decodeAudioData(await blob.arrayBuffer()); ctx.close?.();
-  const rate = 16000; const frames = Math.ceil(decoded.duration * rate);
-  const off = new OfflineAudioContext(1, frames, rate);
-  const src = off.createBufferSource(); src.buffer = decoded; src.connect(off.destination); src.start();
-  const pcm = (await off.startRendering()).getChannelData(0);
-  const buf = new ArrayBuffer(44 + pcm.length * 2); const v = new DataView(buf);
-  const str = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
-  str(0, 'RIFF'); v.setUint32(4, 36 + pcm.length * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
-  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, rate, true);
-  v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, pcm.length * 2, true);
-  for (let i = 0; i < pcm.length; i++) { const x = Math.max(-1, Math.min(1, pcm[i])); v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true); }
-  return new Blob([buf], { type: 'audio/wav' });
-}
-
-function speak(text, language) {
-  if (!('speechSynthesis' in window) || !text) return;
-  const tag = { RU: 'ru', KZ: 'kk', EN: 'en' }[language || app.getLang()];
-  const voice = speechSynthesis.getVoices().find((v) => v.lang?.toLowerCase().startsWith(tag));
-  if (!voice) return; // no voice for this language (often Kazakh): stay silent rather than read it with a wrong accent
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text.replace(/[«»"]/g, '')); u.voice = voice; u.lang = voice.lang; u.rate = 1.02;
-  speechSynthesis.speak(u);
-}
+// shared/voice.js: Whisper / OpenAI TTS through /api/agent-voice and /api/speak (cached), browser voice as fallback.
+const mic = vox.recorder({
+  lang: () => app.getLang(),
+  onState: (state) => { setStatus({ recording: tr('listening'), transcribing: tr('transcribing'), denied: tr('mic_denied'), error: tr('voice_err') }[state] || ''); renderChrome(); },
+  onText: (text) => send(text, { voice: true }),
+});
+const speak = (text, language, opts) => vox.speak(text, language || app.getLang(), opts);
+const helloAudio = () => st.speak && vox.prefetch(tr('hello'), app.getLang(), { ui: true }); // greeting plays at once
 
 // ---------- wiring ----------
-fab.addEventListener('click', () => { st.open = true; if (!st.messages.length && !st.sid) st.messages.push({ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }); save(); renderAll(); input.focus(); });
+fab.addEventListener('click', () => {
+  st.open = true; vox.unlock();
+  if (!st.messages.length && !st.sid) { st.messages.push({ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }); if (st.speak) speak(tr('hello'), app.getLang(), { ui: true }); }
+  save(); renderAll(); input.focus();
+});
 closeBtn.addEventListener('click', () => { st.open = false; save(); renderAll(); fab.focus(); });
-speakBtn.addEventListener('click', () => { st.speak = !st.speak; if (!st.speak) speechSynthesis?.cancel(); save(); renderChrome(); });
-micBtn.addEventListener('click', toggleMic);
+speakBtn.addEventListener('click', () => { st.speak = !st.speak; if (st.speak) { vox.unlock(); helloAudio(); } else vox.stop(); save(); renderChrome(); });
+mic.bind(micBtn);
 form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; autosize(); send(v); });
 input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
-const autosize = () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; };
+const autosize = () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; input.style.overflowY = input.scrollHeight > 120 ? 'auto' : 'hidden'; };
 input.addEventListener('input', autosize);
 panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBtn.click(); });
 store.subscribe(() => { if (st.sid) { renderAll(); evaluateIfClosed(); } });
-app.onLang(() => renderAll());
-renderAll(); evaluateIfClosed();
+app.onLang(() => { root.setAttribute('lang', { RU: 'ru', KZ: 'kk', EN: 'en' }[app.getLang()] || 'ru'); renderAll(); });
+renderAll(); evaluateIfClosed(); autosize(); helloAudio();
 
 // Exposed for debugging and tests only (not used by the page).
-window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline } });
+window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline, voice: vox } });

@@ -1,0 +1,173 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор начал с инструкции без приветствия и представления.",
+   "deduction_reason": "В первой реплике отсутствуют приветствие и представление.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Платформа была важна для инструкции, но оператор не уточнил её до ответа.",
+   "deduction_reason": "Оператор ответил без уточнения недостающей информации о платформе.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 3,
+     "quote": "Are you using the mobile app or the website?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался входа на сайт; защищённого действия или раскрытия данных счёта не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор дал общую инструкцию по входу."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос решён: клиент сообщил, что смог войти.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор не был груб или пренебрежителен и предложил решение проблемы клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось переспросить из-за неясной и неподходящей для его ситуации инструкции.",
+   "deduction_reason": "Клиенту пришлось уточнять, где именно выполнять предложенные действия.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Settings where? I'm on the company website and there's no login."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Заключительная реплика содержит только прощание.",
+   "deduction_reason": "Не было итога или предложения дальнейшей помощи вместе с прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "В репликах оператора грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог войти в аккаунт.",
+  "operator_actions": "Оператор сначала дал общую инструкцию, затем указал сайт tradernet.global.",
+  "outcome": "Клиент подтвердил, что инструкция сработала."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Не может войти в аккаунт.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Просит соединить с оператором.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточняет, где открыть настройки и где войти на сайте компании.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 24397,
+ "usage": {
+  "prompt_tokens": 4879,
+  "completion_tokens": 2443,
+  "cost": 0.001709
+ }
+}
