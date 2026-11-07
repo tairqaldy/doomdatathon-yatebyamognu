@@ -1,0 +1,140 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "В первом ответе оператор поздоровался и представился на английском языке.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил валюту и примерное время перевода, затем добавил полученные сведения в обращение.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Thanks. What currency did you send?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 20,
+     "quote": "I've added that timing to the case. The team will check the brokerage side."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Личность клиента была подтверждена до того, как оператор направил данные на проверку счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Customer identity verified."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор передал обращение на проверку, сообщил дальнейший порядок и полностью объяснил, как выбрать период и скачать брокерский отчёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+    },
+    {
+     "kind": "message",
+     "turn_index": 27,
+     "quote": "Yes, select the start and end dates for the period you need, then download the report."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо отреагировал на беспокойство клиента и помог с обоими вопросами.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы оператора ясные и последовательные; дальнейшие действия по переводу и отчёту объяснены понятно.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 20,
+     "quote": "I've added that timing to the case. The team will check the brokerage side."
+    },
+    {
+     "kind": "message",
+     "turn_index": 27,
+     "quote": "Yes, select the start and end dates for the period you need, then download the report."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор обозначил последующее обновление по переводу и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 29,
+     "quote": "You're welcome. We'll follow up here about the transfer. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложения платных услуг в обход компании или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел выяснить, почему перевод на брокерский счёт не отобразился, и узнать, где скачать брокерский отчёт.",
+  "operator_actions": "Оператор проверил личность, собрал валюту и примерное время перевода, передал информацию на проверку и подсказал, как скачать отчёт.",
+  "outcome": "Перевод направлен на проверку с обещанием сообщить об обновлении в чате; клиент успешно скачал отчёт."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 2286,
+  "completion_tokens": 1846,
+  "cost": 0.001152
+ },
+ "latency_ms": 13315,
+ "attempts": 1
+}

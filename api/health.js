@@ -7,6 +7,7 @@ export default function handler(req, res) {
   send(res, 200, {
     ok: true,
     openrouter: Boolean(process.env.OPENROUTER_API_KEY),
+    openai: Boolean(process.env.OPENAI_API_KEY), // direct OpenAI for eval models named openai:<id> (lib/llm.js)
     organizer_api: Boolean(process.env.CQA_API_URL),
     shared_cache: Boolean(process.env.UPSTASH_REDIS_REST_URL),
     models: MODELS, prompt_version: PROMPT_VERSION,
