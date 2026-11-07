@@ -7,11 +7,35 @@
 // client presses «Да» or types yes / да / иә. «Нет» leaves the page untouched. No extra model call for the answer.
 // Handoff: copies the chat into a LiveSession (shared/live-store.js) → /admin/#/live operator console → QA on close.
 // Voice: push-to-talk → POST /api/agent-voice (Nemotron) → text; replies read aloud with the browser's speechSynthesis.
-import * as app from '/broker/app.js';
 import * as store from '/shared/live-store.js';
 
+// Self-contained widget (#17): own stylesheet (broker/agent.css), mounted on <body> outside the page root, and every
+// page-specific call goes through one host adapter (broker/agent-host.js, or window.AIM_HOST if the page sets it).
+const DEFAULT_HOST = {
+  getLang: () => ({ kk: 'KZ', kz: 'KZ', en: 'EN' })[(document.documentElement.lang || 'ru').slice(0, 2).toLowerCase()] || 'RU',
+  onLang: () => {},
+  currentScreen: () => location.hash.replace(/^#\/?/, '') || location.pathname,
+  catalog: () => [],
+  go: async () => false,
+  findTarget: (id) => document.querySelector(`[data-target="${CSS.escape(id)}"]`),
+  contentRoot: () => document.querySelector('main') || document.body,
+  apiBase: '',
+  checklistUrl: '/data/checklists/freedom-chat-v1.json',
+};
+const app = { ...DEFAULT_HOST, ...(window.AIM_HOST || (await import('./agent-host.js').then((m) => m.default).catch(() => ({})))) };
+const api = (path) => `${app.apiBase || ''}${path}`;
+
+// The widget brings its own stylesheet; it stays invisible until the CSS is in, so it never flashes unstyled.
+const cssReady = new Promise((resolve) => {
+  const existing = document.querySelector('link[data-aim-css]');
+  if (existing) { if (existing.sheet) resolve(); else { existing.addEventListener('load', resolve); existing.addEventListener('error', resolve); } return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet'; css.href = new URL('./agent.css', import.meta.url).href; css.dataset.aimCss = '';
+  css.addEventListener('load', resolve); css.addEventListener('error', resolve);
+  document.head.append(css);
+});
+
 const KEY = 'cqa-broker-agent-v1';
-const CHECKLIST_URL = '/data/checklists/freedom-chat-v1.json';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
 const S = {
@@ -71,7 +95,9 @@ const ICON = {
   speak: '<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M4 8v4h3l4 3V5L7 8H4Zm10-.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   close: '<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
 };
-const root = document.getElementById('cqa-root');
+const root = document.getElementById('aim-widget') || Object.assign(document.createElement('div'), { id: 'aim-widget' });
+root.setAttribute('lang', { RU: 'ru', KZ: 'kk', EN: 'en' }[app.getLang()] || 'ru');
+const toastEl = h('div', { class: 'ag-toast', role: 'status', hidden: true });
 const fab = h('button', { type: 'button', class: 'ag-fab', 'aria-expanded': 'false', 'aria-controls': 'ag-panel' }, h('span', { class: 'ag-fab-dot', 'aria-hidden': 'true' }), h('span', { class: 'ag-fab-text' }));
 const panel = h('section', { class: 'ag-panel', id: 'ag-panel', role: 'dialog', 'aria-labelledby': 'ag-title', hidden: true });
 const head = h('header', { class: 'ag-head' });
@@ -88,7 +114,12 @@ const micBtn = h('button', { type: 'button', class: 'ag-icon ag-mic', 'aria-pres
 const sendBtn = h('button', { type: 'submit', class: 'ag-icon ag-send' }); sendBtn.innerHTML = ICON.send;
 form.append(input, micBtn, sendBtn);
 panel.append(head, list, chipsEl, statusEl, form);
-root.append(fab, panel);
+root.append(fab, panel, toastEl);
+root.style.visibility = 'hidden';
+if (!root.isConnected) document.body.append(root);
+cssReady.then(() => { root.style.visibility = ''; list.scrollTop = list.scrollHeight; });
+let toastTimer = null;
+function toast(text) { toastEl.textContent = text; toastEl.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toastEl.hidden = true; }, 3600); }
 
 // ---------- rendering ----------
 const session = () => (st.sid ? store.get(st.sid) : null);
@@ -139,12 +170,14 @@ const VISIBLE = (el) => el.offsetParent !== null || el.getClientRects().length >
 function labelOf(el) {
   const aria = el.getAttribute('aria-label'); if (aria) return aria;
   if (el.id) { const l = document.querySelector(`label[for="${CSS.escape(el.id)}"] span`) || document.querySelector(`label[for="${CSS.escape(el.id)}"]`); if (l) return l.textContent.trim(); }
+  const wrap = el.closest('label'); // <label>Amount <input></label> on hosts without for= ids
+  if (wrap && wrap !== el) { const txt = [...wrap.childNodes].filter((n) => n !== el && !n.contains?.(el)).map((n) => n.textContent).join(' ').trim().replace(/\s+/g, ' '); if (txt) return txt.slice(0, 60); }
   return (el.textContent || el.getAttribute('placeholder') || el.getAttribute('title') || '').trim().replace(/\s+/g, ' ').slice(0, 60);
 }
 let autoN = 0;
 function scanDom() {
-  const main = document.getElementById('br-main');
-  return [...main.querySelectorAll('a[href], button, input, select, textarea')].filter(VISIBLE).slice(0, 60).map((el) => {
+  const main = app.contentRoot();
+  return [...main.querySelectorAll('a[href], button, input, select, textarea')].filter((el) => VISIBLE(el) && !el.closest('#aim-widget')).slice(0, 60).map((el) => {
     let id = el.dataset.target || el.dataset.agentAuto;
     if (!id) { id = `el-${++autoN}`; el.dataset.agentAuto = id; }
     const tag = el.tagName.toLowerCase();
@@ -152,12 +185,14 @@ function scanDom() {
     return { id, tag, type: el.type || tag, label: labelOf(el), ...(value ? { value: maskPII(String(value).slice(0, 40)) } : {}), ...(el.dataset.protected === 'true' || el.type === 'submit' ? { protected: true } : {}) };
   });
 }
-const pageContext = () => ({ screen: app.currentScreen(), catalog: app.catalog(), dom: scanDom(), text: maskPII(document.getElementById('br-main').innerText.slice(0, 1500)) });
+// Visible page text without the widget itself (the DOM-scan fallback may use the whole <body>).
+function pageText() { const r = app.contentRoot(); if (!r.contains(root)) return r.innerText || ''; const c = r.cloneNode(true); c.querySelector('#aim-widget')?.remove(); return c.textContent.replace(/\s+/g, ' '); }
+const pageContext = () => ({ screen: app.currentScreen(), catalog: app.catalog(), dom: scanDom(), text: maskPII(pageText().slice(0, 1500)) });
 
 // ---------- actions ----------
 function elFor(a) {
   if (a.target) return app.findTarget(a.target);
-  if (a.element_id) return document.querySelector(`#br-main [data-target="${CSS.escape(a.element_id)}"], #br-main [data-agent-auto="${CSS.escape(a.element_id)}"]`);
+  if (a.element_id) return app.contentRoot().querySelector(`[data-target="${CSS.escape(a.element_id)}"], [data-agent-auto="${CSS.escape(a.element_id)}"]`);
   return null;
 }
 function flash(el) {
@@ -184,7 +219,7 @@ function setValue(el, raw) {
   return true;
 }
 const titleOf = (screen) => app.catalog().find((s) => s.id === screen)?.title || screen;
-const targetLabel = (a) => app.catalog().flatMap((s) => s.targets).find((x) => x.id === a.target)?.label || labelOf(elFor(a) || document.body) || a.target || a.element_id;
+const targetLabel = (a) => app.catalog().flatMap((s) => s.targets || []).find((x) => x.id === a.target)?.label || labelOf(elFor(a) || document.body) || a.target || a.element_id;
 const wait = (ms) => new Promise((r) => setTimeout(r, reduced.matches ? 0 : ms));
 
 async function runActions(actions) {
@@ -220,7 +255,7 @@ async function send(text, { voice = false } = {}) {
   st.messages.push({ speaker: 'client', text: clean, at: new Date().toISOString() }); save(); renderAll();
   busy = true; setStatus(tr('thinking')); sendBtn.disabled = true;
   try {
-    const res = await fetch('/api/agent', { method: 'POST', headers: { 'content-type': 'application/json' },
+    const res = await fetch(api('/api/agent'), { method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ messages: st.messages.map(({ speaker, text: tx }) => ({ speaker, text: tx })), page: pageContext(), language: app.getLang() }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
@@ -260,7 +295,7 @@ async function accept(said) {
     const narrow = matchMedia('(max-width: 860px)').matches;
     if (narrow) { st.open = false; save(); renderChrome(); }
     msg.actions = await runActions(p.actions); save(); renderList();
-    if (narrow && msg.actions.length) app.toast(`AIM: ${msg.actions.join(' · ')}`);
+    if (narrow && msg.actions.length) toast(`AIM: ${msg.actions.join(' · ')}`);
     if (st.speak || voiceTurn) speak(msg.text, p.language);
   } finally { busy = false; }
 }
@@ -296,8 +331,8 @@ async function evaluateIfClosed() {
   const s = session(); if (!s || s.status !== 'closed' || s.evaluation || s.evaluation_status === 'pending' || evaluating.has(s.id)) return;
   evaluating.add(s.id); store.update(s.id, { evaluation_status: 'pending' });
   try {
-    const checklist = await fetch(CHECKLIST_URL).then((r) => r.json());
-    const res = await fetch('/api/evaluate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ conversation: store.toConversation(store.get(s.id)), checklist }) });
+    const checklist = await fetch(app.checklistUrl).then((r) => r.json());
+    const res = await fetch(api('/api/evaluate'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ conversation: store.toConversation(store.get(s.id)), checklist }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     store.update(s.id, { evaluation: data, evaluation_status: 'done', evaluated_at: new Date().toISOString(), checklist_id: checklist.id, checklist_version: checklist.version });
@@ -329,7 +364,7 @@ async function toggleMic() {
       const sendBlob = wav || blob;
       const b64 = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1]); fr.onerror = rej; fr.readAsDataURL(sendBlob); });
       const format = wav ? 'wav' : type.includes('mp4') ? 'mp4' : type.includes('ogg') ? 'ogg' : 'webm';
-      const r = await fetch('/api/agent-voice', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ audio: b64, format, language: app.getLang() }) });
+      const r = await fetch(api('/api/agent-voice'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ audio: b64, format, language: app.getLang() }) });
       const data = await r.json().catch(() => ({}));
       if (!r.ok || data.error || !data.text) throw new Error(data.error || 'empty');
       setStatus(''); send(data.text, { voice: true });
@@ -376,7 +411,7 @@ const autosize = () => { input.style.height = 'auto'; input.style.height = `${Ma
 input.addEventListener('input', autosize);
 panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBtn.click(); });
 store.subscribe(() => { if (st.sid) { renderAll(); evaluateIfClosed(); } });
-app.onLang(() => renderAll());
+app.onLang(() => { root.setAttribute('lang', { RU: 'ru', KZ: 'kk', EN: 'en' }[app.getLang()] || 'ru'); renderAll(); });
 renderAll(); evaluateIfClosed(); autosize();
 
 // Exposed for debugging and tests only (not used by the page).
