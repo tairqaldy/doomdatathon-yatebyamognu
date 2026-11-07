@@ -338,7 +338,7 @@ async function askBot() {
   try {
     const res = await fetch('/api/chat', {
       method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ messages: s.messages.map(({ speaker, text }) => ({ speaker, text })) }),
+      body: JSON.stringify({ messages: s.messages.map(({ speaker, text }) => ({ speaker, text })), lang }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || typeof data.reply !== 'string' || !data.reply.trim()) throw new Error(data.error || `HTTP ${res.status}`);
