@@ -178,6 +178,10 @@
   background: var(--cqa-bg-primary); border: 0; color: var(--cqa-text-primary); font-size: 12px; cursor: pointer; text-align: left;
   transition: background-color var(--cqa-dur-base) var(--cqa-ease-out); }
 .cqa .cqa-evidence:hover { background: var(--cqa-bg-secondary); }
+.cqa .cqa-evidence svg { width: 14px; height: 14px; flex: none; color: var(--cqa-brand-primary); }
+.cqa .cqa-banner > svg { width: 20px; height: 20px; flex: none; margin-top: 1px; }
+.cqa .cqa-player > svg { width: 18px; height: 18px; flex: none; color: var(--cqa-brand-primary); }
+.cqa .cqa-btn--icon svg { width: 18px; height: 18px; }
 .cqa .cqa-evidence q { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 420px; quotes: "«" "»"; }
 .cqa .cqa-evidence .cqa-mono { color: var(--cqa-text-tertiary); }
 
