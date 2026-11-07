@@ -1,0 +1,29 @@
+{
+  "group": "DEV",
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v5.3",
+  "samples": null,
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-07T15:54:57.940Z",
+  "n": 1,
+  "errors": 0,
+  "cached": 0,
+  "fresh_calls": 1,
+  "cost_usd_total": 0.00575,
+  "cost_usd_per_eval": 0.00575,
+  "latency_ms_p50": 29076,
+  "latency_ms_p95": 29076,
+  "rows": [
+    {
+      "id": "p1-en-013",
+      "lang": "EN",
+      "cached": false,
+      "ms": 30039,
+      "model_ms": 29076,
+      "cost": 0.005745,
+      "total": 92.31,
+      "problems": 0
+    }
+  ]
+}
