@@ -107,4 +107,4 @@ Total cost $0.041 for all 5 calls.
 - C6 dialog management is the weakest criterion (57.9% strict).
 - C1 on calls without a recorded greeting should be N/A per the organizers; the v1 checklist does not allow it yet.
 - The gold set is small (5 KZ, 5 EN dialogs) and was used for tuning. Per-language differences of a few points are within noise.
-- Results export to `results/dev/results.json` and `results/prod/results.json` (`npm run results`) is still being built.
+- Results export to `results/dev/results.json` and `results/prod/results.json`: `npm run results -- --group <ID>` (`eval/control-run.mjs`, official JSON 1.0, validated).

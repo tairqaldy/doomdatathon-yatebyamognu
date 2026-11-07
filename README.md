@@ -133,18 +133,22 @@ npm test                                   # scoring rules: weights, scale, N/A 
 npm run eval -- --group DEV                # evaluate all DEV dialogs → data/evaluations/DEV.json + eval/runs/<ts>-DEV.json (cost, latency)
 npm run asr                                # transcribe the 5 calls + WER/CER vs organizer transcripts
 node eval/accuracy.ts <run>.evaluations.json --reviewed-only --verbose   # agreement with gold (Node ≥ 23.6)
-npm run results                            # export results/dev and results/prod (being built)
+npm run results -- --group DEV            # fetch/evaluate/export/validate → results/dev/results.json (official JSON 1.0)
 ```
 
 ## Control set at T+23h
 
 Timeline: start Sat 2026-11-07 12:00 → control transcripts Sun 11:00 → **stop code Sun 12:00** ([telegram-qa.md](docs/case/telegram-qa.md)). We have one hour for 10 control chats.
 
-1. Save the control set: `curl -s "$CQA_API_URL&group_id=<GROUP_ID>" -o data/datasets/<GROUP_ID>.json` ([data/README.md](data/README.md)).
-2. Evaluate: `npm run eval -- --group <GROUP_ID>` → `data/evaluations/<GROUP_ID>.json` plus a cost and latency report in `eval/runs/`.
-3. Spot-check in `/prototype/`: gross errors first, then N/A answers.
-4. Export: `npm run results` writes `results/dev/results.json` (DEV) and `results/prod/results.json` (control set). The file format comes from the organizers' `CQA_Student_Guide_Appendix_Results.pdf`; the exporter is being built and this README does not restate the schema.
-5. Commit `results/`, `data/evaluations/` and `eval/cache/` and push before 12:00. After stop code: no commits; data processing and checklist edits through the UI are still allowed.
+One command, from an up-to-date `main` with keys in `.env` (lane C, `eval/control-run.mjs`):
+
+```bash
+npm run results -- --group <GROUP_ID> --push
+```
+
+It fetches the set from the organizers' API (`data/datasets/<GROUP_ID>.json`), evaluates every chat (cached, parallel), retries failures once, writes `results/prod/results.json` in the official "Формат JSON 1.0" ([docs/case/results-format.md](docs/case/results-format.md)), validates it (exactly 10 records, all 8 criteria, 1-based turns, failed dialogs as `status: "error"`, never a made-up score) and commits + pushes. Then spot-check gross errors and N/A answers in `/admin/`.
+
+`--push` commits the results file together with the dataset, `data/evaluations/<GROUP_ID>.json`, `eval/cache/` and `eval/runs/`. Push before 12:00. After stop code: no commits; data processing and checklist edits through the UI are still allowed.
 
 ## Research
 

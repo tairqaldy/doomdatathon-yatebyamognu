@@ -20,7 +20,7 @@
 9. **Use the design system.** v2 surfaces (landing, support, admin) use **`shared/theme-light.css`** (bright, Onest, Freedom logo greens) and the real logo in `shared/brand/`; `design/` + `docs/research/design-system.md` remain the token reference. No ad-hoc colors, fonts or radii.
 9a. **AI calls only via `lib/llm.js` (→ `lib/openai.js` for `openai:<id>`, else `lib/openrouter.js`) + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
 10. **Leave a handoff** in `docs/STATUS.md` and on your issue before you stop (§5).
-11. **Accuracy decides the top 50.** Organizers compare our **per-criterion answers** with experts on **10 unseen control chats** (`docs/case/telegram-qa.md`). Follow `docs/playbook/scoring-playbook.md`; never trade accuracy for features. Results go to `results/dev/results.json` + `results/prod/results.json` via `npm run results` (§1.1).
+11. **Accuracy decides the top 50.** Organizers compare our **per-criterion answers** with experts on **10 unseen control chats** (`docs/case/telegram-qa.md`). Follow `docs/playbook/scoring-playbook.md`; never trade accuracy for features. Results go to `results/dev/results.json` + `results/prod/results.json` via `npm run results` = `eval/control-run.mjs` (§1.1).
 12. **Never stash or switch branches in a working tree other agents are writing to**; use `git worktree add ../<dir> <branch>` (LESSONS).
 
 ---
@@ -33,7 +33,7 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 
 ### 1.1 How we are judged and what to submit (organizer Q&A, `docs/case/telegram-qa.md`)
 - **Top 50 = mainly per-criterion agreement with expert labels on 10 unseen control chats**, plus functionality, UX, a system that really evaluates new dialogs (no replayed results), architecture diversity. No public formula: don't game it, be sensible; **never invent facts when information is missing**.
-- **Submit** `results/dev/results.json` (DEV) and `results/prod/results.json` (control) in the format of `CQA_Student_Guide_Appendix_Results.pdf` (field mapping lives in `results/format.json`; align it with the PDF). Control procedure at **Sun 11:00 → 12:00**: `npm run results -- --group <CONTROL_ID> --set prod` → check `results/prod/details.json` → commit + push within the hour.
+- **Submit** `results/dev/results.json` (DEV) and `results/prod/results.json` (control) in the official "Формат JSON 1.0" (`docs/case/results-format.md`, from `CQA_Student_Guide_Appendix_Results.pdf`). Control procedure at **Sun 11:00 → 12:00**, from an up-to-date `main` with keys in `.env`: `npm run results -- --group <CONTROL_ID> --push` (fetch → evaluate → retry → export → validate → commit + push; `--expect 10` is the default for a control group). Check any file with `node eval/validate-results.mjs results/prod/results.json --expect 10`.
 - **Rulings:** C2 complete request → N/A · C7 literal (summary or offer of help **and** goodbye) · C1 on calls without recorded greeting → N/A · identification needed for protected actions/personal data (omnichannel; being in the app ≠ verified) · data shown before identification: C3 "Нет" (C8 is our call) · half-up rounding to 2 decimals · replacing a criterion → re-evaluate everything · calls use the same logic adapted to speech.
 - **Live demo asks:** list all dialogs with gross errors + why; send a result to appeal; change the checklist (add, edit, change a weight) and re-evaluate; justify one dialog's score. No video required. Corporate look.
 

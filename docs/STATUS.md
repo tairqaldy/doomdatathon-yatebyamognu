@@ -296,3 +296,7 @@ Next for Nazar / Amina: pull main (`git pull --rebase`) before pushing your upda
 Blocked by / Requests: `gh` is logged out on tair's laptop (issue comments pending). CQA_Student_Guide_Appendix_Results.pdf still needed to finalise `results/format.json`.
 Contracts touched: none (results/format.json is provisional).
 How to verify: open `/`, `/support/`, `/admin/` (demo code on the login page), `/preview-hub/`, `/api/health` on production.
+
+### 2026-11-07 20:25 +05:00 · team · tair/claude · #18 #22 · one results pipeline
+Done: correction to the entry above. Nazar's official exporter (#22: `eval/control-run.mjs`, `eval/export-results.mjs`, `eval/validate-results.mjs`, format in `docs/case/results-format.md`) is THE pipeline. `npm run results` now runs it; my provisional `scripts/results.mjs` + `results/format.json` are removed so nobody exports the wrong shape at control time. AGENTS.md §1.1, README, TOOLING and research pages point to `npm run results -- --group <CONTROL_ID> --push`.
+How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65` → valid, 65 ok.
