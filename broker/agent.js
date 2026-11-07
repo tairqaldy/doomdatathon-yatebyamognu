@@ -3,6 +3,8 @@
 //   typed actions (reliable):  open_screen · highlight · prefill   on targets the app declares (broker/app.js SCREENS)
 //   DOM fallback:              click · input · highlight_element    on elements scanned from the current screen
 // Safety: protected elements are only highlighted, never pressed; the server drops actions on unknown targets.
+// Consent first (#15): AIM explains the steps and asks; proposed actions wait in st.pending and run only after the
+// client presses «Да» or types yes / да / иә. «Нет» leaves the page untouched. No extra model call for the answer.
 // Handoff: copies the chat into a LiveSession (shared/live-store.js) → /admin/#/live operator console → QA on close.
 // Voice: push-to-talk → POST /api/agent-voice (Nemotron) → text; replies read aloud with the browser's speechSynthesis.
 import * as app from '/broker/app.js';
@@ -13,39 +15,44 @@ const CHECKLIST_URL = '/data/checklists/freedom-chat-v1.json';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
 const S = {
-  RU: { open: 'Спросить AIM', title: 'AIM · ассистент', sub_bot: 'Сделаю за вас в приложении', sub_wait: 'Ждём специалиста', sub_op: '{name} на связи', sub_closed: 'Разговор завершён',
-    hello: 'Здравствуйте! Я AIM, ассистент Freedom. Скажите, что нужно сделать, и я открою нужный экран, подсвечу кнопку или заполню поля. Деньги и заявки подтверждаете только вы.',
+  RU: { open: 'Спросить AIM', title: 'AIM · ассистент', sub_bot: 'Подскажу и помогу в приложении', sub_wait: 'Ждём специалиста', sub_op: '{name} на связи', sub_closed: 'Разговор завершён',
+    hello: 'Здравствуйте! Я AIM, ассистент Freedom. Скажите, что нужно сделать: я объясню, как это сделать, а если захотите, открою нужный экран и заполню поля за вас. Деньги и заявки подтверждаете только вы.',
+    ask_help: 'Хотите, я открою нужный экран и заполню поля за вас?', consent_yes: 'Да, помогите', consent_no: 'Нет, я сам(а)', done_default: 'Готово, всё подготовил на экране. Проверьте данные и нажмите кнопку сами.', declined: 'Хорошо, тогда по шагам выше. Если понадобится помощь, напишите.',
     placeholder: 'Например: хочу пополнить счёт на 50 000 ₸', send: 'Отправить', mic: 'Сказать голосом', mic_stop: 'Остановить запись', listening: 'Слушаю… нажмите ещё раз, чтобы закончить',
     transcribing: 'Распознаю речь…', speak_on: 'Озвучивать ответы', speak_off: 'Не озвучивать', close: 'Свернуть', thinking: 'AIM думает…', human: 'Позвать специалиста',
     chips: ['Как пополнить счёт?', 'Где мой отчёт брокера?', 'Как найти облигации?', 'Как убрать маржу?'],
-    a_open: 'Открыл «{x}»', a_hl: 'Подсветил «{x}»', a_fill: 'Заполнил «{x}»: {v}', a_click: 'Нажал «{x}»', a_hl_el: 'Подсветил «{x}», нажмите сами',
+    a_open: 'Открыл «{x}»', a_hl: 'Подсветил «{x}»', a_fill: 'Заполнил «{x}»: {v}', a_on: 'Поставил галочку «{x}»', a_off: 'Снял галочку «{x}»', a_click: 'Нажал «{x}»', a_hl_el: 'Подсветил «{x}», нажмите сами',
     handoff_sys: 'Разговор передан специалисту', handoff_card: 'Передаю специалисту. Он увидит весь разговор, повторять не нужно. Обычно отвечаем до 2 минут.',
     closed: 'Специалист завершил разговор. Спасибо, что обратились!', restart: 'Новый разговор', error: 'Не получилось связаться с AIM. Попробуйте ещё раз или позовите специалиста.',
     mic_denied: 'Нет доступа к микрофону. Разрешите его в браузере или напишите текстом.', voice_err: 'Не удалось распознать речь. Попробуйте ещё раз или напишите.', you: 'Вы', op: 'Специалист' },
-  KZ: { open: 'AIM-нен сұрау', title: 'AIM · көмекші', sub_bot: 'Қосымшада өзім істеп беремін', sub_wait: 'Маманды күтеміз', sub_op: '{name} байланыста', sub_closed: 'Сөйлесу аяқталды',
-    hello: 'Сәлеметсіз бе! Мен AIM, Freedom көмекшісімін. Не істеу керек екенін айтыңыз: керекті экранды ашамын, батырманы белгілеймін немесе өрістерді толтырамын. Ақша мен өтінімдерді тек сіз растайсыз.',
+  KZ: { open: 'AIM-нен сұрау', title: 'AIM · көмекші', sub_bot: 'Қосымшада түсіндіріп, көмектесемін', sub_wait: 'Маманды күтеміз', sub_op: '{name} байланыста', sub_closed: 'Сөйлесу аяқталды',
+    hello: 'Сәлеметсіз бе! Мен AIM, Freedom көмекшісімін. Не істеу керек екенін айтыңыз: қалай істеуді түсіндіремін, ал қаласаңыз, керекті экранды ашып, өрістерді өзім толтырамын. Ақша мен өтінімдерді тек сіз растайсыз.',
+    ask_help: 'Керекті экранды ашып, өрістерді өзім толтырайын ба?', consent_yes: 'Иә, көмектесіңіз', consent_no: 'Жоқ, өзім', done_default: 'Дайын, экранда бәрін дайындадым. Деректерді тексеріп, батырманы өзіңіз басыңыз.', declined: 'Жарайды, онда жоғарыдағы қадамдар бойынша жасаңыз. Көмек керек болса, жазыңыз.',
     placeholder: 'Мысалы: шотты 50 000 ₸-ге толықтырғым келеді', send: 'Жіберу', mic: 'Дауыспен айту', mic_stop: 'Жазуды тоқтату', listening: 'Тыңдап тұрмын… аяқтау үшін қайта басыңыз',
     transcribing: 'Сөзді танып жатырмын…', speak_on: 'Жауаптарды дыбыстау', speak_off: 'Дыбыстамау', close: 'Жию', thinking: 'AIM ойланып жатыр…', human: 'Маманды шақыру',
     chips: ['Шотты қалай толықтырамын?', 'Брокер есебі қайда?', 'Облигацияларды қалай табамын?', 'Маржаны қалай алып тастаймын?'],
-    a_open: '«{x}» ашылды', a_hl: '«{x}» белгіленді', a_fill: '«{x}» толтырылды: {v}', a_click: '«{x}» басылды', a_hl_el: '«{x}» белгіленді, өзіңіз басыңыз',
+    a_open: '«{x}» ашылды', a_hl: '«{x}» белгіленді', a_fill: '«{x}» толтырылды: {v}', a_on: '«{x}» белгісі қойылды', a_off: '«{x}» белгісі алынды', a_click: '«{x}» басылды', a_hl_el: '«{x}» белгіленді, өзіңіз басыңыз',
     handoff_sys: 'Сөйлесу маманға берілді', handoff_card: 'Маманға беремін. Ол бүкіл сөйлесуді көреді, қайталаудың қажеті жоқ. Әдетте 2 минут ішінде жауап береміз.',
     closed: 'Маман сөйлесуді аяқтады. Хабарласқаныңызға рақмет!', restart: 'Жаңа сөйлесу', error: 'AIM-ге қосыла алмадым. Қайталап көріңіз немесе маманды шақырыңыз.',
     mic_denied: 'Микрофонға рұқсат жоқ. Браузерде рұқсат беріңіз немесе жазып жіберіңіз.', voice_err: 'Сөзді тану мүмкін болмады. Қайталап көріңіз немесе жазыңыз.', you: 'Сіз', op: 'Маман' },
-  EN: { open: 'Ask AIM', title: 'AIM · assistant', sub_bot: 'I can do it for you in the app', sub_wait: 'Waiting for a specialist', sub_op: '{name} is here', sub_closed: 'Conversation ended',
-    hello: 'Hi! I\'m AIM, Freedom\'s assistant. Tell me what you need and I\'ll open the right screen, highlight the button or fill in the fields. Only you confirm money and orders.',
+  EN: { open: 'Ask AIM', title: 'AIM · assistant', sub_bot: 'I\'ll explain and help in the app', sub_wait: 'Waiting for a specialist', sub_op: '{name} is here', sub_closed: 'Conversation ended',
+    hello: 'Hi! I\'m AIM, Freedom\'s assistant. Tell me what you need: I\'ll explain how to do it and, if you want, open the right screen and fill in the fields for you. Only you confirm money and orders.',
+    ask_help: 'Want me to open the right screen and fill in the fields for you?', consent_yes: 'Yes, help me', consent_no: 'No, I\'ll do it', done_default: 'Done, it\'s all set up on screen. Check the details and press the button yourself.', declined: 'Okay, just follow the steps above. Write if you need help.',
     placeholder: 'For example: I want to add 50,000 ₸ to my account', send: 'Send', mic: 'Speak', mic_stop: 'Stop recording', listening: 'Listening… tap again to finish',
     transcribing: 'Transcribing…', speak_on: 'Read replies aloud', speak_off: 'Don\'t read aloud', close: 'Minimise', thinking: 'AIM is thinking…', human: 'Talk to a specialist',
     chips: ['How do I add funds?', 'Where is my broker report?', 'How do I find bonds?', 'How do I turn off margin?'],
-    a_open: 'Opened "{x}"', a_hl: 'Highlighted "{x}"', a_fill: 'Filled "{x}": {v}', a_click: 'Clicked "{x}"', a_hl_el: 'Highlighted "{x}", press it yourself',
+    a_open: 'Opened "{x}"', a_hl: 'Highlighted "{x}"', a_fill: 'Filled "{x}": {v}', a_on: 'Ticked "{x}"', a_off: 'Unticked "{x}"', a_click: 'Clicked "{x}"', a_hl_el: 'Highlighted "{x}", press it yourself',
     handoff_sys: 'Conversation passed to a specialist', handoff_card: 'Passing you to a specialist. They will see the whole conversation, no need to repeat yourself. We usually reply within 2 minutes.',
     closed: 'The specialist ended the conversation. Thanks for reaching out!', restart: 'New conversation', error: 'Couldn\'t reach AIM. Try again or ask for a specialist.',
     mic_denied: 'No microphone access. Allow it in the browser or type instead.', voice_err: 'Couldn\'t recognise speech. Try again or type.', you: 'You', op: 'Specialist' },
 };
 const tr = (k, vars = {}) => String(S[app.getLang()][k] ?? S.RU[k] ?? k).replace(/\{(\w+)\}/g, (_, v) => vars[v] ?? '');
+// Consent texts follow the language AIM answered in (the client may write Russian in a Kazakh UI).
+const trIn = (lang, k) => String((S[lang] || S[app.getLang()])[k] ?? S.RU[k] ?? k);
 
 // ---------- state ----------
 const load = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch { return null; } };
-let st = load() || { open: false, messages: [], sid: null, speak: false };
+let st = load() || { open: false, messages: [], sid: null, speak: false, pending: null };
 const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
 let busy = false; let voiceTurn = false;
 
@@ -112,8 +119,12 @@ function renderList() {
   list.replaceChildren(...msgs.map((m) => {
     if (m.speaker === 'system') return h('li', { class: 'ag-sys' }, m.text);
     const who = m.speaker === 'client' ? tr('you') : m.speaker === 'bot' ? 'AIM' : (session()?.operator_name || tr('op'));
+    const asking = m.consent === 'pending' && st.pending && st.pending.at === m.at && !session();
     return h('li', { class: `ag-msg ag-${m.speaker}` }, h('span', { class: 'ag-who' }, who), h('p', {}, m.text),
-      ...(m.actions?.length ? [h('ul', { class: 'ag-acts' }, m.actions.map((a) => h('li', {}, a)))] : []));
+      ...(m.actions?.length ? [h('ul', { class: 'ag-acts' }, m.actions.map((a) => h('li', {}, a)))] : []),
+      ...(asking ? [h('div', { class: 'ag-consent' },
+        h('button', { type: 'button', class: 'ag-chip ag-chip-yes', on: { click: () => accept() } }, trIn(st.pending.language, 'consent_yes')),
+        h('button', { type: 'button', class: 'ag-chip', on: { click: () => decline() } }, trIn(st.pending.language, 'consent_no')))] : []));
   }));
   const s = session();
   if (s?.handoff && s.status === 'waiting_operator') list.append(h('li', { class: 'ag-card' }, tr('handoff_card')));
@@ -184,7 +195,7 @@ async function runActions(actions) {
     const el = elFor(a); if (!el) continue;
     if (a.type === 'highlight') { flash(el); done.push(tr('a_hl', { x: targetLabel(a) })); }
     if (a.type === 'highlight_element') { flash(el); done.push(tr('a_hl_el', { x: labelOf(el) })); }
-    if (a.type === 'prefill' || a.type === 'input') { if (setValue(el, a.value)) { const fresh = elFor(a) || el; flash(fresh); done.push(tr('a_fill', { x: targetLabel(a), v: a.value })); } }
+    if (a.type === 'prefill' || a.type === 'input') { if (setValue(el, a.value)) { const fresh = elFor(a) || el; flash(fresh); done.push(el.type === 'checkbox' ? tr(el.checked ? 'a_on' : 'a_off', { x: targetLabel(a) }) : tr('a_fill', { x: targetLabel(a), v: a.value })); } }
     if (a.type === 'click') {
       if (el.dataset.protected === 'true' || el.type === 'submit') { flash(el); done.push(tr('a_hl_el', { x: labelOf(el) })); }
       else { const lbl = labelOf(el); el.click(); flash(el); done.push(tr('a_click', { x: lbl })); }
@@ -200,6 +211,12 @@ async function send(text, { voice = false } = {}) {
   voiceTurn = voice;
   const s = session();
   if (s) { if (s.status !== 'closed') store.addMessage(st.sid, 'client', clean); return renderAll(); }
+  if (st.pending) {
+    // A typed answer to «Хотите, я помогу?» is handled locally; anything else drops the offer and goes to AIM.
+    if (YES.test(clean) && clean.length <= 40) return accept(clean);
+    if (NO.test(clean) && clean.length <= 40) return decline(clean);
+    dropPending();
+  }
   st.messages.push({ speaker: 'client', text: clean, at: new Date().toISOString() }); save(); renderAll();
   busy = true; setStatus(tr('thinking')); sendBtn.disabled = true;
   try {
@@ -208,12 +225,14 @@ async function send(text, { voice = false } = {}) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     const msg = { speaker: 'bot', text: data.reply || '…', actions: [], at: new Date().toISOString() };
+    // Nothing runs yet: show how to do it yourself, ask, and keep the proposed actions until the client says yes (#15).
+    if (data.actions?.length && !data.handoff) {
+      const steps = (data.steps || []).map((x, i) => `${i + 1}. ${String(x).replace(/^\s*\d+[.)]\s*/, '')}`);
+      msg.text = [data.reply, ...steps, trIn(data.language, 'ask_help')].filter(Boolean).join('\n');
+      msg.consent = 'pending';
+      st.pending = { at: msg.at, actions: data.actions, done_reply: data.done_reply || '', language: data.language };
+    }
     st.messages.push(msg); save(); renderAll(); setStatus('');
-    // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
-    const narrow = matchMedia('(max-width: 860px)').matches && data.actions?.length;
-    if (narrow) { st.open = false; save(); renderChrome(); }
-    msg.actions = await runActions(data.actions); save(); renderList();
-    if (narrow && msg.actions.length) app.toast(`AIM: ${msg.actions.join(' · ')}`);
     if (st.speak || voiceTurn) speak(data.reply, data.language);
     if (data.handoff) handoff(data.handoff_reason || 'AIM передал специалисту');
   } catch (e) {
@@ -221,9 +240,44 @@ async function send(text, { voice = false } = {}) {
   } finally { busy = false; setStatus(''); sendBtn.disabled = false; }
 }
 
+const YES = /^(да|ага|угу|давай|давайте|помоги|помогите|конечно|хочу|ок|окей|ok|okay|yes|yeah|yep|sure|please|иә|ия|йә|жарайды|көмектес)/i;
+const NO = /^(нет|не надо|не нужно|не хочу|сам|сама|no|nope|not now|жоқ|керек емес|өзім)/i;
+
+function dropPending() {
+  const m = st.messages.find((x) => x.at === st.pending?.at); if (m) m.consent = 'skipped';
+  st.pending = null; save();
+}
+async function accept(said) {
+  const p = st.pending; if (!p || busy) return;
+  const asked = st.messages.find((x) => x.at === p.at); if (asked) asked.consent = 'yes';
+  st.pending = null;
+  st.messages.push({ speaker: 'client', text: said || trIn(p.language, 'consent_yes'), at: new Date().toISOString() });
+  const msg = { speaker: 'bot', text: p.done_reply || trIn(p.language, 'done_default'), actions: [], at: new Date().toISOString() };
+  st.messages.push(msg); save(); renderAll();
+  busy = true;
+  try {
+    // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
+    const narrow = matchMedia('(max-width: 860px)').matches;
+    if (narrow) { st.open = false; save(); renderChrome(); }
+    msg.actions = await runActions(p.actions); save(); renderList();
+    if (narrow && msg.actions.length) app.toast(`AIM: ${msg.actions.join(' · ')}`);
+    if (st.speak || voiceTurn) speak(msg.text, p.language);
+  } finally { busy = false; }
+}
+function decline(said) {
+  const p = st.pending; if (!p) return;
+  const asked = st.messages.find((x) => x.at === p.at); if (asked) asked.consent = 'no';
+  st.pending = null;
+  st.messages.push({ speaker: 'client', text: said || trIn(p.language, 'consent_no'), at: new Date().toISOString() });
+  st.messages.push({ speaker: 'bot', text: trIn(p.language, 'declined'), at: new Date().toISOString() });
+  save(); renderAll();
+  if (st.speak || voiceTurn) speak(trIn(p.language, 'declined'), p.language);
+}
+
 const mmss = (ms) => { const x = Math.max(0, Math.floor(ms / 1000)); return `${String(Math.floor(x / 60)).padStart(2, '0')}:${String(x % 60).padStart(2, '0')}`; };
 function handoff(reason) {
   if (st.sid) return;
+  if (st.pending) dropPending();
   const s = store.create({ language: app.getLang() });
   st.sid = s.id; save();
   // Keep the real times of the AIM part: QA reads timestamps (waits, response order).
@@ -251,7 +305,7 @@ async function evaluateIfClosed() {
   finally { evaluating.delete(s.id); }
 }
 
-function restart() { st = { open: true, messages: [{ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }], sid: null, speak: st.speak }; save(); renderAll(); input.focus(); }
+function restart() { st = { open: true, messages: [{ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }], sid: null, speak: st.speak, pending: null }; save(); renderAll(); input.focus(); }
 
 // ---------- voice ----------
 let recording = null; let chunks = []; let stopTimer = null;
@@ -326,4 +380,4 @@ app.onLang(() => renderAll());
 renderAll(); evaluateIfClosed();
 
 // Exposed for debugging and tests only (not used by the page).
-window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k } });
+window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline } });
