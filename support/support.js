@@ -16,11 +16,11 @@ const STR = {
   RU: {
     title: 'Поддержка', back: 'Вернуться на главную', lang_label: 'Язык интерфейса', log_label: 'Переписка',
     status_bot: 'AIM на связи', status_waiting: 'Ждём специалиста', status_operator: '{name} на связи', status_closed: 'Разговор завершён',
-    kicker: 'Freedom Broker · поддержка', greet: 'Здравствуйте.',
-    intro: 'Это AIM, ассистент Freedom. Он отвечает на то, что знает точно. Если вопрос требует проверки или вы хотите поговорить с человеком, AIM позовёт специалиста.',
+    kicker: 'AIM, ассистент Freedom Broker', greet: 'Здравствуйте.',
+    intro: 'Отвечаю на то, что знаю точно. Если вопрос нужно проверить или вы хотите поговорить с человеком, позову специалиста.',
     chips_label: 'Частые вопросы', chips: ['Где посмотреть мой тариф?', 'Как вывести деньги?', 'Чем D-счёт отличается от торгового?'], chip_human: 'Нужен оператор',
     placeholder: 'Напишите вопрос', placeholder_wait: 'Можно дописать детали', input_label: 'Ваше сообщение', send: 'Отправить',
-    typing: 'AIM пишет ответ', hint: 'Enter — отправить · Shift+Enter — новая строка', jump: 'Перейти к новым сообщениям', jump_text: 'Новые сообщения',
+    typing: 'AIM пишет ответ', hint: 'Enter — отправить, Shift+Enter — новая строка', jump: 'Перейти к новым сообщениям', jump_text: 'Новые сообщения',
     call_human: 'Позвать специалиста', end: 'Завершить разговор',
     you: 'Вы', bot_role: 'ассистент', op_role: 'специалист',
     handoff_title: 'Передаю специалисту', handoff_joined: 'Специалист на связи',
@@ -41,11 +41,11 @@ const STR = {
   KZ: {
     title: 'Қолдау', back: 'Басты бетке оралу', lang_label: 'Интерфейс тілі', log_label: 'Хат алмасу',
     status_bot: 'AIM байланыста', status_waiting: 'Маманды күтеміз', status_operator: '{name} байланыста', status_closed: 'Сөйлесу аяқталды',
-    kicker: 'Freedom Broker · қолдау', greet: 'Сәлеметсіз бе.',
-    intro: 'Бұл — AIM, Freedom көмекшісі. Ол нақты білетін сұрақтарға жауап береді. Тексеру керек болса немесе адаммен сөйлескіңіз келсе, AIM маманды шақырады.',
+    kicker: 'AIM, Freedom Broker көмекшісі', greet: 'Сәлеметсіз бе.',
+    intro: 'Нақты білетін сұрақтарға жауап беремін. Тексеру керек болса немесе адаммен сөйлескіңіз келсе, маманды шақырамын.',
     chips_label: 'Жиі қойылатын сұрақтар', chips: ['Тарифімді қайдан көремін?', 'Ақшаны қалай шығарамын?', 'D-шот сауда шотынан несімен ерекшеленеді?'], chip_human: 'Маған оператор керек',
     placeholder: 'Сұрағыңызды жазыңыз', placeholder_wait: 'Толығырақ жаза беріңіз', input_label: 'Хабарламаңыз', send: 'Жіберу',
-    typing: 'AIM жауап жазып жатыр', hint: 'Enter — жіберу · Shift+Enter — жаңа жол', jump: 'Жаңа хабарларға өту', jump_text: 'Жаңа хабарлар',
+    typing: 'AIM жауап жазып жатыр', hint: 'Enter — жіберу, Shift+Enter — жаңа жол', jump: 'Жаңа хабарларға өту', jump_text: 'Жаңа хабарлар',
     call_human: 'Маманды шақыру', end: 'Сөйлесуді аяқтау',
     you: 'Сіз', bot_role: 'көмекші', op_role: 'маман',
     handoff_title: 'Маманға беремін', handoff_joined: 'Маман байланыста',
@@ -66,11 +66,11 @@ const STR = {
   EN: {
     title: 'Support', back: 'Back to the main page', lang_label: 'Interface language', log_label: 'Conversation',
     status_bot: 'AIM is here', status_waiting: 'Waiting for a specialist', status_operator: '{name} is here', status_closed: 'Conversation ended',
-    kicker: 'Freedom Broker · support', greet: 'Hello.',
-    intro: 'This is AIM, Freedom’s assistant. It answers what it knows for sure. If your question needs checking or you’d rather talk to a person, AIM calls a specialist.',
+    kicker: 'AIM, Freedom Broker assistant', greet: 'Hello.',
+    intro: 'I answer what I know for sure. If your question needs checking or you’d rather talk to a person, I’ll call a specialist.',
     chips_label: 'Common questions', chips: ['Where can I see my tariff?', 'How do I withdraw money?', 'How is a D-account different from a trading account?'], chip_human: 'I need a person',
     placeholder: 'Type your question', placeholder_wait: 'Add any details', input_label: 'Your message', send: 'Send',
-    typing: 'AIM is writing a reply', hint: 'Enter to send · Shift+Enter for a new line', jump: 'Jump to new messages', jump_text: 'New messages',
+    typing: 'AIM is writing a reply', hint: 'Enter to send, Shift+Enter for a new line', jump: 'Jump to new messages', jump_text: 'New messages',
     call_human: 'Talk to a specialist', end: 'End conversation',
     you: 'You', bot_role: 'assistant', op_role: 'specialist',
     handoff_title: 'Passing you to a specialist', handoff_joined: 'A specialist is here',
@@ -218,10 +218,12 @@ function render(s, { animate = true } = {}) {
 /* handoff card */
 function appendCard(s, animate) {
   card = h('li', { class: `sp-card${animate ? '' : ' no-anim'}`, role: 'status' },
-    h('h3', { 'data-i18n': 'handoff_title' }, t('handoff_title')),
-    h('p', {}, h('span', { 'data-i18n': 'handoff_seen' }, t('handoff_seen')), ' ', h('span', { 'data-i18n': 'handoff_eta' }, t('handoff_eta'))),
-    h('div', { class: 'sp-card-row' }, h('span', { class: 'g-label', 'data-i18n': 'handoff_wait' }, t('handoff_wait')), h('span', { class: 'sp-timer', 'aria-hidden': 'true' }, '00:00')),
-    h('div', { class: 'sp-progress', 'aria-hidden': 'true' }, h('i')));
+    h('span', { class: 'sp-card-icon', 'aria-hidden': 'true' }),
+    h('div', { class: 'sp-card-body' },
+      h('h3', { 'data-i18n': 'handoff_title' }, t('handoff_title')),
+      h('p', {}, h('span', { 'data-i18n': 'handoff_seen' }, t('handoff_seen')), ' ', h('span', { 'data-i18n': 'handoff_eta' }, t('handoff_eta'))),
+      h('div', { class: 'sp-card-row' }, h('span', { class: 'sp-card-label', 'data-i18n': 'handoff_wait' }, t('handoff_wait')), h('span', { class: 'sp-timer', 'aria-hidden': 'true' }, '00:00')),
+      h('div', { class: 'sp-progress', 'aria-hidden': 'true' }, h('i'))));
   lastSpeaker = 'system';
   els.msgs.append(card);
   if (!ticker) ticker = setInterval(tick, 1000);
@@ -238,7 +240,7 @@ function updateCard(s) {
   card.classList.toggle('is-done', Boolean(joined));
   const title = card.querySelector('h3'); const k = joined ? 'handoff_joined' : 'handoff_title';
   if (title.dataset.i18n !== k) { title.dataset.i18n = k; title.textContent = t(k); }
-  const lbl = card.querySelector('.sp-card-row .g-label'); const lk = joined ? 'handoff_waited' : 'handoff_wait';
+  const lbl = card.querySelector('.sp-card-label'); const lk = joined ? 'handoff_waited' : 'handoff_wait';
   if (lbl.dataset.i18n !== lk) { lbl.dataset.i18n = lk; lbl.textContent = t(lk); }
   if (s.status !== 'waiting_operator' && ticker) { clearInterval(ticker); ticker = null; }
 }
@@ -402,7 +404,7 @@ function showClosing(s, animate = true) {
     },
   }, String(n)));
   const comment = h('textarea', { class: 'sp-comment', rows: '3', maxlength: '1000', placeholder: t('comment_ph'), 'data-i18n-ph': 'comment_ph', 'aria-label': t('comment_label'), 'data-i18n-aria': 'comment_label' });
-  const submit = h('button', { type: 'button', class: 'g-btn g-btn--primary', disabled: true, 'data-i18n': 'send_rating', onclick: () => finish(score, comment.value.trim()) }, t('send_rating'));
+  const submit = h('button', { type: 'button', class: 'l-btn l-btn--primary', disabled: true, 'data-i18n': 'send_rating', onclick: () => finish(score, comment.value.trim()) }, t('send_rating'));
   function choose(n) {
     score = n;
     points.forEach((b, i) => { const on = i < n; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(i === n - 1)); b.tabIndex = i === n - 1 ? 0 : -1; });
@@ -412,9 +414,9 @@ function showClosing(s, animate = true) {
     h('h3', { id: 'sp-rate-title', 'data-i18n': 'rate_title' }, t('rate_title')),
     h('p', { 'data-i18n': 'rate_body' }, t('rate_body')),
     h('div', { class: 'sp-points', role: 'radiogroup', 'aria-label': t('rate_group') }, points),
-    h('div', { class: 'sp-scale', 'aria-hidden': 'true' }, h('span', { class: 'g-label', 'data-i18n': 'rate_low' }, t('rate_low')), h('span', { class: 'g-label', 'data-i18n': 'rate_high' }, t('rate_high'))),
+    h('div', { class: 'sp-scale', 'aria-hidden': 'true' }, h('span', { 'data-i18n': 'rate_low' }, t('rate_low')), h('span', { 'data-i18n': 'rate_high' }, t('rate_high'))),
     comment,
-    h('div', { class: 'sp-rate-btns' }, submit, h('button', { type: 'button', class: 'g-btn g-btn--ghost', 'data-i18n': 'skip', onclick: () => finish(null, '') }, t('skip'))));
+    h('div', { class: 'sp-rate-btns' }, submit, h('button', { type: 'button', class: 'l-btn l-btn--ghost', 'data-i18n': 'skip', onclick: () => finish(null, '') }, t('skip'))));
   els.msgs.append(el);
   afterAppend(true, animate);
   setTimeout(() => (finePointer.matches ? points[0] : el).focus({ preventScroll: true }), animate ? 350 : 0);
@@ -433,8 +435,8 @@ function showDone(s, animate = true) {
     h('h3', { id: 'sp-done-title', 'data-i18n': 'done_title' }, t('done_title')),
     h('p', { 'data-i18n': s.csat != null ? 'done_body' : 'done_body_skip' }, t(s.csat != null ? 'done_body' : 'done_body_skip')),
     h('div', { class: 'sp-done-btns' },
-      h('button', { type: 'button', class: 'g-btn g-btn--primary', 'data-i18n': 'new_q', onclick: newQuestion }, t('new_q')),
-      h('a', { class: 'g-btn g-btn--ghost', href: '/landing-tair/', 'data-i18n': 'home' }, t('home'))));
+      h('button', { type: 'button', class: 'l-btn l-btn--primary', 'data-i18n': 'new_q', onclick: newQuestion }, t('new_q')),
+      h('a', { class: 'l-btn l-btn--ghost', href: '/', 'data-i18n': 'home' }, t('home'))));
   els.msgs.append(el);
   afterAppend(true, animate);
   if (animate) setTimeout(() => el.focus({ preventScroll: true }), 300);
