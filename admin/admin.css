@@ -602,7 +602,7 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
 }
 @media (max-width: 1220px) {
   /* dialog card: one column; score and reasons first, then transcript, then the full justification */
-  .analysis { display: flex; flex-direction: column; }
+  .analysis { display: flex; flex-direction: column; align-items: stretch; }
   .side { display: contents; }
   .side > .banner { order: 0; } .score-card { order: 1; } .reasons-card { order: 2; } .tx-card { order: 3; position: relative; top: 0; } .crit-card { order: 4; }
   .tx { max-height: 480px; }
