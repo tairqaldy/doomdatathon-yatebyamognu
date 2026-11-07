@@ -19,6 +19,9 @@ Status: `active` (in use) · `trial` (being evaluated) · `candidate` (proposed,
 | macOS PDFKit via `osascript -l JavaScript` | extracting text from the organizers' PDFs without extra installs | D | used once, outputs in `docs/case/` | free | active |
 | `.githooks/commit-msg` | blocks AI attribution in commits | all | `git config core.hooksPath .githooks` | free | active |
 | `scripts/check.sh` | pre-merge gate (JSON valid, no secrets, no AI attribution, build/test if present) | all | `scripts/check.sh` | free | active |
+| Upstash Redis (REST) | shared AI cache across instances + cross-device live chats (`lib/cache.js`, `lib/kv.js`) | B | Vercel → Storage → "Upstash for Redis" (injects `KV_REST_API_*`) or `UPSTASH_REDIS_REST_*` | free tier | candidate (waiting for tair to connect) |
+| Cloudflare Workers KV (REST) | alternative shared AI cache backend | B | `CF_ACCOUNT_ID`, `CF_KV_NAMESPACE_ID`, `CF_API_TOKEN` (Workers KV Storage: Edit) | free tier | supported, not configured |
+| `npm run results` (`scripts/results.mjs`) | export `results/dev|prod/results.json` for the organizers; per-channel checklist | C | `npm run results -- --group <ID> --set prod` | per-eval cost | active (format provisional until the appendix PDF) |
 | GitHub Actions `check.yml` | runs `scripts/check.sh` on every push/PR | all | `.github/workflows/check.yml` | free (public repo) | active |
 
 ## 2. AI agents and assistants
@@ -95,5 +98,7 @@ Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <eva
 | Opening ceremony livestream screenshots (Freedom + organizer slides) | 4-step speech analytics model, "trust starts with explanation", reference QA workspace UI, 5–10 min defense, IP rule | `docs/case/opening-ceremony.md` |
 | OpenRouter docs: speech-to-text (https://openrouter.ai/docs/guides/overview/multimodal/stt) | `/api/v1/audio/transcriptions` takes base64 `input_audio` | `lib/openrouter.js` |
 | Dameli's model research | candidate models, metrics, test plan | `docs/research/models-and-metrics.md` (branch d/product-quality-demo) |
+| Web research 2026-11-07 (papers, regulators, vendor docs: Zheng 2023 LLM-as-judge, KazMMLU, CFPB chatbot spotlight, Gartner 2024 survey, Freedom FY2026 release, OpenAI/OpenRouter model pages) | judging reliability, Kazakh support, trust + handoff, costs | `docs/research/` (index: `docs/research/README.md`) |
+| Organizer Q&A from Telegram (collected by Nazar) | how we're judged, results files, checklist rulings, demo asks | `docs/case/telegram-qa.md`, `docs/research/organizer-rulings.md` |
 | https://fbroker.kz (HTML + `/_nuxt/*.css`, 2026-11-07) | colors, type, radii, shadows, motion, breakpoints, component patterns | `docs/research/design-system.md` |
 | Organizers' dataset API (signed URL in `.env`) | DEV dataset | `data/datasets/DEV.json`, `data/README.md` |
