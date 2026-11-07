@@ -128,7 +128,7 @@ flowchart TB
 - **Models:** all calls go through [`lib/llm.js`](lib/llm.js) and are cached by model + prompt version + full input, so a repeated request is free. Paid answers are committed in `eval/cache/` for teammates and Vercel.
 - **API:** `GET /api/health` · `POST /api/evaluate` · `POST /api/transcribe` · `GET /api/audio?id=` (organizer audio links expire after ~1 h) · `GET /api/dataset?group_id=` · `POST /api/chat` · `POST /api/agent` · `POST /api/agent-voice` · `GET/POST /api/speak` · `POST /api/insights` · `POST /api/admin-login` · `GET/PUT/DELETE /api/sessions`. Shapes: [CONTRACTS.md](docs/CONTRACTS.md).
 
-Repo map: `landing-tair/` · `support/` · `admin/` · `broker/` · `prototype/` · `shared/` · `design/` · `api/` · `lib/` · `data/` · `eval/` · `scripts/` · `docs/` · team and agent rules in [AGENTS.md](AGENTS.md).
+Repo map: `landing-tair/` · `support/` · `admin/` · `broker/` · `phone/` · `mobile/` · `prototype/` · `shared/` · `design/` · `api/` · `lib/` · `data/` · `eval/` · `scripts/` · `docs/` · team and agent rules in [AGENTS.md](AGENTS.md).
 
 ## Run locally
 
@@ -162,6 +162,11 @@ It fetches the set from the organizers' API (`data/datasets/<GROUP_ID>.json`), e
 
 `--push` commits the results file together with the dataset, `data/evaluations/<GROUP_ID>.json`, `eval/cache/` and `eval/runs/`. Push before 12:00. After stop code: no commits; data processing and checklist edits through the UI are still allowed.
 
+## Phone demo: AIM inside the Freedom Broker app
+
+- **Web:** https://freedom-cqa.vercel.app/phone/ shows an iPhone frame on a laptop and goes full screen on a phone. It's a copy of the official Freedom Broker iOS app (v32.23.17) with mock data, built from [freedom-app.md](docs/research/freedom-app.md). Open AIM from Меню → Поддержка → «AIM · ответ сразу», the chat icon, or the round button.
+- **Native (Expo Go):** `cd mobile && npm install && npx expo start`, then scan the QR code with Expo Go. Details in [mobile/README.md](mobile/README.md).
+
 ## Research
 
 | Page | Topic |
@@ -191,4 +196,5 @@ Thanks to **Freedom Broker** for the case, the DEV data, the checklist and fast 
 - All images on the landing and support pages were generated for this project. Mood-board photos were used only as reference and are not in the repo.
 - Design tokens were reverse-engineered from fbroker.kz for Freedom's own case. We use Inter instead of Freedom's licensed CoFo Sans font. The Freedom logo appears only because this is Freedom's case.
 - No third-party code is copied without a license. Visual references we looked at are linked, not vendored ([navigation-references.md](docs/research/navigation-references.md)). The unslop writing skill has no license file, so it was used locally only and is not in this repo ([TOOLING.md](docs/TOOLING.md)).
+- The `/phone` demo copies the layout and colours of Freedom's own iOS app for Freedom's case, with invented data and icons we drew ourselves. No screenshots of the real app are in the repo.
 - Every tool, model and library we used is logged in [TOOLING.md](docs/TOOLING.md).
