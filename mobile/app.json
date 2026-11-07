@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Freedom AIM Demo",
+    "slug": "freedom-aim-demo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#171D2D",
+    "ios": {
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "AIM слушает голосовой вопрос, пока вы держите кнопку микрофона."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#171D2D",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
