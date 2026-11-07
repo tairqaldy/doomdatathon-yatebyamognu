@@ -28,7 +28,8 @@ export function rawPoints(criterion, answer) {
   return null;
 }
 
-const round2 = (x) => Math.round((x + Number.EPSILON) * 100) / 100;
+// Half-up to 2 decimals (organizers: 50.625 → 50.63). The 1e-7 nudge absorbs float noise like 50.62499999.
+const round2 = (x) => { const s = x < 0 ? -1 : 1; return (s * Math.round(Math.abs(x) * 100 + 1e-7)) / 100; };
 
 /**
  * Score one evaluation.
@@ -104,5 +105,8 @@ export function selfTest(checklist) {
   // Rounding regression (gold audit): official = round(100·Σraw/Σweights, 2) = 30.59; rounding each row first gave 30.58.
   const r3 = { c01: 'yes', c02: 'na', c03: 'no', c04: 5, c05: 'no', c06: 4, c07: 'yes', c08: 'no' };
   t.push(['total rounds once at the end (30.59, not 30.58)', score(checklist, r3).total === 30.59]);
+  // Half-up on an exact .xx5 total: raw 30.5 of 80 applicable → 38.125 → 38.13
+  const r4 = { c01: 'yes', c02: 'na', c03: 'no', c04: 10, c05: 'no', c06: 7, c07: 'na', c08: 'no' };
+  t.push(['half-up rounding of an exact .xx5 total (38.13)', score(checklist, r4).total === 38.13]);
   return t;
 }
