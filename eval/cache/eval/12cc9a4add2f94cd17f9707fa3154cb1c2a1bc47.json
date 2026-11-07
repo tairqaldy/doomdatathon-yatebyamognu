@@ -1,0 +1,157 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор алғашқы репликасында қазақ тілінде сәлемдесіп, есімін айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент нысанның қазақ тілінде берілетін-берілмейтінін нақты сұрады, қосымша мәлімет қажет болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: «1042-S нысанын қазақ тілінде алуға бола ма?»"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Сұрау сәйкестендіруді қажет етпейтін жалпы ақпарат туралы болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Сұрау жалпы сипатта: «1042-S нысанын қазақ тілінде алуға бола ма?»"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиенттің негізгі сұрағы толық шешілді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жақсы, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сыпайы сөйлесті, ал клиент тарапынан наразылық болған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жақсы, рақмет."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог түсінікті және бірізді өтті.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жақсы, рақмет."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу болды, алайда соңғы репликада қорытынды да, әрі қарай көмек ұсыну да жоқ.",
+   "deduction_reason": "Қоштасумен бірге қорытынды немесе қосымша көмек ұсыну талап етілген.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубое нарушение не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент 1042-S нысанын қазақ тілінде алуға болатынын сұрады.",
+  "operator_actions": "Оператор нысанның ағылшын тілінде берілетінін хабарлады.",
+  "outcome": "Сұраққа жауап берілді, клиент ризашылығын білдірді."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сұрады: 1042-S нысанын қазақ тілінде алуға бола ма?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19002,
+ "usage": {
+  "prompt_tokens": 5786,
+  "completion_tokens": 2170,
+  "cost": 0.001664
+ }
+}

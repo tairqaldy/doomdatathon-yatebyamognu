@@ -1,0 +1,195 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Для указания пути подачи запроса данных хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент указал, что приложение просит обновить данные профиля [0], и спросил, где подать запрос [4]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался места подачи изменения данных; идентификация для ответа не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал путь в меню, не сообщая сведений о конкретном счёте и не выполняя действие по нему [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Оператор помог найти раздел для изменения данных, но не ответил, можно ли подать вывод сразу после этого.",
+   "deduction_reason": "Существенная часть запроса — срок повторной подачи вывода — осталась открытой.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I found it. Can I submit the withdrawal right after this?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив; неполный ответ на вопрос о повторной подаче оценивается в консультации, а не сам по себе в эмпатии.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Вопрос о том, можно ли сразу подать вывод, остался без ответа, несмотря на повторное уточнение клиента.",
+   "deduction_reason": "Клиенту пришлось повторить вопрос, а оператор его проигнорировал.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Can you put me through to an agent? Where do I submit that and when can I retry?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I found it. Can I submit the withdrawal right after this?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не ответил на последний вопрос и не подвёл итог или предложил дальнейшую помощь.",
+   "deduction_reason": "Нет ответа на последний вопрос клиента и требуемого элемента завершения.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I found it. Can I submit the withdrawal right after this?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести средства, поскольку приложение просило обновить данные профиля.",
+  "operator_actions": "Оператор указал путь к разделу изменения данных.",
+  "outcome": "Клиент нашёл раздел, но не получил ответа, можно ли повторить вывод сразу после обновления."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 10,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Помочь с блокировкой вывода из-за необходимости обновить данные профиля",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, где подать запрос на изменение данных",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, когда можно повторить вывод",
+    "status": "open"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, можно ли подать вывод сразу после обновления данных",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 82011,
+ "usage": {
+  "prompt_tokens": 5723,
+  "completion_tokens": 4640,
+  "cost": 0.002892
+ }
+}

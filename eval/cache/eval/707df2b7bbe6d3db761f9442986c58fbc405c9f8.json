@@ -1,0 +1,145 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор қазақ тілінде сәлемдесіп, атын атады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент тарифін қайдан көруді сұрап, компьютерде екенін айтты; жауап беру үшін дерек жеткілікті болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сұрады қайдан тарифті көруге болатынын және компьютерде екенін айтты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Бұл жалпы навигациялық сұрақ болды, жеке басын растау талап етілмеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил, где в веб-версии посмотреть тариф."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Нұсқау берілді, клиент оны орындап, тарифті көргенін растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Көрдім, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта клиенттің шағымы не қолайсыздық туралы белгісі болған жоқ, оператор әдепті болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог анық өтті, клиентке қайталап сұрауға тура келмеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу болды, алайда критерий талап ететін қорытынды немесе қосымша көмек ұсынылмады.",
+   "deduction_reason": "Қоштасқанымен, қорытынды жасамады және әрі қарай көмек ұсынбады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубое нарушение не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент веб-нұсқадан тарифін қайдан көруге болатынын сұрады.",
+  "operator_actions": "Оператор «Кабинет» бөліміндегі тарифтің орнын түсіндірді.",
+  "outcome": "Клиент тарифті тауып, растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент қай жерден қазіргі тарифін көре алатынын сұрады.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 35187,
+ "usage": {
+  "prompt_tokens": 11614,
+  "completion_tokens": 3805,
+  "cost": 0.003064
+ }
+}

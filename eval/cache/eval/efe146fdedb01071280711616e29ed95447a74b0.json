@@ -1,0 +1,163 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор сразу дал инструкцию, не поздоровавшись и не представившись.",
+   "deduction_reason": "В первой реплике отсутствуют приветствие и представление.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор начал с инструкции для настроек, не уточнив, использует ли клиент приложение или сайт. Клиенту пришлось пояснить, что он на сайте.",
+   "deduction_reason": "Оператор ответил, не выяснив необходимую для подходящей инструкции деталь — приложение или сайт.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Settings where? I'm on the company website and there's no login."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общего входа на сайт; идентификация для данных о счёте или защищённого действия не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: общая инструкция по входу на сайт."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Проблема со входом решена: клиент подтвердил, что рекомендация сработала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо объяснил назначение сайта и указал, где войти в аккаунт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось переспросить из-за неясной первой инструкции; затем оператор уточнил решение.",
+   "deduction_reason": "Клиенту пришлось уточнить, где искать настройки, после первой инструкции оператора.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Settings where? I'm on the company website and there's no login."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть только прощание без итога или предложения дальнейшей помощи.",
+   "deduction_reason": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог войти в аккаунт.",
+  "operator_actions": "Оператор указал сайт tradernet.global для входа.",
+  "outcome": "Клиент подтвердил, что рекомендация сработала."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Не удаётся войти в аккаунт.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "answered_without_needed_detail",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 52493,
+ "usage": {
+  "prompt_tokens": 5724,
+  "completion_tokens": 2575,
+  "cost": 0.00186
+ }
+}

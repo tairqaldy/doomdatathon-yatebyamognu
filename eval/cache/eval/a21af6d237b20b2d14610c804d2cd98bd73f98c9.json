@@ -1,0 +1,177 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен в первом ответе оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос понятен с самого начала; недостающих сведений для общего ответа не было."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о том, с какого счёта покупать акции; сведений по конкретному счёту оператор не раскрывал."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос и последующее уточнение клиента получили ответы по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге нет грубости или пренебрежения к клиенту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиент понял ответ и уточнил его без затруднений [10].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Не хватает итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      13,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнил, с какого счёта покупать акции и можно ли использовать средства на D-счёте.",
+  "operator_actions": "Оператор пояснил, что для покупки бумаг нужно ориентироваться на торговый счёт.",
+  "outcome": "Клиент подтвердил, что понял ответ."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "С какого счёта покупать акции?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Можно ли использовать для покупки деньги, которые видны на D-счёте?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Нужно ли в приказе ориентироваться на торговый счёт?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 22022,
+ "usage": {
+  "prompt_tokens": 5798,
+  "completion_tokens": 2431,
+  "cost": 0.001795
+ }
+}

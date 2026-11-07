@@ -1,0 +1,170 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор «Сәлем» деп амандасқанымен, аты-жөнін немесе компания атынан сөйлейтінін айтпады.",
+   "deduction_reason": "Алғашқы жауапта өзін таныстырмады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор жауап бермес бұрын клиент хабарлаған сайтты қайта сұрады.",
+   "deduction_reason": "Клиент бұрын айтқан ақпаратты қайта сұрады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Freedom Finance Global сайты. Операторға қосыңызшы."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Сұрау жеке басын растауды талап етпеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Жалпы навигация туралы сұрақ; сәйкестендіру қажет емес."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиентке tradernet.global веб-нұсқасын немесе Freedom Broker қосымшасын пайдалану ұсынылды; клиент сайттың ашылғанын растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Ашылды, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Клиенттің ақпаратты жоғарыда жазғанына наразылығына оператор кешірім сұрап немесе оны мойындап жауап бермеді.",
+   "deduction_reason": "Клиенттің белгілі ақпаратты қайта сұрауға қатысты наразылығына жауап бермеді.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жоғарыда жаздым ғой, Global сайты."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Белгілі ақпарат қайта сұралды, клиент оны қайталады.",
+   "deduction_reason": "Клиентке оператордың сұрағынан кейін ақпаратты қайталап айтуға тура келді.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жоғарыда жаздым ғой, Global сайты."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Диалог оператордың қорытынды репликасынсыз аяқталды; чаттың үзілуі туралы жүйелік оқиға жоқ.",
+   "deduction_reason": "Оператор қорытынды жасамады және қоштаспады.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      12
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Диалогта өрескел бұзушылық белгілері жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент Freedom Finance Global сайтынан жеке кабинетке кіру жолын сұрады.",
+  "operator_actions": "Оператор сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіруге болатынын айтты.",
+  "outcome": "Клиент сайттың ашылғанын растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не нашёл на сайте вход в личный кабинет.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_asked_known_info"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "client_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "asked_known_info",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 24501,
+ "usage": {
+  "prompt_tokens": 5812,
+  "completion_tokens": 2698,
+  "cost": 0.00193
+ }
+}

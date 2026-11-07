@@ -1,0 +1,154 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первой реплике.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала и не требовал дополнительных сведений.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, можно ли получить форму 1042-S на казахском."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о языке формы 1042-S."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "На вопрос клиента дан конкретный ответ по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге соблюдён вежливый тон.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жақсы, рақмет."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Сбой в ведении диалога не выявлен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Ләззатпын. Иә, 1042-S нысаны ағылшын тілінде беріледі."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Заключительная реплика содержит только прощание, без итога или предложения помощи.",
+   "deduction_reason": "Не добавлены итог или предложение дальнейшей помощи к прощанию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, доступна ли форма 1042-S на казахском языке.",
+  "operator_actions": "Оператор подтвердил, что форма выдаётся на английском языке.",
+  "outcome": "Вопрос клиента решён."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Можно ли получить форму 1042-S на казахском языке?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 13917,
+ "usage": {
+  "prompt_tokens": 5786,
+  "completion_tokens": 1757,
+  "cost": 0.001457
+ }
+}

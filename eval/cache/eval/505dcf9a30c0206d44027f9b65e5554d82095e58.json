@@ -1,0 +1,172 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен в первом ответе оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, запрос был понятен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, как пополнить счёт через отделение банка [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о пополнении и навигации; проверки или действий по конкретному счёту не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оба вопроса получили конкретные ответы, клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Нашёл, теперь понятно."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, повода для дополнительной реакции на недовольство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Отлично. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиент понял инструкцию и продолжил диалог без необходимости переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Для завершения не хватило итога или предложения дальнейшей помощи.",
+   "deduction_reason": "Оператор попрощался, но не подытожил решение и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Отлично. Хорошего дня!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнял, как пополнить брокерский счёт через банк и выбрать евро для перевода.",
+  "operator_actions": "Оператор указал путь к реквизитам в приложении и объяснил, что их можно скачать в нужной валюте.",
+  "outcome": "Клиент нашёл нужный раздел и подтвердил, что ему всё понятно."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как пополнить брокерский счёт переводом через отделение банка?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Можно ли выбрать евро при скачивании реквизитов?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21627,
+ "usage": {
+  "prompt_tokens": 5818,
+  "completion_tokens": 2499,
+  "cost": 0.001831
+ }
+}
