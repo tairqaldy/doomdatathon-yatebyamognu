@@ -1,0 +1,622 @@
+{
+ "mode": "models",
+ "at": "2026-11-07T14:52:59.831Z",
+ "base": null,
+ "defaults": {
+  "asr": "whisper-1",
+  "tts": "gpt-4o-mini-tts",
+  "voice": "sage"
+ },
+ "tts": {
+  "gpt-4o-mini-tts": {
+   "latency": {
+    "n": 12,
+    "p50": 1383,
+    "p95": 3028,
+    "min": 1094,
+    "max": 3028
+   },
+   "first_vs_whole": [
+    {
+     "lang": "RU",
+     "whole_ms": 2895,
+     "first_sentence_ms": 1487
+    },
+    {
+     "lang": "KZ",
+     "whole_ms": 2985,
+     "first_sentence_ms": 1264
+    },
+    {
+     "lang": "EN",
+     "whole_ms": 2562,
+     "first_sentence_ms": 1097
+    }
+   ],
+   "rows": [
+    {
+     "lang": "RU",
+     "chars": 45,
+     "latency_ms": 3028,
+     "kb": 76
+    },
+    {
+     "lang": "RU",
+     "chars": 51,
+     "latency_ms": 1383,
+     "kb": 69
+    },
+    {
+     "lang": "RU",
+     "chars": 47,
+     "latency_ms": 2285,
+     "kb": 80
+    },
+    {
+     "lang": "RU",
+     "chars": 52,
+     "latency_ms": 1175,
+     "kb": 90
+    },
+    {
+     "lang": "KZ",
+     "chars": 52,
+     "latency_ms": 2313,
+     "kb": 71
+    },
+    {
+     "lang": "KZ",
+     "chars": 48,
+     "latency_ms": 1268,
+     "kb": 92
+    },
+    {
+     "lang": "KZ",
+     "chars": 48,
+     "latency_ms": 2162,
+     "kb": 93
+    },
+    {
+     "lang": "KZ",
+     "chars": 52,
+     "latency_ms": 1143,
+     "kb": 74
+    },
+    {
+     "lang": "EN",
+     "chars": 46,
+     "latency_ms": 2144,
+     "kb": 71
+    },
+    {
+     "lang": "EN",
+     "chars": 39,
+     "latency_ms": 1094,
+     "kb": 60
+    },
+    {
+     "lang": "EN",
+     "chars": 54,
+     "latency_ms": 2186,
+     "kb": 68
+    },
+    {
+     "lang": "EN",
+     "chars": 74,
+     "latency_ms": 1301,
+     "kb": 82
+    }
+   ]
+  },
+  "tts-1": {
+   "latency": {
+    "n": 12,
+    "p50": 1973,
+    "p95": 2790,
+    "min": 1134,
+    "max": 2790
+   },
+   "first_vs_whole": [
+    {
+     "lang": "RU",
+     "whole_ms": 3659,
+     "first_sentence_ms": 1691
+    },
+    {
+     "lang": "KZ",
+     "whole_ms": 2646,
+     "first_sentence_ms": 1925
+    },
+    {
+     "lang": "EN",
+     "whole_ms": 2915,
+     "first_sentence_ms": 1602
+    }
+   ],
+   "rows": [
+    {
+     "lang": "RU",
+     "chars": 45,
+     "latency_ms": 1973,
+     "kb": 41
+    },
+    {
+     "lang": "RU",
+     "chars": 51,
+     "latency_ms": 2212,
+     "kb": 53
+    },
+    {
+     "lang": "RU",
+     "chars": 47,
+     "latency_ms": 1905,
+     "kb": 51
+    },
+    {
+     "lang": "RU",
+     "chars": 52,
+     "latency_ms": 2097,
+     "kb": 53
+    },
+    {
+     "lang": "KZ",
+     "chars": 52,
+     "latency_ms": 1989,
+     "kb": 39
+    },
+    {
+     "lang": "KZ",
+     "chars": 48,
+     "latency_ms": 2790,
+     "kb": 51
+    },
+    {
+     "lang": "KZ",
+     "chars": 48,
+     "latency_ms": 2553,
+     "kb": 46
+    },
+    {
+     "lang": "KZ",
+     "chars": 52,
+     "latency_ms": 1134,
+     "kb": 47
+    },
+    {
+     "lang": "EN",
+     "chars": 46,
+     "latency_ms": 1740,
+     "kb": 34
+    },
+    {
+     "lang": "EN",
+     "chars": 39,
+     "latency_ms": 1279,
+     "kb": 38
+    },
+    {
+     "lang": "EN",
+     "chars": 54,
+     "latency_ms": 2304,
+     "kb": 54
+    },
+    {
+     "lang": "EN",
+     "chars": 74,
+     "latency_ms": 1405,
+     "kb": 57
+    }
+   ]
+  }
+ },
+ "asr": {
+  "whisper-1": {
+   "latency": {
+    "n": 12,
+    "p50": 1295,
+    "p95": 2655,
+    "min": 749,
+    "max": 2655
+   },
+   "mean_cer": 0.064,
+   "cer_by_lang": {
+    "RU": 0.012,
+    "KZ": 0.11,
+    "EN": 0.069
+   },
+   "errors": 0,
+   "rows": [
+    {
+     "lang": "RU",
+     "ref": "Как пополнить счёт на пятьдесят тысяч тенге?",
+     "hyp": "Как пополнить счет на пятьдесят тысяч тинге.",
+     "cer": 0.047,
+     "latency_ms": 1260
+    },
+    {
+     "lang": "RU",
+     "ref": "Хочу вывести деньги на карту Каспи.",
+     "hyp": "Хочу вывести деньги на карту Каспи.",
+     "cer": 0,
+     "latency_ms": 1608
+    },
+    {
+     "lang": "RU",
+     "ref": "Какой у вас тариф на покупку облигаций?",
+     "hyp": "Какой у вас тариф на покупку облигаций?",
+     "cer": 0,
+     "latency_ms": 820
+    },
+    {
+     "lang": "RU",
+     "ref": "Позовите, пожалуйста, живого специалиста.",
+     "hyp": "Позовите, пожалуйста, живого специалиста.",
+     "cer": 0,
+     "latency_ms": 1640
+    },
+    {
+     "lang": "KZ",
+     "ref": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "hyp": "Шотты елумың тенгеге қалай толықтырамын.",
+     "cer": 0.05,
+     "latency_ms": 1795
+    },
+    {
+     "lang": "KZ",
+     "ref": "Ақшаны Каспи картасына шығарғым келеді.",
+     "hyp": "АҚШАНЫ КАСПИ КАРТАСЫНА ЖһАРВЫМ КЕЛЕДІ!",
+     "cer": 0.105,
+     "latency_ms": 1083
+    },
+    {
+     "lang": "KZ",
+     "ref": "Облигация сатып алу тарифі қандай?",
+     "hyp": "Облигация сата-полу тарифы КАНДАЙ.",
+     "cer": 0.182,
+     "latency_ms": 2655
+    },
+    {
+     "lang": "KZ",
+     "ref": "Маманды шақырыңызшы.",
+     "hyp": "Маманды шақырынышшы",
+     "cer": 0.105,
+     "latency_ms": 749
+    },
+    {
+     "lang": "EN",
+     "ref": "How do I add fifty thousand tenge to my account?",
+     "hyp": "How do I add 50,000 Tenge to my account?",
+     "cer": 0.277,
+     "latency_ms": 762
+    },
+    {
+     "lang": "EN",
+     "ref": "I want to withdraw money to my card.",
+     "hyp": "I want to withdraw money to my card.",
+     "cer": 0,
+     "latency_ms": 1695
+    },
+    {
+     "lang": "EN",
+     "ref": "What is your fee for buying bonds?",
+     "hyp": "What is your fee for buying bonds?",
+     "cer": 0,
+     "latency_ms": 1800
+    },
+    {
+     "lang": "EN",
+     "ref": "Please connect me to a real person.",
+     "hyp": "Please connect me to a real person.",
+     "cer": 0,
+     "latency_ms": 1295
+    }
+   ]
+  },
+  "gpt-4o-mini-transcribe": {
+   "latency": {
+    "n": 12,
+    "p50": 861,
+    "p95": 2350,
+    "min": 638,
+    "max": 2350
+   },
+   "mean_cer": 0.131,
+   "cer_by_lang": {
+    "RU": 0.037,
+    "KZ": 0.286,
+    "EN": 0.069
+   },
+   "errors": 0,
+   "rows": [
+    {
+     "lang": "RU",
+     "ref": "Как пополнить счёт на пятьдесят тысяч тенге?",
+     "hyp": "Как пополнить счёт на пятьдесят тысяч тенге?",
+     "cer": 0,
+     "latency_ms": 861
+    },
+    {
+     "lang": "RU",
+     "ref": "Хочу вывести деньги на карту Каспи.",
+     "hyp": "Хочу вывести деньги на карту Kaspi.",
+     "cer": 0.147,
+     "latency_ms": 959
+    },
+    {
+     "lang": "RU",
+     "ref": "Какой у вас тариф на покупку облигаций?",
+     "hyp": "Какой у вас тариф на покупку облигаций?",
+     "cer": 0,
+     "latency_ms": 638
+    },
+    {
+     "lang": "RU",
+     "ref": "Позовите, пожалуйста, живого специалиста.",
+     "hyp": "Позовите, пожалуйста, живого специалиста.",
+     "cer": 0,
+     "latency_ms": 2350
+    },
+    {
+     "lang": "KZ",
+     "ref": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "hyp": "Шотты елу ман теңгеге қалай толықтырамын?",
+     "cer": 0.05,
+     "latency_ms": 1274
+    },
+    {
+     "lang": "KZ",
+     "ref": "Ақшаны Каспи картасына шығарғым келеді.",
+     "hyp": "Ақшаны Каспий картасына шығарғым келеді.",
+     "cer": 0.026,
+     "latency_ms": 916
+    },
+    {
+     "lang": "KZ",
+     "ref": "Облигация сатып алу тарифі қандай?",
+     "hyp": "Облигация сатапалу тарифа Хандай.",
+     "cer": 0.121,
+     "latency_ms": 1108
+    },
+    {
+     "lang": "KZ",
+     "ref": "Маманды шақырыңызшы.",
+     "hyp": "ماماندا شاتانىش",
+     "cer": 0.947,
+     "latency_ms": 677
+    },
+    {
+     "lang": "EN",
+     "ref": "How do I add fifty thousand tenge to my account?",
+     "hyp": "How do I add 50,000 tenge to my account?",
+     "cer": 0.277,
+     "latency_ms": 787
+    },
+    {
+     "lang": "EN",
+     "ref": "I want to withdraw money to my card.",
+     "hyp": "I want to withdraw money to my card.",
+     "cer": 0,
+     "latency_ms": 725
+    },
+    {
+     "lang": "EN",
+     "ref": "What is your fee for buying bonds?",
+     "hyp": "What is your fee for buying bonds?",
+     "cer": 0,
+     "latency_ms": 894
+    },
+    {
+     "lang": "EN",
+     "ref": "Please connect me to a real person.",
+     "hyp": "Please connect me to a real person.",
+     "cer": 0,
+     "latency_ms": 754
+    }
+   ]
+  },
+  "gpt-4o-transcribe": {
+   "latency": {
+    "n": 12,
+    "p50": 844,
+    "p95": 1166,
+    "min": 763,
+    "max": 1166
+   },
+   "mean_cer": 0.056,
+   "cer_by_lang": {
+    "RU": 0.058,
+    "KZ": 0.11,
+    "EN": 0
+   },
+   "errors": 0,
+   "rows": [
+    {
+     "lang": "RU",
+     "ref": "Как пополнить счёт на пятьдесят тысяч тенге?",
+     "hyp": "Как пополнить счет на 50 тысяч тенге?",
+     "cer": 0.233,
+     "latency_ms": 839
+    },
+    {
+     "lang": "RU",
+     "ref": "Хочу вывести деньги на карту Каспи.",
+     "hyp": "Хочу вывести деньги на карту Каспи.",
+     "cer": 0,
+     "latency_ms": 1019
+    },
+    {
+     "lang": "RU",
+     "ref": "Какой у вас тариф на покупку облигаций?",
+     "hyp": "Какой у вас тариф на покупку облигаций?",
+     "cer": 0,
+     "latency_ms": 1086
+    },
+    {
+     "lang": "RU",
+     "ref": "Позовите, пожалуйста, живого специалиста.",
+     "hyp": "Позовите, пожалуйста, живого специалиста.",
+     "cer": 0,
+     "latency_ms": 775
+    },
+    {
+     "lang": "KZ",
+     "ref": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "hyp": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "cer": 0,
+     "latency_ms": 782
+    },
+    {
+     "lang": "KZ",
+     "ref": "Ақшаны Каспи картасына шығарғым келеді.",
+     "hyp": "Ақшаны Каспий картасына шығарғым келеді.",
+     "cer": 0.026,
+     "latency_ms": 844
+    },
+    {
+     "lang": "KZ",
+     "ref": "Облигация сатып алу тарифі қандай?",
+     "hyp": "Облигация са тпалу тарифа кандай?",
+     "cer": 0.152,
+     "latency_ms": 781
+    },
+    {
+     "lang": "KZ",
+     "ref": "Маманды шақырыңызшы.",
+     "hyp": "Маманды шахтарынышшы.",
+     "cer": 0.263,
+     "latency_ms": 763
+    },
+    {
+     "lang": "EN",
+     "ref": "How do I add fifty thousand tenge to my account?",
+     "hyp": "How do I add fifty thousand tenge to my account?",
+     "cer": 0,
+     "latency_ms": 863
+    },
+    {
+     "lang": "EN",
+     "ref": "I want to withdraw money to my card.",
+     "hyp": "I want to withdraw money to my card.",
+     "cer": 0,
+     "latency_ms": 925
+    },
+    {
+     "lang": "EN",
+     "ref": "What is your fee for buying bonds?",
+     "hyp": "What is your fee for buying bonds?",
+     "cer": 0,
+     "latency_ms": 897
+    },
+    {
+     "lang": "EN",
+     "ref": "Please connect me to a real person.",
+     "hyp": "Please connect me to a real person.",
+     "cer": 0,
+     "latency_ms": 1166
+    }
+   ]
+  },
+  "gpt-transcribe": {
+   "latency": {
+    "n": 12,
+    "p50": 1317,
+    "p95": 2209,
+    "min": 775,
+    "max": 2209
+   },
+   "mean_cer": 0.051,
+   "cer_by_lang": {
+    "RU": 0.058,
+    "KZ": 0.026,
+    "EN": 0.069
+   },
+   "errors": 0,
+   "rows": [
+    {
+     "lang": "RU",
+     "ref": "Как пополнить счёт на пятьдесят тысяч тенге?",
+     "hyp": "Как пополнить счет на 50 тысяч тенге?",
+     "cer": 0.233,
+     "latency_ms": 1140
+    },
+    {
+     "lang": "RU",
+     "ref": "Хочу вывести деньги на карту Каспи.",
+     "hyp": "Хочу вывести деньги на карту Каспи.",
+     "cer": 0,
+     "latency_ms": 1912
+    },
+    {
+     "lang": "RU",
+     "ref": "Какой у вас тариф на покупку облигаций?",
+     "hyp": "Какой у вас тариф на покупку облигаций?",
+     "cer": 0,
+     "latency_ms": 1974
+    },
+    {
+     "lang": "RU",
+     "ref": "Позовите, пожалуйста, живого специалиста.",
+     "hyp": "Позовите, пожалуйста, живого специалиста.",
+     "cer": 0,
+     "latency_ms": 1954
+    },
+    {
+     "lang": "KZ",
+     "ref": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "hyp": "Шотты елу мың теңгеге қалай толықтырамын?",
+     "cer": 0,
+     "latency_ms": 775
+    },
+    {
+     "lang": "KZ",
+     "ref": "Ақшаны Каспи картасына шығарғым келеді.",
+     "hyp": "Ақшаны Каспи картасына шығарғым келеді.",
+     "cer": 0,
+     "latency_ms": 1224
+    },
+    {
+     "lang": "KZ",
+     "ref": "Облигация сатып алу тарифі қандай?",
+     "hyp": "Облигация сатып алу тарифі қандай?",
+     "cer": 0,
+     "latency_ms": 1887
+    },
+    {
+     "lang": "KZ",
+     "ref": "Маманды шақырыңызшы.",
+     "hyp": "Маманды шақырынышшы.",
+     "cer": 0.105,
+     "latency_ms": 1317
+    },
+    {
+     "lang": "EN",
+     "ref": "How do I add fifty thousand tenge to my account?",
+     "hyp": "How do I add 50,000 tenge to my account?",
+     "cer": 0.277,
+     "latency_ms": 2209
+    },
+    {
+     "lang": "EN",
+     "ref": "I want to withdraw money to my card.",
+     "hyp": "I want to withdraw money to my card.",
+     "cer": 0,
+     "latency_ms": 1098
+    },
+    {
+     "lang": "EN",
+     "ref": "What is your fee for buying bonds?",
+     "hyp": "What is your fee for buying bonds?",
+     "cer": 0,
+     "latency_ms": 1554
+    },
+    {
+     "lang": "EN",
+     "ref": "Please connect me to a real person.",
+     "hyp": "Please connect me to a real person.",
+     "cer": 0,
+     "latency_ms": 898
+    }
+   ]
+  }
+ }
+}

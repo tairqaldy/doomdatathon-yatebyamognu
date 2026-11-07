@@ -1,0 +1,498 @@
+{
+ "mode": "http",
+ "at": "2026-11-07T14:59:47.091Z",
+ "base": "http://localhost:3031",
+ "defaults": {
+  "asr": "whisper-1",
+  "tts": "gpt-4o-mini-tts",
+  "voice": "sage"
+ },
+ "tts": {
+  "cold_wall": {
+   "n": 11,
+   "p50": 1374,
+   "p95": 1750,
+   "min": 1208,
+   "max": 1750
+  },
+  "cached_wall": {
+   "n": 12,
+   "p50": 3,
+   "p95": 4,
+   "min": 2,
+   "max": 4
+  },
+  "cold_server": {
+   "n": 11,
+   "p50": 1371,
+   "p95": 1747,
+   "min": 1205,
+   "max": 1747
+  },
+  "cached_server": {
+   "n": 12,
+   "p50": 0,
+   "p95": 1,
+   "min": 0,
+   "max": 1
+  },
+  "cold_was_cached": 1,
+  "warm_cached": 12,
+  "rows": [
+   {
+    "lang": "RU",
+    "chars": 45,
+    "cold": {
+     "status": 200,
+     "wall_ms": 17,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 2,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "RU",
+    "chars": 51,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1750,
+     "server_ms": 1747,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 4,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "RU",
+    "chars": 47,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1561,
+     "server_ms": 1558,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "RU",
+    "chars": 52,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1374,
+     "server_ms": 1371,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "KZ",
+    "chars": 52,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1211,
+     "server_ms": 1206,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "KZ",
+    "chars": 48,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1280,
+     "server_ms": 1277,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 4,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "KZ",
+    "chars": 48,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1499,
+     "server_ms": 1496,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "KZ",
+    "chars": 52,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1208,
+     "server_ms": 1205,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "EN",
+    "chars": 46,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1247,
+     "server_ms": 1244,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "EN",
+    "chars": 39,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1355,
+     "server_ms": 1353,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "EN",
+    "chars": 54,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1477,
+     "server_ms": 1474,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 1,
+     "cached": true,
+     "tier": "memory"
+    }
+   },
+   {
+    "lang": "EN",
+    "chars": 74,
+    "cold": {
+     "status": 200,
+     "wall_ms": 1385,
+     "server_ms": 1382,
+     "cached": false,
+     "tier": "none"
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": "memory"
+    }
+   }
+  ]
+ },
+ "asr": {
+  "cold_wall": {
+   "n": 12,
+   "p50": 1197,
+   "p95": 2515,
+   "min": 691,
+   "max": 2515
+  },
+  "cached_wall": {
+   "n": 12,
+   "p50": 3,
+   "p95": 5,
+   "min": 2,
+   "max": 5
+  },
+  "cold_server": {
+   "n": 12,
+   "p50": 1194,
+   "p95": 2513,
+   "min": 688,
+   "max": 2513
+  },
+  "cached_server": {
+   "n": 12,
+   "p50": 0,
+   "p95": 1,
+   "min": 0,
+   "max": 1
+  },
+  "cold_was_cached": 0,
+  "warm_cached": 12,
+  "rows": [
+   {
+    "lang": "RU",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1586,
+     "server_ms": 1582,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "RU",
+    "cold": {
+     "status": 200,
+     "wall_ms": 773,
+     "server_ms": 771,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 5,
+     "server_ms": 1,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "RU",
+    "cold": {
+     "status": 200,
+     "wall_ms": 2002,
+     "server_ms": 1999,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 1,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "RU",
+    "cold": {
+     "status": 200,
+     "wall_ms": 780,
+     "server_ms": 777,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "KZ",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1352,
+     "server_ms": 1350,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 2,
+     "server_ms": 1,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "KZ",
+    "cold": {
+     "status": 200,
+     "wall_ms": 2515,
+     "server_ms": 2513,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "KZ",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1064,
+     "server_ms": 1061,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "KZ",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1197,
+     "server_ms": 1194,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 1,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "EN",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1410,
+     "server_ms": 1408,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 4,
+     "server_ms": 1,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "EN",
+    "cold": {
+     "status": 200,
+     "wall_ms": 691,
+     "server_ms": 688,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 4,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "EN",
+    "cold": {
+     "status": 200,
+     "wall_ms": 998,
+     "server_ms": 996,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   },
+   {
+    "lang": "EN",
+    "cold": {
+     "status": 200,
+     "wall_ms": 1853,
+     "server_ms": 1851,
+     "cached": false,
+     "tier": null
+    },
+    "warm": {
+     "status": 200,
+     "wall_ms": 3,
+     "server_ms": 0,
+     "cached": true,
+     "tier": null
+    }
+   }
+  ]
+ }
+}
