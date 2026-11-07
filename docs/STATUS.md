@@ -17,7 +17,7 @@ Contracts touched: CONTRACTS §5 additive `/api/sessions` + `health.postgres`.
 How to verify: `node scripts/pg-ping.mjs` (exits 0 if unset); `GET /api/sessions` → `{postgres:false,sessions:[]}` without the URL.
 
 ### 2026-11-07 16:20 · team · tair/claude · #10 · merged 56d069f
-**Live now:** https://freedom-cqa.vercel.app/landing-tair/ (landing) · /support/ (customer chat) · /admin/ (passcode `freedom`) · / (preview hub)
+**Live now:** https://freedom-cqa.vercel.app/landing-tair/ (landing) · /support/ (customer chat) · /admin/ (passcode: from the team when `ADMIN_PASSCODE` is set in Vercel, else `freedom`) · / (preview hub)
 Done (full product loop from #10):
 - `/landing-tair/`: surreal story landing, 8 ORIGINAL images (gpt-image-2.6, IP-safe), scroll-film transitions, demo-video placeholder (swap comment in HTML), CTA → /support/, no admin link
 - `/support/`: AIM bot via `/api/chat` (grounded on real DEV operator answers, ~2 s), honest handoff card (operator sees chat, < 2 min, queue line after 90 s), live operator messages, CSAT, background QA via `/api/evaluate`
