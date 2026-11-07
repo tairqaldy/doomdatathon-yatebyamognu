@@ -2,7 +2,7 @@
 
 What a careful human QA reviewer would answer for each criterion, used by `eval/accuracy.ts` to measure any evaluator (mock today, LLM next). Issue #3.
 
-**Status: all files are `draft`.** They were drafted by an agent and **must be checked by a human** before we quote any accuracy number. Otherwise we only measure one model against another.
+**Status: all 19 files are `reviewed`** (2026-11-07). Drafted by an agent, then checked label by label by a human reviewer, who accepted every answer as drafted. New files start as `draft` and only count once a human flips them to `reviewed`; use `--reviewed-only` for numbers you quote.
 
 ## Coverage (19 DEV dialogs, checklist `freedom-chat` v1)
 | Language | Dialogs |
