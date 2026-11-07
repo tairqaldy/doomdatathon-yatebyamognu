@@ -1,0 +1,208 @@
+{
+  "group": "DEV",
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v3",
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-07T13:08:56.812Z",
+  "n": 19,
+  "errors": 0,
+  "cached": 0,
+  "fresh_calls": 19,
+  "cost_usd_total": 0.02206,
+  "cost_usd_per_eval": 0.00116,
+  "latency_ms_p50": 16325,
+  "latency_ms_p95": 31115,
+  "rows": [
+    {
+      "id": "p1-ru-006",
+      "lang": "RU",
+      "cached": false,
+      "ms": 12765,
+      "model_ms": 11586,
+      "cost": 0.000855,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-012",
+      "lang": "RU",
+      "cached": false,
+      "ms": 17658,
+      "model_ms": 16301,
+      "cost": 0.00111,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-003",
+      "lang": "RU",
+      "cached": false,
+      "ms": 20193,
+      "model_ms": 19053,
+      "cost": 0.001159,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-009",
+      "lang": "RU",
+      "cached": false,
+      "ms": 24452,
+      "model_ms": 23176,
+      "cost": 0.001465,
+      "total": 41,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-018",
+      "lang": "RU",
+      "cached": false,
+      "ms": 16749,
+      "model_ms": 16325,
+      "cost": 0.001112,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-025",
+      "lang": "RU",
+      "cached": false,
+      "ms": 10692,
+      "model_ms": 10347,
+      "cost": 0.000805,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-022",
+      "lang": "RU",
+      "cached": false,
+      "ms": 17415,
+      "model_ms": 17084,
+      "cost": 0.001186,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-029",
+      "lang": "RU",
+      "cached": false,
+      "ms": 15261,
+      "model_ms": 14925,
+      "cost": 0.001099,
+      "total": 45,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-003",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 15901,
+      "model_ms": 15373,
+      "cost": 0.001105,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-011",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 12795,
+      "model_ms": 12457,
+      "cost": 0.001047,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-008",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 17463,
+      "model_ms": 17157,
+      "cost": 0.0012,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-006",
+      "lang": "EN",
+      "cached": false,
+      "ms": 10632,
+      "model_ms": 10322,
+      "cost": 0.000883,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-013",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 19197,
+      "model_ms": 18903,
+      "cost": 0.001179,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-009",
+      "lang": "EN",
+      "cached": false,
+      "ms": 12883,
+      "model_ms": 12580,
+      "cost": 0.000866,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-015",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 21803,
+      "model_ms": 21474,
+      "cost": 0.001335,
+      "total": 41.17,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-015",
+      "lang": "EN",
+      "cached": false,
+      "ms": 12513,
+      "model_ms": 12198,
+      "cost": 0.000882,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-013",
+      "lang": "EN",
+      "cached": false,
+      "ms": 22562,
+      "model_ms": 22214,
+      "cost": 0.001431,
+      "total": 55.38,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-014",
+      "lang": "EN",
+      "cached": false,
+      "ms": 24193,
+      "model_ms": 23682,
+      "cost": 0.001553,
+      "total": 36,
+      "problems": 0
+    },
+    {
+      "id": "p4-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 31442,
+      "model_ms": 31115,
+      "cost": 0.001786,
+      "total": 43.34,
+      "problems": 0
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась на английском и представилась в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Для ответа на исходный вопрос было достаточно данных: клиент спрашивал, где получить реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где получить реквизиты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Оператор дала общую инструкцию по навигации в приложении; идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался общего пути в приложении, а не данных конкретного счёта или защищённого действия."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор указала путь к реквизитам и пояснила, что перед скачиванием нужно выбрать нужную валюту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общалась вежливо и поблагодарила клиента в ответ на его благодарность.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Ответы понятные, но на вопрос о валюте оператор ответила примерно через 50 секунд без предупреждения об ожидании.",
+   "deduction_reason": "Снижено за ожидание без предупреждения.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не предложила дальнейшую помощь и не подвела итог.",
+   "deduction_reason": "Снижено за прощание без итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложений услуг в обход компании или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужны были реквизиты для пополнения брокерского счёта через отделение банка.",
+  "operator_actions": "Оператор указала путь в приложении и объяснила, как выбрать валюту перед скачиванием реквизитов.",
+  "outcome": "Клиент нашёл реквизиты и поблагодарил оператора."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v4",
+ "usage": {
+  "prompt_tokens": 2605,
+  "completion_tokens": 2126,
+  "cost": 0.001324
+ },
+ "latency_ms": 20972,
+ "attempts": 1
+}

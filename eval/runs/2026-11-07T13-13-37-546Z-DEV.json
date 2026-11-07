@@ -1,0 +1,228 @@
+{
+  "group": "DEV",
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v4",
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-07T13:13:37.546Z",
+  "n": 21,
+  "errors": 0,
+  "cached": 0,
+  "fresh_calls": 21,
+  "cost_usd_total": 0.02694,
+  "cost_usd_per_eval": 0.00128,
+  "latency_ms_p50": 18841,
+  "latency_ms_p95": 26014,
+  "rows": [
+    {
+      "id": "p1-ru-022",
+      "lang": "RU",
+      "cached": false,
+      "ms": 15433,
+      "model_ms": 14588,
+      "cost": 0.001084,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-012",
+      "lang": "RU",
+      "cached": false,
+      "ms": 15478,
+      "model_ms": 14644,
+      "cost": 0.001021,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-009",
+      "lang": "RU",
+      "cached": false,
+      "ms": 15478,
+      "model_ms": 14689,
+      "cost": 0.001103,
+      "total": 21,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-006",
+      "lang": "RU",
+      "cached": false,
+      "ms": 16560,
+      "model_ms": 15823,
+      "cost": 0.001087,
+      "total": 95.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-018",
+      "lang": "RU",
+      "cached": false,
+      "ms": 17291,
+      "model_ms": 16475,
+      "cost": 0.001113,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-003",
+      "lang": "RU",
+      "cached": false,
+      "ms": 26847,
+      "model_ms": 26014,
+      "cost": 0.001503,
+      "total": 56.88,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-025",
+      "lang": "RU",
+      "cached": false,
+      "ms": 11753,
+      "model_ms": 11406,
+      "cost": 0.00084,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-011",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 11989,
+      "model_ms": 11654,
+      "cost": 0.000887,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-008",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 19183,
+      "model_ms": 18841,
+      "cost": 0.001178,
+      "total": 32.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-029",
+      "lang": "RU",
+      "cached": false,
+      "ms": 21695,
+      "model_ms": 21306,
+      "cost": 0.001343,
+      "total": 45,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-003",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 25757,
+      "model_ms": 25331,
+      "cost": 0.001558,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-006",
+      "lang": "EN",
+      "cached": false,
+      "ms": 17527,
+      "model_ms": 17180,
+      "cost": 0.001201,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-009",
+      "lang": "EN",
+      "cached": false,
+      "ms": 11889,
+      "model_ms": 11504,
+      "cost": 0.000902,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-013",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 21310,
+      "model_ms": 20972,
+      "cost": 0.001435,
+      "total": 85.38,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-015",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 23184,
+      "model_ms": 22663,
+      "cost": 0.00153,
+      "total": 58.82,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-013",
+      "lang": "EN",
+      "cached": false,
+      "ms": 19890,
+      "model_ms": 19550,
+      "cost": 0.001264,
+      "total": 78.46,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-014",
+      "lang": "EN",
+      "cached": false,
+      "ms": 20717,
+      "model_ms": 20343,
+      "cost": 0.001304,
+      "total": 24.7,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-015",
+      "lang": "EN",
+      "cached": false,
+      "ms": 16858,
+      "model_ms": 16558,
+      "cost": 0.001047,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p4-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 19513,
+      "model_ms": 19206,
+      "cost": 0.001488,
+      "total": 43.34,
+      "problems": 0
+    },
+    {
+      "id": "p4-ru-004",
+      "lang": "RU",
+      "cached": false,
+      "ms": 24213,
+      "model_ms": 23807,
+      "cost": 0.001957,
+      "total": 64.22,
+      "problems": 0
+    },
+    {
+      "id": "p4-ru-003",
+      "lang": "RU",
+      "cached": false,
+      "ms": 29195,
+      "model_ms": 28889,
+      "cost": 0.002097,
+      "total": 70,
+      "problems": 0
+    }
+  ]
+}

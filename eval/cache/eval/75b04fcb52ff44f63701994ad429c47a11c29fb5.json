@@ -1,0 +1,113 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась на английском и представилась в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Julia. Yes, the 1042-S form is provided in English."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос о языке формы был однозначным, дополнительных данных для ответа не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, выпускается ли форма 1042-S на английском."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Общий вопрос о языке формы не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался общей информации о форме, а не данных счёта или защищённого действия."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор прямо подтвердила, что форма предоставляется на английском.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Julia. Yes, the 1042-S form is provided in English."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор была вежлива; клиент не выражал недовольства или неудобства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Happy to help. Goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ был ясным и по существу; явного ожидания во время работы оператора не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Julia. Yes, the 1042-S form is provided in English."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не предложила дальнейшую помощь и не подвела итог в завершающей реплике.",
+   "deduction_reason": "Снижение за прощание без предложения дальнейшей помощи или краткого итога.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Happy to help. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, обходных платных предложений или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Julia. Yes, the 1042-S form is provided in English."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел подтвердить, на каком языке выпускается форма 1042-S.",
+  "operator_actions": "Оператор поздоровалась, представилась и подтвердила, что форма предоставляется на английском.",
+  "outcome": "Клиент получил ответ и завершил разговор."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2497,
+  "completion_tokens": 1466,
+  "cost": 0.000983
+ },
+ "latency_ms": 13720,
+ "attempts": 1
+}

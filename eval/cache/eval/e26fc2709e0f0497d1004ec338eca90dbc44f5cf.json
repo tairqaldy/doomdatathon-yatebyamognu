@@ -1,0 +1,123 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала: клиенту нужна выписка за прошлый год.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент указал нужный документ и период."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Оператор давал общую инструкцию по навигации в приложении; идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общая инструкция по разделу Reports and Documents и выбору Broker Report."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор объяснил, как выбрать отчёт и период, и подтвердил, что его нужно скачать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался вежливо; клиент не выражал недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы были ясными и последовательными; клиент подтвердил, что справился.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор попрощался после того, как клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложений услуг в обход компании или раскрытия конфиденциальных данных нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужна была брокерская выписка за прошлый год и помощь с её скачиванием.",
+  "operator_actions": "Оператор объяснил, где выбрать тип отчёта и нужный период, и подтвердил, что отчёт нужно скачать.",
+  "outcome": "Клиент скачал отчёт и подтвердил, что всё получилось."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2548,
+  "completion_tokens": 1144,
+  "cost": 0.000827
+ },
+ "latency_ms": 10210,
+ "attempts": 1
+}

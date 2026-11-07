@@ -1,0 +1,118 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос и используемый канал были указаны сразу; уточнения для ответа не требовались.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где посмотреть тарифный план на сайте."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для общей навигационной подсказки по сайту идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался только того, где на сайте посмотреть тарифный план; защищённых действий или данных счёта не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор указал конкретный раздел и место, где отображается тариф; клиент подтвердил, что нашёл его.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Found it."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо предложил нужный клиенту способ посмотреть тариф без скачивания отчёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ был ясным и последовательным; ожидания во время работы оператора не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Попрощался без краткого итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Great. Thanks for reaching out, and goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, обходного предложения платной услуги или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, где на сайте посмотреть текущий тарифный план.",
+  "operator_actions": "Оператор подсказал, где найти тариф в разделе аккаунта.",
+  "outcome": "Клиент нашёл план."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2513,
+  "completion_tokens": 1177,
+  "cost": 0.00084
+ },
+ "latency_ms": 11208,
+ "attempts": 1
+}

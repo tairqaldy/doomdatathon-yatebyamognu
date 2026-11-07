@@ -8,6 +8,22 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 18:20 · lane-c · claude · #13 · branch c/13-prompt-v2
+Done: evaluator prompt **eval-v4** (default model `openai:gpt-6-luna`). Five general rules added to the SYSTEM prompt in `lib/evaluator.js` (by criterion meaning, not id, so a replaced criterion still works): N/A for need-identification on clear requests; N/A for closing when the system/client ended the chat; a hand-off counts as a correct next step when the client is told what happens next, gross violations don't lower the consultation, client left before asking → consultation N/A; re-asking caused by the operator → "client has to re-ask" step, bot→operator queue time ignored; account facts before verification = disclosure (gross error + identification "no"), but steps of the verification procedure itself are not.
+| 19 reviewed gold dialogs | eval-v1 | v2 (rejected) | v3 (rejected) | **eval-v4** |
+|---|---|---|---|---|
+| strict / lenient | 86.2 / 94.7 | 89.5 / 96.7 | 92.8 / 96.7 | **91.4 / 96.7** |
+| N/A recall | 78.6 | 89.3 | 92.9 | **96.4** |
+| gross-error recall | 6/7 | 7/7 | 7/7 | **7/7**, 0 FP |
+| total MAE | 7.83 | 6.97 | 5.98 | **6.06** |
+v2 rejected: scored correct hand-offs as 5 and lost 2 dialogs on c07. v3 rejected after spot-checking non-gold dialogs: it raised gross-error flags on two real calls (p4-ru-003/004) where the operator was only running the verification procedure. v4 fixes that (both calls: no gross error, identification yes) and no criterion is below v1.
+All 65 DEV re-run on v4: $0.050 for 44 fresh calls, **$0.00114/eval**, p50 14.9 s, 0 errors; `data/evaluations/DEV.json` = eval-v4. Outside the gold set 58/368 answers (15.8%) changed vs v1, mean total −0.93; main moves c02 yes→na (15), c07 yes→no (11) and no→yes (5); gross-error flags unchanged (only p1-ru-023).
+Judgment call for a human: c07 now reads the checklist literally, so "Пожалуйста. Хорошего дня!" with no summary and no offer of help = "no" (≈11 non-gold chats lose 5 points). Revert that rule if the team reads it differently.
+Known gap: c06 still 57.9% strict; the model gives 4 to clear replies in the off-company-offer dialogs (p1-en-013, p1-ru-022) and 10 in p1-kz-015.
+Paid runs this branch: v2 $0.021, v3 $0.022 + $0.053, v4 $0.027 + $0.050 = **$0.17**. All answers cached in `eval/cache/`.
+Contracts touched: none (schema unchanged).
+How to verify: `node eval/accuracy.ts eval/runs/2026-11-07T13-13-37-546Z-DEV-openai_gpt-6-luna.evaluations.json --reviewed-only --verbose`
+
 ### 2026-11-07 17:30 · lane-b · postgres store · branch b/postgres-store
 Done: optional Postgres client (`lib/postgres.js`, no npm driver): Neon SQL-over-HTTP on `*.neon.tech`, TCP/TLS + SCRAM/MD5 otherwise. Table `cqa_kv` holds live sessions. `GET/PUT/DELETE /api/sessions`; `shared/live-store.js` hydrates and polls when `postgres: true`, otherwise localStorage. `/api/health` has `postgres` boolean. `node scripts/pg-ping.mjs`.
 In progress: waiting on a real `DATABASE_URL` (none on this laptop: no `.env`, no local Postgres, no Docker).
