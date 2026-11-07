@@ -1,0 +1,42 @@
+/* /support voice controls (support/voice-ui.js). Light theme tokens from /shared/theme-light.css. */
+
+/* header: logo · title/status · speaker · language */
+.sp-head.spv-head { grid-template-columns: auto minmax(0, 1fr) auto auto; grid-template-areas: "logo mid speak lang"; }
+.spv-speak {
+  grid-area: speak; display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border-radius: 50%; cursor: pointer;
+  background: var(--l-bg-soft); border: 1px solid var(--l-line); color: var(--l-ink-3);
+  transition: background .25s var(--l-ease), color .25s, border-color .25s, box-shadow .25s;
+}
+.spv-speak:hover { color: var(--l-ink); border-color: var(--l-line-strong); background: #fff; }
+.spv-speak[aria-pressed="true"] { background: var(--l-bg-mint); border-color: transparent; color: var(--l-green-ink); }
+.spv-speak[aria-pressed="false"] .spv-wave { opacity: .35; }
+.sp .spv-speak:focus-visible { border-radius: 50%; }
+
+/* composer: mic sits between the text and the send button */
+.spv-mic {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: transparent; color: var(--l-ink-2);
+  touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; /* hold to talk */
+  transition: background .25s var(--l-ease), color .25s, box-shadow .25s;
+}
+.spv-mic:hover:not(:disabled) { background: var(--l-line); color: var(--l-ink); }
+.spv-mic:disabled { color: var(--l-ink-4); cursor: default; }
+.spv-mic[data-state="starting"], .spv-mic[data-state="recording"] { background: var(--l-red-bg); color: var(--l-red); }
+.spv-mic[data-state="recording"] { animation: spv-rec 1.2s var(--l-ease) infinite; }
+.spv-mic[data-state="transcribing"] { position: relative; color: var(--l-green-ink); }
+.spv-mic[data-state="transcribing"]::after {
+  content: ""; position: absolute; inset: 6px; border-radius: 50%;
+  border: 2px solid var(--l-bg-mint); border-top-color: var(--l-green); animation: spv-spin .8s linear infinite;
+}
+.sp .spv-mic:focus-visible { border-radius: 50%; }
+@keyframes spv-rec { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 58, 58, .28); } 50% { box-shadow: 0 0 0 7px rgba(201, 58, 58, 0); } }
+@keyframes spv-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 640px) {
+  .sp-head.spv-head { grid-template-columns: auto minmax(0, 1fr) auto auto; grid-template-areas: "logo . speak lang" "mid mid mid mid"; }
+  .spv-speak { width: 34px; height: 34px; }
+  .spv-mic { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spv-mic[data-state="recording"] { animation: none; }
+}
