@@ -193,11 +193,13 @@ export function viewCard(view, convId, query) {
     };
   }
   const scrub = $('#scrub', view);
-  scrub.addEventListener('click', (e) => { const r = e.currentTarget.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur); });
-  scrub.addEventListener('keydown', (e) => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); const cur = Number(scrub.getAttribute('aria-valuenow')) || 0; seekTo(conv, Math.max(0, Math.min(dur, cur + (e.key === 'ArrowRight' ? 5 : -5)))); });
-  $$('.track__lane', view).forEach((lane) => lane.addEventListener('click', (e) => { if (e.target.closest('[data-jump]')) return; const r = lane.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur); }));
+  // on a call, seeking from the timeline/player keeps the player on screen (only the transcript box scrolls)
+  const keepPage = { keepPage: call };
+  scrub.addEventListener('click', (e) => { const r = e.currentTarget.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur, keepPage); });
+  scrub.addEventListener('keydown', (e) => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); const cur = Number(scrub.getAttribute('aria-valuenow')) || 0; seekTo(conv, Math.max(0, Math.min(dur, cur + (e.key === 'ArrowRight' ? 5 : -5))), keepPage); });
+  $$('.track__lane', view).forEach((lane) => lane.addEventListener('click', (e) => { if (e.target.closest('[data-jump]')) return; const r = lane.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur, keepPage); }));
   view.addEventListener('click', (e) => {
-    const j = e.target.closest('[data-jump]'); if (j) { jumpTo(conv, [Number(j.dataset.jump)]); return; }
+    const j = e.target.closest('[data-jump]'); if (j) { jumpTo(conv, [Number(j.dataset.jump)], undefined, { keepPage: call && !!j.closest('.timeline-card') }); return; }
     const o = e.target.closest('[data-open]'); if (o) { openCriterion(conv, o.dataset.open); return; }
     const a = e.target.closest('[data-appeal]'); if (a) { openAppeal(conv, a.dataset.appeal); return; }
     const r = e.target.closest('[data-review]'); if (r) { openReview(r.dataset.review); }
@@ -234,19 +236,22 @@ function setPlayhead(sec, dur) {
   const t = $('#tpos'); if (t) t.textContent = mmss(sec);
   $('#scrub')?.setAttribute('aria-valuenow', String(Math.round(sec)));
 }
-function seekTo(conv, sec) {
+function seekTo(conv, sec, opts) {
   let best = 0; for (let i = 0; i < conv.transcript.length; i++) if (offsetSec(conv, i) <= sec) best = i;
-  jumpTo(conv, [best], sec);
+  jumpTo(conv, [best], sec, opts);
 }
-export function jumpTo(conv, indices, sec) {
+export function jumpTo(conv, indices, sec, { keepPage = false } = {}) {
   $$('.tx-row.is-evidence').forEach((el) => el.classList.remove('is-evidence', 'is-flash'));
   indices.forEach((i) => { const el = $(`#m-${i}`); if (el) { el.classList.add('is-evidence'); void el.offsetWidth; el.classList.add('is-flash'); } });
   const first = $(`#m-${indices[0]}`); const box = $('#transcript');
   const behavior = reduced() ? 'auto' : 'smooth';
   if (first && box) {
-    box.scrollTo({ top: first.offsetTop - box.clientHeight / 3, behavior });
+    // row position inside the scroll box (offsetTop is relative to the card and includes its header);
+    // when the page stays put the box may be only partly on screen, so put the row near its top edge
+    const inBox = first.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    box.scrollTo({ top: inBox - (keepPage ? 12 : box.clientHeight / 3), behavior });
     const r = box.getBoundingClientRect();
-    if (r.top < 64 || r.top > innerHeight * 0.6) box.closest('.tx-card')?.scrollIntoView({ behavior, block: 'start' });
+    if (!keepPage && (r.top < 64 || r.top > innerHeight * 0.6)) box.closest('.tx-card')?.scrollIntoView({ behavior, block: 'start' });
   }
   const t = sec ?? offsetSec(conv, indices[0]);
   setPlayhead(t, duration(conv));
