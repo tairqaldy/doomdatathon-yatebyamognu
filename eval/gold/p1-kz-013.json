@@ -1,0 +1,86 @@
+{
+  "conversation_id": "p1-kz-013",
+  "language": "KZ",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "gross-error-private-service",
+    "operator-closed-chat"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c02": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [
+        "yes"
+      ],
+      "note": "The request was clear from the start; nothing needed clarifying."
+    },
+    "c03": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    "c04": {
+      "answer": 20,
+      "evidence": [
+        9,
+        10
+      ],
+      "also_acceptable": [
+        15
+      ],
+      "note": ""
+    },
+    "c05": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": ""
+    },
+    "c06": {
+      "answer": 10,
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [
+        7
+      ],
+      "note": ""
+    },
+    "c07": {
+      "answer": "no",
+      "evidence": [
+        12,
+        13
+      ],
+      "also_acceptable": [],
+      "note": "Operator closed the chat without a farewell."
+    },
+    "c08": {
+      "answer": "yes",
+      "evidence": [
+        11
+      ],
+      "also_acceptable": [],
+      "note": "Asks for the client's personal number to give paid advice privately."
+    }
+  }
+}

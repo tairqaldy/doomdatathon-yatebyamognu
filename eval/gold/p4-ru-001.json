@@ -1,0 +1,96 @@
+{
+  "conversation_id": "p4-ru-001",
+  "language": "RU",
+  "channel": "voice call",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "voice-call",
+    "client-frustrated",
+    "client-hung-up",
+    "noisy-asr"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        12
+      ],
+      "also_acceptable": [],
+      "note": "Greeted and introduced (name masked by the system)."
+    },
+    "c02": {
+      "answer": "na",
+      "evidence": [
+        19,
+        21,
+        24
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "Question \"how do you help me?\" was clear."
+    },
+    "c03": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    "c04": {
+      "answer": 10,
+      "evidence": [
+        25,
+        27,
+        29
+      ],
+      "also_acceptable": [
+        15
+      ],
+      "note": "Explained the support scope, not how to get a personal manager."
+    },
+    "c05": {
+      "answer": "no",
+      "evidence": [
+        39,
+        40,
+        41,
+        42
+      ],
+      "also_acceptable": [
+        "yes"
+      ],
+      "note": "Client said she felt brushed off; replies stayed curt."
+    },
+    "c06": {
+      "answer": 7,
+      "evidence": [
+        37,
+        39
+      ],
+      "also_acceptable": [
+        4
+      ],
+      "note": "Understandable, but one garbled turn and the client re-asked what \"technical part\" means."
+    },
+    "c07": {
+      "answer": "na",
+      "evidence": [
+        43
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "Client ended the call mid-conversation."
+    },
+    "c08": {
+      "answer": "no",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "No insult, off-company paid offer or confidential disclosure."
+    }
+  }
+}

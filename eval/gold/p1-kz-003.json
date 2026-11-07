@@ -1,0 +1,88 @@
+{
+  "conversation_id": "p1-kz-003",
+  "language": "KZ",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "identification-done",
+    "model-answer",
+    "multi-question"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        10
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c02": {
+      "answer": "yes",
+      "evidence": [
+        13,
+        16
+      ],
+      "also_acceptable": [],
+      "note": "Asked currency and transfer time."
+    },
+    "c03": {
+      "answer": "yes",
+      "evidence": [
+        10,
+        12
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c04": {
+      "answer": 20,
+      "evidence": [
+        13,
+        21,
+        23,
+        25
+      ],
+      "also_acceptable": [],
+      "note": "Transfer forwarded; report question answered fully."
+    },
+    "c05": {
+      "answer": "yes",
+      "evidence": [
+        10
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c06": {
+      "answer": 10,
+      "evidence": [
+        16,
+        21,
+        23
+      ],
+      "also_acceptable": [
+        7
+      ],
+      "note": ""
+    },
+    "c07": {
+      "answer": "yes",
+      "evidence": [
+        25
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c08": {
+      "answer": "no",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "No insult, off-company paid offer or confidential disclosure."
+    }
+  }
+}

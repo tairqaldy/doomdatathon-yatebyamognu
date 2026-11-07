@@ -1,0 +1,87 @@
+{
+  "conversation_id": "p1-ru-029",
+  "language": "RU",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "gross-error-insult"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": "Greeted and introduced; the insult is graded in c05 / c08."
+    },
+    "c02": {
+      "answer": "na",
+      "evidence": [
+        0,
+        11
+      ],
+      "also_acceptable": [
+        "yes"
+      ],
+      "note": "The request was clear from the start; nothing needed clarifying."
+    },
+    "c03": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    "c04": {
+      "answer": 20,
+      "evidence": [
+        11,
+        12
+      ],
+      "also_acceptable": [],
+      "note": "Correct site given; client logged in."
+    },
+    "c05": {
+      "answer": "no",
+      "evidence": [
+        9,
+        12
+      ],
+      "also_acceptable": [],
+      "note": "Insulted the client; the client objected."
+    },
+    "c06": {
+      "answer": 7,
+      "evidence": [
+        9,
+        11
+      ],
+      "also_acceptable": [
+        10,
+        4
+      ],
+      "note": ""
+    },
+    "c07": {
+      "answer": "no",
+      "evidence": [
+        12,
+        13
+      ],
+      "also_acceptable": [],
+      "note": "Bare \"goodbye\" after the complaint; no summary or offer of help."
+    },
+    "c08": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": "\"Вы вообще читать умеете?\" = insult."
+    }
+  }
+}
