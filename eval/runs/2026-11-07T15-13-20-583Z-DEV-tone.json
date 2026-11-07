@@ -1,0 +1,55 @@
+{
+  "group": "DEV",
+  "model": "google/gemini-3.8-flash",
+  "prompt_version": "tone-v4",
+  "criteria": [
+    "c09"
+  ],
+  "at": "2026-11-07T15:13:20.583Z",
+  "calls": 1,
+  "fresh_calls": 1,
+  "cost_usd_total": 0.01681,
+  "cost_usd_per_call": 0.01681,
+  "rows": [
+    {
+      "id": "p4-ru-002",
+      "cached": false,
+      "answers": {
+        "c09": 10
+      },
+      "total": 86.82,
+      "audio_tokens": 0,
+      "cost": 0.016805,
+      "latency_ms": 31347,
+      "problems": [],
+      "metrics": {
+        "op_turns": 51,
+        "op_words": 482,
+        "op_wpm_median": 143,
+        "measured_turns": 26,
+        "long_waits": [
+          {
+            "turn_index": 31,
+            "at": "03:42",
+            "wait_s": 31
+          },
+          {
+            "turn_index": 54,
+            "at": "06:17",
+            "wait_s": 66
+          },
+          {
+            "turn_index": 56,
+            "at": "07:28",
+            "wait_s": 21
+          },
+          {
+            "turn_index": 57,
+            "at": "07:50",
+            "wait_s": 55
+          }
+        ]
+      }
+    }
+  ]
+}

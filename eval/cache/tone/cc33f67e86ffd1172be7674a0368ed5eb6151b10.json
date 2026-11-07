@@ -1,0 +1,61 @@
+{
+ "answers": {
+  "c09": {
+   "answer": 10,
+   "explanation": "Оператор общается вежливо, спокойно и доброжелательно, говорит в комфортном темпе и с хорошей дикцией. Перед длительным ожиданием корректно предупредил клиента и поблагодарил после возвращения на линию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Да, всё верно. Спасибо за информацию. Сейчас прошу вас ожидать на линии."
+    },
+    {
+     "kind": "message",
+     "turn_index": 59,
+     "quote": "[Имя скрыто], благодарю вас за ожидание."
+    }
+   ],
+   "audio_metrics": {
+    "op_turns": 51,
+    "op_words": 482,
+    "op_wpm_median": 143,
+    "measured_turns": 26,
+    "long_waits": [
+     {
+      "turn_index": 31,
+      "at": "03:42",
+      "wait_s": 31
+     },
+     {
+      "turn_index": 54,
+      "at": "06:17",
+      "wait_s": 66
+     },
+     {
+      "turn_index": 56,
+      "at": "07:28",
+      "wait_s": 21
+     },
+     {
+      "turn_index": 57,
+      "at": "07:50",
+      "wait_s": 55
+     }
+    ]
+   }
+  }
+ },
+ "problems": [],
+ "model": "google/gemini-3.8-flash",
+ "prompt_version": "tone-v4",
+ "attempts": 1,
+ "latency_ms": 31347,
+ "audio_bytes": 3339792,
+ "usage": {
+  "prompt_tokens": 18657,
+  "audio_tokens": 0,
+  "completion_tokens": 750,
+  "cost": 0.016805
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "answers": {
+  "c09": {
+   "answer": 7,
+   "explanation": "Оператор отвечает вежливо, но местами излишне сухо и безучастно, из-за чего клиентка почувствовала себя неловко и отметила усталость сотрудника.",
+   "deduction_reason": "Сухие и безучастные ответы оператора",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 37,
+     "quote": "Мы откроем делаем."
+    },
+    {
+     "kind": "message",
+     "turn_index": 39,
+     "quote": "Нет, не делаем."
+    }
+   ],
+   "audio_metrics": {
+    "op_turns": 13,
+    "op_words": 205,
+    "op_wpm_median": 124,
+    "measured_turns": 8,
+    "long_waits": []
+   }
+  }
+ },
+ "problems": [
+  "c09: quote not found in turn 37"
+ ],
+ "model": "google/gemini-3.8-flash",
+ "prompt_version": "tone-v4",
+ "attempts": 1,
+ "latency_ms": 18017,
+ "audio_bytes": 1921932,
+ "usage": {
+  "prompt_tokens": 10581,
+  "audio_tokens": 0,
+  "completion_tokens": 1217,
+  "cost": 0.0125
+ }
+}

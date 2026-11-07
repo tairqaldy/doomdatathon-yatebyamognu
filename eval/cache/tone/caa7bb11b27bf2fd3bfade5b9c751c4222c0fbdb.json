@@ -1,0 +1,40 @@
+{
+ "answers": {
+  "c09": {
+   "answer": 10,
+   "explanation": "Оператор общается спокойно, вежливо и доброжелательно. Речь разборчивая, темп комфортный, необоснованных долгих пауз или перебиваний нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 28,
+     "quote": "Это очень приятно. Здравствуйте, можем удалить ваш домой счет, но это будет не сегодня, скорее всего, вам пока стоит не заходить в мобильное приложение некоторое время, и у нас появится возможность уд"
+    }
+   ],
+   "audio_metrics": {
+    "op_turns": 30,
+    "op_words": 314,
+    "op_wpm_median": 120,
+    "measured_turns": 15,
+    "long_waits": []
+   }
+  }
+ },
+ "problems": [],
+ "model": "google/gemini-3.8-flash",
+ "prompt_version": "tone-v4",
+ "attempts": 1,
+ "latency_ms": 12451,
+ "audio_bytes": 2125656,
+ "usage": {
+  "prompt_tokens": 12068,
+  "audio_tokens": 0,
+  "completion_tokens": 331,
+  "cost": 0.010292
+ }
+}
