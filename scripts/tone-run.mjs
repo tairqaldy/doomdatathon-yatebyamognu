@@ -1,7 +1,8 @@
-// Audio criteria (input: "audio", e.g. c09 tone of voice) for every dialog of a group, cached + cost report.
-//   node scripts/tone-run.mjs [--group DEV] [--only p4-ru-001,...] [--force]
-// Patches data/evaluations/<group>.json in place (calls get the model's answer, chats get N/A, totals recomputed)
-// and writes eval/runs/<stamp>-<group>-tone.json. Re-running is free: answers come from eval/cache/tone/.
+// Audio criteria of the call checklist (input: "audio", e.g. c09 tone of voice) for every call of a group.
+//   node scripts/tone-run.mjs [--group DEV] [--only p4-ru-001,...] [--checklist freedom-call-v1] [--force]
+// Run after the text evaluation (npm run eval / npm run results). Adds the answers to data/evaluations/<group>.json
+// (calls only; the official results file ignores them) and writes eval/runs/<stamp>-<group>-tone.json.
+// Re-running is free: answers come from eval/cache/tone/.
 import { writeFile, readFile, mkdir } from 'node:fs/promises';
 import { loadEnv } from './env.mjs';
 loadEnv();
@@ -11,10 +12,10 @@ const { score } = await import('../prototype/scoring.js');
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const group = arg('group', 'DEV'), force = process.argv.includes('--force');
-const checklist = await loadChecklist();
+const checklist = await loadChecklist(arg('checklist', 'freedom-call-v1'));
 const crits = checklist.criteria.filter(isAudioCriterion);
 if (!crits.length) { console.log('checklist has no audio criteria'); process.exit(0); }
-let convs = (await loadDataset(group)).data.records;
+let convs = (await loadDataset(group)).data.records.filter((c) => c.audio_url);
 if (arg('only')) { const s = new Set(arg('only').split(',')); convs = convs.filter((c) => s.has(c.conversation_id)); }
 
 const file = `data/evaluations/${group}.json`;
@@ -28,7 +29,7 @@ for (const c of convs) {
     Object.assign(res.answers, r.value.answers);
     if (r.value.model) Object.assign(res, { audio_model: r.value.model, audio_prompt_version: r.value.prompt_version, audio_usage: r.value.usage });
     const s = score(checklist, Object.fromEntries(Object.entries(res.answers).map(([k, v]) => [k, v.answer])));
-    res.total = s.total; res.gross_error = s.gross_error;
+    res.call_checklist_total = s.total; // total under the call checklist incl. audio criteria; res.total stays the text-pipeline total
     if (c.audio_url) {
       rows.push({ id: c.conversation_id, cached: r.cached, answers: Object.fromEntries(crits.map((x) => [x.id, r.value.answers[x.id]?.answer ?? null])), total: s.total,
         audio_tokens: r.value.usage?.audio_tokens ?? null, cost: r.value.usage?.cost ?? null, latency_ms: r.value.latency_ms ?? null, problems: r.value.problems, metrics: r.value.answers[crits[0].id]?.audio_metrics });

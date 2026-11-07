@@ -1,0 +1,45 @@
+{
+ "answers": {
+  "c09": {
+   "answer": 10,
+   "explanation": "Оператор общается спокойно, вежливо и доброжелательно, сохраняет профессиональный тон и терпеливо повторяет информацию клиенту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 83,
+     "quote": "Хорошо, хорошо [Имя скрыто] [Имя скрыто], я не питаюсь с вами спорить, я вам говорю лишь то, что у вас указано на брокерском счете."
+    },
+    {
+     "kind": "message",
+     "turn_index": 86,
+     "quote": "Я понял болжанка облошим и счастливы мне дадите шанс досказать, я вам все объясню."
+    },
+    {
+     "kind": "message",
+     "turn_index": 109,
+     "quote": "Вы можете либо звонить, либо писать, как вам удобнее."
+    }
+   ],
+   "audio_metrics": {
+    "op_turns": 39,
+    "op_words": 332,
+    "op_wpm_median": 136,
+    "measured_turns": 20,
+    "long_waits": []
+   }
+  }
+ },
+ "problems": [],
+ "model": "google/gemini-3.8-flash",
+ "prompt_version": "tone-v4",
+ "attempts": 1,
+ "latency_ms": 15562,
+ "audio_bytes": 2527056,
+ "usage": {
+  "prompt_tokens": 14844,
+  "audio_tokens": 0,
+  "completion_tokens": 722,
+  "cost": 0.013841
+ }
+}
