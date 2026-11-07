@@ -5,7 +5,8 @@
 import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { loadEnv } from './env.mjs';
 loadEnv();
-const { evaluate, PROMPT_VERSION } = await import('../lib/evaluator.js');
+const { PROMPT_VERSION } = await import('../lib/evaluator.js');
+const { evaluateWithAudio: evaluate } = await import('../lib/tone.js'); // audio criteria (calls) → lib/tone.js
 const { MODELS } = await import('../lib/openrouter.js');
 const { loadDataset, loadChecklist } = await import('../lib/data.js');
 const { score } = await import('../prototype/scoring.js');

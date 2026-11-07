@@ -1,7 +1,7 @@
 // POST /api/evaluate { conversation_id, group?, checklist, model?, force? } → AI answers + evidence (cached).
 // Points/total are computed client-side by the deterministic scoring engine.
 import { send, preflight, body, fail } from '../lib/http.js';
-import { evaluate } from '../lib/evaluator.js';
+import { evaluateWithAudio as evaluate } from '../lib/tone.js'; // text criteria → lib/evaluator.js, audio criteria (calls) → lib/tone.js
 import { findConversation } from '../lib/data.js';
 
 export const config = { maxDuration: 60 };
