@@ -59,6 +59,12 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Postgres (`DATABASE_URL` / `POSTGRES_URL`) | n/a (no npm driver) | shared live sessions in table `cqa_kv`; Neon/Vercel Postgres via SQL-over-HTTP, other hosts via TCP/TLS in `lib/postgres.js` | B | active (optional) |
 
 ## 6. Approaches and development strategies
+Integration QA (2026-11-07): Node built-ins (`node:test`, assert, fs, crypto, child_process), read-only GitHub REST via PowerShell Invoke-RestMethod (public PR/issue inventory), isolated provider fetch doubles and actual cached API-handler tests. Scoring fix is a `.patch` artifact tested in memory; application and backend files stay untouched. No dependencies or paid calls. Reproduce via `node eval/integration/run.mjs`; details and limitations in `docs/INTEGRATION_READINESS.md`.
+
+Readiness diagnostics (2026-11-07): Node v24.18.0 built-in `node:test` / `assert`, offline `fetch` test doubles, `crypto` SHA-256 input snapshots and existing accuracy harness. Run `node --test eval/readiness/*.test.mjs`; c08 suite defaults to mock or reads `CQA_READINESS_RUN` as a saved Evaluation[] file. No network calls, dependencies, prompt tuning or paid inference. Test doubles verify plumbing only, never model accuracy. See `eval/EVALUATOR_READINESS.md`.
+
+Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <evaluations.json>` reads git objects, verifies dataset/checklist and cache/export consistency, then invokes the existing accuracy harness and c08 regressions. Source used: main snapshot 8feeb26, Haiku eval-v1 run from issue #6. No new model request; metadata records source hash and distinguishes historical provider cost from $0 replay cost. `node eval/readiness/run-offline.mjs` writes only `eval/runs/readiness-*` and checks protected-file hashes. Both commands currently return 1 for known regressions; diagnostic `.log` outputs are gitignored, JSON summaries are retained.
+
 | Approach | Why | Where documented |
 |---|---|---|
 | Optional Postgres for live sessions (`lib/postgres.js` + `lib/kv.js` + `/api/sessions`); localStorage remains the offline cache | Vercel isolates and two demo devices cannot share `localStorage` | `DATABASE_URL`, `node scripts/pg-ping.mjs` |
@@ -75,6 +81,7 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Gold set + accuracy harness: hand-checked labels per criterion, every evaluator run scored against them (strict / lenient agreement, N/A, gross-error recall, evidence hit rate, total MAE) | measured accuracy instead of claims; catches prompt regressions; mock baseline proves the harness before the LLM exists | `eval/gold/README.md`, `eval/accuracy.ts` |
 | Client navigation agent = **typed app actions first, DOM scan as fallback**: the page declares screens + named targets (`broker/app.js SCREENS`), the model returns actions, the server keeps only actions on declared targets, protected targets (money, orders, requests) can only be highlighted. Concept inspired by the team's own BariWeb project; code written from scratch for this repo | reliable on our app, still works on elements nobody declared, never moves money | `lib/nav-agent.js`, `broker/agent.js`, CONTRACTS §5 |
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
+| Independent gold audit, runtime shape/reference validation and separate unrounded arithmetic | Review all 19 DEV gold dialogs without changing application code; Node v24.18.0, PowerShell and Git Bash, no new dependencies or paid calls | `node eval/audit-gold.mjs`; `eval/GOLD_AUDIT_REPORT.md`; `eval/runs/gold-audit-*`. Exit 1: gold errors; exit 2: existing scoring mismatch; exit 0: both pass. GitHub API read via web failed; gh/Python unavailable locally. |
 
 ## 7. Research sources and external docs
 | Source | What we took from it | Saved where |

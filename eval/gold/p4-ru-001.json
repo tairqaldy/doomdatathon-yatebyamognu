@@ -36,7 +36,22 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        12,
+        14,
+        16,
+        23,
+        25,
+        26,
+        27,
+        29,
+        30,
+        35,
+        37,
+        39,
+        42
+      ],
       "also_acceptable": [],
       "note": "General / navigation question: no account data disclosed, no protected action."
     },
@@ -88,7 +103,21 @@
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        12,
+        14,
+        16,
+        23,
+        25,
+        26,
+        27,
+        29,
+        30,
+        35,
+        37,
+        39,
+        42
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }

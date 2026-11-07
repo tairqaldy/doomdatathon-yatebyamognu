@@ -4,6 +4,8 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Requests / Plans (fallback when GitHub Issues aren't available)
 - **2026-11-07 · lane-b · postgres store · branch `b/postgres-store` (no `gh` on this laptop):** Goal: connect optional Postgres so `/support` and `/admin` share live sessions across devices. Plan: zero-dep `lib/postgres.js` (Neon HTTP + TCP), `cqa_kv` JSON table, `GET/PUT/DELETE /api/sessions`, live-store hydrate/poll with localStorage fallback. Files: `lib/postgres.js`, `lib/kv.js`, `api/sessions.js`, `shared/live-store.js`, `.env.example`, CONTRACTS/DECISIONS/TOOLING/AGENTS. Contracts: additive `/api/sessions` + `health.postgres`. Verify: `node scripts/pg-ping.mjs`, `/api/sessions` without URL returns `{postgres:false}`, `/api/health` shows the flag. Needs a human: paste Neon/Vercel `DATABASE_URL` into `.env` and Vercel env.
+ - **2026-11-07 · final integration QA · audit/integration-readiness:** User requests local-only QA, minimal scoring patch artifact and docs/INTEGRATION_READINESS.md; no commit/push/PR/merge or paid inference. Base audit c760733, fetched main 2e90055; published audit ref matches local HEAD. Inspect PR #9 and scoring branch; add only eval/integration/*, eval/runs/integration-* and shared handoff/tooling entries. Test existing API handlers with cached results and blocked networking/provider doubles; compare scoring before/after an in-memory application of a proposed patch. Do not edit app/server/prototype/lib/api/data/gold. gh absent: public GitHub REST read succeeds, plan stays local per user restriction.
+ - **2026-11-07 · evaluator readiness · audit/evaluator-readiness (local only):** Goal: inspect actual LLM path and reproduce c08 failures without paid calls. Plan: add seven fixed c08 cases, offline regression tests for mock and LLM normalization/retry boundaries, fresh mock metrics and `eval/EVALUATOR_READINESS.md`. Files: new `eval/readiness/*`, `eval/runs/readiness-*`, report, append-only STATUS/TOOLING. Contracts: none. Verify: Node test runner, existing accuracy harness, protected-file hashes. Existing audit edits remain untouched. `git pull` fetched `origin/main` c30a86a but cannot rebase without upstream; explicit rebase would mix remote gold review metadata into the user's preserved local gold, so inspection uses remote diffs instead. Evaluator implementation matches origin/main. gh absent; no issue publication, commit, push or PR under user restrictions.
 - **tair/claude (no `gh` on this laptop yet):** plan for branch `d/design-system-and-team-rules` was: rules (issue-first, every-prompt pull-rebase, commits, branching, self-merge), TOOLING registry, enforcement (hook, check.sh, CI, templates), design system from fbroker.kz, clickable prototype. Done and merged, see the log entry below. **Someone with `gh`: please run `scripts/setup-labels.sh` and open issues for the lane tasks in "Next".**
 
 ## Log
@@ -63,6 +65,11 @@ Next:
 - demo video for the landing placeholder (record the 5-min flow)
 Contracts touched: CONTRACTS §5 (additive: chat/insights/admin-login, LiveSession fields).
 How to verify: open /support/ and /admin/#/live in two windows of the same browser; hand off from the chat, accept and reply from admin, close, rate, then see the evaluation in admin.
+### 2026-11-07 · lane-c · audit publication · audit/evaluator-readiness
+Authorization: user explicitly requested push and pull; this supersedes the earlier local-only restrictions for publishing this branch. No main merge or PR requested.
+Done: committed gold audit and evaluator diagnostics separately, pulled/rebased onto origin/main 2e90055 without conflicts. Preserved the team's reviewed/reviewed_by metadata on all 19 gold files and retained audit evidence/notes; answers and alternatives match upstream. Reports now distinguish historical audit snapshots from the newer evaluator integrated by the team.
+Verification: 131 tracked JSON files parse via Node; gold validator reports zero structural errors and five existing rounding discrepancies. Mock suite 13/20 pass (seven known misses), contract suite 11/19 pass (eight known defects). Full check.sh still fails its Python-based JSON step because python3 is unavailable; results are not described as a green gate. No application/source-data edits relative to upstream, no paid calls.
+Next: push audit/evaluator-readiness and verify upstream tracking/clean working tree. Evaluator owners can consume the diagnostics; known red tests remain explicit.
 
 ### 2026-11-07 15:10 · lane-c/b/d · tair/claude · branch c/full-dev-eval-hub
 Done:
@@ -203,3 +210,29 @@ How to verify: read AGENTS.md.
 
 ---
 **Official start time T = _fill in_** → control data at T+23h = _fill in_ · STOP CODE at T+24h = _fill in_
+
+### 2026-11-07 · lane-c · independent gold audit · audit/gold-dataset-review
+Goal: independently check all 19 gold dialogs against DEV and the official checklist.
+Plan: read every transcript and label; correct definite errors; record ambiguities; add isolated validator and report; run existing scoring/accuracy checks.
+Files: eval/gold/*.json, eval/audit-gold.mjs, eval/GOLD_AUDIT_REPORT.md, docs/STATUS.md, docs/TOOLING.md.
+Contracts affected: none. Verification: JSON/shape/reference checks, independent total calculation, accuracy harness and npm test.
+Publication: local only per explicit user instruction; no commits, push, PR or main merge. gh unavailable; issue/PR state cannot be confirmed. Existing lane-c drafts (#3) are the requested audit scope. Human review requirement remains in force.
+
+### 2026-11-07 14:35 +05:00 · lane-c · independent gold audit · local branch audit/gold-dataset-review
+Done: all 19 source conversations and 152 gold labels audited; 32 empty evidence fields anchored, 50 empty notes filled, 2 misleading notes corrected. All answers/alternatives preserved; all files remain draft pending human review. Report: eval/GOLD_AUDIT_REPORT.md (per-file changes, all 54 alternatives, source indices, totals).
+In progress: none within authorized audit scope.
+Next: human QA resolves ambiguous labels; scoring owner fixes total rounding (5 discrepancies of 0.01, including 99.99 instead of 100 for p1-ru-025); evaluator owner investigates mock gross-error recall 0/7.
+Blocked by / Requests: gh absent, live Issues/PR unavailable; Python unavailable makes scripts/check.sh fail JSON step. No commits/push/PR/merge permitted by user, all changes remain local. Official T still unconfirmed in STATUS.
+Contracts touched: none. No app/prototype/backend/source-data changes.
+How to verify: node eval/audit-gold.mjs (0 structural errors, exit 2 for existing engine rounding); node eval/accuracy.ts eval/runs/gold-audit-self.json (compatibility only); npm test (7/7). Node parses all 26 tracked JSON; fresh mock metrics in eval/runs/gold-audit-mock.metrics.json. Full check.sh FAILED due to Python, not reported as passing.
+
+### 2026-11-07 · lane-c · evaluator readiness · audit/evaluator-readiness · local only
+Milestone: remote refs advanced during inspection. Frozen main snapshot 8feeb26 now includes #6's saved Haiku 5.5 eval-v1 run and 19 cache entries. Rescored the saved run without inference: strict 75.66%, lenient 92.11%, c08 recall 6/7 (85.71%), FP 0, total MAE 14.06. All 19 cache/export answers and evidence match; 182 message/range refs valid. Missing case is p1-kz-015: c03 recognizes unverified disclosure, c08 says no and cites only turn 13, omitting disclosure in 9. Local gold and all production/source inputs remain unchanged. origin/c/7-openai-direct b43b67d is active; not modified or executed. No prompt tuning or paid calls.
+
+### 2026-11-07 · lane-c · evaluator readiness handoff · audit/evaluator-readiness
+Done: eval/EVALUATOR_READINESS.md, seven fixed c08 cases, isolated c08 and LLM contract suites, offline runners and six readiness JSON artifacts. Mock c08 suite: 13/20 pass, 7 failures; saved LLM c08: 19/20 pass, p1-kz-015 fails; contract suite: 11/19 pass, 8 failures (empty evidence, quote diagnostics, N/A evidence, duplicates, invalid-evidence retry, invalid-JSON retry, partial success, retry-cost aggregation). Existing scoring tests: 7/7. All 19 saved LLM caches match exports; actual inference calls/cost in this task: 0/$0.
+In progress: none within diagnostic-only scope.
+Next: evaluator owner fixes validation/retry/cost, resolves the KZ c03/c08 inconsistency, then checks active provider-router branch. Treat the inspected gold as a development/regression benchmark after any tuning; freeze a separate holdout for independent accuracy. Do not substitute c08 lenient=100% for critical recall=6/7.
+Blocked by / Requests: live provider configuration, direct OpenAI branch behavior, fresh inference, UI/Vercel and unseen data are untested. New paid calls require user authorization. No commits/push/PR allowed. Local gold remains draft while remote metadata says reviewed; answers/alternatives match exactly, preserved without merging.
+Contracts touched: none. Gold, production code, source data and earlier audit artifacts unchanged in this task.
+How to verify: node eval/readiness/run-offline.mjs; node eval/readiness/review-saved-run.mjs 8feeb262cccacd0541ddb5fcec6379cd15fa33b9 eval/runs/2026-11-07T09-36-59-522Z-DEV-anthropic_claude-haiku-5.5.evaluations.json. Both exit 1 because regressions remain; detailed logs and summaries under eval/runs/readiness-*. Full scripts/check.sh not rerun (known missing Python from preceding audit); no green overall gate claimed.

@@ -31,7 +31,11 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        9,
+        11
+      ],
       "also_acceptable": [],
       "note": "General / navigation question: no account data disclosed, no protected action."
     },
@@ -44,7 +48,7 @@
       "also_acceptable": [
         15
       ],
-      "note": ""
+      "note": "Distinguishes informational site from trading login (11); client confirms it opened (12)."
     },
     "c05": {
       "answer": "no",
@@ -81,7 +85,10 @@
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        9,
+        11
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }
