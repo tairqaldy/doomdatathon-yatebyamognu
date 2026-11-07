@@ -14,6 +14,10 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-c · post-merge test compatibility · branch audit/na-cache-compatibility
+Done: resolved STATUS entries by preserving both sides; merge commit 5befa12 appeared from another workspace action during verification (no commit/push command issued by this task). Incoming eval-v5.1 cached diagnostics exposed two overly broad assertions: dynamic-c01 tests now check absence of obsolete criterion-specific findings while retaining unrelated evaluator validation blockers. No production changes.
+How to verify: node --test eval/fairness/candidate.test.mjs eval/fairness/validation.test.mjs eval/fairness/compatibility.test.mjs; npm test.
+
 ### 2026-11-07 · lane-c · local conflict resolution · branch audit/na-cache-compatibility
 Done: user requested conflict resolution against main. Prepared merge without commit; resolved both STATUS.md conflict blocks by retaining all entries from both sides. Other incoming files merged automatically; no manual production-code changes.
 Next: review staged merge and validation results; no commit or push performed. main branch unchanged.
