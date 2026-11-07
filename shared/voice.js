@@ -12,6 +12,7 @@
 const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
 const MAP_MAX = 150;
 const FIRST_MAX = 160; // first chunk: one sentence, so audio starts fast
+const FIRST_SPLIT = 90; // a longer first sentence is cut at a comma/semicolon before this many characters
 const CHUNK_MAX = 260; // later chunks: a few sentences each, fetched in parallel while the first one plays
 
 /** Split a reply into speakable chunks: first sentence alone, then sentences grouped up to CHUNK_MAX characters. */
@@ -32,6 +33,13 @@ export function chunksOf(text) {
       pieces.push(rest.slice(0, at).trim()); rest = rest.slice(at).trim();
     }
     if (rest) pieces.push(rest);
+  }
+  // A long first sentence is cut at its last pause before FIRST_SPLIT characters: TTS time grows with length,
+  // so a short first chunk means audio starts sooner (the rest is fetched in parallel and follows without a gap).
+  if (pieces[0]?.length > FIRST_SPLIT) {
+    const head = pieces[0].slice(0, FIRST_SPLIT);
+    const cut = Math.max(head.lastIndexOf(', '), head.lastIndexOf('; '), head.lastIndexOf(' — '), head.lastIndexOf(': '));
+    if (cut > 30) pieces.splice(0, 1, pieces[0].slice(0, cut + 1).trim(), pieces[0].slice(cut + 1).trim());
   }
   // Chunk 0 is one sentence (it only grows while it is a tiny greeting like «Здравствуйте!»);
   // chunks 1+ group sentences up to CHUNK_MAX, so a long reply is a few requests, not one per sentence.
