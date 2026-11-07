@@ -45,11 +45,13 @@ export function score(checklist, answers) {
   // Step 4: redistribute N/A weight proportionally so the max stays 100.
   const factor = applicableWeight > 0 ? 100 / applicableWeight : 0;
 
+  const rawScaled = new Map();
   const rows = crits.map((c) => {
     const answer = answers[c.id];
     const raw = rawPoints(c, answer);
     const effective = raw == null ? null : round2(c.weight * factor);
     const points = raw == null ? null : round2(raw * factor);
+    rawScaled.set(c.id, raw == null ? 0 : raw * factor); // unrounded, used for totals (checklist: round only the total)
     return {
       criterion_id: c.id,
       answer: answer ?? null,
@@ -61,13 +63,13 @@ export function score(checklist, answers) {
     };
   });
 
-  const sum = rows.reduce((s, r) => s + (r.points ?? 0), 0);
+  const sum = crits.reduce((s, c) => s + (rawScaled.get(c.id) || 0), 0);
   const total = applicableWeight > 0 ? round2(sum) : null; // Step 5: not calculated if nothing applicable
   const gross_error = crits.some((c) => c.type === 'flag' && answers[c.id] === 'yes');
 
   const sections = (checklist.sections || []).map((sec) => {
     const inSec = rows.filter((r) => crits.find((c) => c.id === r.criterion_id)?.section_id === sec.id);
-    const got = inSec.reduce((s, r) => s + (r.points ?? 0), 0);
+    const got = inSec.reduce((s, r) => s + (rawScaled.get(r.criterion_id) || 0), 0);
     const max = inSec.reduce((s, r) => s + (r.effective_weight ?? 0), 0);
     return { section_id: sec.id, title: sec.title, points: round2(got), max: round2(max), score: max > 0 ? round2((got / max) * 100) : null };
   });
@@ -99,5 +101,8 @@ export function selfTest(checklist) {
   t.push(['nothing applicable → total null (not calculated)', score(checklist, nothing).total === null]);
   const mixed = { ...all, c02: 'na', c06: 7, c07: 'no' }; // applicable 85: 10+20+20+15+10.5+0 = 75.5 → 75.5/85*100
   t.push(['mixed case rounds to 2 decimals (88.82)', score(checklist, mixed).total === 88.82]);
+  // Rounding regression (gold audit): official = round(100·Σraw/Σweights, 2) = 30.59; rounding each row first gave 30.58.
+  const r3 = { c01: 'yes', c02: 'na', c03: 'no', c04: 5, c05: 'no', c06: 4, c07: 'yes', c08: 'no' };
+  t.push(['total rounds once at the end (30.59, not 30.58)', score(checklist, r3).total === 30.59]);
   return t;
 }
