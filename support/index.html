@@ -3,26 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-  <meta name="theme-color" content="#090a0b">
-  <title>Поддержка Freedom</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>Поддержка · Freedom</title>
   <meta name="description" content="Чат поддержки Freedom Broker: ассистент AIM отвечает на то, что знает, и зовёт специалиста, когда нужно.">
+  <link rel="icon" type="image/svg+xml" href="/landing-tair/assets/mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="preload" as="image" href="/landing-tair/assets/clouds.webp">
-  <link rel="stylesheet" href="/shared/theme.css">
+  <link rel="stylesheet" href="/shared/theme-light.css">
   <link rel="stylesheet" href="/support/support.css">
   <script type="module" src="/support/support.js"></script>
 </head>
-<body class="g sp">
-  <div class="sp-bg g-grain" aria-hidden="true"><div class="sp-veil"></div></div>
+<body class="l sp">
+  <div class="sp-bg" aria-hidden="true"></div>
 
   <main class="sp-shell">
-    <section class="sp-panel g-glass" aria-labelledby="sp-title">
+    <section class="sp-panel" aria-labelledby="sp-title">
       <header class="sp-head">
-        <a class="sp-back" href="/landing-tair/" data-i18n-aria="back">
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Freedom</span>
+        <a class="sp-logo" href="/" data-i18n-aria="back" aria-label="Вернуться на главную">
+          <img src="/shared/brand/freedom-broker-logo.svg" width="498" height="112" alt="">
         </a>
         <div class="sp-head-mid">
-          <h1 id="sp-title" class="sp-title g-label" data-i18n="title">Поддержка</h1>
+          <h1 id="sp-title" class="sp-title" data-i18n="title">Поддержка</h1>
           <p class="sp-status" id="sp-status"><span class="sp-status-dot" aria-hidden="true"></span><span id="sp-status-text" data-i18n="status_bot">AIM на связи</span></p>
         </div>
         <div class="sp-lang" role="group" data-i18n-aria="lang_label">
@@ -35,20 +38,22 @@
       <div class="sp-log-wrap">
         <div class="sp-log" id="sp-log" tabindex="-1">
           <div class="sp-welcome" id="sp-welcome">
-            <p class="g-label sp-welcome-kicker" data-i18n="kicker">Freedom Broker · поддержка</p>
+            <div class="sp-welcome-who">
+              <span class="sp-avatar" aria-hidden="true"><img src="/landing-tair/assets/mark.svg" width="97" height="112" alt=""></span>
+              <p class="sp-welcome-kicker" data-i18n="kicker">AIM, ассистент Freedom Broker</p>
+            </div>
             <h2 class="sp-greet" data-i18n="greet">Здравствуйте.</h2>
-            <p class="sp-intro" data-i18n="intro">Это AIM, ассистент Freedom. Он отвечает на то, что знает точно, а если вопрос требует проверки или вы хотите поговорить с человеком, зовёт специалиста.</p>
+            <p class="sp-intro" data-i18n="intro">Отвечаю на то, что знаю точно. Если вопрос нужно проверить или вы хотите поговорить с человеком, позову специалиста.</p>
             <div class="sp-chips" id="sp-chips" role="group" data-i18n-aria="chips_label"></div>
           </div>
           <ol class="sp-msgs" id="sp-msgs" aria-live="polite" aria-relevant="additions" data-i18n-aria="log_label"></ol>
           <div class="sp-typing" id="sp-typing" hidden>
-            <span class="sp-typing-who g-label">AIM</span>
             <span class="sp-dots" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="sp-sr" data-i18n="typing">AIM пишет ответ</span>
           </div>
         </div>
         <button type="button" class="sp-jump" id="sp-jump" hidden data-i18n-aria="jump">
-          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span data-i18n="jump_text">Новые сообщения</span>
         </button>
       </div>
@@ -57,13 +62,13 @@
         <form class="sp-composer" id="sp-form" autocomplete="off">
           <label class="sp-sr" for="sp-input" data-i18n="input_label">Ваше сообщение</label>
           <textarea id="sp-input" class="sp-input" rows="1" maxlength="2000" data-i18n-ph="placeholder" placeholder="Напишите вопрос"></textarea>
-          <button type="submit" class="sp-send" id="sp-send" data-i18n-aria="send" disabled>
-            <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16V4M5 9l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <button type="submit" class="sp-send" id="sp-send" data-i18n-aria="send" aria-label="Отправить" disabled>
+            <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16V4M5 9l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </form>
         <div class="sp-actions" id="sp-actions">
-          <button type="button" class="sp-link" id="sp-human" hidden data-i18n="call_human">Позвать специалиста</button>
-          <span class="sp-hint g-label" id="sp-hint" data-i18n="hint">Enter — отправить · Shift+Enter — новая строка</span>
+          <button type="button" class="sp-link sp-link--human" id="sp-human" hidden data-i18n="call_human">Позвать специалиста</button>
+          <span class="sp-hint" id="sp-hint" data-i18n="hint">Enter — отправить, Shift+Enter — новая строка</span>
           <button type="button" class="sp-link sp-end" id="sp-end" hidden data-i18n="end">Завершить разговор</button>
         </div>
       </footer>
