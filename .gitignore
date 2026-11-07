@@ -17,3 +17,7 @@ data/audio/
 
 # graphify knowledge graph (rebuild locally: graphify update .)
 graphify-out/
+
+# Our own ASR transcripts of real calls can contain names the organizers masked → never commit text
+data/transcripts/
+eval/cache/asr/
