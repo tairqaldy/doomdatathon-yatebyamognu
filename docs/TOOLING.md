@@ -77,6 +77,8 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
 
 ## 7. Research sources and external docs
+Transcript fairness audit (2026-11-07): Python 3.14 standard library (`unittest`, `difflib`, `unicodedata`, `datetime`) runs `eval/transcript_guard.py` and offline regression fixtures. Node built-ins replay saved evaluator results through the existing accuracy harness. PowerShell read-only REST checks admin export availability and GitHub issue ownership. No packages installed, no paid inference. Reproduce with `python eval/fairness/run.py` and `node eval/fairness/replay.mjs`.
+
 | Source | What we took from it | Saved where |
 |---|---|---|
 | Official CQA student guide (PDF) | task, timeline, data format, defense script | `docs/case/brief.md` |

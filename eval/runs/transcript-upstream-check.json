@@ -1,0 +1,167 @@
+{
+  "revision": "31977601fe76692d69475ab3cfb0fef84817d55a",
+  "mode": "in-memory upstream verification, no inference",
+  "checks": [
+    {
+      "name": "all yes → 100",
+      "passed": true
+    },
+    {
+      "name": "N/A redistributes, still 100",
+      "passed": true
+    },
+    {
+      "name": "c04=10 of 20 with weight 20 → 90",
+      "passed": true
+    },
+    {
+      "name": "gross flag never adds points",
+      "passed": true
+    },
+    {
+      "name": "N/A where allowed + worst elsewhere → 0",
+      "passed": true
+    },
+    {
+      "name": "nothing applicable → total null (not calculated)",
+      "passed": true
+    },
+    {
+      "name": "mixed case rounds to 2 decimals (88.82)",
+      "passed": true
+    },
+    {
+      "name": "total rounds once at the end (30.59, not 30.58)",
+      "passed": true
+    },
+    {
+      "name": "half-up rounding of an exact .xx5 total (38.13)",
+      "passed": true
+    },
+    {
+      "name": "perfect applicable answers return 100.00, never 99.99",
+      "passed": true
+    },
+    {
+      "name": "upstream diagnoses unsupported c08=yes",
+      "passed": true
+    }
+  ],
+  "gold_rounding": [
+    {
+      "id": "p1-en-006",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-en-009",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-en-013",
+      "total": 92.31,
+      "expected": 92.31,
+      "passed": true
+    },
+    {
+      "id": "p1-en-014",
+      "total": 24.71,
+      "expected": 24.71,
+      "passed": true
+    },
+    {
+      "id": "p1-en-015",
+      "total": 51.25,
+      "expected": 51.25,
+      "passed": true
+    },
+    {
+      "id": "p1-kz-003",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-kz-008",
+      "total": 32.5,
+      "expected": 32.5,
+      "passed": true
+    },
+    {
+      "id": "p1-kz-011",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-kz-013",
+      "total": 92.31,
+      "expected": 92.31,
+      "passed": true
+    },
+    {
+      "id": "p1-kz-015",
+      "total": 30.59,
+      "expected": 30.59,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-003",
+      "total": 51.25,
+      "expected": 51.25,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-006",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-009",
+      "total": 41,
+      "expected": 41,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-012",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-018",
+      "total": 20,
+      "expected": 20,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-022",
+      "total": 31.25,
+      "expected": 31.25,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-025",
+      "total": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "id": "p1-ru-029",
+      "total": 62.31,
+      "expected": 62.31,
+      "passed": true
+    },
+    {
+      "id": "p4-ru-001",
+      "total": 50.83,
+      "expected": 50.83,
+      "passed": true
+    }
+  ],
+  "note": "Other evaluator retry and quote behaviors were inspected, not exhaustively retested here."
+}

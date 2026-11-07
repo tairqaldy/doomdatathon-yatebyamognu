@@ -1,0 +1,35 @@
+{
+  "development": [
+    {"id":"ru-clear","text":"Здравствуйте, меня зовут Айдар.","language":"RU","expected":"supported"},
+    {"id":"ru-brand-typo","text":"Здравствуйте, меня зовут Айдар, Фридом Бракер.","language":"RU","expected":"supported"},
+    {"id":"ru-no-brand","text":"Добрый день, меня зовут Айдар.","language":"RU","expected":"supported"},
+    {"id":"ru-masked-name","text":"Здравствуйте, меня зовут [Имя скрыто].","language":"RU","expected":"supported"},
+    {"id":"ru-short-intro","text":"Здравствуйте, я Руслан.","language":"RU","expected":"supported"},
+    {"id":"ru-asr-greeting","text":"Здраствуйте, меня зовут Айдар.","language":"RU","expected":"needs_review"},
+    {"id":"ru-no-intro","text":"Здравствуйте, чем помочь?","language":"RU","expected":"not_supported"},
+    {"id":"ru-role-only","text":"Здравствуйте, я оператор.","language":"RU","expected":"not_supported"},
+    {"id":"en-substring-hi","text":"This is John.","language":"EN","expected":"not_supported"},
+    {"id":"en-clear","text":"Hello, my name is John.","language":"EN","expected":"supported"},
+    {"id":"en-contraction","text":"Hi, I'm John.","language":"EN","expected":"supported"},
+    {"id":"en-apology-not-name","text":"Hi! I am sorry.","language":"EN","expected":"not_supported"},
+    {"id":"en-quoted-greeting","text":"The customer said \"Hello\". My name is John.","language":"EN","expected":"not_supported"},
+    {"id":"kk-bare-name","text":"Сәлеметсіз бе, мен Дана.","language":"KZ","expected":"supported"},
+    {"id":"kk-name-suffix","text":"Сәлеметсіз бе! Мен Нұрланмын.","language":"KZ","expected":"supported"},
+    {"id":"kk-full-intro","text":"Қайырлы күн, менің атым Ермек.","language":"kk-KZ","expected":"supported"},
+    {"id":"ru-low-confidence","text":"Здравствуйте, меня зовут Айдар.","language":"RU","asr_uncertain":true,"expected":"needs_review"},
+    {"id":"unknown-language","text":"Hola, soy Ana.","language":"ES","expected":"needs_review"},
+    {"id":"late-turn","text":"Hello, my name is John.","language":"EN","first_agent_turn":false,"expected":"not_supported"}
+  ],
+  "holdout": [
+    {"id":"h-ru-1","text":"Добрый вечер, с вами Алина.","language":"ru-RU","expected":"supported"},
+    {"id":"h-ru-2","text":"Здравствуйте, меня зовут Олег, freedom brocker.","language":"RU","expected":"supported"},
+    {"id":"h-ru-3","text":"Меня зовут Олег.","language":"RU","expected":"not_supported"},
+    {"id":"h-en-1","text":"Good morning. This is Emma.","language":"EN","expected":"supported"},
+    {"id":"h-en-2","text":"The shipping is late. My name is Emma.","language":"EN","expected":"not_supported"},
+    {"id":"h-en-3","text":"Hello, my name is Emma, Freedom brooker.","language":"en-US","expected":"supported"},
+    {"id":"h-kk-1","text":"Қайырлы кеш, менің атым Алия.","language":"KZ","expected":"supported"},
+    {"id":"h-kk-2","text":"Сәлем! Қай бөлім қажет?","language":"KZ","expected":"not_supported"},
+    {"id":"h-uncertain","text":"Hello, my name is Emma.","language":"EN","asr_uncertain":true,"expected":"needs_review"},
+    {"id":"h-empty","text":"","language":"RU","expected":"not_supported"}
+  ]
+}
