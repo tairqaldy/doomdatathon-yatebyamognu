@@ -5,7 +5,7 @@
 
 const RX = {
   greet: /(здравствуйте|добрый (день|вечер|утро)|приветствую|сәлеметсіз|сәлем|қайырлы|hello|hi\b|good (morning|afternoon|evening))/i,
-  intro: /(меня зовут|на связи|это \S+ из|мен \S+(мын|мін|пын|пін|быn)|менің атым|i'm \S+|i am \S+|my name is|this is \S+)/i,
+  intro: /(меня зовут|на связи|это \S+ из|(?:^|[\s,.!])я [а-яё]+(?:[.,!]| из| с )|(?:^|[\s,.!])мен [а-яәғқңөұүһі]+[.,!]|мен \S+(мын|мін|пын|пін|быn)|менің атым|i'm \S+|i am \S+|my name is|this is \S+)/i,
   question: /\?/,
   needsId: /(сч[её]т|баланс|вывод|пополн|пароль|номер договора|персональн|шот|қаражат|құпиясөз|account|balance|withdraw|deposit|password|statement|my order|заявк)/i,
   idCheck: /(кодов|кодовое слово|ИИН|дата рождения|верифик|подтвердите личность|жеке басы|ЖСН|verify|verification|date of birth|security (question|code)|identity)/i,
@@ -35,6 +35,26 @@ const range = (a, b) => ({ kind: 'range', range: [a, b] });
 const naEv = (why) => ({ kind: 'na_condition', quote: why });
 
 function hash(s) { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return Math.abs(h); }
+
+/** "Понимание" strip for the mock: reason for contact, what the operator did, outcome (Freedom slide step 02). */
+export function mockSummary(conv) {
+  const t = conv.transcript;
+  // skip IVR keypresses and greetings ("2", "Здравствуйте.") to find the real request
+  const clientLines = t.filter((m) => m.speaker === 'client' && !/^[\d\s.,]+$/.test(m.text));
+  const question = clientLines.find((m) => m.text.includes('?') && m.text.length > 15);
+  const longest = [...clientLines].sort((a, b) => b.text.length - a.text.length)[0];
+  const firstClient = (question || longest)?.text || '';
+  const opCount = t.filter((m) => m.speaker === 'operator').length;
+  const escalated = t.some((m) => m.speaker === 'system' && /(эскалац|оператор|агент|agent|транс|жіберілді)/i.test(m.text));
+  const lastClient = [...t].reverse().find((m) => m.speaker === 'client')?.text || '';
+  const abrupt = t.some((m) => m.speaker === 'system' && RX.abrupt.test(m.text));
+  const short = (s) => (s.length > 110 ? `${s.slice(0, 107)}…` : s);
+  return {
+    reason: short(firstClient) || '—',
+    operator_actions: opCount ? `${escalated ? 'Бот передал диалог оператору; ' : ''}оператор ответил ${opCount} ${opCount === 1 ? 'раз' : 'раза'}` : 'Оператор не подключился',
+    outcome: abrupt ? 'Диалог оборвался со стороны клиента' : RX.thanks.test(lastClient) ? `Клиент подтвердил: «${short(lastClient)}»` : 'Явного подтверждения от клиента нет',
+  };
+}
 
 export function mockEvaluate(conv, checklist) {
   const t = conv.transcript;
@@ -129,6 +149,10 @@ export function mockEvaluate(conv, checklist) {
         r = { answer, explanation: `MOCK: ответ сгенерирован заглушкой. Подключите LLM-оценщик (Lane C), чтобы оценить «${c.title}».`,
           evidence: firstOp != null && answer !== 'na' ? [ev(t, firstOp)] : [naEv(c.na_condition || 'условие N/A')] };
       }
+    }
+    if (!('deduction_reason' in r)) {
+      const full = r.answer === 'yes' ? c.type !== 'flag' : r.answer === 'na' ? true : c.type === 'flag' ? r.answer === 'no' : typeof r.answer === 'number' && r.answer >= Math.max(...(c.scale || [{ value: 0 }]).map((s) => s.value));
+      r.deduction_reason = full ? '' : r.explanation;
     }
     if (r.answer === 'na' && !c.na_allowed) r = { ...r, answer: c.type === 'scale' ? Math.min(...c.scale.map((s) => s.value)) : 'no' };
     // A built-in scale rule may produce a step that the edited scale no longer has → snap to nearest step.

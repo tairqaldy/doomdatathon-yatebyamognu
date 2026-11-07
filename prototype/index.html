@@ -7,16 +7,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../design/tokens.css?v=4">
-  <link rel="stylesheet" href="../design/components.css?v=4">
-  <link rel="stylesheet" href="../design/motion.css?v=4">
-  <link rel="stylesheet" href="prototype.css?v=4">
+  <link rel="stylesheet" href="../design/tokens.css?v=6">
+  <link rel="stylesheet" href="../design/components.css?v=6">
+  <link rel="stylesheet" href="../design/motion.css?v=6">
+  <link rel="stylesheet" href="prototype.css?v=6">
 </head>
 <body style="margin:0">
   <div id="cqa-root" class="cqa cqa-app">
     <aside class="cqa-sidebar" aria-label="Навигация">
       <div class="cqa-brand-block">
-        <div class="logo-mark" aria-hidden="true"></div>
+        <div class="logo-mark" aria-hidden="true">CQA</div>
         <div>
           <div class="cqa-h3">Freedom CQA</div>
           <div class="cqa-small cqa-muted">Контроль качества диалогов</div>
@@ -24,16 +24,16 @@
       </div>
       <nav class="cqa-stack" style="gap:4px" id="nav"></nav>
       <div class="cqa-sidebar__foot">
-        <div class="cqa-small cqa-muted">Режим</div>
+        <div class="ai-status" id="ai-status"></div>
+        <div class="cqa-small cqa-muted">Роль</div>
         <div class="cqa-seg" role="group" aria-label="Роль" id="role-switch">
           <button data-role="qa" aria-pressed="true">Оценщик</button>
           <button data-role="reviewer" aria-pressed="false">Проверяющий</button>
         </div>
-        <div class="cqa-small cqa-muted" style="margin-top:12px">Прототип · оценка = MOCK</div>
-      </div>
+              </div>
     </aside>
     <main class="cqa-main" id="view" tabindex="-1"></main>
   </div>
-  <script type="module" src="app.js?v=4"></script>
+  <script type="module" src="app.js?v=6"></script>
 </body>
 </html>
