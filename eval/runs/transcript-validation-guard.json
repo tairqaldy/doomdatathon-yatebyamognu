@@ -1,0 +1,2494 @@
+{
+  "dialog_count": 65,
+  "warnings": [],
+  "flags_by_kind": {},
+  "c01_candidates": [
+    {
+      "id": "p1-ru-001",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-002",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-003",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-004",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-005",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-006",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-007",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-008",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-009",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-010",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-011",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-012",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-013",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-015",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-016",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-017",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-018",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-019",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-020",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-021",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-022",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-023",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-024",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-025",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-026",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-027",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-028",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-029",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-ru-030",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p1-kz-001",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-002",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-003",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-004",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-005",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-006",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-007",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-009",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-010",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-011",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-012",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-013",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-014",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-kz-015",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      }
+    },
+    {
+      "id": "p1-en-001",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-002",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-003",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-004",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-005",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-006",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-007",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-008",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-009",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-010",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-011",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-012",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-013",
+      "message_index": 9,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p1-en-014",
+      "message_index": 10,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      }
+    },
+    {
+      "id": "p4-ru-003",
+      "message_index": 12,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p4-ru-002",
+      "message_index": 2,
+      "status": "needs_review",
+      "evidence": {
+        "greeting": false,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p4-ru-001",
+      "message_index": 12,
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p4-ru-005",
+      "message_index": 16,
+      "status": "needs_review",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    },
+    {
+      "id": "p4-ru-004",
+      "message_index": 14,
+      "status": "needs_review",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      }
+    }
+  ],
+  "c01_probes": [
+    {
+      "id": "p1-ru-001",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "e3de4212af9e11b747848f6d053d64a4348bc4ed0639820a437d4f6c84bdad74",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-002",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "2ac6d0904defc56eca8fc27d85d41514bf5d3842d1f4f3ae3ca55c10454fb976",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-003",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "1cc5e3f62ef8b38aeb11379c075e6be0bb624679e768e5a35e4f433eecb4ee02",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-004",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "a26f912e872a3e812b4b3d1d90d2b25dc38b642238b51eaae42e9816a32d5167",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-005",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "3c357f08dbc6e8b6af609199079a3f40b866b8416578becbba091277669a0b1a",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-006",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "8244e708d4833f7299888a5c2dcb3bb6f8c8301ac9eed57b4187bf8f6af361db",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-007",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "edb2c3ec6adee4135be97caa70bcd34b1e9e4cde739393620b85bf5d8567c0f4",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-008",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "7247ed9a5aad0b4c2c50559ac8d753807003854c71aa6a97f7bddd930306999a",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-009",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "f2956bff1597b01c79a44eb67bf6c4da0fd03bfeec83f77940e1a9cba94382ea",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-010",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "7a5a6ca00d0aef4e2850d0ec9ccca4fa58d969f3373ddf71bb47288fff76f114",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-011",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "860992e45b96711f296d2278804152a764bda681e196b858b0fc4138523d281b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-012",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "b0d25d6bcd1c1f583f9806b250e513d535e41d106a2f54d4e7d1176ec052f5ae",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-013",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "ce85997c2f2f5fcf7f0a535cda71e431d13dc6b9aea270f5c829f89456c472c4",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-014",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "995944872480ddc69e81b8b609a5397e6f130c3ae18d5818ad389ce3ce4e34b6",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "not_supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-015",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "1f9505e4ae3532410b6240c5e657e33de0f1bad2ffb7e9dfd7d24b5693b47acd",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-016",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "109e7c79c73546ec7b346ff834c59d6d996df87eb917c51466f6c5efda015dee",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-017",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "b15ad3724ec99352022b01e8b025527251ea944614d60bf979b52a8d2787f263",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-018",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "5f49af71e7766feadab50f1a97f66bc22b0c566a0701ad24a0cc44bcf0133817",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-019",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "45b24a5b01393f0d78a6277c7ad632e424711deeda3a05b24609e8e48789e428",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-020",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "1559303babd9f38ece0ad49532192d5bc9b16fbb9535f401262ef8a2fa846805",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-021",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "94d46e81ee2deb6c84202ee345db2e32cc277923f15b42c46cda7b438e041f1e",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-022",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "3700a373f2fa64fa71e1f6e0aadd4bc90d09fca3996b694f1c14439d64ea788a",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-023",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "58ef961e64e2f2430bbe12d68b4daa15931713a99ea309325e36520bca74a7b7",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-024",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "252cdfef81829194ad6335210635f22e1bd1f291388a04211289f436a24d512c",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-025",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "56a059641e96f387e2e8f81b09f7d8e1df880a110b35b355abca0f0ebc5f361e",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-026",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "d3de7aead261369f2a1639901cec19375759456c9a9b5d69051b3f24f3f72418",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-027",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "0035645bcad28e3c4137f3b4af4c7e3cae756bd4eee069c6310ce4ca25398701",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-028",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "35696ab012b268d841675030c7b957caf544298d5f2cee1fe4c97cba9b21f13b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-029",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "287d68632958fc13324169df89ce2cfdeb828597ad55f5ba57af8cf44c4e601b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-ru-030",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "81b1362bd3335c452400a4a7f8029a5c4573adf53efc322cf7889016effddefb",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-001",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "a0ffdc6a045104cee4c3780a0358f8baaf378395ba18d1d765700c85d6764993",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-002",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "a75648f5e533c7bd9529e3e15fd34f878db46dcc894271cc74878e4f1d0d9558",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-003",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "98edab5f83e7e1a9735c7fa175ce83103ffc62a01d254570083babf6e3283ae7",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-004",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "878745e147dec224966477ff245b1eb66b863299d7660ca8d16ffb18234d5125",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-005",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "713310b3a84de811e7958452df48c6280da9618006945fbc3fd20c9236e0390a",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-006",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "25af0b7dce3c363d690a68e56311109969a574e5f62789222eb5320fafba3160",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-007",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "1d930c52de415c1dcea056f109061982ed40305b82c0b37e26e0ffed6853fae9",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-008",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "d775e5fab731f28d099cc4b180bd01ba19a6a16480bdc793b7af84ad7d95c674",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "not_supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-009",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "688d9afc0c65ad63c99c2d01ea6caba003c64bf660829016876eecbf7c7ca75f",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-010",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "272dce03c78cdff611a103638c5d711634765a170ca0ad597695aae36288214e",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-011",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "a5b94e043b85444569805833a1ec4e02414b106e2203ddb343bce1f6144dc80d",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-012",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "258992f591393b54cd43e4ea9cc9b7a631359b3d8f00fa3369a04356af50264c",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-013",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "d2627bab9e8f3ae1f1b14ab2afe38f492b608f9d6e6be4c14c6371c101a66f68",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-014",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "2208dbc600dbc5c7e8e18dcbb587484088e12314789b6ff8dafc6b0041d34b7c",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-kz-015",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "eeb6e870b946da3e159328a90e2676f610a669890df28ee3482126f3854a2d68",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "kk"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-001",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "f4cca2febfec93d70baec118fa18fb83563d4253efe95866c620178ace8460ac",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-002",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "ab9a7fc23640df9f9e1b40ac50cf183873abff6a3d3d8528d83bef8442f87972",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-003",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "f7d4c003d0830ebad3f4ffd660c4d1f0c334bc265fc93a437714dc2644b7e55b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-004",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "18562e2f38236aa55c820e3f9370394d5e2e3085b84093770b60f6858ba8f481",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-005",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "bde6a6b1a4a1d69650fd053bb7a40c30ffa6fafea72a84095011961a897c9767",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-006",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "ce6267e97848c8bda6b9cef96dbbff9cab46cd735d55d503d66996ba2b22602b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-007",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "e5855fd3ae5725cfbd6e19f2d7d819fd6827ca28b7305605d421b78c299de501",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-008",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "4c3c9e7581c6d95dbc07d8df6ffb9f3cf5cae7e033c8b481d68c3e08e4d5b616",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-009",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "203acba998eb61694a2950a92fc2714c71be9d0b236570f57ec0a93372dca32e",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-010",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "6934d4e8e899ac18e4d4a655f9073c24649bbeeb96d7f732120b586af44c212c",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-011",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "60e5eac08d28eec63e821454ac22b54e75110f49dcc4a3be71c2842aaabc9a2c",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-012",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "4ae7df3d7c884081028e406a94fad9093c4e4de673897325cc0cbe70accb1c33",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-013",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "519db27828dab86e7f3e360b73d4cfbbb72a7d0bbd154b8263aa182a6277c71d",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-014",
+      "message_index": 10,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "7ede32e04b4ed5f8ad4c4d51cd24f61af066297da8ae61d942fa908e8b571180",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p1-en-015",
+      "message_index": 9,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "7948da3991714b8ec9c391edcc947d51c1890dca58c6562c566fd01b15d0f5a1",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "not_supported",
+      "evidence": {
+        "greeting": false,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "en"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p4-ru-003",
+      "message_index": 12,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "477d8e1227f3a5c7734e91d3773826068c4cca37dbe240a56bfc74dc2fa31291",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p4-ru-002",
+      "message_index": 2,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "beb49cf150b1769a2328af3a29a7dc7fa8ddde2da42859f983c1e98794e92b3b",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "needs_review",
+      "evidence": {
+        "greeting": false,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Voice opening is incomplete or unsupported in text; check audio before penalizing."
+    },
+    {
+      "id": "p4-ru-001",
+      "message_index": 12,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "2413fd98f2def52748d0d1cea7a066dc760a559e5edeb12583d90a953dc00ae6",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "supported",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": true,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Probe only: needs_review must not become an automatic penalty."
+    },
+    {
+      "id": "p4-ru-005",
+      "message_index": 16,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "b4bff05197d8d7b18dbdbe159d86d33676262a7e8489693498609b84c631e411",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "needs_review",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": false,
+          "method": "none",
+          "confidence": "low"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Voice opening is incomplete or unsupported in text; check audio before penalizing."
+    },
+    {
+      "id": "p4-ru-004",
+      "message_index": 14,
+      "guard_version": "transcript-guard-v2",
+      "transcript_sha256": "2d3e20b8c30b2d05b46677c3d6ad0b97251abd61a485fbf57bb4376ec17a6c56",
+      "quality_checks_completed": true,
+      "quality_flags": [],
+      "status": "needs_review",
+      "evidence": {
+        "greeting": true,
+        "fuzzy_greeting": false,
+        "self_introduction": false,
+        "brand": {
+          "detected": true,
+          "method": "known_variant",
+          "confidence": "high"
+        },
+        "first_agent_turn": true,
+        "language": "ru"
+      },
+      "note": "Voice opening is incomplete or unsupported in text; check audio before penalizing."
+    }
+  ],
+  "scope": "Heuristic review signals only; no score changes or confirmed ASR errors without audio review."
+}

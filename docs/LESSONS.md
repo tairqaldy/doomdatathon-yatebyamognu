@@ -2,6 +2,8 @@
 
 When something breaks or an assumption turns out wrong, add one line: `what happened → rule to avoid it`. Every agent reads this at session start.
 
+- An absent transcript probe allowed the first candidate to confirm scores, and stricter evidence rules quarantined 61/65 old results → fail closed on missing provenance, report coverage explicitly, and reconcile quality-policy changes with existing contracts before integration.
+
 - A transcript guard passed its own fixtures but rejected the real `data.records` envelope and matched `hi` inside `This` → test the actual export schema, word boundaries, roles and ASR uncertainty; never turn a heuristic miss into an automatic staff penalty.
 
 - Nemotron transcripts of the 5 real calls contained first names that the organizer transcripts mask as [Имя скрыто] → never commit raw ASR text (data/transcripts/, eval/cache/asr/ are gitignored); commit metrics only.

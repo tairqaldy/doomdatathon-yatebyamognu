@@ -1,0 +1,20 @@
+[
+  {"id":"descriptive-fine","text":"Hello, this is fine.","language":"en","expected":"not_supported"},
+  {"id":"descriptive-problem","text":"Hello, this is a problem.","language":"en","expected":"not_supported"},
+  {"id":"company-not-name","text":"Hello, this is Freedom Brocker.","language":"en","expected":"not_supported"},
+  {"id":"negated-name-en","text":"Hello, my name is not John.","language":"en","expected":"not_supported"},
+  {"id":"negated-name-ru","text":"Здравствуйте, меня зовут не Иван.","language":"ru","expected":"not_supported"},
+  {"id":"negated-greeting","text":"I did not say hello. My name is John.","language":"en","expected":"not_supported"},
+  {"id":"incomplete-name","text":"Hello, my name is","language":"en","expected":"needs_review"},
+  {"id":"incomplete-name-ru","text":"Здравствуйте, меня зовут…","language":"ru","expected":"needs_review"},
+  {"id":"mixed-en-ru","text":"Hello, меня зовут Иван.","language":"ru","expected":"needs_review"},
+  {"id":"mixed-kk-ru","text":"Сәлеметсіз бе, меня зовут Иван.","language":"KZ","expected":"needs_review"},
+  {"id":"clear-ru-brand","text":"Здравствуйте, меня зовут Иван, Фридом Брокир.","language":"ru","expected":"supported"},
+  {"id":"clear-en-brand","text":"Hello, my name is John, Freedom Brocker.","language":"en","expected":"supported"},
+  {"id":"clear-kk-name","text":"Сәлеметсіз бе, менің атым Алия.","language":"KZ","expected":"supported"},
+  {"id":"masked-name","text":"Здравствуйте, меня зовут [Имя скрыто].","language":"ru","expected":"supported"},
+  {"id":"quoted-other","text":"Клиент сказал «Здравствуйте, меня зовут Иван».","language":"ru","expected":"not_supported"},
+  {"id":"real-name-finn","text":"Hello, this is Finn.","language":"en","expected":"supported"},
+  {"id":"ru-name-from-support","text":"Добрый день! Я Лера из поддержки.","language":"ru","expected":"supported"},
+  {"id":"en-name-from-support","text":"Hi, I'm Maya from support.","language":"en","expected":"supported"}
+]

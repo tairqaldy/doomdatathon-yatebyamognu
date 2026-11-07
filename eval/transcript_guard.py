@@ -4,10 +4,23 @@ Not a replacement for official rubric/LLM; focuses on false negative regressions
 Usage: python transcript_guard.py --self-test; python transcript_guard.py dataset.json
 """
 from __future__ import annotations
-import argparse, json, re, unicodedata
+import argparse, json, re, unicodedata, hashlib
 from difflib import SequenceMatcher
 from pathlib import Path
 from datetime import datetime
+
+GUARD_VERSION = 'transcript-guard-v2'
+
+
+def transcript_digest(messages):
+    """Canonical JSON binding; shared with evaluator-candidate.mjs for contract-shaped transcripts."""
+    def canonical(value):
+        if isinstance(value, float) and value.is_integer(): return int(value)
+        if isinstance(value, list): return [canonical(v) for v in value]
+        if isinstance(value, dict): return {k: canonical(v) for k, v in value.items()}
+        return value
+    source = json.dumps(canonical(messages), ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    return hashlib.sha256(source.encode('utf-8')).hexdigest()
 
 GREETINGS = {
   'ru': ('здравствуйте','здравствуй','добрый день','доброе утро','добрый вечер','привет'),
@@ -47,17 +60,17 @@ def introduction_present(text, language):
     name = r'(?:\[имя скрыто\]|\[name hidden\]|[^\W\d_]+)'
     patterns = {
         'ru': [rf'меня зовут\s+{name}', rf'с вами\s+{name}',
-               rf'(?:^|[,.!?]\s*)я\s+{name}(?=\s*[,!.?]|$)'],
+               rf'(?:^|[,.!?]\s*)я\s+{name}(?=\s*[,!.?]|$|\s+из\s)'],
         'kk': [rf'менің атым\s+{name}',
                rf'(?<!\w)мен\s+{name}(?:мын|мін|пын|пін|бын|бін)?(?=\s*[,!.?]|$)'],
         'en': [rf'my name is\s+{name}', rf'this is\s+{name}',
-               rf"(?<!\w)i(?: am|'m)\s+{name}(?=\s*[,!.?]|$)"],
+               rf"(?<!\w)i(?: am|'m)\s+{name}(?=\s*[,!.?]|$|\s+from\s)"],
     }
     # Match punctuation before normalization; roles alone do not supply a name.
     clean = unicodedata.normalize('NFKC', str(text or '')).lower().translate(TRANS)
     clean = re.sub(r'«[^»]*»|“[^”]*”|"[^"]*"', '', clean)
     # A role or an apology is not a personal introduction.
-    clean = re.sub(r"(?<!\w)(?:я|мен|i am|i'm)\s+(?:оператор|консультант|специалист|sorry|here|ready|agent|consultant|support)(?!\w)", '', clean)
+    clean = re.sub(r"(?<!\w)(?:я|мен|i am|i'm|this is|my name is|меня зовут|с вами|менің атым)\s+(?:оператор|консультант|специалист|sorry|here|ready|agent|consultant|support|fine|okay|ok|good|great|a|an|the|not|не|freedom|фридом)(?!\w)[^.!?]*", '', clean)
     return any(re.search(p, clean) for p in patterns.get(language, []))
 
 
@@ -71,11 +84,12 @@ def greeting_probe(text, language='ru', first_agent_turn=True, asr_uncertain=Fal
     clean = re.sub(r'«[^»]*»|“[^”]*”|"[^"]*"', '', str(text or ''))
     s=norm(clean)
     greeting=any(phrase_present(s, g) for g in GREETINGS[lang])
-    if re.search(r'\b(?:не сказал|не говорил|did not say|never said)\b', s):
+    negated_greeting=bool(re.search(r'\b(?:не сказал|не говорил|did not say|never said)\b', s))
+    if negated_greeting:
         greeting=False
     # Fuzzy for ASR spelling of short salutations; avoid short common words.
     fuzzy=False
-    if not greeting:
+    if not greeting and not negated_greeting:
         for phrase in GREETINGS[lang]:
             if len(norm(phrase))<7: continue
             target=norm(phrase).split()
@@ -83,11 +97,15 @@ def greeting_probe(text, language='ru', first_agent_turn=True, asr_uncertain=Fal
                 if SequenceMatcher(None,' '.join(window),norm(phrase)).ratio() >= .87:
                     fuzzy=True
     introduced=introduction_present(clean, lang)
+    mixed = (not negated_greeting and any(phrase_present(s, g) for values in GREETINGS.values() for g in values)
+             and any(introduction_present(clean, other) for other in GREETINGS)
+             and not (greeting and introduced))
+    incomplete = bool(re.search(r'(?:my name is|this is|меня зовут|менің атым)\s*$', s))
     brand=brand_signal(s)
     evidence={'greeting':greeting,'fuzzy_greeting':fuzzy,'self_introduction':introduced,'brand':brand,'first_agent_turn':first_agent_turn,'language':lang}
     if not first_agent_turn: status='not_supported'
     elif greeting and introduced and not asr_uncertain: status='supported'
-    elif asr_uncertain or fuzzy or (greeting and brand['detected'] and not introduced): status='needs_review'
+    elif asr_uncertain or fuzzy or mixed or incomplete: status='needs_review'
     else: status='not_supported'
     return {'status':status,'evidence':evidence,'note':'Probe only: needs_review must not become an automatic penalty.'}
 
@@ -99,6 +117,10 @@ def transcript_quality(messages):
         txt = m.get('text',m.get('content',m.get('message')))
         if txt is None or not str(txt).strip(): flags.append({'index':i,'kind':'empty_text'})
         if not (m.get('role') or m.get('speaker') or m.get('sender')): flags.append({'index':i,'kind':'missing_role'})
+        if m.get('speaker_uncertain'): flags.append({'index':i,'kind':'speaker_uncertain'})
+        if m.get('segment_missing') or m.get('audio_corrupted'): flags.append({'index':i,'kind':'damaged_segment'})
+        if isinstance(txt, str) and re.search(r'\[(?:неразборчиво|inaudible|unintelligible)\]', txt, re.I):
+            flags.append({'index':i,'kind':'unintelligible_segment'})
         if isinstance(m.get('asr_confidence'), (float,int)) and not isinstance(m['asr_confidence'], bool) and 0 <= m['asr_confidence'] < .75:
             flags.append({'index':i,'kind':'low_asr_confidence','confidence':m['asr_confidence']})
         ts=timestamp_value(m.get('timestamp'))
@@ -142,7 +164,10 @@ def summarize_dataset(path):
         messages=d.get('messages',d.get('turns',d.get('transcript',[])))
         if isinstance(messages,dict):messages=messages.get('messages',[])
         if not isinstance(messages,list):report['warnings'].append({'dialog_index':j,'kind':'non_list_transcript'});continue
-        for flag in transcript_quality(messages):
+        quality_flags=transcript_quality(messages)
+        if d.get('audio_missing') or d.get('audio_corrupted'):
+            quality_flags.append({'index':None,'kind':'damaged_audio'})
+        for flag in quality_flags:
             report['flags_by_kind'][flag['kind']]=report['flags_by_kind'].get(flag['kind'],0)+1
             report['warnings'].append({'dialog_index':j,'id':did,**flag})
         found_operator=False
@@ -160,7 +185,9 @@ def summarize_dataset(path):
                 if d.get('channel') == 'voice call' and result['status'] == 'not_supported':
                     result['status']='needs_review'
                     result['note']='Voice opening is incomplete or unsupported in text; check audio before penalizing.'
-                item={'id':did,'message_index':i,**result}
+                item={'id':did,'message_index':i,'guard_version':GUARD_VERSION,
+                      'transcript_sha256':transcript_digest(messages),'quality_checks_completed':True,
+                      'quality_flags':quality_flags,**result}
                 report['c01_probes'].append(item)
                 if result['status'] in ('supported','needs_review'):
                     report['c01_candidates'].append({'id':did,'message_index':i,'status':result['status'],'evidence':result['evidence']})

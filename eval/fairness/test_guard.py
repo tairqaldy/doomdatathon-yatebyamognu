@@ -10,6 +10,12 @@ SPEC.loader.exec_module(guard)
 
 
 class GuardTests(unittest.TestCase):
+    def test_adversarial_examples(self):
+        fixtures = json.loads((Path(__file__).parent/'adversarial.json').read_text(encoding='utf-8'))
+        for fixture in fixtures:
+            with self.subTest(case=fixture['id']):
+                self.assertEqual(guard.greeting_probe(fixture['text'], fixture['language'])['status'], fixture['expected'])
+
     def test_english_hi_uses_word_boundaries(self):
         self.assertEqual(guard.greeting_probe('This is John.', 'en')['status'], 'not_supported')
         self.assertEqual(guard.greeting_probe('Shipping. My name is John.', 'en')['status'], 'not_supported')
