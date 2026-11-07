@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Freedom CQA · preview hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design/tokens.css">
+  <link rel="stylesheet" href="design/components.css">
+  <style>
+    body { margin: 0; }
+    .hub { min-height: 100vh; padding: 28px clamp(16px, 4vw, 48px) 64px; background: linear-gradient(180deg, #F3F8FF, #fff 360px); position: relative; overflow: hidden; }
+    .hub .cqa-glow { top: -320px; right: -260px; opacity: .3; }
+    .hub-head { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .build { display: flex; flex-wrap: wrap; gap: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; position: relative; }
+    .tile { display: flex; flex-direction: column; gap: 6px; text-decoration: none !important; color: inherit; }
+    .tile .cqa-small { color: var(--cqa-text-tertiary); }
+    .tile.is-missing { opacity: .55; border-style: dashed; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 14px 0 28px; position: relative; }
+    .metric b { display: block; font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .devices-head { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 28px 0 14px; position: relative; }
+    .devices { display: flex; gap: 20px; align-items: flex-start; overflow-x: auto; padding-bottom: 12px; position: relative; }
+    .device { flex: none; display: flex; flex-direction: column; gap: 8px; }
+    .frame { position: relative; overflow: hidden; border-radius: 18px; border: 6px solid #1D1D1B; background: #fff; box-shadow: var(--cqa-shadow-elevated); }
+    .frame iframe { border: 0; transform-origin: 0 0; position: absolute; left: 0; top: 0; }
+  </style>
+</head>
+<body>
+<div class="cqa hub" id="cqa-root">
+  <div class="cqa-glow"></div>
+  <header class="hub-head">
+    <div>
+      <div class="cqa-overline">Freedom Broker · CQA hackathon · NU</div>
+      <h1 class="cqa-title">Preview hub</h1>
+      <p class="cqa-muted" style="margin-top:6px;max-width:640px">Every push to <b>main</b> redeploys this site automatically (Vercel). Every other branch gets its own preview URL. Use this page to check all surfaces on phone, tablet and laptop.</p>
+    </div>
+    <div class="build" id="build"><span class="cqa-badge cqa-badge--outline">loading build…</span></div>
+  </header>
+
+  <section class="metrics" id="metrics"></section>
+
+  <h2 class="cqa-h2" style="position:relative;margin-bottom:12px">Surfaces</h2>
+  <section class="grid" id="tiles"></section>
+
+  <div class="devices-head">
+    <h2 class="cqa-h2">Devices</h2>
+    <select class="cqa-select" id="pick" style="width:auto"></select>
+    <button class="cqa-btn cqa-btn--s" id="reload">Reload frames</button>
+  </div>
+  <section class="devices" id="devices"></section>
+</div>
+<script>
+  const SURFACES = [
+    { id: 'landing', title: 'Landing', path: 'landing/', desc: 'Product landing for the pitch (Lane D, Dameli). Create landing/index.html', probe: 'landing/index.html' },
+    { id: 'dashboard', title: 'Dashboard', path: 'prototype/#/dialogs', desc: 'All dialogs, averages by language, where points are lost' },
+    { id: 'chat', title: 'Analysis · chat (KZ)', path: 'prototype/#/dialog/p1-kz-011', desc: 'Operator view: timeline, transcript, score, deductions' },
+    { id: 'call', title: 'Analysis · call (audio)', path: 'prototype/#/dialog/p4-ru-001', desc: 'Call with recording, seek from deduction markers' },
+    { id: 'reviewer', title: 'Reviewer · appeals', path: 'prototype/#/appeals', desc: 'Switch role to «Проверяющий» bottom-left' },
+    { id: 'admin', title: 'Admin · checklist editor', path: 'prototype/#/checklist', desc: 'Replace a criterion → new version → re-evaluate' },
+    { id: 'design', title: 'Design system', path: 'prototype/#/design', desc: 'Tokens + components from fbroker.kz' },
+    { id: 'health', title: 'API health', path: 'api/health', desc: 'Which keys/models the deploy has (no secrets)' },
+    { id: 'repo', title: 'GitHub repo', path: 'https://github.com/tairqaldy/doomdatathon-yatebyamognu', desc: 'Issues, branches, AGENTS.md', external: true },
+  ];
+  const DEVICES = [{ name: 'Phone', w: 390, h: 844, s: 0.5 }, { name: 'Tablet / D365 iframe', w: 820, h: 1100, s: 0.42 }, { name: 'Laptop', w: 1440, h: 900, s: 0.5 }];
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const exists = async (p) => { try { const r = await fetch(p, { method: 'HEAD', cache: 'no-store' }); return r.ok; } catch { return false; } };
+
+  async function build() {
+    const el = document.getElementById('build');
+    try {
+      const h = await fetch('api/health', { cache: 'no-store' }).then((r) => r.json());
+      el.innerHTML = [
+        `<span class="cqa-badge cqa-badge--brand">${esc(h.branch || 'local')} · ${esc(h.commit || 'dev')}</span>`,
+        `<span class="cqa-badge ${h.openai || h.openrouter ? 'cqa-badge--pass' : 'cqa-badge--fail'}">AI ${h.openai || h.openrouter ? 'on' : 'off'} · ${esc(h.models?.eval || '')}</span>`,
+        `<span class="cqa-badge ${h.organizer_api ? 'cqa-badge--pass' : 'cqa-badge--partial'}">organizer API ${h.organizer_api ? 'on' : 'off'}</span>`,
+      ].join('');
+    } catch { el.innerHTML = '<span class="cqa-badge cqa-badge--partial">static mode (no /api)</span>'; }
+  }
+
+  async function metrics() {
+    const m = await fetch('eval/runs/gpt-6-luna-eval-v1.metrics.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const ev = await fetch('data/evaluations/DEV.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const cards = [];
+    if (ev) cards.push(['Dialogs with AI results', `${Object.keys(ev.results).length}`, esc(ev.model)]);
+    if (m) {
+      cards.push(['Agreement with gold (strict)', `${m.overall.strict}%`, `${m.gold_dialogs} reviewed dialogs`]);
+      cards.push(['Gross-error recall', `${m.gross_error.tp}/${m.gross_error.tp + m.gross_error.fn}`, `${m.gross_error.fp} false positives`]);
+      cards.push(['Evidence hit rate', `${m.evidence.hit_rate}%`, `${m.evidence.invalid_refs} invalid refs`]);
+      cards.push(['Total score MAE', `${m.total.mae}`, 'points vs human']);
+    }
+    cards.push(['Cost per evaluation', '$0.00105', 'GPT-6 Luna, all 65 DEV']);
+    document.getElementById('metrics').innerHTML = cards.map(([k, v, s]) => `<div class="cqa-card cqa-card--compact metric"><span class="cqa-small cqa-muted">${k}</span><b>${v}</b><span class="cqa-small cqa-muted">${s}</span></div>`).join('');
+  }
+
+  async function tiles() {
+    const ok = await Promise.all(SURFACES.map((s) => (s.probe ? exists(s.probe) : true)));
+    document.getElementById('tiles').innerHTML = SURFACES.map((s, i) => `
+      <a class="cqa-card cqa-card--interactive tile ${ok[i] ? '' : 'is-missing'}" href="${s.path}" ${s.external ? 'target="_blank" rel="noopener"' : ''}>
+        <span class="cqa-h3">${esc(s.title)}${ok[i] ? '' : ' · <span class="cqa-badge cqa-badge--partial">not built yet</span>'}</span>
+        <span class="cqa-small">${esc(s.desc)}</span>
+        <span class="cqa-mono cqa-muted">/${esc(s.path.replace(/^https?:\/\//, ''))}</span>
+      </a>`).join('');
+    const pick = document.getElementById('pick');
+    pick.innerHTML = SURFACES.filter((s, i) => !s.external && s.id !== 'health' && ok[i]).map((s) => `<option value="${s.path}">${esc(s.title)}</option>`).join('');
+    pick.onchange = frames; frames();
+  }
+
+  function frames() {
+    const path = document.getElementById('pick').value;
+    document.getElementById('devices').innerHTML = DEVICES.map((d) => `
+      <div class="device"><span class="cqa-small"><b>${d.name}</b> <span class="cqa-muted">${d.w}×${d.h}</span> · <a href="${path}" target="_blank" rel="noopener">open</a></span>
+        <div class="frame" style="width:${d.w * d.s}px;height:${d.h * d.s}px"><iframe src="${path}" title="${d.name}" loading="lazy" style="width:${d.w}px;height:${d.h}px;transform:scale(${d.s})"></iframe></div></div>`).join('');
+  }
+  document.getElementById('reload').onclick = frames;
+  build(); metrics(); tiles();
+</script>
+</body>
+</html>

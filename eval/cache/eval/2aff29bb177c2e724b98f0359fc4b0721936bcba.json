@@ -1,0 +1,116 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "В первом ответе оператор поздоровалась и представилась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Кира. На сайте Freedom Holding Corp. откройте Investors, затем Financial Information."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор учла, что клиенту нужен путь к отчётности на сайте, и указала конкретный раздел.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Кира. На сайте Freedom Holding Corp. откройте Investors, затем Financial Information."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общедоступной финансовой отчётности и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общая информация о расположении публичной отчётности."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дала точный путь к нужному разделу, и клиент подтвердил, что понял.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Кира. На сайте Freedom Holding Corp. откройте Investors, затем Financial Information."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор была вежлива и отреагировала на затруднение клиента конкретной инструкцией.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Кира. На сайте Freedom Holding Corp. откройте Investors, затем Financial Information."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Ответы ясные, но после эскалации до подключения оператора прошло более двух минут без обновления статуса ожидания.",
+   "deduction_reason": "Снижено за отсутствие сообщения об ожидании после эскалации.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      8,
+      9
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор подтвердила нужный раздел и попрощалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, нужный раздел в меню для инвесторов. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложения платной услуги в обход компании и раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Кира. На сайте Freedom Holding Corp. откройте Investors, затем Financial Information."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал финансовую отчётность Freedom Holding Corp., а не выписку по счёту.",
+  "operator_actions": "Оператор указала путь на сайте: Investors → Financial Information.",
+  "outcome": "Клиент понял, где искать отчётность, и поблагодарил."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 1872,
+  "completion_tokens": 1721,
+  "cost": 0.001048
+ },
+ "latency_ms": 14050,
+ "attempts": 1
+}

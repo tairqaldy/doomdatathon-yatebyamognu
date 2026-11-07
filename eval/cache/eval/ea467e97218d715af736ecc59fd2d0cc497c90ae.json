@@ -1,0 +1,114 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась и представилась в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор учла, что клиент уже в приложении и располагает тикером, и дала подходящую инструкцию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Обсуждалась только общая навигация и настройка заявки; идентификация для этого не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о поиске бумаги и настройке Use Margin, без доступа к данным счёта или защищённого действия."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Основные инструкции даны, но осталось неясным, влияет ли настройка на уже имеющуюся позицию.",
+   "deduction_reason": "Не объяснено, затрагивает ли Use Margin уже открытую позицию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общалась вежливо; клиент не выражал недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Of course. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Инструкции в целом ясны, но формулировка о существующей позиции сбивает с толку.",
+   "deduction_reason": "Фраза о влиянии настройки на существующую позицию сформулирована неясно.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не подвела итог и не предложила дальнейшую помощь.",
+   "deduction_reason": "Было только прощание без итога или предложения помочь ещё.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Of course. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложения личной платной услуги или раскрытия конфиденциальных данных нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнял, как найти нужную акцию и отключить Use Margin.",
+  "operator_actions": "Оператор объяснила поиск по тикеру, переход к заявке и настройку Use Margin.",
+  "outcome": "Клиент нашёл настройку, но не получил ясного ответа о влиянии на уже имеющуюся позицию."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 2055,
+  "completion_tokens": 2588,
+  "cost": 0.001499
+ },
+ "latency_ms": 22340,
+ "attempts": 1
+}

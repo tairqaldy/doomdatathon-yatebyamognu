@@ -1,0 +1,113 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась и представилась в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Для ответа хватало информации изначально: клиент уточнил, можно ли купить акции с D-счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Это общий вопрос о назначении счетов; идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основной вопрос решён, но оператор не пояснила, как перевести средства на торговый счёт или действовать при размещении ордера.",
+   "deduction_reason": "Не объяснён следующий шаг для использования средств при оформлении ордера.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор ответила вежливо; клиент не выражал недовольства или неудобства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ сформулирован ясно и связно; явного ожидания со стороны оператора не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не подвела итог и не предложила дальнейшую помощь.",
+   "deduction_reason": "Не предложена дальнейшая помощь и не подведён итог.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Bye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложения платной услуги в обход компании или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнил, можно ли использовать D-счёт для покупки акций и что выбрать при размещении ордера.",
+  "operator_actions": "Оператор пояснила, что средства с D-счёта нельзя использовать напрямую и для ордера нужно смотреть торговый счёт.",
+  "outcome": "Клиент подтвердил, что понял ответ."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 1836,
+  "completion_tokens": 1162,
+  "cost": 0.000765
+ },
+ "latency_ms": 9651,
+ "attempts": 1
+}

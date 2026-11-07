@@ -7,6 +7,18 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 15:10 · lane-c/b/d · tair/claude · branch c/full-dev-eval-hub
+Done:
+- Verified Akanov's OpenAI + OpenRouter router (#7) end to end with real keys (both valid; OpenRouter $14.97 left of $15). No duplicate implementation.
+- **GPT-6 Luna on all 65 DEV dialogs**: 0 errors, $0.048 total, $0.00105/eval, p50 13.3 s. `data/evaluations/DEV.json` now 65/65, so the live app shows real AI for every dialog. Gold accuracy unchanged: 86.2 % strict, gross 6/7, 0 FP, evidence 95.5 %
+- **Nemotron ASR** on the 5 calls: WER 35.5 % / CER 24.4 % vs organizer transcripts, $0.04. Raw transcripts contain unmasked first names → gitignored (LESSONS), metrics only committed
+- **Preview hub at `/`** (`index.html`): build/branch/commit, AI status, live accuracy metrics, every surface (landing slot, dashboard, chat/call analysis, reviewer, admin/checklist, design system, API) and phone / tablet(D365) / laptop frames
+- **CONTRACTS §5** rewritten to the real API + `AIResult` shape for the UI lane
+**Dameli (UI/UX):** build on `CONTRACTS §5`: the card needs `answers[*].deduction_reason`, `evidence`, `summary`; compute points with `prototype/scoring.js`. Your `a/8-card-evaluation-ux` is 5 ahead / 7 behind main: merge `main` into it (prototype files didn't change since, so there should be no conflicts) and check it on its Vercel preview URL. Landing goes in `landing/index.html`; the hub tile turns on automatically.
+**Needs tair (agents can't enter keys):** Vercel → freedom-cqa → Settings → Environment Variables: add `OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `CQA_API_URL` (all environments), then Redeploy. Until then live "Оценить AI" calls fail; precomputed results still show.
+Contracts touched: CONTRACTS §5 documented (matches existing code, no shape change).
+How to verify: https://freedom-cqa.vercel.app → metrics + device frames; `node eval/accuracy.ts eval/runs/2026-11-07T09-57-56-694Z-DEV-openai_gpt-6-luna.evaluations.json`.
+
 ### 2026-11-07 · lane-c · claude · #7 · branch c/7-openai-direct
 Done: evaluation now runs on **OpenAI `gpt-6-luna` through the direct OpenAI API** (team decision). `lib/openai.js` (no-deps client, strict JSON schema, cost from token usage) + `lib/llm.js` router (`openai:<id>` → OpenAI, else OpenRouter); `lib/evaluator.js` imports from the router; default `MODELS.eval = openai:gpt-6-luna`. If `OPENAI_API_KEY` is missing, the same model runs via OpenRouter `openai/gpt-6-luna`, so deploys keep working. ASR unchanged (OpenRouter Nemotron).
 | 19 reviewed gold dialogs | Haiku 5.5 | **GPT-6 Luna** |

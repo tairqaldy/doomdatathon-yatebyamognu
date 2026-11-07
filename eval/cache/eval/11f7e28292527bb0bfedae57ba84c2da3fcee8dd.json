@@ -1,0 +1,139 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор учёл цель клиента и уточнение о переводе в евро, указав выбрать нужную валюту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общего порядка поиска реквизитов в приложении и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос — инструкция по навигации в приложении; оператор не раскрывал данные конкретного счёта и не выполнял защищённое действие."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал путь к реквизитам и объяснил, как выбрать валюту; клиент подтвердил, что получил их.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Got them, thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив и дал конкретное пояснение, чтобы клиент выбрал реквизиты для нужной валюты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и последовательные; явного ожидания во время общения с оператором не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, обходного предложения платной услуги или раскрытия конфиденциальной информации нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужны были реквизиты для пополнения брокерского счёта в отделении банка, в том числе для перевода в евро.",
+  "operator_actions": "Оператор объяснил, где в приложении найти реквизиты, и указал выбрать нужную валюту перед скачиванием.",
+  "outcome": "Клиент получил реквизиты и поблагодарил оператора."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 1882,
+  "completion_tokens": 1324,
+  "cost": 0.00085
+ },
+ "latency_ms": 10717,
+ "attempts": 1
+}
