@@ -31,7 +31,7 @@ Production: **https://freedom-cqa.vercel.app**
 |---|---|---|
 | Agreement with our gold labels, per criterion answer | **96.1% strict**, 98.7% lenient (19 dialogs, 152 answers) | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) |
 | Same, on the 7 held-out gold dialogs | **94.6% strict**, 98.2% lenient (56 answers) | same |
-| Agreement with two blind labelers, 24 other DEV chats | **96.8%** (179 of the 185 answers they agree on) | [`eval/blind/`](eval/blind/blind-24.json) |
+| Agreement with two blind AI labelers, 24 other DEV chats | **96.8%** (179 of the 185 answers they agree on) | [`eval/blind/`](eval/blind/blind-24.json) |
 | Gross errors on gold | **7 of 7 found, 0 false alarms** | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) |
 | Cost per evaluation | $0.0070 average (chats $0.0061, calls $0.018) | [run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
 | 10 control chats | about 3 minutes and $0.07 | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6 |
@@ -186,7 +186,7 @@ The organizers pick the top 50 mainly by **per-criterion agreement with expert l
 - **Gold labels are ours.** 19 DEV dialogs × 8 criteria = 152 answers. An agent drafted them, then a human reviewer checked every label and accepted all of them ([`eval/gold/README.md`](eval/gold/README.md)). A separate audit re-read all 19 against the checklist: 84 completeness fixes, no answer changed, all 7 gross errors confirmed ([gold audit](eval/GOLD_AUDIT_REPORT.md)). Borderline labels list defensible alternatives in `also_acceptable`.
 - **Strict** = the same answer as gold. **Lenient** = gold or one of its accepted alternatives.
 - **Held-out** means "no prompt change was made in response to these 7 dialogs", not "never seen". The split (12 tuning, 7 held-out, stratified by language and case type) was frozen before the first eval-v5 call ([split.md](docs/playbook/split.md)), but eval-v4 and the v5 rules were written after reading all 19. With 56 answers, one answer is 1.8 points.
-- **Blind double labeling** checks that we did not just fit our own reading. Two labelers who saw only the checklist and the organizer rulings, no playbook and no model output, labeled 24 non-gold DEV chats. They agreed with each other on 185 of 192 answers (96.4%); we score against those 185. They are not Freedom's experts ([`blind-24.json`](eval/blind/blind-24.json)).
+- **Blind double labeling** checks that we did not just fit our own reading. Two independent AI labelers (separate Claude sessions, a different model family from our GPT evaluator) saw only the checklist and the organizer rulings, no playbook and no model output, and labeled 24 non-gold DEV chats. They agreed with each other on 185 of 192 answers (96.4%); we score against those 185. They are not people and not Freedom's experts: a consistency check, not ground truth ([`blind-24.json`](eval/blind/blind-24.json)).
 - **The real test** is the 10 control chats graded by Freedom's experts. We have no labels for them.
 
 ### Where eval-v5.1 still disagrees with gold
@@ -366,7 +366,7 @@ API: `POST /api/evaluate` · `GET /api/dataset?group_id=` · `GET /api/audio?id=
 
 ## Limitations
 
-- **Our gold, not Freedom's.** 19 dialogs labeled by us; the blind labelers are not Freedom's experts either. The control chats are the only expert test.
+- **Our gold, not Freedom's.** 19 dialogs labeled by us; the blind labelers are AI sessions, not Freedom's experts. The control chats are the only expert test.
 - **Small samples.** Held-out gold is 56 answers (one answer = 1.8 points); KZ and EN have 5 gold dialogs each.
 - **C7 literal reading is a bet.** If the experts accept a polite goodbye after a solved request, we lose C7 on many chats (−5 points before redistribution). It is one function, `closingAnswer()`.
 - **Weakest criteria:** C6 dialog management (84.2% strict) and C5 empathy (89.5%). C4 is slightly harsh on handoffs that were a correct next step.
