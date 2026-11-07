@@ -18,7 +18,7 @@ const S = {
   RU: { open: 'Спросить AIM', title: 'AIM · ассистент', sub_bot: 'Подскажу и помогу в приложении', sub_wait: 'Ждём специалиста', sub_op: '{name} на связи', sub_closed: 'Разговор завершён',
     hello: 'Здравствуйте! Я AIM, ассистент Freedom. Скажите, что нужно сделать: я объясню, как это сделать, а если захотите, открою нужный экран и заполню поля за вас. Деньги и заявки подтверждаете только вы.',
     ask_help: 'Хотите, я открою нужный экран и заполню поля за вас?', consent_yes: 'Да, помогите', consent_no: 'Нет, я сам(а)', done_default: 'Готово, всё подготовил на экране. Проверьте данные и нажмите кнопку сами.', declined: 'Хорошо, тогда по шагам выше. Если понадобится помощь, напишите.',
-    placeholder: 'Например: хочу пополнить счёт на 50 000 ₸', send: 'Отправить', mic: 'Сказать голосом', mic_stop: 'Остановить запись', listening: 'Слушаю… нажмите ещё раз, чтобы закончить',
+    placeholder: 'Например: пополнить счёт', send: 'Отправить', mic: 'Сказать голосом', mic_stop: 'Остановить запись', listening: 'Слушаю… нажмите ещё раз, чтобы закончить',
     transcribing: 'Распознаю речь…', speak_on: 'Озвучивать ответы', speak_off: 'Не озвучивать', close: 'Свернуть', thinking: 'AIM думает…', human: 'Позвать специалиста',
     chips: ['Как пополнить счёт?', 'Где мой отчёт брокера?', 'Как найти облигации?', 'Как убрать маржу?'],
     a_open: 'Открыл «{x}»', a_hl: 'Подсветил «{x}»', a_fill: 'Заполнил «{x}»: {v}', a_on: 'Поставил галочку «{x}»', a_off: 'Снял галочку «{x}»', a_click: 'Нажал «{x}»', a_hl_el: 'Подсветил «{x}», нажмите сами',
@@ -28,7 +28,7 @@ const S = {
   KZ: { open: 'AIM-нен сұрау', title: 'AIM · көмекші', sub_bot: 'Қосымшада түсіндіріп, көмектесемін', sub_wait: 'Маманды күтеміз', sub_op: '{name} байланыста', sub_closed: 'Сөйлесу аяқталды',
     hello: 'Сәлеметсіз бе! Мен AIM, Freedom көмекшісімін. Не істеу керек екенін айтыңыз: қалай істеуді түсіндіремін, ал қаласаңыз, керекті экранды ашып, өрістерді өзім толтырамын. Ақша мен өтінімдерді тек сіз растайсыз.',
     ask_help: 'Керекті экранды ашып, өрістерді өзім толтырайын ба?', consent_yes: 'Иә, көмектесіңіз', consent_no: 'Жоқ, өзім', done_default: 'Дайын, экранда бәрін дайындадым. Деректерді тексеріп, батырманы өзіңіз басыңыз.', declined: 'Жарайды, онда жоғарыдағы қадамдар бойынша жасаңыз. Көмек керек болса, жазыңыз.',
-    placeholder: 'Мысалы: шотты 50 000 ₸-ге толықтырғым келеді', send: 'Жіберу', mic: 'Дауыспен айту', mic_stop: 'Жазуды тоқтату', listening: 'Тыңдап тұрмын… аяқтау үшін қайта басыңыз',
+    placeholder: 'Мысалы: шотты толықтыру', send: 'Жіберу', mic: 'Дауыспен айту', mic_stop: 'Жазуды тоқтату', listening: 'Тыңдап тұрмын… аяқтау үшін қайта басыңыз',
     transcribing: 'Сөзді танып жатырмын…', speak_on: 'Жауаптарды дыбыстау', speak_off: 'Дыбыстамау', close: 'Жию', thinking: 'AIM ойланып жатыр…', human: 'Маманды шақыру',
     chips: ['Шотты қалай толықтырамын?', 'Брокер есебі қайда?', 'Облигацияларды қалай табамын?', 'Маржаны қалай алып тастаймын?'],
     a_open: '«{x}» ашылды', a_hl: '«{x}» белгіленді', a_fill: '«{x}» толтырылды: {v}', a_on: '«{x}» белгісі қойылды', a_off: '«{x}» белгісі алынды', a_click: '«{x}» басылды', a_hl_el: '«{x}» белгіленді, өзіңіз басыңыз',
@@ -38,7 +38,7 @@ const S = {
   EN: { open: 'Ask AIM', title: 'AIM · assistant', sub_bot: 'I\'ll explain and help in the app', sub_wait: 'Waiting for a specialist', sub_op: '{name} is here', sub_closed: 'Conversation ended',
     hello: 'Hi! I\'m AIM, Freedom\'s assistant. Tell me what you need: I\'ll explain how to do it and, if you want, open the right screen and fill in the fields for you. Only you confirm money and orders.',
     ask_help: 'Want me to open the right screen and fill in the fields for you?', consent_yes: 'Yes, help me', consent_no: 'No, I\'ll do it', done_default: 'Done, it\'s all set up on screen. Check the details and press the button yourself.', declined: 'Okay, just follow the steps above. Write if you need help.',
-    placeholder: 'For example: I want to add 50,000 ₸ to my account', send: 'Send', mic: 'Speak', mic_stop: 'Stop recording', listening: 'Listening… tap again to finish',
+    placeholder: 'For example: add funds', send: 'Send', mic: 'Speak', mic_stop: 'Stop recording', listening: 'Listening… tap again to finish',
     transcribing: 'Transcribing…', speak_on: 'Read replies aloud', speak_off: 'Don\'t read aloud', close: 'Minimise', thinking: 'AIM is thinking…', human: 'Talk to a specialist',
     chips: ['How do I add funds?', 'Where is my broker report?', 'How do I find bonds?', 'How do I turn off margin?'],
     a_open: 'Opened "{x}"', a_hl: 'Highlighted "{x}"', a_fill: 'Filled "{x}": {v}', a_on: 'Ticked "{x}"', a_off: 'Unticked "{x}"', a_click: 'Clicked "{x}"', a_hl_el: 'Highlighted "{x}", press it yourself',
@@ -372,12 +372,12 @@ speakBtn.addEventListener('click', () => { st.speak = !st.speak; if (!st.speak) 
 micBtn.addEventListener('click', toggleMic);
 form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; autosize(); send(v); });
 input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
-const autosize = () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; };
+const autosize = () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; input.style.overflowY = input.scrollHeight > 120 ? 'auto' : 'hidden'; };
 input.addEventListener('input', autosize);
 panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBtn.click(); });
 store.subscribe(() => { if (st.sid) { renderAll(); evaluateIfClosed(); } });
 app.onLang(() => renderAll());
-renderAll(); evaluateIfClosed();
+renderAll(); evaluateIfClosed(); autosize();
 
 // Exposed for debugging and tests only (not used by the page).
 window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline } });
