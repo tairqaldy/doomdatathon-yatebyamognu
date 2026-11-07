@@ -1,0 +1,125 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос о том, как найти облигации в приложении, был понятен с самого начала и не требовал уточнений.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, как найти облигации в приложении."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для общей инструкции по навигации в приложении идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался общего поиска облигаций в приложении, а не данных счёта или защищённого действия."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал понятный следующий шаг: открыть Quotes и искать облигацию по названию или тикеру.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Предложение личной платной консультации не было клиентоориентированным; после уточнения клиента оператор не отреагировал на его просьбу.",
+   "deduction_reason": "Снижено за неуместное предложение платной консультации и отсутствие реакции на уточнение клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "После неуместного предложения клиенту пришлось повторно обозначить, что ему нужна только помощь с приложением.",
+   "deduction_reason": "Снижено за сбивший ход диалога неуместный ответ, после которого клиенту пришлось уточнить свой запрос.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "У оператора была возможность завершить разговор, но он закрыл чат без итога или прощания.",
+   "deduction_reason": "Снижено за закрытие чата без прощания и предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор предложил клиенту личную платную консультацию в обход компании.",
+   "deduction_reason": "Выявлено предложение платной услуги в обход компании.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, как найти облигации в приложении.",
+  "operator_actions": "Оператор подсказал искать облигации в разделе Quotes, затем предложил личную платную консультацию в обход компании.",
+  "outcome": "Инструкцию клиент получил, но после отказа от предложения оператор закрыл чат без завершения."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2560,
+  "completion_tokens": 2350,
+  "cost": 0.001431
+ },
+ "latency_ms": 22214,
+ "attempts": 1
+}

@@ -1,0 +1,125 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не ответил на вопрос, когда клиент сможет повторить вывод средств.",
+   "deduction_reason": "Не уточнил и не объяснил, когда можно повторить вывод после отправки запроса.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по приложению и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Оператор указал путь к разделу меню; сведения о конкретном счёте или защищённое действие не предоставлялись."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Оператор объяснил, где отправить запрос на изменение данных, но оставил без ответа вопрос о сроке повторного вывода.",
+   "deduction_reason": "Решена только часть запроса; существенный вопрос о том, когда можно повторить вывод, остался открытым.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор был вежлив, но не отреагировал на конкретное неудобство — невозможность вывести средства.",
+   "deduction_reason": "Не признал проблему клиента и не отреагировал на неё прямо.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Путь в приложении объяснён ясно, но на вопрос о повторной отправке вывода оператор не ответил.",
+   "deduction_reason": "Один заметный сбой: пропущен прямой вопрос о том, можно ли вывести средства сразу после отправки запроса.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Завершил разговор фразами благодарности и прощания без итога или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, обхода компании или раскрытия конфиденциальной информации в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести средства из-за необходимости обновить данные профиля.",
+  "operator_actions": "Оператор указал путь к разделу изменения персональных данных.",
+  "outcome": "Клиент нашёл раздел, но не получил ответа, когда можно повторить вывод."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2526,
+  "completion_tokens": 1752,
+  "cost": 0.001129
+ },
+ "latency_ms": 17375,
+ "attempts": 1
+}

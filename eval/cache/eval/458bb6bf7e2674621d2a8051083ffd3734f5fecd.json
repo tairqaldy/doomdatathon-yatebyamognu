@@ -1,0 +1,140 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил валюту и примерное время перевода, необходимые для проверки.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Thanks. What currency did you send?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Личность была подтверждена до проверки данных счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Customer identity verified."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Случай передан на проверку; оператор сообщил, что обновление будет в этом чате, и добавил к делу нужные сведения.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+    },
+    {
+     "kind": "message",
+     "turn_index": 20,
+     "quote": "I've added that timing to the case. The team will check the brokerage side."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо признал беспокойство клиента и отреагировал на его проблему.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы оператора ясные и последовательные; заметного ожидания во время его работы не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 22,
+     "quote": "You can return to this chat. The details you've given me are already in the case."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор напомнил о следующем шаге и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 29,
+     "quote": "You're welcome. We'll follow up here about the transfer. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, обхода компании или раскрытия конфиденциальных данных не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел проверить перевод на брокерский счёт, который ещё не отобразился.",
+  "operator_actions": "Оператор подтвердил личность, собрал валюту и примерное время перевода, передал случай на проверку и подсказал, где скачать брокерский отчёт.",
+  "outcome": "Команда проверит перевод и сообщит об обновлении в этом чате."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2972,
+  "completion_tokens": 1172,
+  "cost": 0.000883
+ },
+ "latency_ms": 10322,
+ "attempts": 1
+}

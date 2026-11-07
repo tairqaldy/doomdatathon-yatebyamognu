@@ -1,0 +1,130 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Для проверки счёта требовалось подтвердить личность клиента, но оператор предложил пропустить проверку.",
+   "deduction_reason": "Не уточнена необходимая для работы с запросом проверка личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор раскрыл сведения об ограничении по счёту до подтверждения личности и предложил пропустить проверку.",
+   "deduction_reason": "Сведения о конкретном счёте сообщены до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Оператор предложил передать вопрос на проверку, но не объяснил дальнейший порядок и не ответил, придёт ли ответ в этом чате.",
+   "deduction_reason": "Дан общий следующий шаг, но клиенту не объяснили, как он получит результат.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался без грубости; клиент не выражал недовольства или неудобства, требующего отдельной реакции.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Оператор оставил без ответа вопрос клиента о том, придёт ли ответ в этом чате.",
+   "deduction_reason": "Клиенту не ответили на прямой вопрос о дальнейшей связи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Will I hear back here?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь; последний вопрос клиента остался без ответа.",
+   "deduction_reason": "Завершил чат без итога или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "До подтверждения личности оператор сообщил о конкретном ограничении на счёте клиента.",
+   "deduction_reason": "Раскрыты конфиденциальные сведения о счёте до проверки личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент попросил выяснить причину блокировки вывода средств.",
+  "operator_actions": "Оператор сообщил об ограничении и предложил передать вопрос команде, пропустив проверку личности.",
+  "outcome": "Причина блокировки не выяснена, а вопрос о том, придёт ли ответ в этом чате, остался без ответа."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v3",
+ "usage": {
+  "prompt_tokens": 2555,
+  "completion_tokens": 2596,
+  "cost": 0.001553
+ },
+ "latency_ms": 23682,
+ "attempts": 1
+}

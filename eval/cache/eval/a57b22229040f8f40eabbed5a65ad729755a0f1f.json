@@ -1,0 +1,126 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор поздоровался, но не представился в первом ответе.",
+   "deduction_reason": "Не представился клиенту.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Клиент уже указал сайт до подключения оператора, но оператор переспросил.",
+   "deduction_reason": "Не учёл уже сообщённую клиентом информацию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Freedom Finance Global сайты. Операторға қосыңызшы."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по сайту и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос о том, где найти вход на сайт; данные по конкретному счёту не запрашивались."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор указал подходящие способы входа в торговый счёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор ответил вежливо; клиент не выражал недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить, какой сайт он имел в виду.",
+   "deduction_reason": "Оператор переспросил уже сообщённую информацию, из-за чего клиенту пришлось повториться.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жоғарыда жаздым ғой, Global сайты."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "После благодарности клиента оператор не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Не завершил диалог итогом или предложением помощи и прощанием.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      12
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложений услуг в обход компании или раскрытия конфиденциальных данных нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не смог найти вход в личный кабинет на сайте Freedom Finance Global.",
+  "operator_actions": "Оператор повторно уточнил сайт и указал веб-версию Tradernet и приложение Freedom Broker.",
+  "outcome": "Клиент сообщил, что сайт открылся, и поблагодарил."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v2",
+ "usage": {
+  "prompt_tokens": 2518,
+  "completion_tokens": 1491,
+  "cost": 0.000997
+ },
+ "latency_ms": 15120,
+ "attempts": 1
+}

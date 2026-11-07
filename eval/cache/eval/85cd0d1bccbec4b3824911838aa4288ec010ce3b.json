@@ -1,0 +1,115 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала: клиент хотел найти облигации в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Общая инструкция по навигации в приложении не требовала идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался поиска облигаций в приложении и не требовал идентификации."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал корректный путь к поиску облигаций в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо поздоровался и ответил на вопрос о том, как найти облигации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "После нерелевантного предложения клиенту пришлось уточнить, что ему нужна только помощь с приложением.",
+   "deduction_reason": "Снижено за нерелевантное предложение, после которого клиенту пришлось повторно обозначить запрос.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор закрыл чат, не попрощавшись и не предложив дальнейшую помощь.",
+   "deduction_reason": "Чат закрыт без итога и прощания.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор предложил платную консультацию вне компании и попросил личный номер клиента.",
+   "deduction_reason": "Предложена частная платная консультация в обход компании.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, как найти облигации в приложении.",
+  "operator_actions": "Оператор подсказал искать облигации через Quotes, затем предложил личную платную консультацию.",
+  "outcome": "Инструкцию по поиску клиент получил, но чат завершился без прощания."
+ },
+ "problems": [],
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v4",
+ "usage": {
+  "prompt_tokens": 2597,
+  "completion_tokens": 2008,
+  "cost": 0.001264
+ },
+ "latency_ms": 19550,
+ "attempts": 1
+}
