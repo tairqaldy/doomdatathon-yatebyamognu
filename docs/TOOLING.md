@@ -77,6 +77,8 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
 
 ## 7. Research sources and external docs
+N/A/cache compatibility (2026-11-07): existing Node built-ins and Python regression runner only. Versioned findings separate schema, evidence, transcription, applicability and publication; replay reads all existing cache files without rewriting or model calls. No new dependencies. Reproduce the compatibility tests and `eval/fairness/run-compatibility.py`.
+
 Transcript validation hardening (2026-11-07): existing Python unittest and Node node:test/crypto/fs only; provenance-bound transcript probes, strict saved-result validation and offline cache replay. No dependencies or paid inference. Reproduce `python -m unittest discover -s eval/fairness -p test_guard.py` and `node --test eval/fairness/*.test.mjs`; all-65 audit `node eval/fairness/audit-validation.mjs`.
 
 Transcript fairness audit (2026-11-07): Python 3.14 standard library (`unittest`, `difflib`, `unicodedata`, `datetime`) runs `eval/transcript_guard.py` and offline regression fixtures. Node built-ins replay saved evaluator results through the existing accuracy harness. PowerShell read-only REST checks admin export availability and GitHub issue ownership. No packages installed, no paid inference. Reproduce with `python eval/fairness/run.py` and `node eval/fairness/replay.mjs`.

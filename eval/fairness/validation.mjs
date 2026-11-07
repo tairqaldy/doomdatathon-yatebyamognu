@@ -31,7 +31,7 @@ export function validateEvaluation(conversation, result, checklist, { operatorCr
       || !['binary', 'scale', 'flag'].includes(c.type) || typeof c.na_allowed !== 'boolean'
       || (c.na_allowed && !text(c.na_condition)) || (c.type === 'flag' && c.weight !== 0)) add('invalid_criterion', c?.id ?? null);
     if (c?.type === 'scale' && (!Array.isArray(c.scale) || !c.scale.length
-      || c.scale.some(s => !finite(s.value) || s.value < 0 || !text(s.label))
+      || c.scale.some(s => !object(s) || !finite(s.value) || s.value < 0 || !text(s.label))
       || new Set(c.scale.map(s => s.value)).size !== c.scale.length
       || Math.max(...c.scale.map(s => s.value)) <= 0)) add('invalid_scale', c.id);
     ids.add(c?.id);
@@ -55,18 +55,19 @@ export function validateEvaluation(conversation, result, checklist, { operatorCr
     const row = result.answers[c.id];
     if (!object(row)) { add('incomplete_evaluation', c.id); continue; }
     answers[c.id] = row.answer;
-    const allowed = c.type === 'scale' ? (c.scale || []).map(s => s.value) : ['yes', 'no'];
+    const allowed = c.type === 'scale' ? (Array.isArray(c.scale) ? c.scale : []).map(s => s?.value) : ['yes', 'no'];
     if (c.na_allowed) allowed.push('na');
     if (!allowed.includes(row.answer)) add('invalid_answer', c.id);
-    if (!text(row.explanation) || typeof row.deduction_reason !== 'string' || !Array.isArray(row.evidence)) {
+    if (typeof row.explanation !== 'string' || typeof row.deduction_reason !== 'string' || !Array.isArray(row.evidence)) {
       add('invalid_criterion_fields', c.id); continue;
     }
+    if (row.answer !== 'na' && !text(row.explanation)) add('missing_verdict_explanation', c.id);
     if (!row.evidence.length) add('missing_original_reference', c.id);
     for (const e of row.evidence) {
       if (!object(e)) { add('invalid_evidence', c.id); continue; }
       if (e.kind === 'message') {
-        if (!inRange(e.turn_index) || !text(e.quote)
-          || !transcript[e.turn_index]?.text?.includes(e.quote)) add('invalid_message_evidence', c.id);
+        if (!inRange(e.turn_index) || !text(e.quote) || typeof transcript[e.turn_index]?.text !== 'string'
+          || !transcript[e.turn_index].text.includes(e.quote)) add('invalid_message_evidence', c.id);
       } else if (e.kind === 'range') {
         if (!Array.isArray(e.range) || e.range.length !== 2 || !e.range.every(inRange)
           || e.range[0] > e.range[1]) add('invalid_range_evidence', c.id);
@@ -79,12 +80,12 @@ export function validateEvaluation(conversation, result, checklist, { operatorCr
     const indices = row.evidence.flatMap(e => e?.kind === 'message' && inRange(e.turn_index) ? [e.turn_index]
       : e?.kind === 'range' && Array.isArray(e.range) && e.range.every(inRange) && e.range[0] <= e.range[1]
         ? Array.from({ length: e.range[1] - e.range[0] + 1 }, (_, i) => e.range[0] + i) : []);
-    if (row.answer !== 'na' && operatorCriteria.includes(c.id)
+    if (indices.length && row.answer !== 'na' && operatorCriteria.includes(c.id)
       && !(c.type === 'flag' && row.answer === 'no')
       && !indices.some(i => transcript[i]?.speaker === 'operator')) add('evidence_speaker_mismatch', c.id);
-    if (c.id === contactId && (!Array.isArray(transcript)
+    if (indices.length && c.id === contactId && (!Array.isArray(transcript)
       || !indices.includes(transcript.findIndex(m => m?.speaker === 'operator')))) add('contact_evidence_not_first_reply', c.id);
-    if (c.id === identityId && row.answer === 'yes'
+    if (indices.length && c.id === identityId && row.answer === 'yes'
       && !indices.some(i => ['operator', 'system'].includes(transcript[i]?.speaker))) add('identity_evidence_speaker_mismatch', c.id);
   }
   return { issues, answers, valid: issues.length === 0 };
@@ -98,10 +99,12 @@ export function validateProbe(conversation, probe) {
     || !Array.isArray(conversation?.transcript) || probe.transcript_sha256 !== fingerprint(conversation.transcript)) add('stale_or_unbound_probe');
   if (probe.quality_checks_completed !== true || !Array.isArray(probe.quality_flags)
     || !['supported', 'not_supported', 'needs_review'].includes(probe.status)) add('incomplete_transcript_probe');
+  if (Array.isArray(probe.quality_flags) && probe.quality_flags.some(flag => !object(flag) || !text(flag.kind)
+    || !(flag.index === null || Number.isInteger(flag.index)))) add('incomplete_transcript_probe');
   if (!Number.isInteger(probe.message_index) || probe.message_index < 0
     || !Array.isArray(conversation?.transcript)
     || probe.message_index !== conversation.transcript.findIndex(m => m?.speaker === 'operator')) add('probe_speaker_mismatch');
-  if (Array.isArray(probe.quality_flags) && probe.quality_flags.length) add('transcript_quality_warning');
+  if (Array.isArray(probe.quality_flags) && probe.quality_flags.length) reasons.push({ criterion_id: null, reason: 'transcript_quality_warning', flags: probe.quality_flags });
   if (conversation?.audio_missing || conversation?.audio_corrupted
     || (Array.isArray(conversation?.transcript) && conversation.transcript.some(m => m?.speaker_uncertain || m?.segment_missing || m?.audio_corrupted
       || (finite(m?.asr_confidence) && m.asr_confidence >= 0 && m.asr_confidence < 0.75)))) add('source_quality_uncertainty');

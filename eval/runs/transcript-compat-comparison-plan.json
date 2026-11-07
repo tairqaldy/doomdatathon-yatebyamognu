@@ -1,0 +1,189 @@
+{
+  "status": "prepared_only_not_executed",
+  "paid_calls": 0,
+  "purpose": "Paired development comparison, not an independent test.",
+  "baseline_prompt_version": "eval-v4",
+  "candidate_version": "eval-v4-transcript-fairness-candidate-2",
+  "shared_model": "openai:gpt-6-luna",
+  "shared_checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+  "shared_schema_sha256": "23785d336f5463a940c9106630de87ae1fb48a9888084cab275e6b3ba8a0c7e6",
+  "shared_validation_version": "transcript-validation-v3",
+  "generation_settings": null,
+  "budget_cap_usd": null,
+  "baseline_saved_generation_settings_verified": false,
+  "prerequisites": [
+    "Explicit paid API authorization and budget cap.",
+    "Freeze identical provider/model/temperature/token limits/seed when supported for both arms.",
+    "Re-use baseline generations only when their full generation settings and input provenance match.",
+    "Do not compare published-only metrics without reporting total coverage and review rate."
+  ],
+  "max_attempts_per_arm_dialog": 2,
+  "max_primary_generations": 38,
+  "max_generations_including_repairs": 76,
+  "generation_cache_key_fields": [
+    "model",
+    "full_messages",
+    "schema",
+    "all_generation_settings"
+  ],
+  "validation_sidecar_key_fields": [
+    "generation_output_sha256",
+    "validation_version",
+    "probe_sha256",
+    "checklist_sha256"
+  ],
+  "note": "Changing validation alone must not invalidate paid generation cache.",
+  "dialogs": [
+    {
+      "id": "p1-en-006",
+      "language": "EN",
+      "transcript_sha256": "ce6267e97848c8bda6b9cef96dbbff9cab46cd735d55d503d66996ba2b22602b",
+      "baseline_messages_sha256": "73f9f7e794eb82ed11a12ffcbe78851439bbb09930f6ab4f9794f19076e95ea6",
+      "candidate_messages_sha256": "7382e7948bc15ab0186443fdfd4f726558649c9d3c014ab8f69d916a1d848a26"
+    },
+    {
+      "id": "p1-en-009",
+      "language": "EN",
+      "transcript_sha256": "203acba998eb61694a2950a92fc2714c71be9d0b236570f57ec0a93372dca32e",
+      "baseline_messages_sha256": "45fe07b214d1c55dcf62fc62346e875f7b77e136e2e8bd500f8a1b40ca443475",
+      "candidate_messages_sha256": "7403f2b96e469e3c385d8b05e42b6b4dbb49348279b5996794362b161d42b8ab"
+    },
+    {
+      "id": "p1-en-013",
+      "language": "EN",
+      "transcript_sha256": "519db27828dab86e7f3e360b73d4cfbbb72a7d0bbd154b8263aa182a6277c71d",
+      "baseline_messages_sha256": "e754bad97f230095a7d793afb210887a794634c27ff1a1e8f023b39379c4214a",
+      "candidate_messages_sha256": "935984b9d02ee1f9e46ab7548e03b7b890aa5e12288bed97e4de83196ffd6d1e"
+    },
+    {
+      "id": "p1-en-014",
+      "language": "EN",
+      "transcript_sha256": "7ede32e04b4ed5f8ad4c4d51cd24f61af066297da8ae61d942fa908e8b571180",
+      "baseline_messages_sha256": "7da673ebaa1bf7121ab5721b03e3c94d5bbfdb71af3048e1413228f18fa96211",
+      "candidate_messages_sha256": "f7c4427f3c62ee8448937bb914d428a6e970d4c88be273d17a7cd85df4f07261"
+    },
+    {
+      "id": "p1-en-015",
+      "language": "EN",
+      "transcript_sha256": "7948da3991714b8ec9c391edcc947d51c1890dca58c6562c566fd01b15d0f5a1",
+      "baseline_messages_sha256": "13cf69a9002a81dbc3871925d753b225a6a1873cb7f4a8513700e92182fbc622",
+      "candidate_messages_sha256": "e4c02661f8471334350fea950f391066238fac7a906a56a19a9c0ec7202695b3"
+    },
+    {
+      "id": "p1-kz-003",
+      "language": "KZ",
+      "transcript_sha256": "98edab5f83e7e1a9735c7fa175ce83103ffc62a01d254570083babf6e3283ae7",
+      "baseline_messages_sha256": "91a8ddf759cc29df7e003cdea18eb621684bd2a8bc5730352dd19acfab648ef5",
+      "candidate_messages_sha256": "a8f7da48d57f00f01f28979a6bac55ee36fdd6247aee1169dc56dc89e7c02f97"
+    },
+    {
+      "id": "p1-kz-008",
+      "language": "KZ",
+      "transcript_sha256": "d775e5fab731f28d099cc4b180bd01ba19a6a16480bdc793b7af84ad7d95c674",
+      "baseline_messages_sha256": "1e3e73d95310bc831f53b1f365c798ed966f1896bc0ac3f46b85bc2fd5cba87f",
+      "candidate_messages_sha256": "ec89dc70434240b4d2bb39d4f23c261d636fe9f09542e47a835d014ebeeacdb8"
+    },
+    {
+      "id": "p1-kz-011",
+      "language": "KZ",
+      "transcript_sha256": "a5b94e043b85444569805833a1ec4e02414b106e2203ddb343bce1f6144dc80d",
+      "baseline_messages_sha256": "38a450c0fe6a27bb8042db825d9856b73b11d49813c0c476800fbce3d1b1adee",
+      "candidate_messages_sha256": "26d863393e1ab20db796953fc048af9d3630818e209874f57bcbdd49a97b220b"
+    },
+    {
+      "id": "p1-kz-013",
+      "language": "KZ",
+      "transcript_sha256": "d2627bab9e8f3ae1f1b14ab2afe38f492b608f9d6e6be4c14c6371c101a66f68",
+      "baseline_messages_sha256": "b45526677cf1557c01dfde37a61b158fe4f54a5c0e71f9faf3dc34ae5a09841d",
+      "candidate_messages_sha256": "72cd20f034350df3a850a011116af9fbd6ffc19902b429c3c6b021418fe2566f"
+    },
+    {
+      "id": "p1-kz-015",
+      "language": "KZ",
+      "transcript_sha256": "eeb6e870b946da3e159328a90e2676f610a669890df28ee3482126f3854a2d68",
+      "baseline_messages_sha256": "849e3c94faec95f5bb5a6116244b01f5512bff7deee82562c044d1dda102517e",
+      "candidate_messages_sha256": "dabf7e535e2f0d819ac6679429e93c5068e2657e41b50e3748a21b17178a8d69"
+    },
+    {
+      "id": "p1-ru-003",
+      "language": "RU",
+      "transcript_sha256": "1cc5e3f62ef8b38aeb11379c075e6be0bb624679e768e5a35e4f433eecb4ee02",
+      "baseline_messages_sha256": "85261fd0388b4c7c4e8ad1c9e4f7c601e953d1cf2cc6fcbf074e74785431a293",
+      "candidate_messages_sha256": "8c604b60c0397e30e2ac6e6cce7a56499668ad2408cc2bec38b86e0fc8dd15e3"
+    },
+    {
+      "id": "p1-ru-006",
+      "language": "RU",
+      "transcript_sha256": "8244e708d4833f7299888a5c2dcb3bb6f8c8301ac9eed57b4187bf8f6af361db",
+      "baseline_messages_sha256": "89197a540fb082e32429d6d5710d0f667a03be4e9320f0e4a1b7a40efe9659a9",
+      "candidate_messages_sha256": "f8a4d4d4a1913472502c98fb3017a870440072bb5f7505bb49e61360c268aa0f"
+    },
+    {
+      "id": "p1-ru-009",
+      "language": "RU",
+      "transcript_sha256": "f2956bff1597b01c79a44eb67bf6c4da0fd03bfeec83f77940e1a9cba94382ea",
+      "baseline_messages_sha256": "9595fad987b6d95ca8f31e9e763ebc02fc85fbfc625df5583615c2d32f4bc2c5",
+      "candidate_messages_sha256": "7250122cac21d9a8f9b0184f1921233bd448e7c2d8f32305de0104f3d161d09e"
+    },
+    {
+      "id": "p1-ru-012",
+      "language": "RU",
+      "transcript_sha256": "b0d25d6bcd1c1f583f9806b250e513d535e41d106a2f54d4e7d1176ec052f5ae",
+      "baseline_messages_sha256": "9077fc17a1190cbd8b0371b055f9de40974eeb819bfdb4e7fe4d0c1e22d19f69",
+      "candidate_messages_sha256": "678464edb0b00321b1e44a576b2b26cef1bf0ce5d70dbd2dec1e451b9ba9765d"
+    },
+    {
+      "id": "p1-ru-018",
+      "language": "RU",
+      "transcript_sha256": "5f49af71e7766feadab50f1a97f66bc22b0c566a0701ad24a0cc44bcf0133817",
+      "baseline_messages_sha256": "fcd45440cd5b83aaf286cf7c59e5c7a6898438791fa97a38866f29814adc78c9",
+      "candidate_messages_sha256": "5d9e76be9819507224e255a8c4d2fe2c14272e97d37b50423733f6878ccb3f66"
+    },
+    {
+      "id": "p1-ru-022",
+      "language": "RU",
+      "transcript_sha256": "3700a373f2fa64fa71e1f6e0aadd4bc90d09fca3996b694f1c14439d64ea788a",
+      "baseline_messages_sha256": "b7d253f8f1a8db8986b91781d5db7f18c2a468611d7c6effb96feb1de0ee677e",
+      "candidate_messages_sha256": "3af196b949a8e76287ffec5b43ee707877e6a87002528da852448135d906d868"
+    },
+    {
+      "id": "p1-ru-025",
+      "language": "RU",
+      "transcript_sha256": "56a059641e96f387e2e8f81b09f7d8e1df880a110b35b355abca0f0ebc5f361e",
+      "baseline_messages_sha256": "138a7d0ba5e60d900dda2cb1a49257e772af226f67be99ff3301f898419e2b16",
+      "candidate_messages_sha256": "da52c1eb5d5de2a71ff72b520e22bdef7fc2d998a1e5a9783b04e1f17dba4015"
+    },
+    {
+      "id": "p1-ru-029",
+      "language": "RU",
+      "transcript_sha256": "287d68632958fc13324169df89ce2cfdeb828597ad55f5ba57af8cf44c4e601b",
+      "baseline_messages_sha256": "a84390f4457a90bcd99403a44eb77b9cf1fe457caa4874cacdd16b5fa770b2bb",
+      "candidate_messages_sha256": "3ef1aace52d3d92aeab54e8afda21abff92d41b7d513c3a9d2071c08e5af8cd2"
+    },
+    {
+      "id": "p4-ru-001",
+      "language": "RU",
+      "transcript_sha256": "2413fd98f2def52748d0d1cea7a066dc760a559e5edeb12583d90a953dc00ae6",
+      "baseline_messages_sha256": "ed6ef93247c8b6672832d97e6ce8007f0bc2ff149b1ad9bc266213c066b6ad7b",
+      "candidate_messages_sha256": "da88ca909b9a4c25cca7c170b3a0f575bfbdfacf605630d2c38d3fd40098a0f8"
+    }
+  ],
+  "metrics": [
+    "all-input strict and lenient accuracy",
+    "false penalty/pass with a predeclared denominator",
+    "NA precision/recall and mismatches",
+    "c08 precision/recall",
+    "score MAE",
+    "review rate",
+    "publishable rate",
+    "evidence validity and separate human evidence sufficiency"
+  ],
+  "independent_test": {
+    "available": false,
+    "status": "new unseen human-reviewed RU/KZ/EN set required after prompt freeze"
+  },
+  "audio_review": {
+    "status": "not_performed",
+    "queue": "eval/runs/transcript-compat-audio-queue.json"
+  }
+}

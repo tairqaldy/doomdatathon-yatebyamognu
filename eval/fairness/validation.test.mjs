@@ -62,17 +62,22 @@ reject('customer assertion alone does not establish completed identity verificat
   f.r.answers.c03.evidence = [{ kind: 'message', turn_index: index, quote: f.c.transcript[index].text }];
 }, 'identity_evidence_speaker_mismatch');
 reject('ambiguous identity context needs review, not an automatic failed identity answer', f => {
-  f.p.quality_flags = [{ index: 0, kind: 'damaged_segment' }];
+  f.p.quality_flags = [{ index: f.r.answers.c03.evidence.find(e => e.kind === 'message').turn_index, kind: 'damaged_segment' }];
 }, 'transcript_quality_warning');
 reject('missing audio segment prevents final publication', f => { f.c.audio_missing = true; }, 'source_quality_uncertainty');
 reject('low confidence cannot be hidden by a clean probe', f => {
-  f.c.transcript[0].asr_confidence = 0.5; f.p.transcript_sha256 = fingerprint(f.c.transcript);
+  f.c.transcript[f.p.message_index].asr_confidence = 0.5; f.p.transcript_sha256 = fingerprint(f.c.transcript);
 }, 'source_quality_uncertainty');
 reject('unknown extra verdict cannot survive a changed checklist', f => { f.r.answers.old_criterion = f.r.answers.c01; }, 'unexpected_criterion');
 reject('duplicate checklist IDs are rejected', f => { f.cl.criteria.push(structuredClone(f.cl.criteria[0])); }, 'invalid_criterion');
 reject('invalid scale cannot reach scoring', f => { f.cl.criteria.find(c => c.type === 'scale').scale = []; }, 'invalid_scale');
 reject('null checklist returns diagnostics', f => { f.cl = null; }, 'invalid_checklist');
 reject('non-array transcript cannot crash validation', f => { f.c.transcript = 'broken'; }, 'invalid_transcript');
+reject('non-array scale cannot crash validation', f => { f.cl.criteria.find(c => c.type === 'scale').scale = {}; }, 'invalid_scale');
+reject('null scale entry cannot crash validation', f => { f.cl.criteria.find(c => c.type === 'scale').scale = [null]; }, 'invalid_scale');
+reject('non-string evidence source cannot crash validation', f => {
+  f.c.transcript[f.p.message_index].text = 42; f.p.transcript_sha256 = fingerprint(f.c.transcript);
+}, 'invalid_transcript');
 
 test('no arithmetic is performed on malformed verdict fields', () => {
   const f = fixture(); delete f.r.answers.c03;
