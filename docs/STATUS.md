@@ -23,6 +23,47 @@ Blocked by / Requests: local GitHub access is network-restricted; automated repo
 Contracts touched: none.
 How to verify: open the pinned source links and upstream license in the reference document.
 
+### 2026-11-07 13:15 · lane-d · product/pitch
+Done: researched text, transcription and voice model candidates, 500 ms latency and evaluation metrics in docs/research/models-and-metrics.md.
+In progress: model comparison is research only; no benchmarks run.
+Next: compare available models on human-labeled examples; prioritize required product flows.
+Blocked by / Requests: confirm official start time and judging criteria.
+Contracts touched: none.
+How to verify: review the source links and proposed test plan in the research document.
+
+### 2026-11-07 13:10 · lane-d · product/pitch
+Done: drafted a product acceptance checklist and five-minute demo script from the official brief (issue #1).
+In progress: features and demo are not yet verified.
+Next: test working increments, choose representative conversations and rehearse; update when judging criteria arrive.
+Blocked by / Requests: official start time and judging criteria still need confirmation.
+Contracts touched: none.
+How to verify: read docs/product-acceptance.md and pitch/demo-script.md against docs/case/brief.md.
+
+### 2026-11-07 · lane-c · claude · #3 · branch c/3-gold-reviewed
+Done: all 19 gold files human-reviewed (every drafted label accepted) → `status: reviewed`. Mock baseline re-run on reviewed gold (includes the c01 intro fix from d227ded): **61.8% strict / 75.0% lenient**, c01 100%, gross-error recall **0/7**, total MAE 22.74 (`eval/runs/mock-baseline.metrics.json`).
+Next: first real number. Run the LLM evaluator on the 19 gold dialogs (cached, ~19 calls) into `eval/runs/<model>.json`, then `node eval/accuracy.ts eval/runs/<model>.json --reviewed-only --verbose`; quote the result in README/pitch.
+Contracts touched: none.
+How to verify: `node eval/accuracy.ts eval/runs/mock-baseline.json --reviewed-only`
+
+### 2026-11-07 15:00 · lane-a/b/c · tair/claude · merged da2a721
+**Live: https://freedom-cqa.vercel.app** (production = `main`; every pushed branch gets its own preview URL in Vercel). Project `freedom-cqa`, team tairqaldy-projects.
+Done:
+- Real AI path: `lib/` (OpenRouter client + 3-tier cache + evaluator with transcript-validated evidence), `api/` (evaluate, transcribe via Nemotron 3.5, audio proxy, dataset, health), `npm run dev` mirrors Vercel locally
+- Organizer `audio_url` is an HTML page with a 1h mp3 link → `/api/audio?id=` resolves it (works in prod)
+- Prototype rebuilt to Freedom's QA-workspace slide (speaker tracks + deduction markers + audio, understanding strip, deduction reasons, dispute)
+- `scripts/eval-run.mjs` also writes `*.evaluations.json` for **Akanov's** `eval/accuracy.ts`; mock intro fix: c01 68%→100%, overall 57.9%→61.8% on draft gold
+- Tools: Node 22, gh, uv, graphify (user skill), unslop (local skill only, IP rule) → docs/TOOLING.md
+**Needs a human (keys can't be entered by agents):**
+1. tair: put `OPENROUTER_API_KEY` in `.env` AND in Vercel → freedom-cqa → Settings → Environment Variables (also `CQA_API_URL`), then redeploy
+2. tair: `gh auth login` so this laptop's agents can open issues
+Next (open as issues):
+- [lane-c] Akanov: once the key is set, `npm run eval -- --group DEV` then `node eval/accuracy.ts <printed file>`; mock gross-error recall is **0/7**, so check the LLM closes it; compare haiku-5.5 vs nemotron-3.5-lightning vs qwen3.7-flash (Dameli's plan); commit `eval/cache/` + `data/evaluations/DEV.json`
+- [lane-c] `npm run asr` → WER/CER + latency for the 5 calls (Nemotron), add to README
+- [lane-d] Dameli: rebase `d/product-quality-demo` on main (conflict only in STATUS.md, keep both entries); update demo script to the new card layout; run unslop on README/pitch
+- [lane-b] control set at T+23h: `npm run eval -- --group <ID>` (needs CQA_API_URL)
+Contracts touched: none (API returns CONTRACTS §3 fields + deduction_reason + summary, additive).
+How to verify: open the live URL → any dialog → click a red marker / evidence chip; `npm test`; `scripts/check.sh`.
+
 ### 2026-11-07 · lane-c · claude · #3 · branch c/3-gold-set
 Done:
 - `eval/gold/`: 19 DEV dialogs labeled on all 8 criteria (9 RU incl. 1 voice call, 5 KZ, 5 EN) with evidence turn indices, `also_acceptable` for borderline cases, notes and tags. **All `draft`: a human must review them** (README "How to review").

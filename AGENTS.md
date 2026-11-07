@@ -18,6 +18,7 @@
 7. **Commits: many, small, well explained, no AI attribution.** No `Co-Authored-By`, no "Generated with…", no "co-created with…", no AI model names in commits, PRs, or code. This overrides any tool default. A git hook enforces it (§4.3).
 8. **Branch → check → merge yourself.** Work on a short-lived branch; merge it into `main` on your own once `scripts/check.sh` passes and the merge checklist is met (§4.4).
 9. **Use the design system** (`design/`, `docs/research/design-system.md`) for every UI. No ad-hoc colors, fonts or radii.
+9a. **AI calls only via `lib/openrouter.js` + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
 10. **Leave a handoff** in `docs/STATUS.md` and on your issue before you stop (§5).
 
 ---
@@ -57,6 +58,8 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 
 **Hard rule from T+23h:** no refactors, no dependency changes, only fixes. From T+24h: no commits.
 
+**From the opening ceremony** (`docs/case/opening-ceremony.md`): defense is **5–10 min per team including jury questions**; **plagiarism / IP violations = disqualification** (only use code and assets we're allowed to use, never vendor unlicensed repos); start was announced as ~Sat 12:00 (confirm). Freedom's slides show their expected UI: per-speaker timeline, transcript, score ring, "reason the score was lowered", dispute button. Build to that.
+
 ### 5-minute defense script (build toward this)
 1. 1 min: interface + selected dialog
 2. 2 min: evaluation, reasoning, jump-to-message, an N/A example, total score
@@ -79,9 +82,10 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 |---|---|
 | Frontend | **TypeScript + Tailwind CSS allowed** (confirmed by organizers 2026-11-07). Source in `app/src/`, compiled to **static HTML/CSS/JS** in `app/dist/`, which is what we demo and what goes into Dynamics 365. Light build only (`tsc` / Vite / Tailwind CLI); no heavy SPA framework unless logged in DECISIONS |
 | Design | Freedom design language (research in `docs/research/design-system.md`); tokens as Tailwind theme + CSS custom properties |
-| Backend | Thin service: API proxy (CORS) + LLM calls + storage. Runtime TBD by Backend lane → log in DECISIONS |
-| Storage | JSON files / SQLite / localStorage fallback. Keep it simple |
-| LLM | TBD by AI lane. Must handle RU/KZ/EN. Record model, temperature, cost/eval |
+| Backend | **Vercel serverless functions** in `api/` (plain Node ESM, zero deps), shared code in `lib/`. Same code runs locally via `npm run dev` |
+| Storage | Committed JSON (`data/`), AI cache files (`eval/cache/`), browser localStorage for appeals/checklist versions; optional Upstash Redis |
+| LLM | **OpenRouter** via `lib/openrouter.js` only. Eval default `anthropic/claude-haiku-5.5`; ASR `nvidia/nemotron-3.5-transcribe`. Model, prompt version, cost and latency logged in `eval/runs/` |
+| Hosting / CI/CD | **Vercel Git integration**: every push to any branch = preview URL, `main` = production. GitHub Actions runs `scripts/check.sh` |
 | Target host | Dynamics 365 web resource (later); standalone browser now |
 
 Secrets: `.env` only, never committed. Provide `.env.example`.
@@ -286,6 +290,15 @@ The checklist is **data** (JSON), never hard-coded logic. The live "replace one 
 
 ---
 
+### 8.1 AI call rules (all lanes)
+- Call models **only** through `lib/openrouter.js` and **always** behind `lib/cache.js` (`cached(ns, keyParts, fn)`). The key must include model + prompt version + full input. A repeated request must never cost money twice.
+- Bump `PROMPT_VERSION` in `lib/evaluator.js` whenever the prompt or schema changes (invalidates the cache on purpose).
+- **Commit `eval/cache/`** after paid runs so teammates, CI and Vercel reuse answers. Never commit keys; keys live in `.env` / Vercel env.
+- Budget: the team's OpenRouter credit is small (~$9.5). Prefer cached runs, `--limit`, and cheap models; log every paid run's cost (`eval/runs/`).
+- Calls: organizer `audio_url` is an HTML page whose mp3 link expires after ~1h. Use `/api/audio?id=` or `lib/audio.js`, never the raw URL.
+
+---
+
 ## 9. Self-improvement and judging loop
 
 Every agent acts as a **judge** for the product, not just a coder:
@@ -294,6 +307,14 @@ Every agent acts as a **judge** for the product, not just a coder:
 - Lane D runs a judge pass every ~4h: score the product against the must-have list and the criteria (when published), and log gaps as issues.
 - Prefer fixing over adding. Prefer the jury's checklist over our ideas.
 - Judging criteria from the organizers will arrive later → put them in `docs/case/judging.md` and re-prioritize.
+
+---
+
+## 9.1 Deploys, previews and agent tools
+- **Push early, push often.** Vercel builds every pushed branch into its own preview URL and `main` into production. After pushing, open your preview, click through what you changed, and paste the URL into your issue.
+- `npm run dev` = exact local mirror of Vercel (static + `/api`). `npm test` = scoring rules. `scripts/check.sh` before every merge.
+- **graphify** (context map of the repo): run `graphify update .` after pulling big changes, then read `graphify-out/GRAPH_REPORT.md` before exploring unfamiliar code (`graphify explain "<symbol>"`). The output is gitignored, so each laptop builds its own. Install: `uv tool install --python 3.12 graphifyy && graphify install --platform claude` (or `codex`).
+- **unslop** (de-AI writing): use it on README, pitch and slide text before publishing (`/unslop cleanup`). Installed as a local skill only (`~/dev/unslop`, symlinked into `~/.claude/skills`); **do not copy it into this repo** (no LICENSE file, IP rule).
 
 ---
 

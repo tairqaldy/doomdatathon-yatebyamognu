@@ -4,9 +4,9 @@
   "channel": "voice call",
   "checklist_id": "freedom-chat",
   "checklist_version": 1,
-  "status": "draft",
+  "status": "reviewed",
   "labeled_by": "lane-c/claude",
-  "reviewed_by": null,
+  "reviewed_by": "lane-c/human-review",
   "tags": [
     "voice-call",
     "client-frustrated",

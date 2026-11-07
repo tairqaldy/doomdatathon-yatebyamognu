@@ -1,11 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "prototype",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080", "--bind", "127.0.0.1"],
-      "port": 8080
-    }
+    { "name": "dev", "runtimeExecutable": "sh", "runtimeArgs": ["-c", "PATH=\"$HOME/.local/node/bin:$PATH\" exec node scripts/dev-server.mjs"], "port": 3000 },
+    { "name": "prototype", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8080", "--bind", "127.0.0.1"], "port": 8080 }
   ]
 }
