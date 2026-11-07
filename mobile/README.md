@@ -18,6 +18,12 @@ The app opens `https://freedom-cqa.vercel.app/phone/` (production, which has the
 EXPO_PUBLIC_DEMO_URL=http://<laptop-LAN-IP>:3000/phone/ npx expo start
 ```
 
+## If it doesn't open
+- **Camera says "No usable data found":** Expo Go isn't installed yet. Install it, open it once, scan again.
+- **"You're signed in to Expo Go as …, but not signed in to Expo CLI":** run `npx expo login` on the laptop with the same Expo account (or sign out in Expo Go), then scan again.
+- **Spinner forever:** the phone can't reach the laptop. Use the same Wi-Fi or hotspot, or `npx expo start --tunnel`.
+- **No install possible:** open https://freedom-cqa.vercel.app/phone/ in Safari → Share → Add to Home Screen. It runs full screen and looks almost the same.
+
 ## What the wrapper adds
 - Edge to edge on iOS: the page pads itself with CSS `env(safe-area-inset-*)`, so the blue Счета header runs under the status bar as in the real app. On Android it pads natively.
 - Light status bar on navy, a loading screen, and an error screen with «Повторить».
