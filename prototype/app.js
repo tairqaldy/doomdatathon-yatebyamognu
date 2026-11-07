@@ -400,6 +400,8 @@ function viewCard(view, convId) {
     } catch (e) {
       S.singleEval = { convId, error: e.name === 'AbortError' ? 'Оценка занимает слишком много времени.' : 'Проверьте соединение или попробуйте позже.' };
       if (location.hash === `#/dialog/${encodeURIComponent(convId)}` || location.hash === `#/dialog/${convId}`) viewCard(view, convId);
+    } finally {
+      if (!S.singleEval?.pending) { const current = $('#reeval'); if (current) { current.disabled = false; current.removeAttribute('aria-busy'); } }
     }
   };
 }
