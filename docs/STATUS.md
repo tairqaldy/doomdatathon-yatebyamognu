@@ -97,6 +97,13 @@ Remaining weak spots (prompt v2): c06 rated 10 on the disclosure dialogs where t
 Requests: **tair (Vercel access): add `OPENAI_API_KEY` to Vercel → freedom-cqa → Environment Variables** (until then prod uses the OpenRouter fallback, same model). Lane D: README model line = "OpenAI GPT-6 Luna, ≈$0.0011 per evaluation".
 Contracts touched: none. Shared files: AGENTS.md §0/§2/§8.1 (AI-call rule now names `lib/llm.js`), one additive line in `api/health.js` (lane-b).
 How to verify: `node eval/accuracy.ts eval/runs/2026-11-07T09-48-01-230Z-DEV-openai_gpt-6-luna.evaluations.json --reviewed-only` · `curl <preview>/api/health` shows `openai`
+### 2026-11-07 · lane-a · product/design · #8 · branch a/8-card-evaluation-ux
+Done: moved deduction reasons and evidence ahead of the full criteria list, prioritized the evaluation panel at narrow widths, and added single-evaluation progress, timeout and retry feedback.
+In progress: preview and a real model response have not been verified.
+Next: check the deployed preview and an actual evaluation before merging.
+Blocked by / Requests: Vercel team access is unavailable for deployment inspection.
+Contracts touched: none.
+How to verify: open a conversation, follow an evidence link and appeal; start evaluation and check waiting/error states.
 
 ### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
 Done: saved Gradient ASCII reference and pinned source locally, plus a proposed Freedom neon-green direction using existing tokens.

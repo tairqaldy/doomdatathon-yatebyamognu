@@ -4,14 +4,14 @@
 // Layout follows Freedom's own "Рабочее место контроля качества" slide (docs/case/opening-ceremony.md).
 // Flow: list → analysis card → evidence jump/seek → N/A → deduction reasons → appeal → reviewer decision → new total → edit criterion → re-apply.
 
-import { score, tier, maxStep, selfTest } from './scoring.js?v=6';
-import { mockEvaluate, mockSummary } from './mock-evaluator.js?v=6';
+import { score, tier, maxStep, selfTest } from './scoring.js?v=7';
+import { mockEvaluate, mockSummary } from './mock-evaluator.js?v=7';
 
 /* ================= state ================= */
 const LS_KEY = 'cqa-prototype-v2';
 const S = {
   convs: [], byId: {}, checklists: [], activeVersion: 1, appeals: [], role: 'qa',
-  ai: {}, mock: {}, lastTotals: {}, api: { ok: false, openrouter: false, model: null }, busy: null,
+  ai: {}, mock: {}, lastTotals: {}, api: { ok: false, openrouter: false, model: null }, busy: null, singleEval: null,
 };
 const persist = () => { try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: S.ai })); } catch {} };
 const restore = () => { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch { return null; } };
@@ -118,7 +118,11 @@ async function apiHealth() {
 }
 async function aiEvaluate(convId, { force = false } = {}) {
   const cl = checklist();
-  const r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }) });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 45000);
+  let r;
+  try { r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal }); }
+  finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
   S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, problems: j.problems };
@@ -246,6 +250,7 @@ function viewCard(view, convId) {
   const conv = S.byId[convId];
   if (!conv) { view.innerHTML = `<div class="cqa-empty"><div class="cqa-glow"></div><h2 class="cqa-header-4">Диалог не найден</h2><button class="cqa-btn cqa-btn--primary" data-go="#/dialogs">К списку</button></div>`; return; }
   const E = evaluation(convId);
+  const evalState = S.singleEval?.convId === convId ? S.singleEval : null;
   const { cl, answers, finalScore, aiScore, finalAnswers } = E;
   const crits = [...cl.criteria].sort((a, b) => a.order - b.order);
   const dd = deductions(E);
@@ -327,21 +332,14 @@ function viewCard(view, convId) {
               <div class="cqa-small cqa-muted">Применимый вес ${finalScore.applicable_weight}/${finalScore.nominal_weight} → нормирован до 100</div>
             </div>
           </div>
-          <div class="crit-table">${crits.map((c) => {
-            const row = finalScore.criteria.find((x) => x.criterion_id === c.id); const a = finalAnswers[c.id];
-            const ap = E.appeals.filter((x) => x.criterion_id === c.id).at(-1);
-            return `<button class="crit-line ${ap?.status === 'open' ? 'is-appealed' : ap?.status === 'changed' ? 'is-overridden' : ''}" data-open="${c.id}">
-              <span class="crit-line__name">${String(c.order).padStart(2, '0')} · ${esc(c.title)}</span>
-              ${answerBadge(c, a)}
-              <span class="crit-line__pts cqa-num">${c.type === 'flag' ? '' : row.points == null ? '—' : `${fmt(row.points, 1)}<small>/${fmt(row.effective_weight, 1)}</small>`}</span></button>`;
-          }).join('')}</div>
           <div class="cqa-row" style="gap:8px;margin-top:14px;flex-wrap:wrap">
             <button class="cqa-btn cqa-btn--primary" id="appeal-main">Оспорить оценку</button>
-            <button class="cqa-btn" id="reeval" ${S.api.ok && S.api.openrouter ? '' : 'title="Нужен OPENROUTER_API_KEY"'}>${ICON.spark} ${E.src === 'ai' ? 'Переоценить AI' : 'Оценить AI'}</button>
+            <button class="cqa-btn" id="reeval" ${S.singleEval?.pending ? 'disabled aria-busy="true"' : ''} ${S.api.ok && S.api.openrouter ? '' : 'title="Нужен OPENROUTER_API_KEY"'}>${ICON.spark} ${evalState?.pending ? 'Оценка выполняется…' : evalState?.error ? 'Повторить оценку' : E.src === 'ai' ? 'Переоценить AI' : 'Оценить AI'}</button>
           </div>
+          ${evalState?.pending ? `<div class="eval-feedback eval-feedback--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>Анализируем диалог</b><div>Это может занять некоторое время. Текущая оценка останется на экране до завершения.</div></div></div>` : evalState?.error ? `<div class="eval-feedback eval-feedback--error" role="alert"><div><b>Не удалось выполнить оценку</b><div>${esc(evalState.error)} Текущая оценка сохранена. Попробуйте ещё раз.</div></div></div>` : ''}
         </div>
 
-        <div class="cqa-card panel">
+        <div class="cqa-card panel panel--reasons">
           <div class="panel__head"><h2 class="cqa-h3">Причина снижения оценки</h2><span class="cqa-small cqa-muted">${dd.length ? `${dd.length} ${dd.length === 1 ? 'пункт' : 'пункта'}` : ''}</span></div>
           ${dd.length ? `<div class="ded-list">${dd.map((d) => { const i = evidenceIdx(d.c); const ap = E.appeals.filter((x) => x.criterion_id === d.c.id).at(-1); return `
             <div class="ded ${d.gross ? 'ded--gross' : ''}">
@@ -352,6 +350,17 @@ function viewCard(view, convId) {
                 ${ap?.status === 'open' ? `<span class="cqa-badge cqa-badge--appeal">на рассмотрении</span>${S.role === 'reviewer' ? `<button class="cqa-btn cqa-btn--s cqa-btn--primary" data-review="${ap.id}">Проверить</button>` : ''}` : `<button class="cqa-btn cqa-btn--s cqa-btn--ghost" data-appeal="${d.c.id}">Оспорить</button>`}
               </div></div>`; }).join('')}</div>`
           : `<div class="cqa-banner cqa-banner--ok">${ICON.check}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
+        </div>
+        <div class="cqa-card panel panel--criteria">
+          <div class="panel__head"><h2 class="cqa-h3">Все критерии</h2><span class="cqa-small cqa-muted">Нажмите для подробностей</span></div>
+          <div class="crit-table">${crits.map((c) => {
+            const row = finalScore.criteria.find((x) => x.criterion_id === c.id); const a = finalAnswers[c.id];
+            const ap = E.appeals.filter((x) => x.criterion_id === c.id).at(-1);
+            return `<button class="crit-line ${ap?.status === 'open' ? 'is-appealed' : ap?.status === 'changed' ? 'is-overridden' : ''}" data-open="${c.id}">
+              <span class="crit-line__name">${String(c.order).padStart(2, '0')} · ${esc(c.title)}</span>
+              ${answerBadge(c, a)}
+              <span class="crit-line__pts cqa-num">${c.type === 'flag' ? '' : row.points == null ? '—' : `${fmt(row.points, 1)}<small>/${fmt(row.effective_weight, 1)}</small>`}</span></button>`;
+          }).join('')}</div>
         </div>
       </section>
     </div>`;
@@ -376,10 +385,24 @@ function viewCard(view, convId) {
   view.querySelectorAll('[data-review]').forEach((b) => b.addEventListener('click', () => openReview(b.dataset.review)));
   $('#appeal-main').onclick = () => openAppeal(conv, dd[0]?.c.id || crits[0].id);
   $('#reeval').onclick = async () => {
-    if (!(S.api.ok && S.api.openrouter)) return toast('AI не подключён: добавьте OPENROUTER_API_KEY в .env / Vercel', 'warn');
-    const b = $('#reeval'); b.classList.add('is-loading');
-    try { const j = await aiEvaluate(convId, { force: E.src === 'ai' }); toast(`AI-оценка готова · ${j.cached ? 'из кэша' : `${(j.latency_ms / 1000).toFixed(1)} c · $${(j.usage?.cost || 0).toFixed(4)}`}`); viewCard(view, convId); }
-    catch (e) { b.classList.remove('is-loading'); toast(`AI: ${e.message}`, 'warn'); }
+    if (S.singleEval?.pending) return;
+    if (!(S.api.ok && S.api.openrouter)) {
+      S.singleEval = { convId, error: 'Сервис оценки сейчас недоступен.' };
+      viewCard(view, convId); return;
+    }
+    S.singleEval = { convId, pending: true }; viewCard(view, convId);
+    try {
+      await aiEvaluate(convId, { force: E.src === 'ai' });
+      S.singleEval = null;
+      if (location.hash === `#/dialog/${encodeURIComponent(convId)}` || location.hash === `#/dialog/${convId}`) {
+        viewCard(view, convId); toast('Оценка готова');
+      }
+    } catch (e) {
+      S.singleEval = { convId, error: e.name === 'AbortError' ? 'Оценка занимает слишком много времени.' : 'Проверьте соединение или попробуйте позже.' };
+      if (location.hash === `#/dialog/${encodeURIComponent(convId)}` || location.hash === `#/dialog/${convId}`) viewCard(view, convId);
+    } finally {
+      if (!S.singleEval?.pending) { const current = $('#reeval'); if (current) { current.disabled = false; current.removeAttribute('aria-busy'); } }
+    }
   };
 }
 
@@ -661,3 +684,4 @@ async function boot() {
   route();
 }
 boot();
+
