@@ -67,6 +67,12 @@ interface Evaluation {
 }
 ```
 
+**Additive, eval-v5.1 (2026-11-07).** The raw AI result (`lib/evaluator.js` `evaluate()` → `data/evaluations/<group>.json` `results[id]`) also carries, all optional for readers:
+- `answers[criterion_id].agreement`: share of self-consistency samples that voted for the chosen answer (0–1); low values go to a human first.
+- `facts`: dialog facts the model filled before answering (requests, first operator turn, verification turn, disclosure / insult / off-company turns, client re-asks with cause, ending type, goodbye / summary / offer turns).
+- `samples`: how many samples were voted over; `derived`: answers set by the deterministic rules (C7 closing, C3→C8 disclosure) for unchanged built-in criteria.
+- `evaluate(conv, checklist, { model, promptVersion, samples, deadlineMs })`; env `CQA_EVAL_SAMPLES` (default 3 for the default eval model), `CQA_EVAL_DEADLINE_MS` (Vercel votes over samples finished within it, default 45 s).
+
 ## 4. Appeal and review
 ```ts
 interface Appeal {
