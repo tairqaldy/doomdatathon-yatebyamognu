@@ -2,7 +2,7 @@
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
 import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced, signed } from './ui.js';
-import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash } from './store.js';
+import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
 let draft = null;
@@ -135,7 +135,7 @@ export function viewChecklist(view, _arg, query) {
         <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100</span>
         <span class="muted small">${ws === 100 ? 'Итог считается из 100 баллов.' : 'Итог всё равно нормируется до 100, но лучше выровнять веса.'} N/A перераспределяет вес между применимыми критериями. Округление до 2 знаков.</span>
       </div>
-      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${openHere ? `<p class="muted small">Открытых апелляций по v${cl.version}: ${openHere}. Они останутся привязаны к v${cl.version}: решение по ним можно принять, вернув эту версию активной.</p>` : ''}</div>` : ''}`;
+      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${sameQuestions(cl, draft) ? '<p class="muted small">Меняются только веса, порядок или секции: ответы AI сохранятся, итог пересчитается сразу, без нового вызова AI.</p>' : ''}${openHere ? `<p class="muted small">Открытых апелляций по v${cl.version}: ${openHere}. Они останутся привязаны к v${cl.version}: решение по ним можно принять, вернув эту версию активной.</p>` : ''}</div>` : ''}`;
   };
   summary();
   if (focusKey) { const el = view.querySelector(`[data-id="${focusKey[0]}"] [data-k="${focusKey[1]}"]`); el?.focus(); }
@@ -204,9 +204,21 @@ export function viewChecklist(view, _arg, query) {
     const { __base: _, ...clean } = draft;
     clean.criteria = clean.criteria.map((c) => ({ ...c, weight: Number(c.weight) || 0 }));
     refresh();
+    const fromCl = checklistOf(k);
     addVersion(k, { ...structuredClone(clean), version: nextV, updated_at: new Date().toISOString() });
     draft = null; newId = null; replaced.clear();
     lastRun = null;
+    // weights / order / sections only: the evaluator would be asked the same questions, so keep its answers and
+    // let the scoring engine recompute the totals now (no LLM call, no cost, same evidence)
+    if (sameQuestions(fromCl, checklistOf(k))) {
+      const t0 = performance.now(); const total = S.convs.filter((c) => kindOf(c) === k).length;
+      const n = carryAnswers(k, fromCl, checklistOf(k));
+      lastRun = { kind: k, version: nextV, fromV, before, after: devAvg(k), done: total, total, failed: 0, cost: 0, ms: performance.now() - t0, mode: 'carry', carried: n };
+      toast(`${KINDS[k].name} v${nextV} применён: итог пересчитан по новым весам, ответы AI сохранены`);
+      emit('change');
+      scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
+      return;
+    }
     emit('change');
     // the progress card and its result sit under the save bar: bring them into view instead of leaving the user mid-list
     scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
@@ -234,8 +246,11 @@ function runBlock(b) {
   if (lastRun) {
     const r = lastRun; const d = r.after != null && r.before != null ? r.after - r.before : null;
     return `<section class="card run-card run-card--done" role="status">
-      <div class="run-card__head">${icon('check')}<b>${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалог переоценён', 'диалога переоценены', 'диалогов переоценены'])} за ${fmt(r.ms / 1000, 1)} с</b></div>
-      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
+      <div class="run-card__head">${icon('check')}<b>${r.mode === 'carry'
+        ? `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: итог ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} пересчитан по новым весам`
+        : `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалог переоценён', 'диалога переоценены', 'диалогов переоценены'])} за ${fmt(r.ms / 1000, 1)} с`}</b></div>
+      ${r.mode === 'carry' ? `<p class="muted small">Изменились только веса, порядок или секции: вопросы к AI те же, поэтому ответы и доказательства из v${r.fromV} сохранены (${r.carried} ${plural(r.carried, ['диалог', 'диалога', 'диалогов'])}), а баллы пересчитал движок оценки. Без нового вызова AI.</p>` : ''}
+      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : r.mode === 'carry' ? ' · $0' : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
       <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a></div>
     </section>`;
   }

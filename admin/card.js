@@ -48,7 +48,7 @@ export function viewCard(view, convId, query) {
   const verdict = gross ? 'Грубая ошибка' : total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
   const verdictColor = gross ? 'var(--bad-ink)' : tierVar(tier(total));
   const runInfo = E.src === 'ai'
-    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}`
+    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}${E.base.carried_from ? ` · ответы из v${E.base.carried_from}, баллы по весам v${cl.version}` : ''}`
     : 'Предварительная оценка без AI. Нажмите «Оценить заново», чтобы оценил AI';
   const clLabel = checklistLabel(cl);
   setHead('Анализ диалога', `${conv.conversation_id} · ${clLabel}`);
