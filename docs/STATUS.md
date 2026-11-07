@@ -373,3 +373,14 @@ Next: at T+23h, after `npm run results -- --group <ID>`, run `node scripts/tone-
 Blocked by / Requests: none. `lib/evaluator.js` is untouched (identical to main), so all 65 DEV eval-v5.1 text answers still hit the cache; the audio merge lives in `lib/tone.js evaluateWithAudio`. Browsers that already saved a call checklist in localStorage don't see c09 until it is reset.
 Contracts touched: additive `criterion.input`, `answer.audio_metrics`, `audio_model`, `usage.audio` (CONTRACTS §2–3).
 How to verify: /admin → Диалоги → p4-ru-001 → «09 Тон и подача речи»; `npm test` (12/12); `node eval/export-results.mjs` → 65 ok, unchanged.
+
+### 2026-11-07 21:45 +05:00 · team · tair/claude · #18 · evening merge (v5.3, UI audit, README, video, leaves)
+Done (all on main → production):
+- **Evaluator eval-v5.3** (lane C): held-out gold 54/56 strict, blind consensus 180/185, gross 7/7 with 0 FP; playbook justifies every rule; DEV + `results/dev/results.json` regenerated (valid 65/65); control rehearsal 10 chats 79 s $0.064 incl. the error path. Report `eval/runs/2026-11-07T16-05-00Z-v53-report.md`. Weak spot: C6 is noisy (3 of 10 C6 answers differ between draws).
+- **UI audit** (lane A): 19 fixes (gross-error verdict, checklist validation, weight-only edits recompute from the same AI answers, drawer focus trap, KZ language in support chat, double-click guard on paid evaluation, call seek, number formatting …); admin overview reads the v5.3 metrics.
+- **README** rewritten for the jury: diagrams, accuracy charts (still v4 vs v5.1; a note gives the v5.3 numbers), research per theme, cost, control procedure.
+- **Demo video** `landing-tair/assets/demo.mp4` (3:17, recorded from the real product, `node scripts/demo/record.mjs` reproduces it) on the landing; 8 stills in `docs/media/`.
+- **Leaves** on the landing: a few fall when scrolling up, heaps along the footer (`landing-tair/leaves.js`, no dependency, off under reduced motion).
+- Amina's audit PRs #26–#28 merged earlier tonight.
+Next: regenerate README charts for v5.3 (`scripts/readme-charts.mjs` RUNS → the v5.3 DEV run); a possible final video re-record from the video branch; C6 procedure experiment if budget allows. Demo tip: re-evaluate a chat live (≈30 s), not a call (can pass 60 s); weight changes recompute instantly.
+Control run Sun 11:00: `npm run results -- --group <CONTROL_ID> --push` from an up-to-date main with `.env`.
