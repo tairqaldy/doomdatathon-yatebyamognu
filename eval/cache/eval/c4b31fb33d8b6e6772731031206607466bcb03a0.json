@@ -1,0 +1,177 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор установил контакт на русском языке.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день, меня зовут Нина. Сумму комиссии без условий вашего банка я назвать не могу."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Чтобы ответить на вопрос о комиссии, оператору требовались дополнительные сведения об условиях банка, но он их не запросил.",
+   "deduction_reason": "Оператор не уточнил необходимые условия банка до ответа.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      9
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей информации о комиссии и навигации по приложению; идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о комиссии и поиск реквизитов в приложении; защищённого действия не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса решена: клиент нашёл реквизиты. Существенный вопрос о комиссии остался без прямого ответа.",
+   "deduction_reason": "Не дан прямой ответ, кто взимает комиссию; клиенту предложено уточнить её в банке.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день, меня зовут Нина. Сумму комиссии без условий вашего банка я назвать не могу."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Извините, уточню: «Меню → Пополнить → Перевод по реквизитам». Выберите нужную валюту."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Теперь вижу."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Хорошо. Перед переводом проверьте комиссию в банке. До свидания!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив и помог клиенту разобраться с навигацией.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Извините, уточню: «Меню → Пополнить → Перевод по реквизитам». Выберите нужную валюту."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за неясной инструкции клиенту пришлось переспросить.",
+   "deduction_reason": "Первоначальный ответ о меню был расплывчатым, и клиенту пришлось уточнять, где искать реквизиты.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Там же где перевод, не в отчете, сверху вниз в меню."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "В каком меню? Я уже в приложении."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Завершение содержит и следующий шаг, и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Хорошо. Перед переводом проверьте комиссию в банке. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать о комиссии при пополнении и найти реквизиты.",
+  "operator_actions": "Оператор указал путь к реквизитам и посоветовал уточнить комиссию в банке.",
+  "outcome": "Клиент нашёл реквизиты, но вопрос о том, кто взимает комиссию, остался без прямого ответа."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, кто возьмёт комиссию при пополнении счёта — банк или брокер.",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Узнать, где найти реквизиты для пополнения.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 39793,
+ "usage": {
+  "prompt_tokens": 5040,
+  "completion_tokens": 4081,
+  "cost": 0.002544
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Антон. Переустановите приложение."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор сделал предположение о приложении, хотя клиент пытался войти с компьютера [10].",
+   "deduction_reason": "Не уточнил, где клиент пытается войти, и ответил наугад.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Антон. Переустановите приложение."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Какое приложение? Я на компьютере вообще."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации к веб-кабинету и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий навигационный вопрос; защищённого действия не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил нужный адрес веб-кабинета и подтвердил, что ответ соответствует запросу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "На этом сайте входа нет, он информационный. Веб-кабинет доступен через tradernet.global."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Вот это я и хотел узнать."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Фраза «Ну, тогда сайт» звучит отмахивающе и не помогает клиенту разобраться.",
+   "deduction_reason": "Оператор отреагировал на возражение клиента пренебрежительно.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ну, тогда сайт."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за предположения и неясного ответа клиенту пришлось дополнительно объяснять ситуацию.",
+   "deduction_reason": "Клиенту пришлось уточнять ситуацию из-за ошибочного и расплывчатого ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Какое приложение? Я на компьютере вообще."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я открываю сайт Freedom Finance Global, там кнопки входа нет."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно для выполнения критерия завершения.",
+   "deduction_reason": "В заключительной реплике нет итога, следующего шага или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Пожалуйста, до свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений из перечня критерия не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход в Freedom Finance Global с компьютера.",
+  "operator_actions": "Сначала ошибочно посоветовал переустановить приложение, затем назвал tradernet.global.",
+  "outcome": "Клиент подтвердил, что получил нужную информацию."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не может войти и спрашивает, что делать.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Просит подключить оператора.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_wrong_answer"
+   },
+   {
+    "turn": 12,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 32223,
+ "usage": {
+  "prompt_tokens": 4979,
+  "completion_tokens": 3307,
+  "cost": 0.002151
+ }
+}

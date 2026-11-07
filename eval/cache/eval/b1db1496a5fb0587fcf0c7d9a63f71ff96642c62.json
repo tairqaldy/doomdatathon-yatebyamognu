@@ -1,0 +1,152 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Noah. Open tradernet.global for the browser version, or use the Freedom Broker app. The company information site doesn't have the sign-in page."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был достаточно конкретным с самого начала, поэтому уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Where is the sign-in button? I'm on the Freedom Finance Global website."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался входа на сайт, а не конкретного счёта или защищённого действия.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Open tradernet.global for the browser version, or use the Freedom Broker app."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал конкретную инструкцию, и клиент подтвердил, что она помогла.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Noah. Open tradernet.global for the browser version, or use the Freedom Broker app. The company information site doesn't have the sign-in page."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "I'm on a laptop. The web version works. Thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге нет грубости или неотработанного недовольства клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Noah. Open tradernet.global for the browser version, or use the Freedom Broker app. The company information site doesn't have the sign-in page."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор дал понятный ответ, клиент смог продолжить и подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Noah. Open tradernet.global for the browser version, or use the Freedom Broker app. The company information site doesn't have the sign-in page."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "I'm on a laptop. The web version works. Thanks."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Есть прощание, но отсутствует итог или предложение помочь ещё.",
+   "deduction_reason": "В заключительной реплике оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Glad you got in. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Noah. Open tradernet.global for the browser version, or use the Freedom Broker app. The company information site doesn't have the sign-in page."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти вход в торговую платформу с сайта Freedom Finance Global.",
+  "operator_actions": "Оператор подсказал открыть tradernet.global или использовать приложение Freedom Broker.",
+  "outcome": "Клиент сообщил, что веб-версия работает."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где находится кнопка входа на сайте Freedom Finance Global.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором и помочь разобраться, какой из открытых сайтов использовать.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 19700,
+ "usage": {
+  "prompt_tokens": 4890,
+  "completion_tokens": 1930,
+  "cost": 0.001454
+ }
+}

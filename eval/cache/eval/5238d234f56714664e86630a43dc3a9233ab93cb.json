@@ -1,0 +1,162 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Maya from support. A login stays on record after the account is closed. Use a different login for the new registration."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен, и необходимая деталь о прежнем использовании логина была известна до ответа.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сообщил, что закрыл прежний счёт с этим логином [4]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался выбора логина для новой регистрации и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о регистрации; защищённых действий или раскрытия данных о конкретном счёте не было [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос решён: после закрытия счёта логин остаётся в системе, поэтому для новой регистрации нужно использовать другой.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Maya from support. A login stays on record after the account is closed. Use a different login for the new registration."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Right, I thought I'd just have to wait. Thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, а клиент не высказывал недовольства или неудобства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Maya from support. A login stays on record after the account is closed. Use a different login for the new registration."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Take care!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог был понятным, клиенту не пришлось переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Maya from support. A login stays on record after the account is closed. Use a different login for the new registration."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Take care!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но ограничился вежливой формулой и не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике отсутствуют итог/следующий шаг и предложение помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Take care!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Maya from support. A login stays on record after the account is closed. Use a different login for the new registration."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Take care!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог использовать прежний логин при открытии нового счёта.",
+  "operator_actions": "Оператор объяснил, что логин остаётся в системе после закрытия счёта, и посоветовал выбрать другой.",
+  "outcome": "Клиент подтвердил, что понял ответ."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сообщил, что выбранный логин уже занят при открытии нового счёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Клиент попросил связать его с оператором поддержки.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 21228,
+ "usage": {
+  "prompt_tokens": 4865,
+  "completion_tokens": 2354,
+  "cost": 0.001664
+ }
+}

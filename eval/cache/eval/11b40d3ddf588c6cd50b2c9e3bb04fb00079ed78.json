@@ -1,0 +1,182 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась и назвала своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Лиза. В приложении откройте «Меню → Отчёты и документы → Отчёт брокера», выберите нужный период и скачайте документ."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "К моменту ответа запрос был достаточно конкретизирован; оператор сразу дал путь в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала работы оператора: клиент уточнил «Отчёт брокера за прошлый год» и сообщил, что не находит его с телефона [4]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался поиска и скачивания отчёта, идентификация для ответа оператора не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: дана общая инструкция по меню приложения [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Запрос решён полностью; клиент нашёл и скачал отчёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Лиза. В приложении откройте «Меню → Отчёты и документы → Отчёт брокера», выберите нужный период и скачайте документ."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, если нужен отчёт за весь год, выберите этот период."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Скачалось. Спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор была вежлива, а клиент подтвердил успешное решение вопроса.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Лиза. В приложении откройте «Меню → Отчёты и документы → Отчёт брокера», выберите нужный период и скачайте документ."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог последовательный, ответ на уточнение дан понятно, клиент смог скачать отчёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Лиза. В приложении откройте «Меню → Отчёты и документы → Отчёт брокера», выберите нужный период и скачайте документ."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, если нужен отчёт за весь год, выберите этот период."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Скачалось. Спасибо."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не подвела итог и не предложила дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике нет итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Я Лиза. В приложении откройте «Меню → Отчёты и документы → Отчёт брокера», выберите нужный период и скачайте документ."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, если нужен отчёт за весь год, выберите этот период."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. Хорошего дня!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужен был брокерский отчёт за прошлый год, который он не находил в приложении.",
+  "operator_actions": "Оператор указала путь к отчёту и пояснила, как выбрать период.",
+  "outcome": "Клиент скачал отчёт и поблагодарил оператора."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Нужен отчёт для налоговой по брокерскому счёту — конкретизирован как отчёт брокера за прошлый год.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Подключить оператора, так как клиент не находит отчёт с телефона.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, нужно ли выбрать даты за весь год.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 27410,
+ "usage": {
+  "prompt_tokens": 4965,
+  "completion_tokens": 2593,
+  "cost": 0.001793
+ }
+}

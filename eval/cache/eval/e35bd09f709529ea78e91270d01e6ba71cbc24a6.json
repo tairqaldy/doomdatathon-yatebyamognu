@@ -1,0 +1,154 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Первый ответ содержит приветствие и имя оператора на языке клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала, недостающих данных для ответа не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, как найти облигации в приложении."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос о навигации по приложению не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил, где искать облигации в приложении."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос решён конкретной инструкцией, клиент подтвердил, что нашёл поиск.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I see the search bar now."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Клиент не выразил недовольства или беспокойства; спокойный отказ сам по себе не является жалобой.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог по запросу приложения был ясным и связным.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I see the search bar now."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор закрыл чат без заключительной реплики с прощанием и итогом или предложением дальнейшей помощи.",
+   "deduction_reason": "Не было прощания вместе с итогом или предложением дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор предложил платную услугу в обход компании.",
+   "deduction_reason": "Предложена частная платная консультация с личным звонком.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти облигации в приложении.",
+  "operator_actions": "Оператор объяснил, как искать облигации, а затем предложил частную платную консультацию.",
+  "outcome": "Клиент нашёл строку поиска; оператор закрыл чат."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, как найти облигации в приложении.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Поговорить с оператором, так как клиент раньше не пользовался этим разделом.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 26291,
+ "usage": {
+  "prompt_tokens": 4912,
+  "completion_tokens": 2656,
+  "cost": 0.001819
+ }
+}

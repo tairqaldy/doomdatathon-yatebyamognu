@@ -1,0 +1,164 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Бірінші репликада амандасу да, оператордың есімі де бар.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Сұрауға жауап беру үшін деректер бастапқыдан жеткілікті болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Бұл сұрау идентификацияны талап етпейтін интерфейс бойынша нұсқаулық болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: общая навигация по настройкам приказа."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиентке қажетті нақты қадам берілді және ол параметрді өшіргенін растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Өшірдім, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта дөрекілік немесе еленбей қалған наразылық болған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператордың жауабында түсініксіздік не айтарлықтай кідіріс байқалмайды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу бар, алайда қорытынды немесе әрі қарай көмек ұсыну жоқ.",
+   "deduction_reason": "Қоштасу репликасында қорытынды немесе қосымша көмек ұсыну жетіспейді.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубое нарушение не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сатып алу өтініміндегі «Использовать маржу» параметрін өшіру жолын сұрады.",
+  "operator_actions": "Оператор «Настройки приказа» бөлімінен параметр белгісін алып тастауды нұсқады.",
+  "outcome": "Клиент параметрді өшіргенін растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Сұрады: сатып алу өтінімінде «Использовать маржу» параметрін алып тастауға бола ма.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Параметрді қай жерден өшіру керегін сұрады және операторды қосуды өтінді.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 2,
+ "latency_ms": 61969,
+ "usage": {
+  "prompt_tokens": 9964,
+  "completion_tokens": 5997,
+  "cost": 0.003995
+ }
+}

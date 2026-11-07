@@ -1,0 +1,162 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Дина. Да, использованный ранее логин остаётся в системе и после закрытия счёта. Для новой регистрации используйте другой."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен сразу, поэтому уточнять дополнительные детали не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент описал проблему и связь со старым счётом [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Обращение касалось общего вопроса о регистрации, защищённых действий не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор дал общую рекомендацию по регистрации [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Причина занятости логина объяснена, и клиенту дан понятный следующий шаг.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Дина. Да, использованный ранее логин остаётся в системе и после закрытия счёта. Для новой регистрации используйте другой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Для регистрации сейчас выберите другой логин. Спасибо за обращение, до свидания!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор соблюдал вежливый тон и корректно ответил на вопросы.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Дина. Да, использованный ранее логин остаётся в системе и после закрытия счёта. Для новой регистрации используйте другой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Для регистрации сейчас выберите другой логин. Спасибо за обращение, до свидания!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиенту не пришлось переспрашивать из-за неясности; заметных задержек или противоречий нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "То есть ждать, пока освободится, не надо?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Для регистрации сейчас выберите другой логин. Спасибо за обращение, до свидания!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор обозначил, что делать дальше, и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Для регистрации сейчас выберите другой логин. Спасибо за обращение, до свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Дина. Да, использованный ранее логин остаётся в системе и после закрытия счёта. Для новой регистрации используйте другой."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, почему логин занят после закрытия старого счёта.",
+  "operator_actions": "Оператор объяснил, что использованный логин остаётся в системе, и предложил выбрать другой.",
+  "outcome": "Клиенту даны причина и дальнейший шаг для регистрации."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": 11,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Понять, почему логин занят после закрытия старого счёта и связано ли это со старым счётом.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, нужно ли ждать, пока логин освободится.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 27135,
+ "usage": {
+  "prompt_tokens": 4929,
+  "completion_tokens": 2616,
+  "cost": 0.001801
+ }
+}
