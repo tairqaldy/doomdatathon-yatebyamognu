@@ -2,7 +2,7 @@
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
 import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced } from './ui.js';
-import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute } from './store.js';
+import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
 let draft = null;
@@ -127,6 +127,7 @@ export function viewChecklist(view, _arg, query) {
     const { __base, ...cmp } = draft;
     const dirty = JSON.stringify(cmp) !== JSON.stringify(cl);
     const ws = weightSum(draft); const changes = diffOf(cl, draft);
+    const openHere = S.appeals.filter((a) => a.status === 'open' && a.checklist_hash === clHash(cl)).length;
     $('#save', view).disabled = !dirty || !!S.busy;
     $('#reset', view).hidden = !dirty;
     $('#cl-summary', view).innerHTML = `
@@ -134,7 +135,7 @@ export function viewChecklist(view, _arg, query) {
         <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100</span>
         <span class="muted small">${ws === 100 ? 'Итог считается из 100 баллов.' : 'Итог всё равно нормируется до 100, но лучше выровнять веса.'} N/A перераспределяет вес между применимыми критериями. Округление до 2 знаков.</span>
       </div>
-      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}`;
+      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${openHere ? `<p class="muted small">Открытых апелляций по v${cl.version}: ${openHere}. Они останутся привязаны к v${cl.version}: решение по ним можно принять, вернув эту версию активной.</p>` : ''}</div>` : ''}`;
   };
   summary();
   if (focusKey) { const el = view.querySelector(`[data-id="${focusKey[0]}"] [data-k="${focusKey[1]}"]`); el?.focus(); }
@@ -207,6 +208,8 @@ export function viewChecklist(view, _arg, query) {
     draft = null; newId = null; replaced.clear();
     lastRun = null;
     emit('change');
+    // the progress card and its result sit under the save bar: bring them into view instead of leaving the user mid-list
+    scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
     const res = await reevaluateAll(mode, `${KINDS[k].label}: переоценка по v${nextV}`, k);
     if (!res) return;
     const run = { ...res, fromV, before, after: devAvg(k) };
