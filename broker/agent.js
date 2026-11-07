@@ -6,8 +6,10 @@
 // Consent first (#15): AIM explains the steps and asks; proposed actions wait in st.pending and run only after the
 // client presses «Да» or types yes / да / иә. «Нет» leaves the page untouched. No extra model call for the answer.
 // Handoff: copies the chat into a LiveSession (shared/live-store.js) → /admin/#/live operator console → QA on close.
-// Voice: push-to-talk → POST /api/agent-voice (Nemotron) → text; replies read aloud with the browser's speechSynthesis.
+// Voice (shared/voice.js): push-to-talk (tap or hold) → POST /api/agent-voice (OpenAI Whisper, Nemotron fallback) → text;
+// replies read aloud sentence by sentence via POST /api/speak (OpenAI TTS, cached), or speechSynthesis without a server voice.
 import * as store from '/shared/live-store.js';
+import { createVoice, toWav16k } from '/shared/voice.js';
 
 // Self-contained widget (#17): own stylesheet (broker/agent.css), mounted on <body> outside the page root, and every
 // page-specific call goes through one host adapter (broker/agent-host.js, or window.AIM_HOST if the page sets it).
@@ -24,6 +26,7 @@ const DEFAULT_HOST = {
 };
 const app = { ...DEFAULT_HOST, ...(window.AIM_HOST || (await import('./agent-host.js').then((m) => m.default).catch(() => ({})))) };
 const api = (path) => `${app.apiBase || ''}${path}`;
+const vox = createVoice({ apiBase: app.apiBase, getLang: () => app.getLang() }); // `vox`: send() has a `voice` flag
 
 // The widget brings its own stylesheet; it stays invisible until the CSS is in, so it never flashes unstyled.
 const cssReady = new Promise((resolve) => {
@@ -134,7 +137,7 @@ function renderChrome() {
   subEl.textContent = sub; subEl.dataset.state = s?.status || 'bot';
   speakBtn.setAttribute('aria-pressed', String(st.speak)); speakBtn.setAttribute('aria-label', st.speak ? tr('speak_off') : tr('speak_on')); speakBtn.title = speakBtn.getAttribute('aria-label');
   closeBtn.setAttribute('aria-label', tr('close')); closeBtn.title = tr('close');
-  micBtn.setAttribute('aria-label', recording ? tr('mic_stop') : tr('mic')); micBtn.title = micBtn.getAttribute('aria-label'); micBtn.setAttribute('aria-pressed', String(Boolean(recording)));
+  micBtn.setAttribute('aria-label', mic.recording() ? tr('mic_stop') : tr('mic')); micBtn.title = micBtn.getAttribute('aria-label'); micBtn.setAttribute('aria-pressed', String(mic.recording()));
   sendBtn.setAttribute('aria-label', tr('send'));
   input.placeholder = tr('placeholder'); input.setAttribute('aria-label', tr('placeholder'));
   const closed = s?.status === 'closed';
@@ -243,7 +246,7 @@ async function runActions(actions) {
 // ---------- talking to AIM ----------
 async function send(text, { voice = false } = {}) {
   const clean = maskPII(text.trim()); if (!clean || busy) return;
-  voiceTurn = voice;
+  voiceTurn = voice; vox.stop(); vox.unlock(); // the client talks: AIM stops
   const s = session();
   if (s) { if (s.status !== 'closed') store.addMessage(st.sid, 'client', clean); return renderAll(); }
   if (st.pending) {
@@ -355,68 +358,24 @@ async function evaluateIfClosed() {
 function restart() { st = { open: true, messages: [{ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }], sid: null, speak: st.speak, pending: null }; save(); renderAll(); input.focus(); }
 
 // ---------- voice ----------
-let recording = null; let chunks = []; let stopTimer = null;
-function pickMime() { for (const m of ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus']) if (window.MediaRecorder?.isTypeSupported?.(m)) return m; return ''; }
-async function toggleMic() {
-  if (recording) { recording.stop(); return; }
-  if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) { setStatus(tr('mic_denied')); return; }
-  let stream;
-  try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { setStatus(tr('mic_denied')); return; }
-  const mime = pickMime(); chunks = [];
-  recording = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
-  recording.ondataavailable = (e) => e.data.size && chunks.push(e.data);
-  recording.onstop = async () => {
-    clearTimeout(stopTimer); stream.getTracks().forEach((t) => t.stop());
-    const type = recording.mimeType || mime || 'audio/webm'; recording = null; renderChrome();
-    const blob = new Blob(chunks, { type }); if (blob.size < 1200) { setStatus(''); return; }
-    setStatus(tr('transcribing'));
-    try {
-      // Browsers record webm/opus (Chrome) or mp4/aac (Safari); we always send 16 kHz mono WAV, which Nemotron accepts.
-      const wav = await toWav16k(blob).catch(() => null);
-      const sendBlob = wav || blob;
-      const b64 = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1]); fr.onerror = rej; fr.readAsDataURL(sendBlob); });
-      const format = wav ? 'wav' : type.includes('mp4') ? 'mp4' : type.includes('ogg') ? 'ogg' : 'webm';
-      const r = await fetch(api('/api/agent-voice'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ audio: b64, format, language: app.getLang() }) });
-      const data = await r.json().catch(() => ({}));
-      if (!r.ok || data.error || !data.text) throw new Error(data.error || 'empty');
-      setStatus(''); send(data.text, { voice: true });
-    } catch (e) { console.warn('[broker-agent voice]', e); setStatus(tr('voice_err')); }
-  };
-  recording.start(); setStatus(tr('listening')); renderChrome();
-  stopTimer = setTimeout(() => recording?.state === 'recording' && recording.stop(), 30_000);
-}
-/** Decode any recorded blob and re-encode it as 16 kHz mono 16-bit PCM WAV (≈ 32 KB per second). */
-async function toWav16k(blob) {
-  const Ctx = window.AudioContext || window.webkitAudioContext; if (!Ctx || !window.OfflineAudioContext) throw new Error('no WebAudio');
-  const ctx = new Ctx(); const decoded = await ctx.decodeAudioData(await blob.arrayBuffer()); ctx.close?.();
-  const rate = 16000; const frames = Math.ceil(decoded.duration * rate);
-  const off = new OfflineAudioContext(1, frames, rate);
-  const src = off.createBufferSource(); src.buffer = decoded; src.connect(off.destination); src.start();
-  const pcm = (await off.startRendering()).getChannelData(0);
-  const buf = new ArrayBuffer(44 + pcm.length * 2); const v = new DataView(buf);
-  const str = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
-  str(0, 'RIFF'); v.setUint32(4, 36 + pcm.length * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
-  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, rate, true);
-  v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, pcm.length * 2, true);
-  for (let i = 0; i < pcm.length; i++) { const x = Math.max(-1, Math.min(1, pcm[i])); v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true); }
-  return new Blob([buf], { type: 'audio/wav' });
-}
-
-function speak(text, language) {
-  if (!('speechSynthesis' in window) || !text) return;
-  const tag = { RU: 'ru', KZ: 'kk', EN: 'en' }[language || app.getLang()];
-  const voice = speechSynthesis.getVoices().find((v) => v.lang?.toLowerCase().startsWith(tag));
-  if (!voice) return; // no voice for this language (often Kazakh): stay silent rather than read it with a wrong accent
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text.replace(/[«»"]/g, '')); u.voice = voice; u.lang = voice.lang; u.rate = 1.02;
-  speechSynthesis.speak(u);
-}
+// shared/voice.js: Whisper / OpenAI TTS through /api/agent-voice and /api/speak (cached), browser voice as fallback.
+const mic = vox.recorder({
+  lang: () => app.getLang(),
+  onState: (state) => { setStatus({ recording: tr('listening'), transcribing: tr('transcribing'), denied: tr('mic_denied'), error: tr('voice_err') }[state] || ''); renderChrome(); },
+  onText: (text) => send(text, { voice: true }),
+});
+const speak = (text, language, opts) => vox.speak(text, language || app.getLang(), opts);
+const helloAudio = () => st.speak && vox.prefetch(tr('hello'), app.getLang(), { ui: true }); // greeting plays at once
 
 // ---------- wiring ----------
-fab.addEventListener('click', () => { st.open = true; if (!st.messages.length && !st.sid) st.messages.push({ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }); save(); renderAll(); input.focus(); });
+fab.addEventListener('click', () => {
+  st.open = true; vox.unlock();
+  if (!st.messages.length && !st.sid) { st.messages.push({ speaker: 'bot', text: tr('hello'), at: new Date().toISOString() }); if (st.speak) speak(tr('hello'), app.getLang(), { ui: true }); }
+  save(); renderAll(); input.focus();
+});
 closeBtn.addEventListener('click', () => { st.open = false; save(); renderAll(); fab.focus(); });
-speakBtn.addEventListener('click', () => { st.speak = !st.speak; if (!st.speak) speechSynthesis?.cancel(); save(); renderChrome(); });
-micBtn.addEventListener('click', toggleMic);
+speakBtn.addEventListener('click', () => { st.speak = !st.speak; if (st.speak) { vox.unlock(); helloAudio(); } else vox.stop(); save(); renderChrome(); });
+mic.bind(micBtn);
 form.addEventListener('submit', (e) => { e.preventDefault(); const v = input.value; input.value = ''; autosize(); send(v); });
 input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
 const autosize = () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; input.style.overflowY = input.scrollHeight > 120 ? 'auto' : 'hidden'; };
@@ -424,7 +383,7 @@ input.addEventListener('input', autosize);
 panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBtn.click(); });
 store.subscribe(() => { if (st.sid) { renderAll(); evaluateIfClosed(); } });
 app.onLang(() => { root.setAttribute('lang', { RU: 'ru', KZ: 'kk', EN: 'en' }[app.getLang()] || 'ru'); renderAll(); });
-renderAll(); evaluateIfClosed(); autosize();
+renderAll(); evaluateIfClosed(); autosize(); helloAudio();
 
 // Exposed for debugging and tests only (not used by the page).
-window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline } });
+window.CQA = Object.assign(window.CQA || {}, { brokerAgent: { send, runActions, pageContext, handoff, toWav16k, accept, decline, voice: vox } });
