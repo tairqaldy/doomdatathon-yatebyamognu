@@ -76,6 +76,14 @@ export function drawer(title, body, foot, { wide = false } = {}) {
   document.body.appendChild(wrap);
   wrap.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => closeDrawer()));
   document.addEventListener('keydown', escClose);
+  // aria-modal sheet: Tab / Shift+Tab cycle inside it instead of walking into the page behind the scrim
+  wrap.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = [...wrap.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
+    else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+  });
   setTimeout(() => (wrap.querySelector('textarea, select, input') || wrap.querySelector('.drawer__head .icon-btn'))?.focus(), 60);
   return wrap;
 }
