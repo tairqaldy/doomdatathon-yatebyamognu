@@ -1,0 +1,137 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском, языке клиента, и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор учёл известный перевод на брокерский счёт и уточнил недостающие детали: валюту и время отправки.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Thanks. What currency did you send?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Оператор запросил проверку личности до работы с аккаунтом, и система подтвердила личность до дальнейших действий.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Customer identity verified."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основной вопрос о переводе передан на проверку, а вопрос о брокерском отчёте решён. Не указаны сроки проверки и дальнейшие действия, если перевод не появится.",
+   "deduction_reason": "Не указаны сроки проверки перевода и что делать клиенту, если средства не появятся.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+    },
+    {
+     "kind": "message",
+     "turn_index": 27,
+     "quote": "Yes, select the start and end dates for the period you need, then download the report."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор отреагировал на тревогу клиента и вежливо объяснил необходимость проверки.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и связные, оператор сообщил, что будет обратная связь в этом чате.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 22,
+     "quote": "You can return to this chat. The details you've given me are already in the case."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор подвёл итог по переводу, сообщил о дальнейшем обновлении и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 29,
+     "quote": "You're welcome. We'll follow up here about the transfer. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оскорблений, предложения платных услуг в обход компании и раскрытия конфиденциальных данных не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      29
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент отправил перевод в USD на брокерский счёт, который не отображается, и попросил оператора проверить его.",
+  "operator_actions": "Оператор поздоровался, представился, провёл идентификацию, уточнил валюту и время перевода, передал кейс на проверку и ответил на вопрос о брокерском отчёте.",
+  "outcome": "Кейс передан на проверку, оператор пообещал обновление в этом чате; перевод пока не подтверждён."
+ },
+ "problems": [],
+ "model": "anthropic/claude-haiku-5.5",
+ "prompt_version": "eval-v1",
+ "usage": {
+  "prompt_tokens": 3942,
+  "completion_tokens": 2733,
+  "cost": 0.0017607
+ },
+ "latency_ms": 12578,
+ "attempts": 1
+}
