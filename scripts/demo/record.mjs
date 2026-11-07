@@ -597,8 +597,9 @@ async function sceneReevaluate() {
   await waitFor('.run--pending', { timeout: 5000 }).catch(() => {});
   await say(C.wait, 0);
   const r = await until(() => !!document.querySelector('.run--ok, .run--error'), { visible: 2600, timeout: 200000, what: 'AI evaluation' });
-  const failed = await js(() => !!document.querySelector('.run--error'));
-  if (failed) notes.push(`AI re-evaluation failed: ${await text('.run--error')}`);
+  // a video that shows a failed evaluation is not a demo: stop before encoding, so the committed video stays
+  if (await js(() => !!document.querySelector('.run--error'))) throw new Error(`AI re-evaluation failed after ${Math.round(r.ms / 1000)} s (${await text('.run--error')}); run again`);
+  const failed = false;
   await sleep(600);
   await say(failed ? 'AI не ответил, оценка без AI осталась на экране' : C.done(Math.round(r.ms / 1000)), 0);
   await hover('.run--ok, .run--error', { dx: 0.4 });
