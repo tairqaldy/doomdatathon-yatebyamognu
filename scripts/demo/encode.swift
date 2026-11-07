@@ -2,7 +2,7 @@
 //   swift scripts/demo/encode.swift <manifest.json> <out.mp4>
 // manifest.json (written by record.mjs):
 //   { "dir": "/tmp/…/frames", "fps": 24, "width": 1440, "height": 900, "bitrate": 480000, "duration_ms": 182000,
-//     "frames": [{ "t": 0, "f": "000001.jpg" }, …] }   t = ms on the recording clock (waits already cut out)
+//     "keyframe_s": 10, "frames": [{ "t": 0, "f": "000001.jpg" }, …] }   t = ms on the recording clock (waits cut out)
 // Output frame k (time k/fps) shows the last captured frame with t ≤ k/fps, so a still screen is the same
 // frame repeated (it costs almost no bits) and the video runs at a constant 24 fps.
 import AVFoundation
@@ -14,6 +14,7 @@ import ImageIO
 struct Frame: Decodable { let t: Double; let f: String }
 struct Manifest: Decodable {
   let dir: String; let fps: Int; let width: Int; let height: Int; let bitrate: Int; let duration_ms: Double; let frames: [Frame]
+  let keyframe_s: Int?
 }
 
 let args = CommandLine.arguments
@@ -40,7 +41,8 @@ let input = AVAssetWriterInput(mediaType: .video, outputSettings: [
   ],
   AVVideoCompressionPropertiesKey: [
     AVVideoAverageBitRateKey: m.bitrate,
-    AVVideoMaxKeyFrameIntervalKey: m.fps * 4,
+    // screen recordings are mostly still: rare keyframes leave the bits for scrolling and transitions
+    AVVideoMaxKeyFrameIntervalKey: m.fps * (m.keyframe_s ?? 10),
     AVVideoExpectedSourceFrameRateKey: m.fps,
     AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel,
     AVVideoH264EntropyModeKey: AVVideoH264EntropyModeCABAC,
