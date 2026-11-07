@@ -1,0 +1,164 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Ирина. Сейчас проверю путь."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных хватало, чтобы подсказать раздел и нужный вид поручения; условие N/A выполнено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спрашивал, где обновить персональные данные."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации в приложении, идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общая навигация по приложению; данных по счёту и защищённых действий нет."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос и уточнение о банковских реквизитах получили конкретный ответ; клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Поняла, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сохранял вежливый тон; повода реагировать на недовольство клиента не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Пожалуйста. До свидания!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Было одно заметное ожидание без предварительного предупреждения; дальнейшие ответы были понятны.",
+   "deduction_reason": "Снижение за заметное ожидание без предупреждения.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, но нет итога, следующего шага или предложения помощи.",
+   "deduction_reason": "Нет итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Пожалуйста. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти в приложении раздел для обновления персональных данных и убедиться, что не выберет поручение для банковских реквизитов.",
+  "operator_actions": "Оператор указал путь к поручению «Изменение сведений» и подтвердил, что оно предназначено для анкетных данных.",
+  "outcome": "Клиент увидел нужный пункт и подтвердил, что понял ответ."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где в приложении обновить персональные данные.",
+    "status": "resolved"
+   },
+   {
+    "turn": 12,
+    "request": "Уточнить, не относится ли пункт «Изменение сведений» к банковским реквизитам.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 16423,
+ "usage": {
+  "prompt_tokens": 5858,
+  "completion_tokens": 1890,
+  "cost": 0.001531
+ }
+}

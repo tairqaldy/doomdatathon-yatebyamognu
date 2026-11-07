@@ -1,0 +1,162 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор «Сәлеметсіз бе» деп амандасып, өзін Алма деп таныстырды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент маржа параметрін өшіру мүмкіндігін және қай жерден өшіруді сұрады; оған жауап беру үшін қосымша дерек қажет болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, можно ли убрать настройку, и где её отключить."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Бұл жалпы өтінім параметрін баптау туралы сұрақ; сәйкестендіру қажет болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал общий путь к настройке приказа."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор қажетті мәзір мен әрекетті нақты атады. Клиент параметрді өшіргенін растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Өшірдім, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Жауап сыпайы әрі нақты болды; клиент рақмет айтып, параметрді өшіргенін жеткізді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Өшірдім, рақмет."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор нақты нұсқау берді, ал клиент оның көмегімен параметрді өшірді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу бар, алайда қорытынды немесе әрі қарай көмек ұсыну жоқ.",
+   "deduction_reason": "Қоштасу кезінде қорытынды жасалмады және қосымша көмек ұсынылмады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Диалогта өрескел бұзушылық анықталған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Алма. Өтінімді жібермей тұрып, «Настройки приказа» тармағын ашып, «Использовать маржу» белгісін алып тастаңыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сатып алу өтініміндегі «Использовать маржу» параметрін өшіру жолын сұрады.",
+  "operator_actions": "Оператор «Настройки приказа» бөлімінен белгіні алып тастауды нұсқады.",
+  "outcome": "Клиент параметрді өшіргенін растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Сұрау параметрінен «Использовать маржу» белгісін алып тастауға бола ма?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "«Использовать маржу» белгісін қай жерден алып тастау керегін сұрады.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 22472,
+ "usage": {
+  "prompt_tokens": 5827,
+  "completion_tokens": 2528,
+  "cost": 0.001847
+ }
+}

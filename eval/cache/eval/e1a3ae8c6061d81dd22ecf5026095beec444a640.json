@@ -1,0 +1,172 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор запросил недостающую информацию и учёл её.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "В тенге."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Проверка личности подтверждена до защищённого действия.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Личность клиента подтверждена."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Обращение передано с необходимой деталью, клиенту обозначено, где он получит ответ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор признал переживание клиента и обозначил дальнейшую проверку.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Сбоев в ведении диалога не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Есть и информация о дальнейшем ответе, и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сообщил, что отправленный с карты платёж не зачислился, и попросил проверить его.",
+  "operator_actions": "Оператор подтвердил личность, передал вопрос специалистам и добавил сведения о валюте перевода.",
+  "outcome": "Клиенту сообщили, что ответ по платежу придёт в этом чате."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": 11,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": 14,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить, почему отправленный с карты платёж не зачислился.",
+    "status": "handed_off_with_next_step"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 12,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 50422,
+ "usage": {
+  "prompt_tokens": 11732,
+  "completion_tokens": 5585,
+  "cost": 0.003966
+ }
+}

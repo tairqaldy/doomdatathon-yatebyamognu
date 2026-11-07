@@ -1,0 +1,163 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент сразу обозначил, что хочет узнать причину блокировки выводов.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для понимания запроса хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор раскрыл наличие ограничения по конкретному счёту до проверки личности.",
+   "deduction_reason": "Сведения о счёте были сообщены до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Основной вопрос остался без ответа, дано лишь общее обещание проверить причину.",
+   "deduction_reason": "Оператор не объяснил причину ограничения и не обозначил дальнейший порядок получения ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал по существу на опасение клиента о проверке личности.",
+   "deduction_reason": "Оператор отмахнулся от беспокойства клиента вместо того, чтобы объяснить, как были получены сведения или провести проверку.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "How do you know it's my account? I haven't verified anything."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Последний вопрос остался без ответа, после чего оператор завершил диалог.",
+   "deduction_reason": "Клиенту пришлось бы повторить вопрос о том, где он получит ответ.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Will I hear back here?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор не ответил, получит ли клиент ответ в этом чате, и не назвал следующий шаг.",
+   "deduction_reason": "Нет ответа на последний вопрос и нет итога или предложения дальнейшей помощи перед прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Will I hear back here?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено раскрытие конфиденциальной информации о счёте до проверки личности.",
+   "deduction_reason": "Оператор раскрыл наличие ограничения на вывод средств.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, почему на его счёте заблокированы выводы.",
+  "operator_actions": "Оператор сообщил о наличии ограничения и сказал, что передаст вопрос команде для проверки.",
+  "outcome": "Причина блокировки и способ получения ответа остались неуточнёнными."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 10,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 13,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, почему на счёте заблокированы выводы.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 11,
+    "cause": "reaction_to_misconduct"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   11
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 38737,
+ "usage": {
+  "prompt_tokens": 5752,
+  "completion_tokens": 3342,
+  "cost": 0.002246
+ }
+}

@@ -1,0 +1,175 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась и представилась в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало: клиент спрашивал, как найти нужную акцию, и уже сообщил, что у него есть тикер.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "I have the ticker"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации и общих настроек, идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснял шаги в приложении, не проверяя и не изменяя счёт."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основные запросы получили конкретные инструкции, но на последующий вопрос о влиянии настройки на уже имеющуюся позицию ответа по существу не было.",
+   "deduction_reason": "Не разъяснено, влияет ли Use Margin на уже имеющуюся позицию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Before you submit, open Order Settings and untick Use Margin."
+    },
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сохраняла вежливый тон, и повода для реакции на недовольство клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Of course. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за неполного ответа клиент не получил ясности по последнему вопросу и решил пока не отправлять ордер.",
+   "deduction_reason": "Последний вопрос о существующей позиции остался без ясного ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Okay, I'll leave the order unsubmitted for now."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но не подвела итог и не предложила дальнейшую помощь.",
+   "deduction_reason": "В финальной реплике есть только вежливая формула и прощание.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Of course. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    },
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужна была помощь с поиском акции и настройкой Use Margin.",
+  "operator_actions": "Оператор объяснила, как найти бумагу, перейти к ордеру и отключить Use Margin.",
+  "outcome": "Вопрос о влиянии настройки на уже имеющуюся позицию остался без ответа."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 19,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как найти именно нужную акцию среди нескольких результатов поиска компании.",
+    "status": "resolved"
+   },
+   {
+    "turn": 11,
+    "request": "Что делать после того, как в поиске остался один результат.",
+    "status": "resolved"
+   },
+   {
+    "turn": 14,
+    "request": "Как отключить флажок Use Margin на экране ордера.",
+    "status": "resolved"
+   },
+   {
+    "turn": 16,
+    "request": "Меняет ли настройка Use Margin уже имеющуюся позицию.",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 49011,
+ "usage": {
+  "prompt_tokens": 5938,
+  "completion_tokens": 3892,
+  "cost": 0.00254
+ }
+}

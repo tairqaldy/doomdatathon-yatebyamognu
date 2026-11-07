@@ -1,0 +1,158 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор сәлемдесіп, атын айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Дидармын. Қай облигацияны таңдадыңыз? Тикері болса, жазыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор нақты жауап беруге қажетті жетіспейтін мәліметтерді сұрады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Дидармын. Қай облигацияны таңдадыңыз? Тикері болса, жазыңыз."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Жеке деректерді ашу немесе шот бойынша қорғалған әрекет жасалған жоқ; оператор тек құпия емес мәліметтерді жинады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Оператор тексеруге қажетті құпия емес мәліметтерді сұрады, клиент оларды кейін жіберетінін айтты."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Жауап беру үшін клиенттен әрекет қажет болғандықтан, оператор қандай мәліметтерді жіберу керегін және одан кейін не істейтінін айтты. Клиент өзі кейін жазатынын айтты [12].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Қазір қолым босамай тұр, кейін жазамын."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор әдепті сөйлесті, клиенттің айтқан мәселесіне қажетті мәліметтерді сұрады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалогта оператордан болған айқын кідіріс, түсініксіз жауап немесе клиенттің қайта сұрауы жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор дайын болғанда мәліметтерді жіберуді сұрап, қоштасу сөзін айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент облигация сатып алу өтінімінің қабылданбағанын хабарлады.",
+  "operator_actions": "Оператор облигация тикерін және экрандағы хабарламаны сұрап, өтінімді тексеруге жолдай алатынын айтты.",
+  "outcome": "Клиент кейін жазатынын айтты; тексеру мәліметтер алынғанша жалғаспады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент облигация сатып алу өтінімі қабылданбай жатқанын айтты.",
+    "status": "next_step_given"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 24000,
+ "usage": {
+  "prompt_tokens": 5881,
+  "completion_tokens": 2661,
+  "cost": 0.001919
+ }
+}

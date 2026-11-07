@@ -1,0 +1,153 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте! Я Олег. Вы знаете точный тикер нужной бумаги или видите только название?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "До рекомендации оператор уточнил, какие данные о бумаге доступны клиенту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте! Я Олег. Вы знаете точный тикер нужной бумаги или видите только название?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для поиска бумаги и навигации в приложении идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос касался поиска бумаги в приложении, без действий по счёту клиента."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор предложил искать по точному тикеру, открыть бумагу и проверить её перед заполнением параметров приказа. Клиент подтвердил, что нашёл нужную бумагу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Попробуйте ввести точный тикер. Откройте найденную бумагу и проверьте её перед заполнением параметров приказа на покупку."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Нашёл одну нужную, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался корректно, признаков недовольства клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Попробуйте ввести точный тикер. Откройте найденную бумагу и проверьте её перед заполнением параметров приказа на покупку."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор уточнил нужную деталь и дал понятную инструкцию; клиенту не пришлось переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Попробуйте ввести точный тикер. Откройте найденную бумагу и проверьте её перед заполнением параметров приказа на покупку."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Есть прощание, однако итог или предложение помощи в заключительной реплике отсутствует.",
+   "deduction_reason": "Не добавлен итог обращения или вариант дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Рад помочь. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      14
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не понимал, как найти облигацию для покупки, и видел несколько похожих бумаг.",
+  "operator_actions": "Оператор уточнил, доступен ли клиенту тикер, и посоветовал искать по нему, открыть бумагу и проверить её.",
+  "outcome": "Клиент нашёл нужную бумагу."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как найти облигацию в приложении, чтобы купить её.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Как выбрать нужную бумагу среди похожих результатов поиска.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 10,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 28088,
+ "usage": {
+  "prompt_tokens": 5846,
+  "completion_tokens": 3077,
+  "cost": 0.002123
+ }
+}

@@ -1,0 +1,196 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент сразу сформулировал конкретный запрос о выводах на своём счёте.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для понимания запроса хватало с самого начала."
+    },
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Can someone check why withdrawals are blocked on my account?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор передал счёт-специфичный запрос на проверку до подтверждения личности.",
+   "deduction_reason": "Не подтверждена личность перед передачей операции по счёту на проверку.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    },
+    {
+     "kind": "range",
+     "range": [
+      8,
+      12
+     ]
+    }
+   ]
+  },
+  "c04": {
+   "answer": 0,
+   "explanation": "Основной вопрос остался без ответа, а совет пропустить проверку — ошибочная рекомендация; на вопрос о получении ответа оператор не отреагировал [13–14].",
+   "deduction_reason": "Запрос не решён, клиенту не объяснили дальнейший порядок ответа, и дана неверная рекомендация пропустить проверку.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    },
+    {
+     "kind": "range",
+     "range": [
+      13,
+      14
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор отмахнулся от конкретного опасения клиента вместо того, чтобы объяснить, как будет проверена личность.",
+   "deduction_reason": "Опасение клиента по поводу идентификации осталось без ответа по существу.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "How do you know it's my account? I haven't verified anything."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось бы повторно выяснять, как определён счёт, и задавать вопрос о дальнейшей связи; оператор завершил чат прощанием без ответа.",
+   "deduction_reason": "Остались без ответа вопросы клиента, включая последний вопрос о получении ответа в чате.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "We can skip that. I'll send it to the team to check the reason."
+    },
+    {
+     "kind": "range",
+     "range": [
+      13,
+      14
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно: оператор не ответил на вопрос клиента и не назвал следующий шаг.",
+   "deduction_reason": "В заключительной реплике есть только прощание, без итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Goodbye."
+    },
+    {
+     "kind": "range",
+     "range": [
+      13,
+      14
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Фраза оператора повторяет сообщённое клиентом обстоятельство; оскорбления и предложения услуг в обход компании нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Can someone check why withdrawals are blocked on my account?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент попросил проверить, почему заблокированы выводы со счёта.",
+  "operator_actions": "Оператор заявил, что отправит запрос команде на проверку причины.",
+  "outcome": "Причина блокировки и порядок получения ответа не сообщены; личность не подтверждена."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 13,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить, почему на счёте заблокированы выводы.",
+    "status": "handed_off_without_next_step"
+   },
+   {
+    "turn": 11,
+    "request": "Объяснить, как оператор узнал, что это счёт клиента, если проверка личности не пройдена.",
+    "status": "wrong_answer"
+   },
+   {
+    "turn": 13,
+    "request": "Сообщить, придёт ли ответ в этом чате.",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [
+   11
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 55312,
+ "usage": {
+  "prompt_tokens": 5752,
+  "completion_tokens": 5136,
+  "cost": 0.003143
+ }
+}

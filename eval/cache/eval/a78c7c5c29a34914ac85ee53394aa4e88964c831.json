@@ -1,0 +1,169 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, я Дамир. В приложении откройте «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому уточнение потребности не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос сформулирован в [0] и [4]: клиент сообщил о запросе обновить данные и спросил, где найти поручение."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации и общей информации о порядке действий; идентификация в этом чате не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "В приложении откройте «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Вопрос о том, где найти поручение, решён. Существенный вопрос о сроке повторной подачи на вывод остался без ответа.",
+   "deduction_reason": "Не разъяснено, когда можно повторно подать поручение на вывод.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, я Дамир. В приложении откройте «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "range",
+     "range": [
+      11,
+      12
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Фраза «Путь к обновлению я указал» отмахивается от нового уточняющего вопроса клиента.",
+   "deduction_reason": "Оператор не ответил по существу на вопрос, можно ли сразу повторить подачу на вывод.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Путь к обновлению я указал. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить вопрос, оставшийся без ответа, а ответ оператора отсылает к другой части запроса.",
+   "deduction_reason": "Клиент повторил вопрос из-за его пропуска, и вопрос остался без ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Нашёл. После отправки сразу заново подавать на вывод?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Путь к обновлению я указал. Хорошего дня!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не ответил на последний вопрос и не обозначил итог или дальнейший шаг.",
+   "deduction_reason": "Последний вопрос клиента проигнорирован; одного прощания недостаточно.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      11,
+      12
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, я Дамир. В приложении откройте «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести деньги из-за необходимости обновить анкетные данные и спросил, где найти поручение и когда повторить вывод.",
+  "operator_actions": "Оператор указал путь к поручению в приложении, но не ответил на вопрос о сроке повторной подачи.",
+  "outcome": "Место поручения клиент нашёл, однако порядок повторной подачи на вывод остался неясен."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 11,
+  "operator_goodbye_turn": 12,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не может вывести деньги из-за запроса обновить анкетные данные.",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Где найти поручение в приложении и когда снова пробовать вывод.",
+    "status": "partly"
+   },
+   {
+    "turn": 11,
+    "request": "Можно ли повторно подать на вывод сразу после отправки обновлённых данных.",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 11,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 37438,
+ "usage": {
+  "prompt_tokens": 5785,
+  "completion_tokens": 4085,
+  "cost": 0.002621
+ }
+}

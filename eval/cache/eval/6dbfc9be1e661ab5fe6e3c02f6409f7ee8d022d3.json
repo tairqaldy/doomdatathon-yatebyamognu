@@ -1,0 +1,195 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных хватало с самого начала: клиент указал, что уже находится в приложении, и сформулировал проблему.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сообщил, что он в приложении и не может найти отчёты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации и общих сведений о том, где отображается тариф; идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор давал инструкции по меню и отображению тарифа."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все существенные вопросы клиента получили ответы по существу, включая поиск отчёта, просмотр тарифа и выбор периода.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Выберите период и скачайте отчёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "На первой странице, в разделе «Информация о счёте»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 21,
+     "quote": "Да, для сверки выберите тот период, который хотите проверить."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, клиент не выражал недовольства или беспокойства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 23,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог шёл последовательно, клиент следовал инструкциям и подтверждал результат; заметных сбоев управления не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Выберите период и скачайте отчёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, но только с вежливой формулой; итога или предложения помощи нет.",
+   "deduction_reason": "В заключительной реплике оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 23,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оператор давал инструкции по навигации и не раскрывал сведения конкретного счёта или конфиденциальную информацию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти отчёт брокера и посмотреть тариф, а также уточнил, как на тариф и отчёт влияет выбранный период.",
+  "operator_actions": "Оператор объяснил, где открыть и скачать отчёт, где посмотреть тариф в документе и веб-кабинете, и ответил на вопросы о периоде.",
+  "outcome": "Клиент подтвердил, что оставит отчёт за прошлый месяц для сверки; существенные вопросы закрыты."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 23,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где найти и скачать отчёт брокера.",
+    "status": "resolved"
+   },
+   {
+    "turn": 0,
+    "request": "Узнать, где посмотреть свой тариф.",
+    "status": "resolved"
+   },
+   {
+    "turn": 15,
+    "request": "Узнать, можно ли посмотреть тариф в веб-версии без отчёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 18,
+    "request": "Уточнить, влияют ли даты отчёта на отображаемое название тарифа.",
+    "status": "resolved"
+   },
+   {
+    "turn": 20,
+    "request": "Уточнить, можно ли оставить отчёт за прошлый месяц для сверки.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 33516,
+ "usage": {
+  "prompt_tokens": 6084,
+  "completion_tokens": 3840,
+  "cost": 0.002528
+ }
+}

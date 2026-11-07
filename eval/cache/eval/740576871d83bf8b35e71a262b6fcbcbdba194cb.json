@@ -1,0 +1,155 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен и достаточен для ответа; уточнять недостающие сведения не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало: клиент уточнил, освободится ли старый логин."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал проверки личности: оператор дал общую информацию о логине.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации; защищённого действия или раскрытия данных о счёте не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оба запроса клиента получили конкретный ответ и рекомендацию, как действовать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге нет грубости или выраженного клиентом неудобства, на которое оператор не отреагировал.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Түсіндім."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиент понял ответ, сбоев в ведении диалога не видно.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Түсіндім."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно: в заключительной реплике также нужны итог, следующий шаг или предложение помощи.",
+   "deduction_reason": "В заключительной реплике было только прощание.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оператор сообщил только общую информацию о логине; признаков грубого нарушения нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, освободится ли логин после закрытия старого счёта.",
+  "operator_actions": "Оператор объяснил, что старый логин остаётся в системе, и посоветовал выбрать другой.",
+  "outcome": "Клиент понял ответ; оператор попрощался."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "При открытии нового счёта логин занят после закрытия старого счёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Освободится ли старый логин после закрытия счёта?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 27098,
+ "usage": {
+  "prompt_tokens": 5816,
+  "completion_tokens": 2831,
+  "cost": 0.001997
+ }
+}

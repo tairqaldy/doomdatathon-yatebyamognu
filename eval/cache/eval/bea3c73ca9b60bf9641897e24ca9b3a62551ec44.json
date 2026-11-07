@@ -1,0 +1,153 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Дидармын. Қай облигацияны таңдадыңыз? Тикері болса, жазыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Для уточнения отклонённой заявки оператор запросил сведения, необходимые для определения конкретной облигации и дальнейшей проверки.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Дидармын. Қай облигацияны таңдадыңыз? Тикері болса, жазыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Защищённого действия, требующего идентификации, в чате не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий запрос о причине отклонения заявки; оператор только попросил тикер и текст сообщения для последующей проверки [11]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиенту дан конкретный следующий шаг: прислать тикер и сообщение с экрана, после чего оператор сможет уточнить заявку и направить её на проверку. Клиент решил написать позже, оператор повторил этот шаг [13].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор отвечал корректно и без грубости; отдельной реакции на недовольство не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор последовательно запросил данные для проверки и напомнил, что их можно отправить позже. Сбоев в ведении диалога не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жақсы. Тикерді және экрандағы хабарламаны жіберсеңіз, қай өтінім туралы екенін нақтылап, тексеруге жолдай аламын."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор попросил прислать данные, когда клиент будет готов, и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жарайды, дайын болғанда осы мәліметтерді жіберіңіз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сообщил, что заявку на покупку облигации отклоняют.",
+  "operator_actions": "Оператор запросил тикер и сообщение с экрана для уточнения заявки и передачи на проверку.",
+  "outcome": "Клиент отложил отправку данных; оператор объяснил, что прислать позже."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не может подать заявку на покупку облигации: она отклоняется.",
+    "status": "next_step_given"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 24090,
+ "usage": {
+  "prompt_tokens": 5881,
+  "completion_tokens": 2574,
+  "cost": 0.001875
+ }
+}

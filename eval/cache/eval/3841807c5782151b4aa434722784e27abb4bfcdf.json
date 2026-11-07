@@ -1,0 +1,150 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовала клиента и назвала своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Оператор ответил по существу на понятный общий вопрос, дополнительное уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, можно ли использовать D account для покупки акций [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос был общим и не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил, для чего используется D account и trading account [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос решён конкретным ответом, клиент подтвердил, что понял.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Understood, thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общалась вежливо, а клиент не сообщал о проблеме или неудобстве.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Bye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ понятен; время ожидания после реплики клиента составило менее двух минут.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание есть, однако в последней реплике нет итога, следующего шага или предложения помощи.",
+   "deduction_reason": "Не подведён итог и не предложена дальнейшая помощь в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Bye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Признаков грубого нарушения в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina. Money in the D account can't be used directly to buy securities. For the order, look at the trading account."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, можно ли использовать D account для покупки акций.",
+  "operator_actions": "Оператор объяснила, что для размещения приказа нужно смотреть на trading account.",
+  "outcome": "Клиент подтвердил, что понял ответ."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Can the D account be used to buy stock, and what does that mean when placing an order?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20502,
+ "usage": {
+  "prompt_tokens": 5719,
+  "completion_tokens": 2207,
+  "cost": 0.001675
+ }
+}
