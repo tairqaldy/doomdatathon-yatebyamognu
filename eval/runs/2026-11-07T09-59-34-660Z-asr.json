@@ -1,0 +1,57 @@
+{
+  "model": "nvidia/nemotron-3.5-transcribe",
+  "at": "2026-11-07T09:59:34.660Z",
+  "n": 5,
+  "wer_mean": 0.35493686305188854,
+  "cer_mean": 0.24426101388106156,
+  "latency_ms_mean": 14636.4,
+  "cost_usd": 0.040664546996,
+  "note": "Reference = organizer transcripts (themselves ASR output), so this measures agreement, not true accuracy. 5 calls only.",
+  "rows": [
+    {
+      "id": "p4-ru-003",
+      "cached": false,
+      "latency_ms": 16248,
+      "cost": 0.006553679774,
+      "wer": 0.4426559356136821,
+      "cer": 0.2998019801980198,
+      "ref_words": 497
+    },
+    {
+      "id": "p4-ru-002",
+      "cached": false,
+      "latency_ms": 17630,
+      "cost": 0.010339687346,
+      "wer": 0.4095744680851064,
+      "cer": 0.31010063361908313,
+      "ref_words": 564
+    },
+    {
+      "id": "p4-ru-001",
+      "cached": false,
+      "latency_ms": 9936,
+      "cost": 0.005204343742,
+      "wer": 0.1827768014059754,
+      "cer": 0.0979020979020979,
+      "ref_words": 569
+    },
+    {
+      "id": "p4-ru-005",
+      "cached": false,
+      "latency_ms": 16728,
+      "cost": 0.011499822,
+      "wer": 0.2981186685962373,
+      "cer": 0.18176670441676104,
+      "ref_words": 691
+    },
+    {
+      "id": "p4-ru-004",
+      "cached": false,
+      "latency_ms": 12640,
+      "cost": 0.007067014134,
+      "wer": 0.44155844155844154,
+      "cer": 0.3317336532693461,
+      "ref_words": 693
+    }
+  ]
+}
