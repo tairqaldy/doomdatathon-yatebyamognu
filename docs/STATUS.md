@@ -318,3 +318,19 @@ How to verify: open `/`, `/support/`, `/admin/` (demo code on the login page), `
 ### 2026-11-07 20:25 +05:00 · team · tair/claude · #18 #22 · one results pipeline
 Done: correction to the entry above. Nazar's official exporter (#22: `eval/control-run.mjs`, `eval/export-results.mjs`, `eval/validate-results.mjs`, format in `docs/case/results-format.md`) is THE pipeline. `npm run results` now runs it; my provisional `scripts/results.mjs` + `results/format.json` are removed so nobody exports the wrong shape at control time. AGENTS.md §1.1, README, TOOLING and research pages point to `npm run results -- --group <CONTROL_ID> --push`.
 How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65` → valid, 65 ok.
+
+### 2026-11-07 20:45 +05:00 · lane-c · tair/claude · #18 · eval-v5.1 on main
+Done: evaluator **eval-v5.1** is the default on main and production: facts-first prompt, per-criterion playbook procedures (`docs/playbook/scoring-playbook.md`), deterministic C7 closing + C3→C8 disclosure for unchanged built-ins, 3 samples with majority vote. `data/evaluations/DEV.json` and `results/dev/results.json` regenerated from it (65/65 valid, 47 of 520 answers changed vs v4). eval-v4 stays selectable (`--prompt eval-v4`).
+| | v4 | eval-v5.1 |
+|---|---|---|
+| held-out gold strict / lenient | 92.9·91.1 / 96.4·98.2 | 94.6 / 98.2 |
+| all 19 gold strict | 91.5·94.7 | 96.1 |
+| C6 strict (all gold) | 57.9·79.0 | 84.2 |
+| blind consensus (`eval/blind/`, 185 answers) | 170 | 179 |
+| gross errors | 7/7, 0 FP | 7/7, 0 FP |
+| cost / chat · p50 / p95 | $0.0012 · 15 / 26 s | $0.0070 · 32 / 62 s |
+eval-v5.2 (rules from the blind labels) was measured and rejected: blind +2 but held-out gold −2 strict (`docs/playbook/eval-v5.2-candidate.diff`).
+Judgment call on record: C7 literal closing («Пожалуйста. Хорошего дня!» = no); flip `closingAnswer()` in `lib/evaluator.js` if organizers say otherwise.
+Next: control run Sun 11:00 with `npm run results -- --group <CONTROL_ID> --push` (10 chats ≈ 3 min, ≈ $0.07). Any change to `lib/evaluator.js` invalidates every eval cache entry; re-measure with `node eval/accuracy.ts <run> --reviewed-only` and `python3 -I eval/blind/compare.py eval/blind/blind-24.json new=<run>` before merging.
+Contracts touched: additive evaluation fields (CONTRACTS §3 note).
+How to verify: `/api/health` → `prompt_version: eval-v5.1`; full report `eval/runs/2026-11-07T15-15-00Z-v5-report.md`.
