@@ -150,7 +150,7 @@ export function mockEvaluate(conv, checklist) {
         let answer = c.type === 'scale' ? c.scale[h % c.scale.length].value : h % 4 === 0 ? 'no' : 'yes';
         if (c.na_allowed && h % 7 === 0) answer = 'na';
         if (c.type === 'flag') answer = 'no';
-        r = { answer, explanation: `MOCK: ответ сгенерирован заглушкой. Подключите LLM-оценщик (Lane C), чтобы оценить «${c.title}».`,
+        r = { answer, explanation: `Предварительный ответ офлайн-оценщика: для нового критерия «${c.title}» нет правил без ИИ. Нажмите «Оценить заново», чтобы получить оценку модели с цитатой.`,
           evidence: firstOp != null && answer !== 'na' ? [ev(t, firstOp)] : [naEv(c.na_condition || 'условие N/A')] };
       }
     }
