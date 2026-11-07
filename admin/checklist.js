@@ -132,7 +132,8 @@ export function viewChecklist(view, _arg, query) {
   });
   rowsEl.addEventListener('change', (e) => {
     const k = e.target.dataset.k; if (!k) return; const c = find(e.target);
-    if (k === 'weight') { c.weight = Math.max(0, Number(e.target.value) || 0); summary(); return; }
+    // clamp and show the stored value, so the field never says "-5" while the draft holds 0
+    if (k === 'weight') { c.weight = Math.max(0, Number(e.target.value) || 0); e.target.value = String(c.weight); summary(); return; }
     if (['title', 'description', 'na_condition'].includes(k)) { c[k] = e.target.value; summary(); return; }
     if (k === 'na_allowed') { c.na_allowed = e.target.checked; if (!c.na_allowed) delete c.na_condition; }
     else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).map(Number).filter(Number.isFinite); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
