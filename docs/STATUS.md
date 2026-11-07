@@ -8,6 +8,14 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 ## Log
 
 ### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
+Done: saved Gradient ASCII reference and pinned source locally, plus a proposed Freedom neon-green direction using existing tokens.
+In progress: none; no implementation or landing page built.
+Next: consult the reference if the team chooses to use it; check reduced motion, WebGL fallback and contrast.
+Blocked by / Requests: automated repository checks not run due to network-restricted local checkout.
+Contracts touched: none.
+How to verify: read docs/research/navigation-references.md and inspect upstream links.
+
+### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
 Done: saved Gooey Nav and Card Nav links and pinned upstream sources in docs/research/navigation-references.md. Retrieved source and license locally; no landing implementation or dependencies added.
 In progress: none.
 Next: team can consult the references if needed.
