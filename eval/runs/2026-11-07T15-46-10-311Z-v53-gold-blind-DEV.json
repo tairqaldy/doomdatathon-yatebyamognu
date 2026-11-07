@@ -1,0 +1,449 @@
+{
+  "group": "DEV",
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v5.3",
+  "samples": null,
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-07T15:46:10.311Z",
+  "n": 43,
+  "errors": 0,
+  "cached": 1,
+  "fresh_calls": 42,
+  "cost_usd_total": 0.26306,
+  "cost_usd_per_eval": 0.00626,
+  "latency_ms_p50": 23121,
+  "latency_ms_p95": 45535,
+  "rows": [
+    {
+      "id": "p1-ru-009",
+      "lang": "RU",
+      "cached": true,
+      "ms": 30,
+      "model_ms": 38169,
+      "cost": 0.008236,
+      "total": 50.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 19599,
+      "model_ms": 18394,
+      "cost": 0.004957,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-004",
+      "lang": "RU",
+      "cached": false,
+      "ms": 19598,
+      "model_ms": 18627,
+      "cost": 0.005209,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-012",
+      "lang": "RU",
+      "cached": false,
+      "ms": 22096,
+      "model_ms": 20693,
+      "cost": 0.005084,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-003",
+      "lang": "RU",
+      "cached": false,
+      "ms": 30366,
+      "model_ms": 29320,
+      "cost": 0.00721,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-007",
+      "lang": "RU",
+      "cached": false,
+      "ms": 34948,
+      "model_ms": 33962,
+      "cost": 0.007494,
+      "total": 47.69,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-014",
+      "lang": "RU",
+      "cached": false,
+      "ms": 20680,
+      "model_ms": 19462,
+      "cost": 0.005536,
+      "total": 32.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-006",
+      "lang": "RU",
+      "cached": false,
+      "ms": 41063,
+      "model_ms": 39107,
+      "cost": 0.007319,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-017",
+      "lang": "RU",
+      "cached": false,
+      "ms": 22820,
+      "model_ms": 22393,
+      "cost": 0.005747,
+      "total": 93.75,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-005",
+      "lang": "RU",
+      "cached": false,
+      "ms": 42489,
+      "model_ms": 41334,
+      "cost": 0.008837,
+      "total": 57.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-018",
+      "lang": "RU",
+      "cached": false,
+      "ms": 23603,
+      "model_ms": 23121,
+      "cost": 0.006048,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-011",
+      "lang": "RU",
+      "cached": false,
+      "ms": 47042,
+      "model_ms": 45535,
+      "cost": 0.007724,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-025",
+      "lang": "RU",
+      "cached": false,
+      "ms": 15123,
+      "model_ms": 14763,
+      "cost": 0.004302,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-020",
+      "lang": "RU",
+      "cached": false,
+      "ms": 26496,
+      "model_ms": 25896,
+      "cost": 0.006321,
+      "total": 77.69,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-024",
+      "lang": "RU",
+      "cached": false,
+      "ms": 18573,
+      "model_ms": 18231,
+      "cost": 0.005111,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-022",
+      "lang": "RU",
+      "cached": false,
+      "ms": 27868,
+      "model_ms": 27533,
+      "cost": 0.006927,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-029",
+      "lang": "RU",
+      "cached": false,
+      "ms": 25019,
+      "model_ms": 24027,
+      "cost": 0.005993,
+      "total": 45,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-002",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 22711,
+      "model_ms": 22329,
+      "cost": 0.005649,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-028",
+      "lang": "RU",
+      "cached": false,
+      "ms": 27519,
+      "model_ms": 27151,
+      "cost": 0.005944,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-001",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 30292,
+      "model_ms": 29271,
+      "cost": 0.006721,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-005",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 21704,
+      "model_ms": 21324,
+      "cost": 0.00575,
+      "total": 78.46,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-006",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 19917,
+      "model_ms": 19560,
+      "cost": 0.005172,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-003",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 26897,
+      "model_ms": 26426,
+      "cost": 0.00684,
+      "total": 85,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-008",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 22278,
+      "model_ms": 21921,
+      "cost": 0.005649,
+      "total": 32.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-010",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 19961,
+      "model_ms": 19642,
+      "cost": 0.005362,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-014",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 15835,
+      "model_ms": 15469,
+      "cost": 0.004609,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-011",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 24564,
+      "model_ms": 24139,
+      "cost": 0.005621,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-009",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 28487,
+      "model_ms": 27806,
+      "cost": 0.006598,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-013",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 20824,
+      "model_ms": 20357,
+      "cost": 0.005546,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-001",
+      "lang": "EN",
+      "cached": false,
+      "ms": 19273,
+      "model_ms": 18821,
+      "cost": 0.005165,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-003",
+      "lang": "EN",
+      "cached": false,
+      "ms": 19627,
+      "model_ms": 19092,
+      "cost": 0.004753,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-004",
+      "lang": "EN",
+      "cached": false,
+      "ms": 20326,
+      "model_ms": 19732,
+      "cost": 0.005228,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-015",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 33675,
+      "model_ms": 33305,
+      "cost": 0.007635,
+      "total": 30.59,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-009",
+      "lang": "EN",
+      "cached": false,
+      "ms": 17551,
+      "model_ms": 17240,
+      "cost": 0.004351,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-012",
+      "lang": "EN",
+      "cached": false,
+      "ms": 14210,
+      "model_ms": 13745,
+      "cost": 0.004129,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-006",
+      "lang": "EN",
+      "cached": false,
+      "ms": 27056,
+      "model_ms": 26666,
+      "cost": 0.007024,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-011",
+      "lang": "EN",
+      "cached": false,
+      "ms": 19245,
+      "model_ms": 18370,
+      "cost": 0.005108,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-007",
+      "lang": "EN",
+      "cached": false,
+      "ms": 27331,
+      "model_ms": 26403,
+      "cost": 0.006347,
+      "total": 40,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-013",
+      "lang": "EN",
+      "cached": false,
+      "ms": 25938,
+      "model_ms": 25587,
+      "cost": 0.006075,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-015",
+      "lang": "EN",
+      "cached": false,
+      "ms": 23489,
+      "model_ms": 22830,
+      "cost": 0.005715,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-014",
+      "lang": "EN",
+      "cached": false,
+      "ms": 30054,
+      "model_ms": 29649,
+      "cost": 0.007044,
+      "total": 24.71,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-008",
+      "lang": "EN",
+      "cached": false,
+      "ms": 47216,
+      "model_ms": 46490,
+      "cost": 0.008692,
+      "total": 75,
+      "problems": 0
+    },
+    {
+      "id": "p4-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 88290,
+      "model_ms": 86787,
+      "cost": 0.016515,
+      "total": 67.5,
+      "problems": 1
+    }
+  ]
+}

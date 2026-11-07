@@ -1,0 +1,155 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день! Меня зовут Вера. Если поручение ещё в обработке, дождитесь его исполнения и обновления данных."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала; уточнять дополнительные сведения не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Условие N/A: данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации: оператор не раскрывал данные счёта и не выполнял операцию по нему.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Условие N/A: общий вопрос, защищённого действия не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос и уточнение клиента закрыты; дальнейший порядок действий обозначен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, сначала дождитесь обновления, затем повторите вывод."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Понял, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался корректно и доброжелательно.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день! Меня зовут Вера. Если поручение ещё в обработке, дождитесь его исполнения и обновления данных."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог шёл связно, клиент понял порядок действий и продолжил разговор.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, сначала дождитесь обновления, затем повторите вывод."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, но нет итога или предложения помощи.",
+   "deduction_reason": "Не хватает итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Пожалуйста. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день! Меня зовут Вера. Если поручение ещё в обработке, дождитесь его исполнения и обновления данных."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнил, можно ли подавать вывод после изменения сведений, пока поручение ещё обрабатывается.",
+  "operator_actions": "Оператор объяснил, что нужно дождаться исполнения и обновления данных, а затем повторить вывод.",
+  "outcome": "Клиент понял ответ; вопрос решён."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Уточнить, можно ли подать поручение на вывод после отправки изменения сведений.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Подтвердить, нужно ли сейчас подавать вторую заявку на вывод.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20126,
+ "usage": {
+  "prompt_tokens": 5796,
+  "completion_tokens": 2038,
+  "cost": 0.001599
+ }
+}

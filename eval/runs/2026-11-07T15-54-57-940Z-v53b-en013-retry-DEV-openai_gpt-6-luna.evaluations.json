@@ -1,0 +1,175 @@
+{
+ "meta": {
+  "evaluator": "openai:gpt-6-luna",
+  "prompt_version": "eval-v5.3",
+  "samples": null,
+  "dataset": "DEV",
+  "checklist": "freedom-chat@v1",
+  "created_at": "2026-11-07T15:54:57.940Z",
+  "count": 1
+ },
+ "evaluations": [
+  {
+   "id": "openai:gpt-6-luna-p1-en-013",
+   "conversation_id": "p1-en-013",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T15:54:57.940Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v5.3",
+    "latency_ms": 29076,
+    "cost_usd": 0.005745
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 15.38,
+     "effective_weight": 15.38,
+     "explanation": "Оператор поздоровался на английском и назвал своё имя в первой реплике.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Условие N/A выполнено: клиент сразу сообщил, что хочет найти облигации в приложении.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Данных для ответа хватало с самого начала: клиент хотел найти облигации в приложении [0]."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос касался общего использования приложения и не требовал идентификации.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Общий вопрос о навигации в приложении, не требующий идентификации [0], [9]."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 30.77,
+     "effective_weight": 30.77,
+     "explanation": "Основной запрос решён конкретной инструкцией, и клиент подтвердил, что нашёл поиск. Недопустимое предложение оценивается отдельно и консультацию не снижает.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      },
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Okay, I see the search bar now."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 23.08,
+     "effective_weight": 23.08,
+     "explanation": "Клиент не выразил недовольства или беспокойства. Само предложение платной услуги в обход компании оценивается как грубая ошибка, но не снижает этот критерий автоматически.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "No, I'm only asking for help with the app."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 23.08,
+     "effective_weight": 23.08,
+     "explanation": "Диалог по запросу клиента был понятным; задержки ответа оператора в ходе общения не зафиксировано.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      },
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Okay, I see the search bar now."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 7.69,
+     "explanation": "Чат завершён без прощания и без итога или предложения помощи.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        13
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Есть предложение платной услуги в обход компании.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100.03
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 85.71
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 92.31,
+   "gross_error": true
+  }
+ ]
+}

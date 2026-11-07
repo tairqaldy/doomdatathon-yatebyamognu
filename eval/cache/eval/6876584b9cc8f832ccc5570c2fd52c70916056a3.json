@@ -1,0 +1,164 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Первый ответ содержит приветствие и имя оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил недостающую деталь для обращения к специалистам.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Личность была подтверждена до защищённого действия по обращению о конкретном платеже.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Личность клиента подтверждена."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Обращение передано с нужной информацией, клиенту сообщили, где он получит ответ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор признал беспокойство клиента и вёл диалог корректно.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиенту не пришлось переспрашивать, ответы ясные, предупреждение об ожидании не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "В финальном сообщении указано, где сообщат результат, и есть прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      14
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент попросил проверить отправленный перевод, который не отразился в приложении.",
+  "operator_actions": "Оператор подтвердил личность, уточнил валюту и передал вопрос специалистам.",
+  "outcome": "Клиенту сообщили, что ответ по платежу придёт в этом чате."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": 11,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": 14,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить уже отправленный перевод, который не отразился в приложении.",
+    "status": "handed_off_with_next_step"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 12,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 24802,
+ "usage": {
+  "prompt_tokens": 5866,
+  "completion_tokens": 2792,
+  "cost": 0.001983
+ }
+}

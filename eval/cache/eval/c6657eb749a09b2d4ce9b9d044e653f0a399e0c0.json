@@ -1,0 +1,157 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Установление контакта выполнено в первом ответе оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Алина. В веб-версии откройте вкладку «Кабинет». Название тарифа будет под вашим ФИО."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала; оператор сразу указал путь в веб-версии.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос ясен, уточнение не требовалось."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о навигации, без сведений по конкретному счёту и защищённых действий."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной вопрос решён, клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Алина. В веб-версии откройте вкладку «Кабинет». Название тарифа будет под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Нашла, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив; повода для дополнительной реакции на неудобство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Алина. В веб-версии откройте вкладку «Кабинет». Название тарифа будет под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог понятный, клиенту не пришлось переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Алина. В веб-версии откройте вкладку «Кабинет». Название тарифа будет под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Нашла, спасибо."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Есть прощание, однако нет итога или предложения дальнейшей помощи.",
+   "deduction_reason": "Снижено за отсутствие итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, где посмотреть свой тариф, поскольку не нашёл его в приложении.",
+  "operator_actions": "Алина объяснила, где найти тариф в веб-версии.",
+  "outcome": "Клиент нашёл тариф и поблагодарил оператора."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где посмотреть свой тариф, если в приложении его не видно и клиент сейчас с ноутбука?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 18314,
+ "usage": {
+  "prompt_tokens": 5747,
+  "completion_tokens": 1912,
+  "cost": 0.001531
+ }
+}

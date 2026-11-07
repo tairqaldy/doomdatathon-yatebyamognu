@@ -1,0 +1,160 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя на английском.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был ясен с самого начала, данных хватало для ответа.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент указал, что использует website [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для общего вопроса о расположении тарифного плана идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор только указал, где найти тарифный план на сайте [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос решён конкретной инструкцией, и клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Found it."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге оператор был вежлив, повода для дополнительной реакции на недовольство не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Great. Thanks for reaching out, and goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы последовательны и понятны; клиент смог сразу найти нужную информацию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Found it."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, однако не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике есть только благодарность и прощание, без итога или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Great. Thanks for reaching out, and goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Eva. Open the account area, labelled «Кабинет» in the Russian interface. You'll see your plan under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Great. Thanks for reaching out, and goodbye!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, где на сайте посмотреть текущий тарифный план.",
+  "operator_actions": "Оператор представился и объяснил, где найти план в кабинете.",
+  "outcome": "Клиент нашёл план и подтвердил это."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Where to see the current pricing plan on the website.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 61768,
+ "usage": {
+  "prompt_tokens": 5710,
+  "completion_tokens": 2421,
+  "cost": 0.001782
+ }
+}

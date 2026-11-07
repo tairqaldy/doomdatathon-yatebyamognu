@@ -1,0 +1,200 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на русском языке и назвал себя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных хватало: оператор ответил, что средства с D-счёта напрямую для покупки бумаг не используются, и указал торговый счёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    },
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Вижу D-счёт и торговый. С какого покупать акции?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "А если деньги сейчас видны на D-счёте? Можно оператора?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общего порядка торговли; сведения о конкретном счёте из систем компании не раскрывались, защищённых действий не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "На оба вопроса клиент получил ответ по существу и подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Понятно, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге нет грубости или отмахивания от клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог понятный; переспрос клиента был уточнением-подтверждением, а не следствием сбоя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "То есть в приказе надо смотреть на торговый счёт?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Фраза «Хорошего дня!» является прощанием, но итог или предложение помощи отсутствуют.",
+   "deduction_reason": "Оператор попрощался, но не добавил итог или предложение дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Понятно, спасибо."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнил, с какого счёта покупать акции и можно ли использовать средства на D-счёте.",
+  "operator_actions": "Оператор сообщил, что средства с D-счёта напрямую не используются, и указал ориентироваться на торговый счёт.",
+  "outcome": "Клиент понял ответ и поблагодарил."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Уточнить, с какого счёта покупать акции.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Уточнить, можно ли использовать деньги, которые видны на D-счёте.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 28686,
+ "usage": {
+  "prompt_tokens": 5798,
+  "completion_tokens": 3272,
+  "cost": 0.002216
+ }
+}

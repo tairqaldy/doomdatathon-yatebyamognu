@@ -1,0 +1,202 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал компанию в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор повторно запросил уже сообщённые сведения, из-за чего клиенту пришлось снова объяснить ситуацию.",
+   "deduction_reason": "Оператор уточнил уже названные клиентом варианты документов.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 61,
+     "quote": "У вас выбор между вмж или удостоверение личности Казахстан?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 63,
+     "quote": "Вот есть вон ж оно выдано республикой Казахстан это айдикарда вид на жительство, а есть загранпаспорт, выданный республикой Кыргызстан."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Обсуждались будущие действия и общие шаги; фактического защищённого действия в разговоре не зафиксировано.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Оператор только запросил номер телефона и объяснил, что клиенту сделать позднее."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "По обоим вопросам клиент получил ответ или конкретный дальнейший шаг; клиент подтвердил, что позвонит утром.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 48,
+     "quote": "Да да да я подожду некоторое время, просто есть возможность, что рабочее время у меня закончится. Я не успею его удалить, в связи с чем вам лучше завтра на всякий случай позвонить нам сперва на линию "
+    },
+    {
+     "kind": "message",
+     "turn_index": 50,
+     "quote": "С 09:00."
+    },
+    {
+     "kind": "message",
+     "turn_index": 66,
+     "quote": "Да, когда при регистрации тогда лучше будет крыну указать и паспорт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 70,
+     "quote": "Да, сперва указывайте свой паспорт и далее если желать уже можно добавить казахстанский."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Несмотря на неясные формулировки, грубости или отмахивания от опасений клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 67,
+     "quote": "Всё я понял, Спасибо большое. Я понял спасибо."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Несколько реплик оператора были неясными, и клиенту приходилось переспрашивать или повторять сведения.",
+   "deduction_reason": "Снижение за повторные уточнения клиента из-за неясных формулировок и порядка ответов.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 32,
+     "quote": "Настройки и там не знаю выход да."
+    },
+    {
+     "kind": "message",
+     "turn_index": 53,
+     "quote": "Что говорите?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 54,
+     "quote": "У вас остались с тобой эти вопросы?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Клиент завершил звонок до того, как оператор смог закончить разговор.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент завершил разговор."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений по указанным основаниям в разговоре нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      16,
+      74
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил об удалении счёта для повторной регистрации супруги и о выборе страны и документа.",
+  "operator_actions": "Объяснил, что нужно позвонить утром для проверки и возможного удаления счёта, и подсказал указать кыргызский паспорт.",
+  "outcome": "Клиент понял рекомендации и сообщил, что позвонит в 09:00."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 16,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 52,
+  "client_requests": [
+   {
+    "turn": 18,
+    "request": "Как удалить или сбросить брокерский счёт, чтобы супруга могла зарегистрироваться заново с корректными данными о гражданстве и ВНЖ.",
+    "status": "next_step_given"
+   },
+   {
+    "turn": 57,
+    "request": "Какую страну и документ выбрать при регистрации: Кыргызстан и загранпаспорт или Казахстан и документ, связанный с ВНЖ.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 31,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 33,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 41,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 46,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 53,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 63,
+    "cause": "operator_asked_known_info"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "client_left_or_hung_up",
+  "cut_before_operator_could_close": true,
+  "operator_clarifying_question_turn": 61,
+  "need_missed_kind": "asked_known_info",
+  "need_missed_turn": 61
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 76194,
+ "usage": {
+  "prompt_tokens": 8816,
+  "completion_tokens": 6874,
+  "cost": 0.004319
+ }
+}

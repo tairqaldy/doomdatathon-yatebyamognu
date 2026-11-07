@@ -1,0 +1,166 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на языке клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Добрый день, я Виктор. Чем могу помочь?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор спросил о потребности, которая уже была сформулирована клиентом до перевода на оператора.",
+   "deduction_reason": "Оператор повторно спросил, чем помочь, хотя запрос уже был известен.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      0,
+      9
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос о том, где найти реквизиты в приложении, не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о навигации в приложении; идентификация не требовалась."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 0,
+   "explanation": "По существу вопрос о том, какую кнопку нажать, не решён; конкретного следующего шага оператор не дал.",
+   "deduction_reason": "Не указал, где именно найти реквизиты или какую кнопку нажать.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Я писал выше. Нужны реквизиты, какую кнопку нажать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Всё есть в приложении."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Клиент выразил раздражение повторным вопросом, но оператор не отреагировал на это и не помог с конкретной проблемой.",
+   "deduction_reason": "Не признал недовольство клиента и отмахнулся от его вопроса.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Я писал выше. Нужны реквизиты, какую кнопку нажать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Всё есть в приложении."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить уже заданный вопрос, а конкретного ответа после этого не последовало.",
+   "deduction_reason": "Клиент повторил запрос после вопроса оператора о том, чем помочь.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      12
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор закрыл чат без прощания и без подведения итога или предложения помощи.",
+   "deduction_reason": "В заключительной реплике нет необходимых элементов завершения.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      11,
+      12
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений указанного типа в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, где скачать реквизиты пополнения и какую кнопку нажать.",
+  "operator_actions": "Оператор спросил, чем помочь, хотя запрос уже был в чате, затем ответил, что всё есть в приложении.",
+  "outcome": "Клиент не получил конкретной инструкции, чат закрыт оператором."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где скачать реквизиты пополнения и какую кнопку нажать; повторено в реплике [10].",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_asked_known_info"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "asked_known_info",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 34552,
+ "usage": {
+  "prompt_tokens": 5744,
+  "completion_tokens": 3749,
+  "cost": 0.002449
+ }
+}

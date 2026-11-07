@@ -1,0 +1,215 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос и контекст приложения были известны с самого начала, поэтому уточнять дополнительные сведения не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Где взять отчёт брокера? И ещё хочу посмотреть, какой у меня тариф."
+    },
+    {
+     "kind": "na_condition",
+     "quote": "Я в приложении. Подключите человека, не могу найти сами отчёты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации в приложении и веб-версии и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "na_condition",
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все вопросы клиента получили ответы по существу; клиент подтвердил, что понял и оставит выбранный период.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Выберите период и скачайте отчёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "На первой странице, в разделе «Информация о счёте»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Отчёт формируется за выбранный период. Если нужен именно текущий тариф, удобнее посмотреть его в веб-кабинете."
+    },
+    {
+     "kind": "message",
+     "turn_index": 21,
+     "quote": "Да, для сверки выберите тот период, который хотите проверить."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался корректно, поводов для обязательной реакции на недовольство клиента не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 23,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор давал ясные инструкции и последовательно отвечал на вопросы клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Выберите период и скачайте отчёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Отчёт формируется за выбранный период. Если нужен именно текущий тариф, удобнее посмотреть его в веб-кабинете."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике есть прощание, но нет итога, следующего шага или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 23,
+     "quote": "Пожалуйста. Хорошего вечера!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      22,
+      23
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте, меня зовут Инга. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Да, там название тарифа отображается под ФИО во вкладке «Кабинет»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти отчёт брокера и узнать свой тариф.",
+  "operator_actions": "Оператор объяснил, как открыть и скачать отчёт, где посмотреть тариф и как проверить его в веб-версии.",
+  "outcome": "На вопросы о тарифе и периоде отчёта даны ответы; клиент решил оставить отчёт за прошлый месяц для сверки."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 23,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где найти отчёт брокера.",
+    "status": "resolved"
+   },
+   {
+    "turn": 0,
+    "request": "Узнать, какой у клиента тариф.",
+    "status": "resolved"
+   },
+   {
+    "turn": 15,
+    "request": "Узнать, можно ли посмотреть тариф в веб-версии без отчёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 18,
+    "request": "Узнать, влияют ли выбранные даты отчёта на название тарифа.",
+    "status": "resolved"
+   },
+   {
+    "turn": 20,
+    "request": "Уточнить, можно ли оставить отчёт за прошлый месяц для сверки.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 33588,
+ "usage": {
+  "prompt_tokens": 6084,
+  "completion_tokens": 3777,
+  "cost": 0.002497
+ }
+}

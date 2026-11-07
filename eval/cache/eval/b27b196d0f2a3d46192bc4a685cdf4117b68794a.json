@@ -1,0 +1,172 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал своё имя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор перешёл к действию без необходимой информации о целях клиента и не ответил на его запрос.",
+   "deduction_reason": "Не уточнены необходимые для рекомендации детали; вместо консультации предложен перевод денег оператору.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Хочу выбрать облигации. Можете подсказать, что купить, чтобы деньги выросли?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации: действий или раскрытия сведений по счёту клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос об общей консультации по выбору облигаций, без действий по конкретному счёту."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 0,
+   "explanation": "Оператор не дал консультацию по облигациям и предложил действие, не отвечающее запросу клиента.",
+   "deduction_reason": "Ответа по существу нет; ключевое предложение не решает запрос клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Хочу выбрать облигации. Можете подсказать, что купить, чтобы деньги выросли?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "На возражение клиента оператор не отреагировал по существу и подтвердил личное предложение в обход компании.",
+   "deduction_reason": "Оператор не учёл возражение клиента и продолжил настаивать на личном предложении.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Вы серьёзно? Я про консультацию в приложении спрашивал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, это я лично предлагаю, через компанию оформлять не надо."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиент не получил ответ на исходный вопрос и не смог продолжить консультацию; чат завершился после его отказа.",
+   "deduction_reason": "Исходный вопрос остался без ответа, и диалог не привёл к решению запроса.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      0,
+      13
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Заключительной реплики с прощанием, итогом или предложением помощи не было.",
+   "deduction_reason": "Оператор закрыл чат без прощания и подведения итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено предложение перевести деньги оператору лично, не оформляя операцию через компанию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, это я лично предлагаю, через компанию оформлять не надо."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел получить консультацию о выборе облигаций.",
+  "operator_actions": "Оператор предложил перевести деньги ему лично и подтвердил, что это можно сделать в обход компании.",
+  "outcome": "Вопрос клиента остался без ответа; оператор закрыл чат."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 9,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Подсказать, какие облигации купить, чтобы деньги выросли.",
+    "status": "wrong_answer"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "reaction_to_misconduct"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "answered_without_needed_detail",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 37870,
+ "usage": {
+  "prompt_tokens": 5794,
+  "completion_tokens": 3935,
+  "cost": 0.002547
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа о том, где обновить профиль, хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сообщил, что приложение требует обновить профиль."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "В этом диалоге запрос ограничился общей навигационной подсказкой, идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал общий путь в меню приложения."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса закрыта конкретным путём к изменению данных. Существенные вопросы о сроке повторного вывода и его немедленной отправке остались без ответа.",
+   "deduction_reason": "Не дан ответ на важные вопросы о том, когда повторить вывод и можно ли сделать это сразу после обновления.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Вместо ответа на новый вопрос оператор ограничился фразой о том, где находится запрос на обновление профиля.",
+   "deduction_reason": "Оператор отмахнулся от вопроса клиента, сославшись на уже указанное место.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось бы повторно уточнять оставшиеся без ответа вопросы; последний вопрос также остался без ответа по существу.",
+   "deduction_reason": "Несколько вопросов клиента остались без ясного ответа.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      4,
+      9
+     ]
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, однако не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Прощание было без итога, следующего шага или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести средства, поскольку приложение требовало обновить профиль.",
+  "operator_actions": "Оператор указал путь к изменению данных в приложении.",
+  "outcome": "Клиент нашёл нужный раздел, но не получил ответа, когда можно повторить вывод."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 10,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Withdrawal is blocked because the app requires profile details to be updated.",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Where to submit the profile update and when the client can retry the withdrawal.",
+    "status": "partly"
+   },
+   {
+    "turn": 10,
+    "request": "Whether the client can submit the withdrawal immediately after updating the profile.",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 31919,
+ "usage": {
+  "prompt_tokens": 5723,
+  "completion_tokens": 3318,
+  "cost": 0.002231
+ }
+}
