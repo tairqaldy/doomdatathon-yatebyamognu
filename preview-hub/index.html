@@ -83,17 +83,22 @@
   }
 
   async function metrics() {
-    const m = await fetch('/eval/runs/gpt-6-luna-eval-v1.metrics.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    const ev = await fetch('/data/evaluations/DEV.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    // same metrics file as /admin (newest measured prompt first), so both pages show the same agreement number
+    const get = (u) => fetch(u, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const m = (await get('/eval/runs/gpt-6-luna-eval-v4.metrics.json')) || (await get('/eval/runs/gpt-6-luna-eval-v1.metrics.json'));
+    const ev = await get('/data/evaluations/DEV.json');
+    const mv = m?.meta?.prompt_version || '';
     const cards = [];
-    if (ev) cards.push(['Dialogs with AI results', `${Object.keys(ev.results).length}`, esc(ev.model)]);
+    if (ev) cards.push(['Dialogs with AI results', `${Object.keys(ev.results).length}`, `${esc(ev.model)} · ${esc(ev.prompt_version || '')}`]);
     if (m) {
-      cards.push(['Agreement with gold (strict)', `${m.overall.strict}%`, `${m.gold_dialogs} reviewed dialogs`]);
+      cards.push(['Agreement with gold (strict)', `${m.overall.strict}%`, `${m.gold_dialogs} reviewed dialogs${mv && mv !== ev?.prompt_version ? ` · measured on ${esc(mv)}` : ''}`]);
       cards.push(['Gross-error recall', `${m.gross_error.tp}/${m.gross_error.tp + m.gross_error.fn}`, `${m.gross_error.fp} false positives`]);
       cards.push(['Evidence hit rate', `${m.evidence.hit_rate}%`, `${m.evidence.invalid_refs} invalid refs`]);
       cards.push(['Total score MAE', `${m.total.mae}`, 'points vs human']);
     }
-    cards.push(['Cost per evaluation', '$0.00105', 'GPT-6 Luna, all 65 DEV']);
+    // measured, not typed in: mean usage.cost of the evaluations currently shipped in data/evaluations/DEV.json
+    const costs = ev ? Object.values(ev.results).map((r) => Number(r.usage?.cost)).filter((x) => x > 0) : [];
+    cards.push(['Cost per evaluation', costs.length ? `$${(costs.reduce((s, x) => s + x, 0) / costs.length).toFixed(5)}` : '—', costs.length ? `${esc(ev.prompt_version || '')}, mean of ${costs.length} DEV dialogs` : 'no usage data']);
     document.getElementById('metrics').innerHTML = cards.map(([k, v, s]) => `<div class="cqa-card cqa-card--compact metric"><span class="cqa-small cqa-muted">${k}</span><b>${v}</b><span class="cqa-small cqa-muted">${s}</span></div>`).join('');
   }
 
@@ -103,7 +108,7 @@
       <a class="cqa-card cqa-card--interactive tile ${ok[i] ? '' : 'is-missing'}" href="${s.path}" ${s.external ? 'target="_blank" rel="noopener"' : ''}>
         <span class="cqa-h3">${esc(s.title)}${ok[i] ? '' : ' · <span class="cqa-badge cqa-badge--partial">not built yet</span>'}</span>
         <span class="cqa-small">${esc(s.desc)}</span>
-        <span class="cqa-mono cqa-muted">/${esc(s.path.replace(/^https?:\/\//, ''))}</span>
+        <span class="cqa-mono cqa-muted">${esc(s.path.replace(/^https?:\/\//, ''))}</span>
       </a>`).join('');
     const pick = document.getElementById('pick');
     pick.innerHTML = SURFACES.filter((s, i) => !s.external && s.id !== 'health' && ok[i]).map((s) => `<option value="${s.path}">${esc(s.title)}</option>`).join('');
