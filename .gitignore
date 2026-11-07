@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vite/
+coverage/
+__pycache__/
+.venv/
+# large audio downloads
+data/audio/
+# app/dist/ is intentionally NOT ignored, see AGENTS.md §7
