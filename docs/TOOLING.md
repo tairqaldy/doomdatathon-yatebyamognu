@@ -56,6 +56,8 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Checklist as JSON data | live "replace one criterion" test with zero code change | `data/checklists/` |
 | Design tokens reverse-engineered from fbroker.kz (site is Nuxt + Tailwind, so its utility names map 1:1) | consistent Freedom look, Tailwind-ready | `docs/research/design-system.md` |
 | Clickable no-build prototype first, then the TS app copies its patterns | fast UX validation; demo exists even if the build breaks | `prototype/` |
+| Gold set + accuracy harness: hand-checked labels per criterion, every evaluator run scored against them (strict / lenient agreement, N/A, gross-error recall, evidence hit rate, total MAE) | measured accuracy instead of claims; catches prompt regressions; mock baseline proves the harness before the LLM exists | `eval/gold/README.md`, `eval/accuracy.ts` |
+| Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
 
 ## 7. Research sources and external docs
 | Source | What we took from it | Saved where |
