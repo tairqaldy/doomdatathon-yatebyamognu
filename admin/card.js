@@ -43,7 +43,10 @@ export function viewCard(view, convId, query) {
   const open = E.appeals.filter((a) => a.status === 'open');
   const reviewer = S.role === 'reviewer';
   const lastAppeal = (cid) => E.appeals.filter((x) => x.criterion_id === cid).at(-1);
-  const verdict = total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
+  // A gross error carries no points, so the total can stay high: the verdict must still say the dialog needs review.
+  const gross = finalScore.gross_error;
+  const verdict = gross ? 'Грубая ошибка' : total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
+  const verdictColor = gross ? 'var(--bad-ink)' : tierVar(tier(total));
   const runInfo = E.src === 'ai'
     ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}`
     : 'Предварительная оценка без AI. Нажмите «Оценить заново», чтобы оценил AI';
@@ -113,7 +116,8 @@ export function viewCard(view, convId, query) {
           <div class="score-head">
             <div class="ring-wrap" id="ring-wrap">${ring(prev ?? 0, tier(total))}<span class="ring-wrap__num num" id="total">${prev == null ? '—' : fmt(prev, 2)}</span><span class="ring-wrap__of">из 100</span></div>
             <div class="score-head__text">
-              <b class="verdict" style="color:${tierVar(tier(total))}">${verdict}</b>
+              <b class="verdict" style="color:${verdictColor}">${verdict}</b>
+              ${gross ? '<span class="small verdict-note">Баллы за флаг не снимаются, но диалог нужно разобрать.</span>' : ''}
               <span class="muted small">${runInfo}</span>
               <span class="muted small">Применён: ${esc(clLabel)}</span>
               <span class="muted small">Применимый вес ${finalScore.applicable_weight} из ${finalScore.nominal_weight}, итог нормирован до 100</span>

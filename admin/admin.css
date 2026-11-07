@@ -354,6 +354,7 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .ring-wrap--s .ring-wrap__num { padding: 0; font-size: 20px; }
 .score-head__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .verdict { font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
+.verdict-note { color: var(--bad-ink); }
 .history { display: grid; grid-template-columns: 1fr 1.3fr 1fr; margin: 16px 20px 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .history__step { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; font-size: 12.5px; color: var(--ink-3); min-width: 0; }
 .history__step + .history__step { border-left: 1px solid var(--line); }
