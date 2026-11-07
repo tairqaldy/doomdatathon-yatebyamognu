@@ -10,7 +10,7 @@ let audioEl = null;
 let ticker = null;
 
 function answerBadge(c, a) {
-  if (a == null) return '<span class="ans ans--none">нет ответа</span>';
+  if (a == null) return '<span class="ans ans--none">не оценён</span>';
   if (c.type === 'flag') return a === 'yes' ? `<span class="ans ans--gross">${icon('alert')}Нарушение</span>` : `<span class="ans ans--ok">${icon('check')}Нет нарушений</span>`;
   if (a === 'na') return `<span class="ans ans--na">${icon('dash')}N/A</span>`;
   if (a === 'yes') return `<span class="ans ans--ok">${icon('check')}Да</span>`;

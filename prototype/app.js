@@ -5,7 +5,7 @@
 // Flow: list → analysis card → evidence jump/seek → N/A → deduction reasons → appeal → reviewer decision → new total → edit criterion → re-apply.
 
 import { score, tier, maxStep, selfTest } from './scoring.js?v=7';
-import { mockEvaluate, mockSummary } from './mock-evaluator.js?v=7';
+import { mockEvaluate, mockSummary } from './mock-evaluator.js?v=8';
 
 /* ================= state ================= */
 const LS_KEY = 'cqa-prototype-v2';
@@ -78,7 +78,7 @@ function answerBadge(c, a) {
   if (a === 'no') return `<span class="cqa-badge cqa-badge--fail">${ICON.x} Нет</span>`;
   const m = maxStep(c); return `<span class="cqa-badge cqa-badge--${a >= m ? 'pass' : a === 0 ? 'fail' : 'partial'}">${a} / ${m}</span>`;
 }
-const answerText = (c, a) => (a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Да (нарушение)' : 'Да') : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
+const answerText = (c, a) => (a == null ? 'не оценён' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Да (нарушение)' : 'Да') : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
 
 /* ================= evaluation model (AI if available, else MOCK) ================= */
 const aiKey = (convId, cl) => `${convId}|${clHash(cl)}`;
