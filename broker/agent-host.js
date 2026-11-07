@@ -14,6 +14,9 @@
 //                                                    (default: viewport ≤ 860 px). Used by the /phone demo frame.
 //   apiBase          → ''                            prefix for /api/agent, /api/agent-voice, /api/evaluate
 //   checklistUrl     → URL of the QA checklist used after a handoff
+//   keepHistory      → false (default)               true = restore the chat (messages, open panel, pending consent,
+//                                                    handoff link) from sessionStorage after a reload. By default
+//                                                    every fresh page load starts a clean conversation (#25).
 import * as app from '/broker/app.js';
 
 export default {
