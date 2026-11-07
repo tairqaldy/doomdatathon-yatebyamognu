@@ -3,232 +3,422 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Freedom · Поддержка</title>
-  <meta name="description" content="Поддержка Freedom Broker. Ассистент отвечает за пару секунд на русском, казахском или английском, а когда нужен человек, зовёт специалиста и говорит, когда он ответит.">
-  <meta name="theme-color" content="#0f1011">
-  <meta property="og:title" content="Freedom · Поддержка">
-  <meta property="og:description" content="Спросите. Ответим по-человечески.">
-  <meta property="og:image" content="assets/hero-meadow.webp">
+  <title>Freedom Broker · Поддержка и качество разговоров</title>
+  <meta name="description" content="AIM отвечает клиентам Freedom Broker за 2–4 секунды и передаёт специалисту вопросы о деньгах и счёте. Каждый чат и звонок проверяется по чек-листу Freedom из 8 пунктов.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Freedom Broker · Поддержка и качество разговоров">
+  <meta property="og:description" content="Ответ за пару секунд. Специалист, когда речь о деньгах.">
+  <meta property="og:image" content="/landing-tair/assets/hero-meadow.webp">
+  <link rel="icon" type="image/svg+xml" href="/landing-tair/assets/mark.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/hero-meadow.webp" fetchpriority="high">
-  <link rel="stylesheet" href="/shared/theme.css">
-  <link rel="stylesheet" href="landing.css">
-  <script type="module" src="landing.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="preload" as="image" href="/landing-tair/assets/hero-meadow.webp" fetchpriority="high">
+  <link rel="stylesheet" href="/shared/theme-light.css">
+  <link rel="stylesheet" href="/landing-tair/landing.css">
+  <script type="module" src="/landing-tair/landing.js"></script>
 </head>
-<body class="g" id="top">
+<body class="l">
+  <span id="top" class="top-sentinel" aria-hidden="true"></span>
   <a class="skip" href="#main">Перейти к содержанию</a>
 
+  <!-- Water shimmer filters. Each <svg> holds one SMIL animation so landing.js can pause it
+       separately (svg.pauseAnimations) when its photo leaves the screen. -->
+  <svg class="fx-defs" id="fx-water-shore" data-fx-svg aria-hidden="true" focusable="false" width="0" height="0">
+    <filter id="water-shore" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005 0.06" numOctaves="2" seed="4" result="noise">
+        <animate attributeName="baseFrequency" dur="11s" values="0.005 0.06;0.007 0.075;0.005 0.06" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+  <svg class="fx-defs" id="fx-water-door" data-fx-svg aria-hidden="true" focusable="false" width="0" height="0">
+    <filter id="water-door" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.07" numOctaves="2" seed="9" result="noise">
+        <animate attributeName="baseFrequency" dur="9s" values="0.006 0.07;0.008 0.088;0.006 0.07" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
   <header class="bar">
-    <a class="bar__mark" href="#top" aria-label="Freedom · Поддержка, в начало страницы">
-      <span class="g-dot" aria-hidden="true"></span>
-      <span>Freedom <span class="bar__sep">·</span> Поддержка</span>
+    <a class="bar__logo" href="#top">
+      <img src="/shared/brand/freedom-broker-logo.svg" width="498" height="112" alt="Freedom Broker, в начало страницы">
     </a>
-    <a class="bar__link" href="/support/">Написать</a>
+    <nav class="bar__nav" aria-label="Разделы страницы">
+      <a class="bar__link" href="#how">Как работает</a>
+      <a class="bar__link" href="#quality">Проверка качества</a>
+      <a class="bar__link" href="#team">Команда</a>
+      <a class="l-btn l-btn--primary l-btn--s" href="/support/">Написать</a>
+    </nav>
   </header>
 
   <main id="main">
 
-    <!-- 0 · HERO: meadow, Ken Burns, settles into a rounded frame on exit -->
-    <section class="stage stage--hero" data-stage aria-labelledby="hero-title">
-      <div class="stage__sticky g-grain">
-        <div class="layer fx-hero" data-range="0 0 0 1">
-          <div class="layer__media">
-            <img src="assets/hero-meadow.webp" width="1536" height="1024" fetchpriority="high" decoding="async"
-                 alt="Васильковый луг под ярким солнцем, вдали на холме стоит маленькая фигура человека">
-            <div class="scrim scrim--bottom"></div>
-          </div>
-          <div class="copy copy--hero" data-range="0 0 0 .7">
-            <p class="g-label copy__label">Freedom Broker · поддержка</p>
-            <h1 id="hero-title" class="g-display h1" data-words>Спросите.<br>Ответим по-человечески.</h1>
-            <p class="lead">Ассистент Freedom отвечает за пару секунд. Когда вопрос касается денег или счёта, к разговору подключается живой специалист.</p>
-            <div class="actions">
-              <a class="g-btn g-btn--primary" href="/support/">Написать в поддержку</a>
-              <a class="textlink" href="#story">Как это устроено <span aria-hidden="true">↓</span></a>
+    <!-- Hero: centered text on white, the meadow rises from the bottom and breathes slowly -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__media">
+        <img class="hero__img" data-loop src="/landing-tair/assets/hero-meadow.webp" width="1536" height="1024"
+             fetchpriority="high" decoding="async"
+             alt="Луг с васильками и ромашками под ярким солнцем, вдали по холму идёт человек">
+      </div>
+      <div class="hero__inner">
+        <h1 id="hero-title" class="hero__title" data-reveal>Ответ за пару секунд. Специалист, когда речь о&nbsp;деньгах.</h1>
+        <p class="l-lead hero__lead" data-reveal style="--d:120">AIM, ассистент Freedom Broker, отвечает на русском, казахском и английском. Вопросы о выводе, счёте и личных данных он передаёт специалисту и говорит, сколько ждать.</p>
+        <div class="hero__actions" data-reveal style="--d:240">
+          <a class="l-btn l-btn--primary" href="/support/">Написать в поддержку</a>
+          <a class="l-btn l-btn--ghost" href="#demo">Смотреть демо</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo: compact 16:9 frame that fits one laptop screen together with its caption -->
+    <section class="demo" id="demo" aria-labelledby="demo-title">
+      <div class="demo__inner" data-reveal>
+        <figure class="demo__frame">
+          <!--
+            HOW TO SWAP IN THE REAL VIDEO
+            Replace the .demo__poster block and the .demo__play button with ONE of these
+            (keep the .demo__frame wrapper: it gives the 16:9 ratio and the 28px corners):
+
+              <video controls playsinline preload="metadata"
+                     poster="/landing-tair/assets/shore.webp" src="/landing-tair/assets/demo.mp4"></video>
+
+              <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+                      title="Демо Freedom CQA" loading="lazy"
+                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                      allowfullscreen></iframe>
+
+            landing.css already sizes a <video> or <iframe> inside .demo__frame to fill it.
+            initDemo() in landing.js does nothing once the button is gone.
+          -->
+          <div class="demo__poster" style="--pos: 50% 50%; --wf: 0.42">
+            <img class="demo__img" src="/landing-tair/assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async"
+                 alt="Белый деревянный стул стоит в мелкой воде у берега, закатное небо">
+            <div class="water" data-loop data-fx="fx-water-shore" style="filter: url(#water-shore)" aria-hidden="true">
+              <img src="/landing-tair/assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 1–3 · CUSTOMER STORY: bird (circle reveal) → door (doorway reveal) → horse (cross-fade + drift) -->
-    <section class="stage stage--story" id="story" data-stage aria-label="Как это работает для клиента">
-      <div class="stage__sticky g-grain">
-
-        <div class="layer fx-circle fx-shade" data-range="0 .13 .30 .40">
-          <div class="layer__media">
-            <img src="assets/bird.webp" width="1024" height="1536" loading="lazy" decoding="async"
-                 alt="Белый голубь летит в синем небе сквозь круг из листьев, вид снизу">
-            <div class="scrim scrim--right"></div>
-          </div>
-          <div class="layer__shade"></div>
-          <div class="copy copy--right" data-range=".06 .13 .24 .30">
-            <p class="g-label copy__label">01 · Ассистент</p>
-            <h2 class="g-display h2" data-words>Отвечает только то, что знает.</h2>
-            <p class="body">Он учился на том, как отвечают настоящие операторы Freedom. Если точного ответа нет, ассистент не будет угадывать и позовёт человека.</p>
-            <dl class="facts">
-              <div><dt class="g-label">Языки</dt><dd>Русский, казахский, английский</dd></div>
-              <div><dt class="g-label">Ответ</dt><dd>Примерно за 2 секунды</dd></div>
-            </dl>
-          </div>
-        </div>
-
-        <div class="layer fx-door fx-shade" data-range=".30 .44 .62 .72">
-          <div class="layer__media">
-            <img src="assets/door.webp" width="1024" height="1536" loading="lazy" decoding="async"
-                 alt="Открытая белая дверь стоит в зеркально спокойном море, за ней светлое небо">
-            <div class="scrim scrim--left"></div>
-          </div>
-          <div class="layer__shade"></div>
-          <div class="copy copy--left" data-range=".41 .48 .58 .63">
-            <p class="g-label copy__label">02 · Специалист</p>
-            <h2 class="g-display h2" data-words>Дверь к человеку открыта.</h2>
-            <p class="body">Деньги, счёт или просто надоело говорить с ботом. В этот момент разговор переходит к специалисту. Он видит всю переписку, так что повторять ничего не придётся.</p>
-          </div>
-        </div>
-
-        <div class="layer fx-fade fx-drift" data-range=".62 .72 1 1">
-          <div class="layer__media">
-            <img src="assets/horse.webp" width="1536" height="1024" loading="lazy" decoding="async"
-                 alt="Конь скачет по высокогорному плато, вдали вулкан со светлым ореолом">
-            <div class="scrim scrim--top"></div>
-          </div>
-          <div class="copy copy--top" data-range=".73 .81 2 2">
-            <p class="g-label copy__label">03 · Срок</p>
-            <h2 class="g-display h2" data-words>Вы знаете, когда вам ответят.</h2>
-            <p class="body">Раньше было «Я передам вопрос специалистам», и дальше тишина. Теперь вы видите срок. Обычно специалист отвечает меньше чем через две минуты.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 4 · FOR FREEDOM: clouds pivot → rest fades in → shrinks into a window in the dark gallery -->
-    <section class="stage stage--quality" data-stage aria-labelledby="quality-title">
-      <div class="stage__sticky g-grain">
-
-        <div class="layer fx-fade fx-fadeout" data-range="0 .12 .42 .44">
-          <div class="layer__media">
-            <img src="assets/clouds.webp" width="1536" height="1024" loading="lazy" decoding="async"
-                 alt="Мягкие облака, небо переходит от бледно-голубого к персиковому">
-          </div>
-          <div class="copy copy--center" data-range=".05 .14 .25 .31">
-            <p class="g-label copy__label copy__label--dark">Для Freedom</p>
-            <p class="g-display h2 h2--dark" data-words>Теперь о том, что видит Freedom.</p>
-          </div>
-        </div>
-
-        <div class="layer fx-fade fx-window" data-range=".30 .42 .56 .74">
-          <div class="layer__media">
-            <img src="assets/rest.webp" width="1536" height="1024" loading="lazy" decoding="async"
-                 alt="Человек лежит на цветущем горном лугу, вдали снежные вершины и облака">
-          </div>
-          <div class="copy copy--gallery" data-range=".68 .78 2 2">
-            <p class="g-label copy__label">04 · Качество</p>
-            <h2 id="quality-title" class="g-display h2" data-words>Каждый разговор проверяется.</h2>
-            <p class="body">Чаты и звонки сверяются с чек-листом Freedom из восьми пунктов. У каждой оценки есть цитата из разговора. Последнее слово остаётся за проверяющим.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 4b · evidence + checklist + numbers, plain flow in the dark gallery -->
-    <section class="gallery" aria-label="Как выглядит оценка">
-      <div class="wrap evidence">
-        <article class="slip" data-rise>
-          <p class="g-label">Пункт 06 · Ведение диалога</p>
-          <blockquote class="slip__quote">«Я передам вопрос специалистам.»</blockquote>
-          <p class="slip__note">Оператор не сказал, когда ждать ответа. Клиенту пришлось переспросить.</p>
-          <div class="slip__foot">
-            <span class="g-label">Оценка 4 / 10</span>
-            <span class="g-label slip__review"><span class="g-dot" aria-hidden="true"></span>Проверяющий может изменить</span>
-          </div>
-        </article>
-
-        <div class="evidence__text" data-rise>
-          <p class="body body--gallery">Оценка всегда показывает строку, на которой она основана. Если пункт к разговору не относится, ставится N/A. Грубые ошибки отмечаются отдельно от баллов.</p>
-          <ol class="criteria" aria-label="Восемь пунктов чек-листа Freedom">
-            <li><span class="g-label">01</span>Установление контакта</li>
-            <li><span class="g-label">02</span>Выявление потребности</li>
-            <li><span class="g-label">03</span>Идентификация</li>
-            <li><span class="g-label">04</span>Консультация</li>
-            <li><span class="g-label">05</span>Эмпатия</li>
-            <li><span class="g-label">06</span>Ведение диалога</li>
-            <li><span class="g-label">07</span>Завершение</li>
-            <li><span class="g-label">08</span>Грубые ошибки</li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="wrap numbers">
-        <header class="numbers__head" data-rise>
-          <p class="g-label">05 · Проверено</p>
-          <h2 class="g-display h2" data-words>65 настоящих разговоров.</h2>
-          <p class="body body--gallery">Диалоги на русском, казахском и английском. Оценки системы сравнили с оценками проверяющих.</p>
-        </header>
-        <dl class="stats">
-          <div class="stat" data-rise><dt class="g-label">Совпадение с проверяющими</dt><dd class="g-display">86%</dd></div>
-          <div class="stat" data-rise><dt class="g-label">Грубых ошибок найдено</dt><dd class="g-display">6 из 7</dd></div>
-          <div class="stat" data-rise><dt class="g-label">Ложных тревог</dt><dd class="g-display">0</dd></div>
-          <div class="stat" data-rise><dt class="g-label">Стоимость одной проверки</dt><dd class="g-display">$0,001</dd></div>
-        </dl>
-      </div>
-
-      <!-- 6 · DEMO VIDEO placeholder -->
-      <div class="wrap demo" id="demo">
-        <div class="demo__head" data-rise>
-          <p class="g-label">Демо · 2 мин</p>
-          <h2 class="g-display h2" data-words>Посмотрите, как это работает.</h2>
-        </div>
-        <figure class="demo__frame g-grain" data-rise>
-          <!--
-            SWAP FOR THE REAL VIDEO: replace everything inside .demo__frame with ONE of these
-            (keep the .demo__frame wrapper, it gives the 16:9 ratio and rounded corners):
-              <video controls playsinline preload="metadata" poster="assets/shore.webp" src="assets/demo.mp4"></video>
-              <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Демо Freedom CQA"
-                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
-            Then delete the .demo__play button handler in landing.js (initDemo) if you like; it is harmless without the button.
-          -->
-          <img class="demo__poster" src="assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async"
-               alt="Белый стул стоит в мелкой воде у берега в золотой час">
           <button class="demo__play" type="button" aria-describedby="demo-note">
-            <span class="demo__icon" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></svg>
             <span class="sr-only">Воспроизвести демо</span>
           </button>
-          <figcaption class="demo__caption">
-            <span class="g-label">Демо · 2 мин</span>
-            <span id="demo-note" class="demo__note" aria-live="polite">Видео скоро появится здесь.</span>
-          </figcaption>
+          <span class="demo__soon" aria-hidden="true">Скоро</span>
+        </figure>
+        <div class="demo__caption">
+          <h2 id="demo-title" class="demo__title">Демо на 2 минуты</h2>
+          <p id="demo-note" class="demo__note" aria-live="polite">Видео монтируем. В нём один разговор целиком: вопрос клиента, передача специалисту и оценка по чек-листу.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Assistant: dove centered in the left half, text in the right half -->
+    <section class="assist" id="how" aria-labelledby="assist-title">
+      <div class="assist__media">
+        <img class="assist__img" data-loop src="/landing-tair/assets/bird.webp" width="1024" height="1536" loading="lazy" decoding="async"
+             alt="Белый голубь летит в синем небе, вокруг кольцо из листвы, вид снизу">
+      </div>
+      <div class="assist__text">
+        <h2 id="assist-title" class="l-h2" data-reveal>AIM отвечает тем, что уже говорили операторы Freedom.</h2>
+        <p class="l-lead" data-reveal style="--d:100">В основе его ответов 65 настоящих разговоров поддержки, из них 60 чатов и 5 звонков. Если похожего ответа там нет, AIM передаёт вопрос человеку.</p>
+        <p class="assist__note" data-reveal style="--d:160">В первом сообщении AIM называет себя ассистентом. За человека он себя не выдаёт.</p>
+        <dl class="facts" data-reveal style="--d:220">
+          <div class="facts__item"><dt>на ответ</dt><dd>2–4 с</dd></div>
+          <div class="facts__item"><dt>языка: русский, казахский, английский</dt><dd>3</dd></div>
+          <div class="facts__item"><dt>разговоров в основе</dt><dd>65</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Handoff: the moment AIM hands the chat to a person, next to the open door -->
+    <section class="sec handoff" aria-labelledby="handoff-title">
+      <div class="wrap handoff__grid">
+        <div class="handoff__text">
+          <h2 id="handoff-title" class="l-h2" data-reveal>Дверь к человеку всегда открыта.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Вопросы о выводе денег, данных счёта и идентификации AIM передаёт специалисту. Так же он поступает, если клиент просит человека или раздражён. Специалист видит всю переписку, и клиенту не нужно повторять вопрос.</p>
+        </div>
+
+        <div class="chat l-card" data-reveal role="group" aria-label="Пример чата: AIM передаёт разговор специалисту">
+          <div class="chat__head">
+            <span class="chat__avatar"><img src="/landing-tair/assets/mark.svg" width="97" height="112" alt=""></span>
+            <span>
+              <span class="chat__title">Поддержка Freedom Broker</span>
+              <span class="chat__sub"><span class="dot" aria-hidden="true"></span>AIM и специалисты на связи</span>
+            </span>
+          </div>
+          <ol class="chat__log">
+            <li class="msg msg--client" style="--i:0">
+              <span class="sr-only">Клиент:</span>
+              <p>Вчера вывод работал, сегодня нет. Посмотрите, что с моим счётом?</p>
+              <time class="msg__time">10:41</time>
+            </li>
+            <li class="msg msg--bot" style="--i:1">
+              <span class="msg__who">AIM, ассистент</span>
+              <p>Это вопрос о вашем счёте, его решает специалист. Передаю ему разговор: он увидит всю переписку, обычно отвечает в течение 2 минут.</p>
+              <time class="msg__time">10:41</time>
+            </li>
+            <li class="msg msg--sys" style="--i:2">
+              <span class="msg__pill"><span class="dot" aria-hidden="true"></span>Разговор передан специалисту</span>
+            </li>
+            <li class="msg msg--human" style="--i:3">
+              <span class="msg__who">Алина, специалист</span>
+              <p>Здравствуйте, я Алина. Сначала подтвердим вашу личность, потом проверю, почему ограничен вывод.</p>
+              <time class="msg__time">10:42</time>
+            </li>
+          </ol>
+        </div>
+
+        <figure class="door">
+          <div class="door__media" style="--pos: 50% 50%; --wf: 0.44">
+            <img class="door__img" src="/landing-tair/assets/door.webp" width="1024" height="1536" loading="lazy" decoding="async"
+                 alt="Открытая белая дверь стоит в спокойном море, сквозь проём виден свет">
+            <div class="water" data-loop data-fx="fx-water-door" style="filter: url(#water-door)" aria-hidden="true">
+              <img src="/landing-tair/assets/door.webp" width="1024" height="1536" loading="lazy" decoding="async" alt="">
+            </div>
+          </div>
+          <figcaption class="door__pill" data-reveal style="--d:1500"><span class="dot" aria-hidden="true"></span>Специалист подключился</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- 7 · FINAL: blue hour, light opens from the lamp -->
-    <section class="stage stage--final" data-stage aria-labelledby="final-title">
-      <div class="stage__sticky g-grain">
-        <div class="layer fx-lamp" data-range="0 .55 2 2">
-          <div class="layer__media">
-            <img src="assets/bluehour.webp" width="1536" height="1024" loading="lazy" decoding="async"
-                 alt="Поле в синий час, посреди горит один тёплый фонарь">
-            <div class="scrim scrim--final"></div>
-          </div>
-          <div class="copy copy--final" data-range=".45 .62 2 2">
-            <h2 id="final-title" class="g-display h2 h2--final" data-words>Напишите, когда будет удобно.</h2>
-            <p class="lead">Ассистент ответит сразу. Если понадобится человек, он тоже придёт.</p>
-            <div class="actions actions--center">
-              <a class="g-btn g-btn--primary" href="/support/">Написать в поддержку</a>
-            </div>
-          </div>
+    <!-- Pace: wide horse panorama + a horizontal conversation timeline with three states -->
+    <section class="sec pace" aria-labelledby="pace-title">
+      <div class="wrap pace__head">
+        <h2 id="pace-title" class="l-h2" data-reveal>Клиент знает, когда ему ответят.</h2>
+        <p class="l-lead" data-reveal style="--d:100">В одном из чатов набора клиент спросил, почему ограничен вывод. Оператор написал «Передам вопрос на проверку. До свидания.» и закрыл чат. Когда ждать ответа, клиент так и не узнал.</p>
+      </div>
+      <div class="pace__band" data-par-scope data-reveal>
+        <div class="pace__par" data-par style="--par: 28px">
+          <img class="pace__img" data-loop src="/landing-tair/assets/horse.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="Конь скачет по золотистому плато, вдали заснеженный вулкан со светлым ореолом">
         </div>
+      </div>
+      <div class="wrap">
+        <ol class="timeline" data-reveal aria-label="Как идёт разговор">
+          <li class="step" style="--i:0">
+            <span class="step__when">00:00</span>
+            <h3 class="step__title">Вопрос</h3>
+            <p>Клиент пишет в чат или звонит.</p>
+          </li>
+          <li class="step" style="--i:1">
+            <span class="step__when">через 2–4 с</span>
+            <h3 class="step__title">Ответ AIM</h3>
+            <p>Если операторы Freedom уже отвечали на такой вопрос, AIM отвечает сам.</p>
+          </li>
+          <li class="step" style="--i:2">
+            <span class="step__when">обычно до 2 мин</span>
+            <h3 class="step__title">Специалист</h3>
+            <p>Клиент видит срок. Специалист читает переписку и продолжает с того же места.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Clouds: the turn from the client's side to Freedom's side. No sticky stage:
+         the strip drifts with a CSS loop, the band moves with a scroll-linked transform. -->
+    <section class="sky" data-par-scope aria-labelledby="sky-title">
+      <div class="sky__band" data-par style="--par: 44px" aria-hidden="true">
+        <div class="sky__strip" data-loop>
+          <span class="sky__tile"></span><span class="sky__tile"></span><span class="sky__tile"></span>
+          <span class="sky__tile"></span><span class="sky__tile"></span><span class="sky__tile"></span>
+        </div>
+      </div>
+      <h2 id="sky-title" class="sky__title l-h2" data-reveal>Это видит клиент. Дальше то, что видит команда качества Freedom.</h2>
+    </section>
+
+    <!-- Quality: text left, rounded square photo right (the person is fully inside the frame) -->
+    <section class="sec quality" id="quality" aria-labelledby="quality-title">
+      <div class="wrap quality__grid">
+        <div class="quality__text">
+          <h2 id="quality-title" class="l-h2" data-reveal>Каждый чат и звонок проверяется по чек-листу Freedom.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Те же 8 пунктов, по которым оценивают проверяющие Freedom. У каждой оценки есть ссылка на строку чата или на момент в записи звонка.</p>
+          <ul class="ticks" data-reveal style="--d:180">
+            <li>Если пункт к разговору не относится, ставится N/A с объяснением, а его вес делится между остальными пунктами.</li>
+            <li>Оскорбление клиента, платная услуга в обход компании и раскрытие конфиденциальных данных отмечаются красным флагом отдельно от баллов.</li>
+            <li>Проверяющий может оспорить любую оценку. Итог пересчитывается сразу, исходная оценка остаётся в карточке.</li>
+            <li>После чата клиент оценивает разговор. Администратор видит, где проседает качество, и может спросить ИИ-аналитика, что поменять.</li>
+          </ul>
+        </div>
+        <figure class="quality__photo" data-reveal>
+          <img class="quality__img" data-loop src="/landing-tair/assets/rest.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="Человек лежит, раскинув руки, на цветущем горном склоне, за ним снежные вершины и облака">
+        </figure>
+      </div>
+    </section>
+
+    <!-- Checklist: 8 criteria as a 4×2 grid of tiles, weights from data/checklists/freedom-chat-v1.json -->
+    <section class="sec checklist" aria-labelledby="checklist-title">
+      <div class="wrap">
+        <div class="checklist__head">
+          <h2 id="checklist-title" class="l-h2" data-reveal>8 пунктов, 100 баллов.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Модель выбирает ответ по каждому пункту и цитату из разговора. Баллы считает обычный код по формуле чек-листа. Пункты можно поменять в интерфейсе, без правок в коде.</p>
+        </div>
+        <ul class="crits" aria-label="Пункты чек-листа Freedom">
+          <li class="crit" data-reveal style="--d:0">
+            <div class="crit__top"><h3 class="crit__name">Установление контакта</h3><span class="crit__w"><b>10</b> баллов</span></div>
+            <p>Оператор поздоровался на языке клиента и представился в первом ответе.</p>
+          </li>
+          <li class="crit" data-reveal style="--d:60">
+            <div class="crit__top"><h3 class="crit__name">Выявление потребности</h3><span class="crit__w"><b>15</b> баллов</span></div>
+            <p>Учёл то, что клиент уже написал, и уточнил недостающее до ответа.</p>
+            <div class="crit__tags"><span class="l-chip l-chip--info">N/A, если данных хватало сразу</span></div>
+          </li>
+          <li class="crit" data-reveal style="--d:120">
+            <div class="crit__top"><h3 class="crit__name">Идентификация</h3><span class="crit__w"><b>20</b> баллов</span></div>
+            <p>Подтвердил личность до того, как раскрыть данные счёта или выполнить защищённое действие.</p>
+            <div class="crit__tags"><span class="l-chip l-chip--info">N/A для общих вопросов</span></div>
+          </li>
+          <li class="crit" data-reveal style="--d:180">
+            <div class="crit__top"><h3 class="crit__name">Корректная и полная консультация</h3><span class="crit__w"><b>20</b> баллов</span></div>
+            <p>Решил запрос полностью или дал верный следующий шаг.</p>
+            <div class="crit__tags"><span class="l-chip">Шкала 0–20</span><span class="l-chip l-chip--info">N/A возможен</span></div>
+          </li>
+          <li class="crit" data-reveal style="--d:0">
+            <div class="crit__top"><h3 class="crit__name">Эмпатия и клиенто&shy;ориентированность</h3><span class="crit__w"><b>15</b> баллов</span></div>
+            <p>Был вежлив и, если клиент недоволен, ответил на его конкретную проблему.</p>
+          </li>
+          <li class="crit" data-reveal style="--d:60">
+            <div class="crit__top"><h3 class="crit__name">Управление диалогом</h3><span class="crit__w"><b>15</b> баллов</span></div>
+            <p>Ответы ясные и по порядку. Если клиенту нужно подождать, оператор предупредил.</p>
+            <div class="crit__tags"><span class="l-chip">Шкала 0–10</span></div>
+          </li>
+          <li class="crit" data-reveal style="--d:120">
+            <div class="crit__top"><h3 class="crit__name">Завершение</h3><span class="crit__w"><b>5</b> баллов</span></div>
+            <p>Подвёл итог или предложил помощь и попрощался.</p>
+            <div class="crit__tags"><span class="l-chip l-chip--info">N/A, если чат оборвался</span></div>
+          </li>
+          <li class="crit crit--flag" data-reveal style="--d:180">
+            <div class="crit__top"><h3 class="crit__name">Грубые ошибки</h3><span class="crit__w crit__w--flag">флаг</span></div>
+            <p>Оскорбление, платная услуга в обход компании или раскрытие конфиденциальных данных. Достаточно одного предложения.</p>
+            <div class="crit__tags"><span class="l-chip l-chip--bad">Без баллов, отдельно от итога</span></div>
+          </li>
+        </ul>
+        <p class="checklist__formula" data-reveal>Итог = сумма баллов ÷ сумма весов применимых пунктов × 100, округление до двух знаков. Пункты с N/A в расчёт не входят.</p>
+      </div>
+    </section>
+
+    <!-- Case: one real chat from the dataset (p1-ru-009) with the exact quotes and scores -->
+    <section class="sec case" aria-labelledby="case-title">
+      <div class="wrap">
+        <div class="case__head">
+          <h2 id="case-title" class="l-h2" data-reveal>Разбор настоящего чата: 21 из 100.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Клиент не может вывести деньги и просит проверить счёт. Слева последние реплики, справа решения системы. Нажмите на пункт, чтобы увидеть строку, на которую он ссылается.</p>
+        </div>
+
+        <article class="case__card" data-reveal aria-label="Оценка чата p1-ru-009">
+          <div class="case__log">
+            <p class="case__meta"><span class="l-mono">p1-ru-009</span><span>чат, русский</span></p>
+            <ol class="lines">
+              <li class="line" id="ln-0251">
+                <time class="line__t">02:51</time>
+                <div><span class="line__who">Оператор</span><p>«Я посмотрел: на вашем счёте есть ограничение на вывод.»</p></div>
+              </li>
+              <li class="line" id="ln-0306">
+                <time class="line__t">03:06</time>
+                <div><span class="line__who">Клиент</span><p>«Подождите, я ещё не подтверждал, что это мой счёт.»</p></div>
+              </li>
+              <li class="line" id="ln-0419">
+                <time class="line__t">04:19</time>
+                <div><span class="line__who">Клиент</span><p>«Я спрашиваю, почему вывод ограничен.»</p></div>
+              </li>
+              <li class="line" id="ln-0435">
+                <time class="line__t">04:35</time>
+                <div><span class="line__who">Оператор</span><p>«Передам вопрос на проверку. До свидания.»</p></div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="case__verdicts">
+            <button class="verdict" type="button" data-ref="ln-0419 ln-0435" aria-pressed="true">
+              <span class="verdict__top"><span class="verdict__name">Корректная и полная консультация</span><span class="verdict__score">5 из 20</span></span>
+              <span class="verdict__why">Причину ограничения оператор не назвал и не объяснил, что будет дальше.</span>
+              <span class="verdict__ref">Строки 04:19 и 04:35</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0251 ln-0306" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Идентификация</span><span class="verdict__score">0 из 20</span></span>
+              <span class="verdict__why">Статус счёта сообщён до подтверждения личности.</span>
+              <span class="verdict__ref">Строки 02:51 и 03:06</span>
+            </button>
+            <button class="verdict verdict--flag" type="button" data-ref="ln-0251" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Грубая ошибка</span><span class="verdict__score">флаг</span></span>
+              <span class="verdict__why">Данные счёта раскрыты клиенту до идентификации.</span>
+              <span class="verdict__ref">Строка 02:51</span>
+            </button>
+            <div class="case__total">
+              <span>Итог по 7 пунктам</span>
+              <span class="case__num"><b>21</b> из 100</span>
+            </div>
+            <p class="case__appeal">Проверяющий может оспорить любой пункт. Итог пересчитается, а исходная оценка останется в карточке.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Numbers: one big-number strip, measured on reviewed reference dialogs -->
+    <section class="sec numbers" aria-labelledby="numbers-title">
+      <div class="wrap">
+        <h2 id="numbers-title" class="numbers__title" data-reveal>Сверили с проверяющими на 19 размеченных разговорах.</h2>
+        <dl class="stats">
+          <div class="stat" data-reveal style="--d:0"><dt>ответов по пунктам совпали с проверяющими</dt><dd>91%</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>баллов из 100: средняя разница в итоговой оценке</dt><dd>≈6</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>стоимость одной проверки</dt><dd>$0,001</dd></div>
+        </dl>
+        <p class="numbers__note" data-reveal>Эталон: 19 разговоров, которые вручную оценили проверяющие. Версия промпта <span class="l-mono">eval-v4</span>.</p>
+      </div>
+    </section>
+
+    <!-- Final call to action over the blue-hour field; the lamp glows on a slow loop -->
+    <section class="cta" data-par-scope aria-labelledby="cta-title">
+      <div class="cta__frame">
+        <div class="cta__media" data-par style="--par: 26px" aria-hidden="true">
+          <img class="cta__img" src="/landing-tair/assets/bluehour.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+          <span class="cta__glow" data-loop></span>
+          <span class="cta__glow cta__glow--ground" data-loop></span>
+        </div>
+        <div class="cta__inner">
+          <img class="cta__logo" src="/shared/brand/freedom-broker-logo-white.svg" width="498" height="112" alt="Freedom Broker">
+          <h2 id="cta-title" class="cta__title" data-reveal>Спросите про тариф, вывод или комиссию.</h2>
+          <p class="cta__lead" data-reveal style="--d:100">AIM ответит за пару секунд. Если нужен специалист, вы увидите, когда он подключится.</p>
+          <div class="cta__actions" data-reveal style="--d:200"><a class="l-btn cta__btn" href="/support/">Написать в поддержку</a></div>
+        </div>
+        <span class="sr-only">Фон: поле в синий час, посреди горит один тёплый фонарь.</span>
       </div>
     </section>
   </main>
 
-  <footer class="foot">
-    <p class="g-label">Прототип для Freedom Broker · NU Datathon 2026</p>
-    <p class="foot__small">Все изображения оригинальные и созданы для этого проекта.</p>
+  <footer class="foot" id="team">
+    <div class="wrap">
+      <div class="foot__grid">
+        <div class="foot__brand">
+          <img class="foot__logo" src="/shared/brand/freedom-broker-logo.svg" width="498" height="112" alt="Freedom Broker">
+          <p>Freedom CQA: поддержка с ассистентом AIM и проверка качества каждого чата и звонка.</p>
+          <a class="l-btn l-btn--ghost l-btn--s" href="/support/">Написать в поддержку</a>
+        </div>
+        <div class="foot__col">
+          <h2 class="foot__h">Команда <span class="foot__team">YaTebyaMognu</span></h2>
+          <ul class="foot__list">
+            <li>Tair Kaldybayev</li>
+            <li>Dameli Kalikhanova</li>
+            <li>Nazar Akanov</li>
+            <li>Amina Aktayeva</li>
+          </ul>
+        </div>
+        <div class="foot__col">
+          <h2 class="foot__h">Ссылки</h2>
+          <ul class="foot__list">
+            <li><a href="https://fbroker.kz" target="_blank" rel="noopener">Freedom Broker</a></li>
+            <li><a href="https://freedomholdingcorp.com" target="_blank" rel="noopener">Freedom Holding</a></li>
+            <li><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu" target="_blank" rel="noopener">Код на GitHub</a></li>
+            <li><a href="https://www.instagram.com/nu_datasci/" target="_blank" rel="noopener">Организаторы дататона</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot__base">
+        <p>Прототип для Freedom Broker · <a href="https://www.instagram.com/nu_datasci/" target="_blank" rel="noopener">NU Datathon 2026</a></p>
+        <p>Все изображения оригинальные и созданы для этого проекта.</p>
+      </div>
+    </div>
   </footer>
-
 </body>
 </html>

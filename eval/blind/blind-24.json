@@ -1,0 +1,2026 @@
+{
+ "_about": "Blind labels for 24 non-gold DEV chats by two independent labelers who read only docs/case/checklist.md and the organizer rulings (no playbook, no model output). consensus = both agree; disputed = they differ (both answers listed). Used as an out-of-sample check: python3 eval/blind/compare.py. Not expert ground truth.",
+ "labelers": {
+  "A": {
+   "p1-ru-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте! Меня зовут Алина' — greeting in RU + name in first reply."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client already said she is on a laptop [4]; operator used it (web path) [9], nothing missing to clarify.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] only points to the 'Кабинет' tab)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] correct web path to the tariff; client confirms 'Нашла' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; addressed the stated inconvenience (no report download) with a web route [4]->[9]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Single clear answer [9], no confusion."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Пожалуйста. Хорошего вечера!' — goodbye only, no summary/offer of help (exact organizer ruling)."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-004": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Артём'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Request (top-up by bank-branch transfer) was clear from [0]/[4]; operator restated it and answered in [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9],[11] give the menu path)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path [9] plus currency answer [11]; client 'Нашёл, теперь понятно' [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite throughout [9]-[13]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear, ordered replies [9],[11]."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Отлично. Хорошего дня!' — no summary or offer of further help."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-005": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Добрый день, меня зовут Нина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client gave the transfer method in [4]; no missing data needed for the answer.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action (commission question + requisites path)."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Requisites path resolved [13], bank commission pointed to bank [9],[15], but whether the broker charges anything was never stated.",
+     "alt": "10"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, apologised 'Извините' [13]."
+    },
+    "c06": {
+     "a": "4",
+     "why": "[11] 'Там же где перевод, не в отчете, сверху вниз в меню' is unclear; client had to re-ask 'В каком меню?' [12]."
+    },
+    "c07": {
+     "a": "yes",
+     "why": "[15] recap/next step 'Перед переводом проверьте комиссию в банке' + 'До свидания!'.",
+     "alt": "no"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-007": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Здравствуйте, я Дамир'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said what is blocked and that he is on the phone [0],[4],[9]; enough to answer.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([10] only gives the menu path)."
+    },
+    "c04": {
+     "a": "10",
+     "why": "Path given [10], but the second question (when to retry the withdrawal) asked in [4] and again [11] was left unanswered [12].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "no",
+     "why": "Client is blocked from withdrawing; operator brushed off his follow-up 'Путь к обновлению я указал' [12] instead of addressing it.",
+     "alt": "yes"
+    },
+    "c06": {
+     "a": "10",
+     "why": "Replies are clear; the gap is in content (checklist: clear answer to one of two questions = high C6, partial C4).",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[12] dismissive 'Путь к обновлению я указал. Хорошего дня!' — no real summary or offer of help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-011": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте! Я Лиза'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Bot already clarified report type [3]; client specified broker report for last year [4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] path to download the report in-app)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path [9] + period answer [11]; 'Скачалось' [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear and ordered."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Пожалуйста. Хорошего дня!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-014": {
+    "c01": {
+     "a": "no",
+     "why": "[9] 'Привет, где именно ищете?' — informal greeting, operator did not introduce himself."
+    },
+    "c02": {
+     "a": "no",
+     "why": "Operator re-asked where the client looks [9] although it was already stated in [0]/[4]; client: 'Я уже писал' [10].",
+     "alt": "na"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([11] general info about website vs tradernet)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[11] correct explanation and login route; 'Зашёл' [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Not rude and answered the concrete problem [11], though 'Привет' and no apology after 'Я уже писал'.",
+     "alt": "no"
+    },
+    "c06": {
+     "a": "7",
+     "why": "Redundant question [9] forced the client to repeat himself [10]; otherwise understandable.",
+     "alt": "4"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Хорошего дня.' — no summary or offer of help."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-017": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Здравствуйте! Я Олег'."
+    },
+    "c02": {
+     "a": "yes",
+     "why": "Client only said he would find the ticker [9]; operator clarified whether he knows the exact ticker [10] before advising [12].",
+     "alt": "na"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([12] search/order navigation)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[12] search by ticker, verify before order; 'Нашёл одну нужную' [13]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear and logical."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[14] 'Рад помочь. Хорошего дня!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-020": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Егор'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said the order is not sent yet [4]; operator used it [9]; nothing to clarify.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9],[11] general order-settings info)."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Main question solved [9]; follow-up on the existing position only got 'нужно рассматривать отдельно' [11] without a next step.",
+     "alt": "20"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Replies clear and ordered.",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Пожалуйста. Хорошего дня!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-024": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Света'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question (money shown on D-account) was clear [4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action (no account data disclosed in [9],[11])."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Said D-account funds are not used for trading [9]/[11] but gave no next step for moving the money to the trading account.",
+     "alt": "20"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Short but clear; client follows [10]-[12].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Хорошего дня!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-ru-028": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Ирина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Request clear from [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([11],[13] menu path)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct path [11] and disambiguation [13]; 'Поняла' [14]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, addressed fear of picking the wrong order [4] in [13]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Warned about the wait [9] and thanked for waiting [11]."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[15] 'Пожалуйста. До свидания!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, менің атым Аружан' — KZ greeting + name."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said he is on a computer [4]; operator used it [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] points to the 'Кабинет' tab)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] correct; 'Көрдім' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Оқасы жоқ. Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-002": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе! Мен Нұрланмын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Request (bank transfer requisites) clear from [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9],[11] menu path)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path [9] + currency answer [11]; 'Таптым' [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Жақсы. Күніңіз сәтті өтсін!' — no summary or offer of help."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-005": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Мадина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Request clear from [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([11] menu path)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "First pointer was wrong [9] but corrected to the exact path [11]; client found it [12].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite enough; corrected after client's objection [10]-[11]."
+    },
+    "c06": {
+     "a": "4",
+     "why": "Vague/wrong first instruction [9] made the client push back 'Профильде ондай бөлім жоқ қой' [10].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Жақсы.' — no goodbye, no summary."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-006": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Әсел'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Period (last year) given in [0]; question about dates in [4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] path to download the report)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] path + dates; 'Дайын болды' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Көмегім тигеніне қуаныштымын. Сау болыңыз!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-009": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Сәлеметсіз бе! Мен Айсұлумын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client already had the ticker [4],[9]; operator used it [10].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([10]-[17] search/order navigation)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "All follow-ups answered [10],[12],[15],[17]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, respected wish not to send the order yet [17]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear and ordered."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[19] 'Оқасы жоқ. Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-010": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Алма'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question clear [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] order settings)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] exact steps; 'Өшірдім' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-kz-014": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Ләззатпын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question clear [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] general form info)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] confirms the form is issued in English (i.e. not in Kazakh); client satisfied [10].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Understood by client [10]; leading 'Иә' to a 'in Kazakh?' question is slightly ambiguous.",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Maya from support'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Bot already established the old closed account [3]-[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] general login policy)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] explains why and what to do."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'You're welcome. Take care!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-003": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Eva'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said website + no report download [0],[4]; operator used it.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] points to account area)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] correct; 'Found it' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; addressed the 'don't want to download a report' inconvenience."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Great. Thanks for reaching out, and goodbye!' — no summary or offer of help."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-004": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Alex'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Request (last-year statement) clear from [0].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9],[11] navigation)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9],[11]; 'That worked' [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'You're welcome. Have a good day!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-007": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Chris'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client stated the block and the two questions [0],[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] menu path)."
+    },
+    "c04": {
+     "a": "10",
+     "why": "Path given [9]; the 'when can I retry the withdrawal' question asked in [4] and [10] was never answered [11].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "no",
+     "why": "Client is blocked from withdrawing; operator ignored his follow-up and closed 'That's where the profile request is ... Bye.' [11].",
+     "alt": "yes"
+    },
+    "c06": {
+     "a": "10",
+     "why": "Replies are clear; the gap is in content (clear answer to one of two questions).",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Thanks for contacting us. Bye.' — no summary or offer of help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-008": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Hi, I'm Sofia'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client had the ticker and app open [4],[9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([10]-[17] navigation/order settings)."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Ticker search, order steps and margin answered [10],[12],[15]; existing-position question got a non-answer [17].",
+     "alt": "20"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "7",
+     "why": "[17] 'It doesn't answer what's happening with an existing position' is muddled; rest clear.",
+     "alt": "10"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[19] 'Of course. Have a good day!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-011": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Julia'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question clear [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] general form info)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] direct answer; 'That's all I needed' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Happy to help. Goodbye!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   },
+   "p1-en-012": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hello, I'm Daniel'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question clear [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation/how-to request; operator disclosed no account data and did no protected action ([9] public website navigation)."
+    },
+    "c04": {
+     "a": "20",
+     "why": "[9] exact path; 'That's the page I was after' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; resolved the 'keep getting sent to account reports' frustration."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'You're welcome. Have a good day!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, no off-company paid offer, no confidential data disclosed."
+    }
+   }
+  },
+  "B": {
+   "p1-ru-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте! Меня зовут Алина' in RU in the first reply."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client already said laptop + no report [4]; operator used it ('веб-версии') [9], nothing missing.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Only navigation to where the tariff is shown [9]; no account data disclosed, no protected action."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct web path [9]; client found it [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; reacted to the 'no report, on laptop' inconvenience [4] with a web-version path [9]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Single clear reply [9], no confusion."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Пожалуйста. Хорошего вечера!' is a goodbye without summary or offer of further help (literal ruling).",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "No insult, side offer or confidential disclosure."
+    }
+   },
+   "p1-ru-004": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Артём' in RU."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Need (bank-transfer requisites) was clear from [0]/[4]; operator restated it ('верно?') and answered in the same message [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "General instruction on top-up path [9],[11]; no account data."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path [9] + currency choice and how to use at the bank [11]; client understood [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite throughout [9],[11],[13]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear, ordered answers; follow-up on EUR [10] was a new detail, not a re-ask."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Отлично. Хорошего дня!' has goodbye but no summary or offer of help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-005": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Добрый день, меня зовут Нина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Method (branch transfer) was given before handoff [4]; operator answered without needing more input [9].",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Commission/requisites are general info; nothing account-specific [9],[13]."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Requisites path correct [13] and bank-fee next step given [9],[15], but 'bank or broker' — broker side never stated.",
+     "alt": "10"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, apologized after the confusing reply [13] 'Извините, уточню'."
+    },
+    "c06": {
+     "a": "4",
+     "why": "[11] 'Там же где перевод, не в отчете, сверху вниз в меню' was unclear, client had to re-ask [12].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "yes",
+     "why": "[15] key takeaway 'проверьте комиссию в банке' + 'До свидания!'.",
+     "alt": "no"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-007": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Здравствуйте, я Дамир'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Both questions (where + when to retry) and device [9] were stated before the operator joined [4]; nothing to clarify.",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Operator only gave the menu path [10]; no data change or account data handled by operator."
+    },
+    "c04": {
+     "a": "10",
+     "why": "Path given [10], but 'when can I retry withdrawal' asked at [4] and [11] left unanswered [12]."
+    },
+    "c05": {
+     "a": "no",
+     "why": "Client blocked from withdrawing [0]; operator brushed off the follow-up with 'Путь к обновлению я указал' [12] and never addressed the withdrawal concern.",
+     "alt": "yes"
+    },
+    "c06": {
+     "a": "4",
+     "why": "Operator skipped the retry question in [10], client had to re-ask [11], and still got no answer [12].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "yes",
+     "why": "[12] states what was done ('Путь к обновлению я указал') + 'Хорошего дня!' — literally a recap + goodbye.",
+     "alt": "no"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-011": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте! Я Лиза'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Bot already clarified report type; client gave period and device [4]; operator used them [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Path to self-service report [9]; nothing disclosed by operator."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct path and period [9],[11]; client downloaded it [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, no complaint to address."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear; client's date question [10] was a natural follow-up answered directly [11].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Пожалуйста. Хорошего дня!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-014": {
+    "c01": {
+     "a": "no",
+     "why": "[9] 'Привет, где именно ищете?' — informal greeting and no self-introduction."
+    },
+    "c02": {
+     "a": "no",
+     "why": "Operator asked where the client was looking [9] although it was already stated at [0] and [4]; client: 'Я уже писал' [10]."
+    },
+    "c03": {
+     "a": "na",
+     "why": "General login-location info [11]."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct next step: tradernet.global or the app [11]; client logged in [12]."
+    },
+    "c05": {
+     "a": "no",
+     "why": "Client was confused [4] and irritated at repeating [10]; operator only 'Понял.' [11], no apology, informal 'Привет'.",
+     "alt": "yes"
+    },
+    "c06": {
+     "a": "7",
+     "why": "One notable glitch: redundant question forced the client to repeat [9]-[10]; then clear answer [11].",
+     "alt": "4"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Хорошего дня.' — no summary or offer of help."
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-017": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Здравствуйте! Я Олег'."
+    },
+    "c02": {
+     "a": "yes",
+     "why": "Client had only said he'd look for the ticker [9]; operator clarified whether he has the exact ticker [10] before answering [12].",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Search/navigation help only."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Search by exact ticker, open and check before filling the order [12]; client found it [13].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, 'Рад помочь' [14]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear clarification then clear instruction [10],[12]."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[14] 'Рад помочь. Хорошего дня!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-020": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Егор'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said the order wasn't sent [4]; operator used it ('Пока приказ не отправлен') [9], nothing missing.",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "No account/position data looked up or disclosed [11]."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Margin untick solved [9]; existing-position question only deflected ('рассматривать отдельно') with no next step [11].",
+     "alt": "20"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite throughout."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear, ordered replies [9],[11].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Пожалуйста. Хорошего дня!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-024": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Света'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question at [4] was explicit; operator answered directly [9].",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Operator did not look up or disclose balances [9],[11]."
+    },
+    "c04": {
+     "a": "10",
+     "why": "Says D-account funds can't be used directly [9],[11] but never gives the next step (moving money to the trading account) though the client's money is on D [4].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Short, clear replies; client confirmed understanding [12].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Хорошего дня!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-ru-028": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Здравствуйте, я Ирина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Need (where to change personal data) clear from [0]/[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation only; operator made no data change."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Exact path [11] and disambiguation from bank details [13]; client confirmed [14]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Addressed the client's worry about picking the wrong order [4],[12] with a precise answer [13]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Warned about the wait [9] and thanked for waiting [11]; clear replies."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[15] 'Пожалуйста. До свидания!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, менің атым Аружан' in KZ."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said he's on a computer [4]; operator used it (web version) [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Only where the tariff is shown [9]."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct path [9]; client saw it [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; adapted to the computer context [9]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear single answer."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Оқасы жоқ. Сау болыңыз!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-002": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе! Мен Нұрланмын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Need (requisites in the app) clear from [0]/[4]; currency came up later and was handled [10]-[11].",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "General top-up path."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path [9], currency choice and use at the bank [11]; client found it [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear replies."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Жақсы. Күніңіз сәтті өтсін!' — no summary or offer of help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-005": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Мадина'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Need (which menu) was clear at [4].",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation only."
+    },
+    "c04": {
+     "a": "20",
+     "why": "First hint was wrong ('Профиль') [9] but corrected to the exact path [11]; client found it [12].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite tone; responded to 'no such section' [10] with the correct path [11].",
+     "alt": "no"
+    },
+    "c06": {
+     "a": "4",
+     "why": "Vague/incorrect first instruction [9] forced the client to come back [10].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'Жақсы.' — no goodbye, no summary."
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-006": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Әсел'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Period (last year) and question (dates) known [0],[4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Self-service report path."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Report item + date range [9]; client done [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Көмегім тигеніне қуаныштымын. Сау болыңыз!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-009": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Сәлеметсіз бе! Мен Айсұлумын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client already had the ticker [4],[9]; operator built on it [10].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation only."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Ticker search [10], next buy step [12], pick exact ticker match [15], review before sending [17]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; respected the client's wish to review first [17]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear, consistent replies to each new question.",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[19] 'Оқасы жоқ. Сау болыңыз!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-010": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Алма'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question explicit [0],[4]."
+    },
+    "c03": {
+     "a": "na",
+     "why": "Order-setting navigation only."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Exact steps [9]; client turned it off [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-kz-014": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Сәлеметсіз бе, мен Ләззатпын'."
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question explicit [0],[4]."
+    },
+    "c03": {
+     "a": "na",
+     "why": "General document info."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Confirms the form is issued in English [9] (i.e. no Kazakh version); client satisfied [10].",
+     "alt": "15"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Short answer; leading 'Иә' to a 'can I get it in Kazakh' question is slightly ambiguous but understood [10].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Сау болыңыз!' — goodbye only."
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-001": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Maya from support.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Bot already established the old closed account [3]-[4]; operator used it [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "General login rule [9]; no account data."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Explains why and the next step (different login) [9]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'You're welcome. Take care!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-003": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Eva.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client said website + no report [0],[4]; operator used it [9].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Only where the plan is shown [9]."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Correct path [9]; client found it [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; avoided the report the client didn't want [4],[9]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear, even explains the Russian label [9]."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Great. Thanks for reaching out, and goodbye!' — thanks + goodbye, no summary or offer of help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-004": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Alex.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Need (last year's statement) explicit [0].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Self-service report path."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Path + dates [9], download [11]; worked [12]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[13] 'You're welcome. Have a good day!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-007": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Chris.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Both questions were stated before handoff [4]; nothing to clarify.",
+     "alt": "no"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Navigation only; no data change by operator."
+    },
+    "c04": {
+     "a": "10",
+     "why": "Path given [9]; 'when can I retry/submit withdrawal' asked at [4] and [10] never answered [11]."
+    },
+    "c05": {
+     "a": "no",
+     "why": "Withdrawal blocked [0]; follow-up dismissed with 'That's where the profile request is' [11].",
+     "alt": "yes"
+    },
+    "c06": {
+     "a": "4",
+     "why": "Retry question skipped in [9], client re-asked [10], still unanswered [11].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "yes",
+     "why": "[11] recap of what was given + 'Thanks for contacting us. Bye.'",
+     "alt": "no"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-008": {
+    "c01": {
+     "a": "yes",
+     "why": "[10] 'Hi, I'm Sofia.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Client had the ticker and app open [4],[9]; operator used it [10].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "No position data looked up or disclosed [17]."
+    },
+    "c04": {
+     "a": "15",
+     "why": "Ticker search [10], buy flow [12], margin untick [15] solved; existing-position question left open [17].",
+     "alt": "10"
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite, accepted the client's choice to wait [19]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear steps; [17] 'It doesn't answer what's happening with an existing position' is awkward but client continued [18].",
+     "alt": "7"
+    },
+    "c07": {
+     "a": "no",
+     "why": "[19] 'Of course. Have a good day!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-011": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hi, I'm Julia.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Question explicit [0],[4]."
+    },
+    "c03": {
+     "a": "na",
+     "why": "General document info."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Direct confirmation [9]; client: 'That's all I needed' [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'Happy to help. Goodbye!' — no summary or offer of further help.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   },
+   "p1-en-012": {
+    "c01": {
+     "a": "yes",
+     "why": "[9] 'Hello, I'm Daniel.'"
+    },
+    "c02": {
+     "a": "na",
+     "why": "Bot already identified Freedom Holding Corp. [3]; client only needed the menu [4].",
+     "alt": "yes"
+    },
+    "c03": {
+     "a": "na",
+     "why": "Public information."
+    },
+    "c04": {
+     "a": "20",
+     "why": "Exact menu path [9]; client confirmed [10]."
+    },
+    "c05": {
+     "a": "yes",
+     "why": "Polite; resolved the 'keep getting sent to account reports' inconvenience [0]."
+    },
+    "c06": {
+     "a": "10",
+     "why": "Clear."
+    },
+    "c07": {
+     "a": "no",
+     "why": "[11] 'You're welcome. Have a good day!' — goodbye only.",
+     "alt": "yes"
+    },
+    "c08": {
+     "a": "no",
+     "why": "None detected."
+    }
+   }
+  }
+ },
+ "consensus": {
+  "p1-en-001": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-en-003": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-en-004": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-en-007": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 10,
+   "c05": "no",
+   "c08": "no"
+  },
+  "p1-en-008": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 15,
+   "c05": "yes",
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-en-011": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-en-012": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-001": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-002": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-005": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 4,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-006": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-009": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-010": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-kz-014": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-001": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-004": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-005": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 15,
+   "c05": "yes",
+   "c06": 4,
+   "c07": "yes",
+   "c08": "no"
+  },
+  "p1-ru-007": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 10,
+   "c05": "no",
+   "c08": "no"
+  },
+  "p1-ru-011": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-014": {
+   "c01": "no",
+   "c02": "no",
+   "c03": "na",
+   "c04": 20,
+   "c06": 7,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-017": {
+   "c01": "yes",
+   "c02": "yes",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-020": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 15,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-024": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  },
+  "p1-ru-028": {
+   "c01": "yes",
+   "c02": "na",
+   "c03": "na",
+   "c04": 20,
+   "c05": "yes",
+   "c06": 10,
+   "c07": "no",
+   "c08": "no"
+  }
+ },
+ "disputed": {
+  "p1-en-007": {
+   "c06": [
+    10,
+    4
+   ],
+   "c07": [
+    "no",
+    "yes"
+   ]
+  },
+  "p1-en-008": {
+   "c06": [
+    7,
+    10
+   ]
+  },
+  "p1-ru-007": {
+   "c06": [
+    10,
+    4
+   ],
+   "c07": [
+    "no",
+    "yes"
+   ]
+  },
+  "p1-ru-014": {
+   "c05": [
+    "yes",
+    "no"
+   ]
+  },
+  "p1-ru-024": {
+   "c04": [
+    15,
+    10
+   ]
+  }
+ }
+}

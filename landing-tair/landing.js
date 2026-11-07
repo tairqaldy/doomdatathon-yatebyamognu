@@ -1,128 +1,134 @@
-// Freedom CQA landing: scroll film.
-// One passive scroll listener + requestAnimationFrame. For every [data-range="a b c d"] inside a
-// [data-stage] we write --r (reveal a→b), --o (out c→d) and --k (life a→d) from the stage's scroll
-// progress; landing.css turns those into transform / opacity / clip-path. No libraries.
+// Freedom CQA landing, v2. Vanilla JS, no dependencies.
+// 1. reveal-on-enter for [data-reveal]
+// 2. living-photo loops: [data-loop] runs only while on screen (CSS animations + SMIL water filters)
+// 3. scroll parallax fallback for browsers without CSS animation-timeline (one rAF per scroll frame)
+// 4. header border after the first scroll
+// 5. evidence highlight in the real-chat card
+// 6. demo placeholder button
 
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 root.classList.add('js');
-if (!reduce.matches) root.classList.add('motion');
+const syncMotion = () => root.classList.toggle('motion', !reduce.matches);
+syncMotion();
+const motionOn = () => root.classList.contains('motion');
 
-/* ── split headlines into words for the fade-up ── */
-function splitWords(el) {
-  let i = 0;
-  const walk = (node) => {
-    for (const child of [...node.childNodes]) {
-      if (child.nodeType === Node.TEXT_NODE) {
-        const parts = child.textContent.split(/(\s+)/);
-        const frag = document.createDocumentFragment();
-        for (const part of parts) {
-          if (!part) continue;
-          if (/^\s+$/.test(part)) { frag.append(document.createTextNode(' ')); continue; }
-          const w = document.createElement('span');
-          w.className = 'w';
-          w.style.setProperty('--i', i++);
-          w.textContent = part;
-          frag.append(w);
-        }
-        child.replaceWith(frag);
-      } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
-        walk(child);
-      }
+/* 1 · reveal */
+const revealIO = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    e.target.classList.add('is-in');
+    revealIO.unobserve(e.target);
+  }
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach((el) => revealIO.observe(el));
+
+/* 2 · loops: play only on screen */
+document.querySelectorAll('svg[data-fx-svg]').forEach((svg) => svg.pauseAnimations?.());
+const onScreen = new Set();
+function applyLoop(el) {
+  const on = motionOn() && onScreen.has(el);
+  el.classList.toggle('is-playing', on);
+  const svg = el.dataset.fx && document.getElementById(el.dataset.fx);
+  if (svg) (on ? svg.unpauseAnimations : svg.pauseAnimations).call(svg);
+}
+const loopIO = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (e.isIntersecting) onScreen.add(e.target); else onScreen.delete(e.target);
+    applyLoop(e.target);
+  }
+}, { rootMargin: '60px 0px' });
+const loops = [...document.querySelectorAll('[data-loop]')];
+loops.forEach((el) => loopIO.observe(el));
+
+/* 3 · parallax fallback (CSS handles it where animation-timeline is supported) */
+const cssTimeline = window.CSS?.supports?.('animation-timeline: view()');
+let resetParallax = () => {};
+if (!cssTimeline) {
+  const items = [...document.querySelectorAll('[data-par]')].map((el) => ({
+    el,
+    scope: el.closest('[data-par-scope]') || el.parentElement,
+    amp: parseFloat(getComputedStyle(el).getPropertyValue('--par')) || 40,
+    top: 0, h: 0, last: NaN,
+  }));
+  let vh = innerHeight;
+  let raf = 0;
+  const measure = () => {
+    vh = innerHeight;
+    const y = scrollY;
+    for (const it of items) {
+      const r = it.scope.getBoundingClientRect();
+      it.top = r.top + y;
+      it.h = r.height;
     }
   };
-  walk(el);
-}
-document.querySelectorAll('[data-words]').forEach(splitWords);
-
-/* ── reveal-on-enter for plain flow blocks (and every copy block when motion is off) ── */
-const io = new IntersectionObserver((entries) => {
-  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-}, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
-document.querySelectorAll('[data-rise]').forEach((el) => io.observe(el));
-if (!root.classList.contains('motion')) document.querySelectorAll('.copy').forEach((el) => io.observe(el));
-
-/* ── scroll-driven stages ── */
-const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
-const ramp = (p, a, b) => (b <= a ? (p >= a ? 1 : 0) : clamp01((p - a) / (b - a)));
-
-const stages = [...document.querySelectorAll('[data-stage]')].map((el) => ({
-  el, top: 0, len: 1,
-  items: [...el.querySelectorAll('[data-range]')].map((node) => ({
-    node, range: node.dataset.range.trim().split(/\s+/).map(Number),
-    isCopy: node.classList.contains('copy'), r: -1, o: -1, k: -1, inState: null,
-  })),
-}));
-
-let vh = innerHeight;
-function measure() {
-  vh = innerHeight;
-  const y = scrollY;
-  for (const s of stages) {
-    const rect = s.el.getBoundingClientRect();
-    s.top = rect.top + y;
-    s.len = Math.max(1, rect.height - vh);
-  }
-}
-
-const q = (v) => Math.round(v * 1000) / 1000;
-function update() {
-  ticking = false;
-  const y = scrollY;
-  for (const s of stages) {
-    // skip stages far from the viewport, but still settle them once at their ends
-    const p = clamp01((y - s.top) / s.len);
-    for (const it of s.items) {
-      const [a, b, c, d] = it.range;
-      const r = q(ramp(p, a, b)), o = q(ramp(p, c, d)), k = q(ramp(p, a, d));
-      const st = it.node.style;
-      if (r !== it.r) { st.setProperty('--r', r); it.r = r; }
-      if (o !== it.o) { st.setProperty('--o', o); it.o = o; }
-      if (k !== it.k) { st.setProperty('--k', k); it.k = k; }
-      if (it.isCopy) {
-        const on = r > 0.5 && o < 0.5;
-        if (on !== it.inState) { it.node.classList.toggle('is-in', on); it.inState = on; }
-      }
+  const update = () => {
+    raf = 0;
+    if (!motionOn()) return;
+    const y = scrollY;
+    for (const it of items) {
+      // same mapping as the CSS range "cover 0% → cover 100%"
+      const p = (y + vh - it.top) / (vh + it.h);
+      if (p < -0.05 || p > 1.05) continue;
+      const v = Math.round((Math.min(1, Math.max(0, p)) * 2 - 1) * it.amp * 10) / 10;
+      if (v === it.last) continue;
+      it.last = v;
+      it.el.style.transform = `translate3d(0, ${v}px, 0)`;
     }
-  }
-}
-
-let ticking = false;
-const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-
-function startMotion() {
-  measure(); // forces a style pass first, so the hero words still fade in
+  };
+  const request = () => { if (!raf) raf = requestAnimationFrame(update); };
+  measure();
   update();
   addEventListener('scroll', request, { passive: true });
   addEventListener('resize', () => { measure(); request(); });
   addEventListener('load', () => { measure(); request(); });
-  if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); request(); }).observe(document.body);
+  resetParallax = () => { for (const it of items) { it.el.style.transform = ''; it.last = NaN; } };
 }
 
-function stopMotion() {
-  removeEventListener('scroll', request);
-  for (const s of stages) for (const it of s.items) {
-    it.node.style.removeProperty('--r'); it.node.style.removeProperty('--o'); it.node.style.removeProperty('--k');
-    if (it.isCopy) it.node.classList.add('is-in');
+reduce.addEventListener?.('change', () => {
+  syncMotion();
+  loops.forEach(applyLoop);
+  if (!motionOn()) {
+    resetParallax();
+    document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in'));
   }
-}
-
-if (root.classList.contains('motion')) startMotion();
-reduce.addEventListener?.('change', (e) => {
-  if (e.matches) { root.classList.remove('motion'); stopMotion(); }
-  else { root.classList.add('motion'); startMotion(); }
 });
 
-/* ── demo placeholder: the play button only explains that the video is on its way ──
-   When the real <video>/<iframe> replaces the poster (see comment in index.html), this does nothing. */
+/* 4 · header border once the page has scrolled */
+const bar = document.querySelector('.bar');
+const sentinel = document.getElementById('top');
+if (bar && sentinel) {
+  new IntersectionObserver(([e]) => bar.classList.toggle('is-scrolled', !e.isIntersecting)).observe(sentinel);
+}
+
+/* 5 · evidence: a verdict highlights the transcript lines it cites */
+const verdicts = [...document.querySelectorAll('.verdict[data-ref]')];
+function highlight(btn) {
+  document.querySelectorAll('.line.is-hl').forEach((l) => l.classList.remove('is-hl'));
+  if (!btn) return;
+  for (const id of btn.dataset.ref.split(/\s+/)) document.getElementById(id)?.classList.add('is-hl');
+}
+const pressed = () => verdicts.find((b) => b.getAttribute('aria-pressed') === 'true');
+for (const btn of verdicts) {
+  btn.addEventListener('click', () => {
+    verdicts.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    highlight(btn);
+  });
+  btn.addEventListener('mouseenter', () => highlight(btn));
+  btn.addEventListener('mouseleave', () => highlight(pressed()));
+}
+highlight(pressed());
+
+/* 6 · demo placeholder: the play button only says the video is on its way.
+   Once a real <video>/<iframe> replaces it (see the comment in index.html), this does nothing. */
 function initDemo() {
   const btn = document.querySelector('.demo__play');
   const note = document.getElementById('demo-note');
   if (!btn || !note) return;
   btn.addEventListener('click', () => {
-    note.textContent = 'Видео готовим. Совсем скоро оно появится здесь.';
+    note.textContent = 'Видео появится здесь в ближайшее время. Пока можно открыть поддержку и написать AIM самим.';
     note.classList.add('is-flash');
-    setTimeout(() => note.classList.remove('is-flash'), 1600);
+    setTimeout(() => note.classList.remove('is-flash'), 1800);
   });
 }
 initDemo();

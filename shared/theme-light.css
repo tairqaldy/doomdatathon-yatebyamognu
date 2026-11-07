@@ -1,0 +1,81 @@
+/* Freedom CQA light theme (v2) for landing, support and admin.
+   Bright, calm, readable: white canvas, one ink colour, Freedom greens from the official logo,
+   colour comes from our own film photos. Typography: Onest (Cyrillic incl. Kazakh) for everything,
+   JetBrains Mono only for small data values. No section numbering, no decorative labels. */
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* surfaces */
+  --l-bg: #ffffff;
+  --l-bg-soft: #f6f7f4;      /* warm paper */
+  --l-bg-sky: #eef4fb;       /* pale sky tint */
+  --l-bg-mint: #ecf7ef;      /* pale Freedom green */
+  --l-card: #ffffff;
+  --l-line: #e6e8e4;
+  --l-line-strong: #d4d8d2;
+
+  /* ink */
+  --l-ink: #0e151c;          /* Freedom wordmark colour */
+  --l-ink-2: #3c4650;        /* body */
+  --l-ink-3: #6b7680;        /* secondary (AA on white) */
+  --l-ink-4: #9aa3ab;        /* hints, disabled only */
+
+  /* brand + states */
+  --l-green: #02b140;        /* logo green: accents, focus, success */
+  --l-green-ink: #0a7a33;    /* green for text on white (AA) */
+  --l-forest: #164734;       /* logo dark green: primary button */
+  --l-forest-hover: #0f3527;
+  --l-amber: #b7791f; --l-amber-bg: #fdf3e1;
+  --l-red: #c93a3a; --l-red-bg: #fdecec;
+  --l-blue: #2f6fdb; --l-blue-bg: #eaf1fd;
+
+  /* type */
+  --l-sans: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --l-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --l-h1: clamp(40px, 6vw, 76px);
+  --l-h2: clamp(30px, 4vw, 52px);
+  --l-h3: clamp(20px, 2vw, 26px);
+  --l-lead: clamp(17px, 1.4vw, 20px);
+  --l-body: 16px;
+  --l-small: 14px;
+
+  /* shape + motion */
+  --l-r-sm: 12px; --l-r-md: 18px; --l-r-lg: 28px; --l-r-xl: 36px;
+  --l-shadow: 0 1px 2px rgba(14,21,28,.04), 0 8px 28px rgba(14,21,28,.06);
+  --l-shadow-lg: 0 2px 6px rgba(14,21,28,.05), 0 24px 60px rgba(14,21,28,.10);
+  --l-ease: cubic-bezier(.2, 0, 0, 1);
+  --l-ease-out: cubic-bezier(0, 0, .2, 1);
+}
+
+.l { background: var(--l-bg); color: var(--l-ink); font-family: var(--l-sans); font-size: var(--l-body); line-height: 1.55;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.l *, .l *::before, .l *::after { box-sizing: border-box; }
+.l h1, .l h2, .l h3 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; margin: 0; color: var(--l-ink); text-wrap: balance; }
+.l p { margin: 0; color: var(--l-ink-2); text-wrap: pretty; }
+.l .l-h1 { font-size: var(--l-h1); }
+.l .l-h2 { font-size: var(--l-h2); }
+.l .l-h3 { font-size: var(--l-h3); letter-spacing: -0.015em; }
+.l .l-lead { font-size: var(--l-lead); line-height: 1.5; color: var(--l-ink-2); max-width: 60ch; }
+.l .l-muted { color: var(--l-ink-3); }
+.l .l-num { font-variant-numeric: tabular-nums; }
+.l .l-mono { font-family: var(--l-mono); font-size: 13px; }
+
+.l .l-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; padding: 0 24px; border-radius: 999px;
+  border: 1px solid transparent; font: 500 15px/1 var(--l-sans); text-decoration: none; cursor: pointer;
+  transition: background .25s var(--l-ease), transform .25s var(--l-ease), box-shadow .25s var(--l-ease), border-color .25s; }
+.l .l-btn--primary { background: var(--l-forest); color: #fff; }
+.l .l-btn--primary:hover { background: var(--l-forest-hover); transform: translateY(-1px); box-shadow: 0 10px 30px rgba(22,71,52,.25); }
+.l .l-btn--ghost { background: rgba(255,255,255,.7); color: var(--l-ink); border-color: var(--l-line-strong); backdrop-filter: blur(12px); }
+.l .l-btn--ghost:hover { background: #fff; border-color: var(--l-ink-4); }
+.l .l-btn--s { height: 38px; padding: 0 16px; font-size: 14px; }
+.l :focus-visible { outline: 2px solid var(--l-green); outline-offset: 3px; border-radius: 8px; }
+
+.l .l-card { background: var(--l-card); border: 1px solid var(--l-line); border-radius: var(--l-r-md); box-shadow: var(--l-shadow); }
+.l .l-chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12.5px; font-weight: 500;
+  background: var(--l-bg-soft); color: var(--l-ink-2); border: 1px solid var(--l-line); }
+.l .l-chip--ok { background: var(--l-bg-mint); color: var(--l-green-ink); border-color: transparent; }
+.l .l-chip--warn { background: var(--l-amber-bg); color: var(--l-amber); border-color: transparent; }
+.l .l-chip--bad { background: var(--l-red-bg); color: var(--l-red); border-color: transparent; }
+.l .l-chip--info { background: var(--l-blue-bg); color: var(--l-blue); border-color: transparent; }
+
+@media (prefers-reduced-motion: reduce) { .l *, .l *::before, .l *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; } }
