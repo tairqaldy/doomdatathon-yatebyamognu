@@ -10,6 +10,8 @@
 //   go(screen)       → Promise<boolean> | boolean    open a screen from the catalog
 //   findTarget(id)   → Element | null                element for a catalog target id
 //   contentRoot()    → Element                       where the DOM-scan fallback looks for buttons and fields
+//   compact()        → boolean (optional)            true = the app is phone-sized, so minimise AIM while it acts
+//                                                    (default: viewport ≤ 860 px). Used by the /phone demo frame.
 //   apiBase          → ''                            prefix for /api/agent, /api/agent-voice, /api/evaluate
 //   checklistUrl     → URL of the QA checklist used after a handoff
 import * as app from '/broker/app.js';
