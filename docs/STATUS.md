@@ -7,6 +7,22 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 13:15 · lane-d · product/pitch
+Done: researched text, transcription and voice model candidates, 500 ms latency and evaluation metrics in docs/research/models-and-metrics.md.
+In progress: model comparison is research only; no benchmarks run.
+Next: compare available models on human-labeled examples; prioritize required product flows.
+Blocked by / Requests: confirm official start time and judging criteria.
+Contracts touched: none.
+How to verify: review the source links and proposed test plan in the research document.
+
+### 2026-11-07 13:10 · lane-d · product/pitch
+Done: drafted a product acceptance checklist and five-minute demo script from the official brief (issue #1).
+In progress: features and demo are not yet verified.
+Next: test working increments, choose representative conversations and rehearse; update when judging criteria arrive.
+Blocked by / Requests: official start time and judging criteria still need confirmation.
+Contracts touched: none.
+How to verify: read docs/product-acceptance.md and pitch/demo-script.md against docs/case/brief.md.
+
 ### 2026-11-07 · lane-c · claude · #3 · branch c/3-gold-reviewed
 Done: all 19 gold files human-reviewed (every drafted label accepted) → `status: reviewed`. Mock baseline re-run on reviewed gold (includes the c01 intro fix from d227ded): **61.8% strict / 75.0% lenient**, c01 100%, gross-error recall **0/7**, total MAE 22.74 (`eval/runs/mock-baseline.metrics.json`).
 Next: first real number. Run the LLM evaluator on the 19 gold dialogs (cached, ~19 calls) into `eval/runs/<model>.json`, then `node eval/accuracy.ts eval/runs/<model>.json --reviewed-only --verbose`; quote the result in README/pitch.
