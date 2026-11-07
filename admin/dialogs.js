@@ -1,6 +1,6 @@
 // Диалоги: every evaluated dialog with search and simple filters. "Грубые ошибки" switches to a list that shows,
 // for every dialog with a gross-error flag, the AI explanation and the evidence line.
-import { $, esc, fmt, plural, icon, LANG, CHAN, TIER_LABEL, tierVar, setHead, seg } from './ui.js';
+import { $, esc, fmt, fix, plural, icon, LANG, CHAN, TIER_LABEL, tierVar, setHead, seg } from './ui.js';
 import { rows, hrefFor, reasonOf, grossOf, checklistOf, isCall, offsetSec, mmss } from './store.js';
 import * as live from '/shared/live-store.js';
 
@@ -11,7 +11,10 @@ const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify(f)); } c
 const SORTS = { order: 'По порядку', low: 'Сначала низкие', high: 'Сначала высокие' };
 
 const chanCell = (r) => `<span class="chan">${icon(r.channel === 'call' ? 'phone' : 'chat')}${CHAN[r.channel]}</span>`;
-const scorePill = (r) => `<span class="score-pill" style="--c:${tierVar(r.tier)}">${r.total == null ? '—' : fmt(r.total, 2)}</span>`;
+// exactly 2 decimals so the right-aligned column lines up (92,31 · 70,00 · 57,50), as totals are rounded in results.json
+const scorePill = (r) => (r.total == null
+  ? '<span class="score-pill" style="--c:var(--ink-4)" title="Итог не рассчитан: нет применимых критериев с весом">—</span>'
+  : `<span class="score-pill" style="--c:${tierVar(r.tier)}">${fix(r.total, 2)}</span>`);
 const evLine = (E, a) => {
   const e = (a.evidence || []).find((x) => x.kind === 'message' || x.kind === 'range');
   if (!e) return null;
