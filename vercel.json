@@ -16,5 +16,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/landing-tair/index.html"
+    }
   ]
 }

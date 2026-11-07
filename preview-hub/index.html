@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="design/tokens.css">
-  <link rel="stylesheet" href="design/components.css">
+  <link rel="stylesheet" href="/design/tokens.css">
+  <link rel="stylesheet" href="/design/components.css">
   <style>
     body { margin: 0; }
     .hub { min-height: 100vh; padding: 28px clamp(16px, 4vw, 48px) 64px; background: linear-gradient(180deg, #F3F8FF, #fff 360px); position: relative; overflow: hidden; }
@@ -54,17 +54,16 @@
 </div>
 <script>
   const SURFACES = [
-    { id: 'landing', title: 'Landing', path: 'landing-tair/', desc: 'Surreal story landing → CTA to support', probe: 'landing-tair/index.html' },
-    { id: 'support', title: 'Customer support chat', path: 'support/', desc: 'AIM bot → honest human handoff → CSAT → auto QA', probe: 'support/index.html' },
-    { id: 'admin', title: 'Admin (passcode from the team)', path: 'admin/', desc: 'Overview, live operator console, dialogs, AI analyst', probe: 'admin/index.html' },
-    { id: 'dashboard', title: 'Analyst workspace', path: 'prototype/#/dialogs', desc: 'All dialogs, averages by language, where points are lost' },
-    { id: 'chat', title: 'Analysis · chat (KZ)', path: 'prototype/#/dialog/p1-kz-011', desc: 'Timeline, transcript, score, deductions' },
-    { id: 'call', title: 'Analysis · call (audio)', path: 'prototype/#/dialog/p4-ru-001', desc: 'Call with recording, seek from deduction markers' },
-    { id: 'reviewer', title: 'Reviewer · appeals', path: 'prototype/#/appeals', desc: 'Switch role to «Проверяющий» bottom-left' },
-    { id: 'checklist', title: 'Checklist editor', path: 'prototype/#/checklist', desc: 'Replace a criterion → new version → re-evaluate' },
-    { id: 'design', title: 'Design system', path: 'prototype/#/design', desc: 'Tokens + components from fbroker.kz' },
-    { id: 'health', title: 'API health', path: 'api/health', desc: 'Which keys/models the deploy has (no secrets)' },
-    { id: 'repo', title: 'GitHub · issue #10', path: 'https://github.com/tairqaldy/doomdatathon-yatebyamognu/issues/10', desc: 'Full product loop plan; comment to add context', external: true },
+    { id: 'landing', title: 'Landing', path: '/', desc: 'Bright story landing → CTA to support', probe: '/landing-tair/index.html' },
+    { id: 'support', title: 'Customer support chat', path: '/support/', desc: 'AIM bot → honest human handoff → CSAT → auto QA', probe: '/support/index.html' },
+    { id: 'broker', title: 'Client app + AIM agent', path: '/broker/', desc: 'Mock Freedom Broker app; agent explains, acts only with consent', probe: '/broker/index.html' },
+    { id: 'admin', title: 'Admin (passcode from the team)', path: '/admin/', desc: 'Overview, dialogs, appeals, checklist, live chats, AI analyst', probe: '/admin/index.html' },
+    { id: 'dashboard', title: 'Analyst workspace', path: '/prototype/#/dialogs', desc: 'All dialogs, where points are lost' },
+    { id: 'chat', title: 'Analysis · chat (KZ)', path: '/prototype/#/dialog/p1-kz-011', desc: 'Timeline, transcript, score, deductions' },
+    { id: 'call', title: 'Analysis · call (audio)', path: '/prototype/#/dialog/p4-ru-001', desc: 'Call with recording, seek from deduction markers' },
+    { id: 'checklist', title: 'Checklist editor', path: '/prototype/#/checklist', desc: 'Replace a criterion → new version → re-evaluate' },
+    { id: 'health', title: 'API health', path: '/api/health', desc: 'Keys, models, cache backend, logic fingerprints (no secrets)' },
+    { id: 'repo', title: 'GitHub · issue #18', path: 'https://github.com/tairqaldy/doomdatathon-yatebyamognu/issues/18', desc: 'Current plan; comment to add context', external: true },
   ];
   const DEVICES = [{ name: 'Phone', w: 390, h: 844, s: 0.5 }, { name: 'Tablet / D365 iframe', w: 820, h: 1100, s: 0.42 }, { name: 'Laptop', w: 1440, h: 900, s: 0.5 }];
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -73,7 +72,7 @@
   async function build() {
     const el = document.getElementById('build');
     try {
-      const h = await fetch('api/health', { cache: 'no-store' }).then((r) => r.json());
+      const h = await fetch('/api/health', { cache: 'no-store' }).then((r) => r.json());
       el.innerHTML = [
         `<span class="cqa-badge cqa-badge--brand">${esc(h.branch || 'local')} · ${esc(h.commit || 'dev')}</span>`,
         `<span class="cqa-badge ${h.openai || h.openrouter ? 'cqa-badge--pass' : 'cqa-badge--fail'}">AI ${h.openai || h.openrouter ? 'on' : 'off'} · ${esc(h.models?.eval || '')}</span>`,
@@ -83,8 +82,8 @@
   }
 
   async function metrics() {
-    const m = await fetch('eval/runs/gpt-6-luna-eval-v1.metrics.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    const ev = await fetch('data/evaluations/DEV.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const m = await fetch('/eval/runs/gpt-6-luna-eval-v1.metrics.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    const ev = await fetch('/data/evaluations/DEV.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     const cards = [];
     if (ev) cards.push(['Dialogs with AI results', `${Object.keys(ev.results).length}`, esc(ev.model)]);
     if (m) {
