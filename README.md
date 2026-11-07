@@ -8,7 +8,7 @@ Prototype for the Freedom Broker case at the NU datathon: automatic, explainable
 
 ```bash
 git clone https://github.com/tairqaldy/doomdatathon-yatebyamognu.git && cd doomdatathon-yatebyamognu
-cp .env.example .env          # add OPENROUTER_API_KEY (+ CQA_API_URL from the team chat; optional DATABASE_URL for shared live sessions)
+cp .env.example .env          # add OPENAI_API_KEY (evaluation) + OPENROUTER_API_KEY (transcription) (+ CQA_API_URL from the team chat; optional DATABASE_URL for shared live sessions)
 npm run dev                   # Node ≥ 20, no dependencies → http://localhost:3000 (hub) · /prototype/ (app)
 ```
 Without a key the app runs on the built-in MOCK evaluator (clearly labelled). Without Node: `python3 -m http.server 8080` → http://localhost:8080/prototype/ (static only, MOCK, no call audio).
@@ -26,7 +26,7 @@ The LLM only decides each criterion's answer, explanation, deduction reason and 
 ## AI, cost and caching
 | Job | Model | Measured |
 |---|---|---|
-| Evaluate a dialog | **`openai:gpt-6-luna`** (default, direct OpenAI; falls back to OpenRouter's `openai/gpt-6-luna` without `OPENAI_API_KEY`). Any OpenRouter id works via `CQA_EVAL_MODEL` | **$0.00105 per evaluation**, p50 13.3 s, 0 errors on all 65 DEV dialogs. Gold set (19 reviewed dialogs): **86.2 % strict agreement**, 94.7 % lenient, gross-error recall 6/7 with 0 false positives, evidence hit rate 95.5 %, total MAE 7.8 points. Haiku 5.5 for comparison: 75.7 % strict |
+| Evaluate a dialog | **`openai:gpt-6-luna`** (default, direct OpenAI; falls back to OpenRouter's `openai/gpt-6-luna` without `OPENAI_API_KEY`), prompt **`eval-v4`**. Any OpenRouter id works via `CQA_EVAL_MODEL` | **$0.00114 per evaluation** (one call per dialog), p50 14.9 s, 0 errors on all 65 DEV dialogs. Gold set (19 human-reviewed dialogs, RU/KZ/EN): **91.4 % strict agreement, 96.7 % lenient**, gross-error recall **7/7** with 0 false positives, N/A recall 96.4 %, evidence hit rate 92.8 % with 0 invalid references, total MAE 6.1 points. Earlier prompt eval-v1: 86.2 % strict, 6/7 gross errors; Haiku 5.5: 75.7 % strict ([eval/gold](eval/gold/README.md), `node eval/accuracy.ts <run>`) |
 | Transcribe a call | `nvidia/nemotron-3.5-transcribe` (OpenRouter) | $0.04 for all 5 calls, 10–18 s each; WER 35.5 % / CER 24.4 % vs organizer transcripts (themselves ASR incl. IVR prompts, so this is agreement, not accuracy) |
 
 Every model call is cached (memory → `eval/cache/` files → optional Upstash), keyed by model + prompt version + input. A repeated request is instant and free; committed cache files let teammates and Vercel reuse paid answers.
