@@ -11,6 +11,26 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 21:00 · lane-a · claude · #21 · branch a/21-phone-demo
+Done: **`/phone/`**, AIM inside a copy of the official Freedom Broker iOS app (from `docs/research/freedom-app.md`). On a laptop it shows an iPhone frame, scaled to fit; ≤500 px wide the app fills the screen. All 6 tabs plus Пополнение, Вывод, Обмен, Отчеты и документы, Настройки (language RU/KZ/EN), the Поддержка sheet, the ticket form, Контакты and FAQ. Mock data only.
+AIM entry points: the first row of the Поддержка sheet («AIM · ответ сразу»), the chat icon on Котировки/Идеи, the round launcher above the tab bar, and FAQ items (they ask AIM). AIM is the unchanged `broker/agent.js`, mounted inside the phone through `window.AIM_HOST` and re-themed dark through scoped overrides in `phone/phone.css`.
+Small cross-lane changes (announced in #21): `broker/agent.js` gets an optional `host.compact()` (minimise while acting inside the frame; default unchanged); `lib/nav-agent.js` `sanitizeActions` also accepts an exact target **label** when the model returns «Сумма» instead of `dep-amount` (it was silently dropping prefills).
+Verified: desktop frame + 375 px mobile; real AIM run «пополнить через Kaspi 50 000» → opens Пополнение, fills Kaspi / KZT / 50 000, protected button left to the client; KZ switch; console clean; `npm test`, `scripts/check.sh`.
+Note: another session was working uncommitted on `c/23-call-tone` in the main checkout, so this branch was built in a separate worktree. Their uncommitted changes make one scoring test fail there (not on main).
+Contracts touched: none (AIM host adapter: one optional field).
+How to verify: `npm run dev` → http://localhost:3000/phone/ ; Меню → Поддержка → «AIM · ответ сразу».
+
+### 2026-11-07 20:55 · lane-c · claude · #22 · branch c/22-results-export
+Done: the graded deliverable. Appendix «Как сдать результаты» transcribed to `docs/case/results-format.md`. `eval/export-results.mjs` maps our c01–c08 to the official codes (contact, discovery, identification, consultation, empathy, dialogue, closure, critical), yes/no/na → true/false/null, **evidence turns +1 (format is 1-based)**, totals half-up via `prototype/scoring.js`, failed dialogs → `status: "error"` with the reason; N/A without cited turns points at the client's request or the system end event. `eval/validate-results.mjs` checks every rule and recomputes final_score from the values with the official weights (a corrupted copy: all 9 planted errors caught). `eval/control-run.mjs` = one command: fetch + save set → evaluate (concurrency 8, cached) → retry failures once → export → validate → `--push`. **`results/dev/results.json` committed: 65/65 ok, valid.**
+Rehearsal on DEV with a live fetch: identical data, export + validation in ~1 s (cached); fresh 10 chats ≈ 1 min.
+**Before T+23h (needs a human):** this laptop's `.env` has the placeholder `CQA_API_URL` from `.env.example`. The run falls back to our Vercel proxy `/api/dataset` (which has the real link), but put the real URL in `.env` too.
+Control-set runbook (from an up-to-date `main`):
+```bash
+node eval/control-run.mjs --group <CONTROL_GROUP_ID> --out results/prod/results.json --expect 10 --push
+```
+Contracts touched: none (new output files only). Team name in the file: `YaTebyaMognu` (override with `--team` or `CQA_TEAM_NAME`); model: `OpenAI gpt-6-luna (OpenAI API)`, mode `external_api`.
+How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65`
+
 ### 2026-11-07 20:40 · lane-d · claude · #20 · branch d/20-freedom-app-research
 Done: captured the live **Freedom Broker iOS app v32.23.17** through iPhone Mirroring (28 frames, all 6 tabs, read-only) and wrote `docs/research/freedom-app.md`: app shell, 6-tab nav, palette (mostly Tailwind defaults on navy `#171D2D`, accent blue-500), type scale, components, screen inventory, where AIM goes (chat icon + Меню → Поддержка), phone-demo plan. **The app is dark navy + blue, not the light green fbroker.kz look**, so the phone demo must use this file, not `design-system.md`.
 Raw frames stay out of git (real client name, account numbers, balances).

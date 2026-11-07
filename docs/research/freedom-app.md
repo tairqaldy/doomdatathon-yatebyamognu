@@ -162,7 +162,7 @@ AIM's navigation actions (`open_screen`, `highlight`, `prefill`, see #14 / #19) 
 
 ---
 
-## 7. Demo page plan (follow-up, lane A)
+## 7. Demo page (built in #21: `/phone/`)
 
 - **Desktop / projector**: page with one iPhone frame (393×852 pt screen, Dynamic Island, status bar with fixed time) centered. The mock app renders inside at 1:1 CSS pixels. Optionally a side caption explaining what AIM just did.
 - **Real phone**: the same URL, but below ~500 px wide the frame drops and the app fills the viewport (`viewport-fit=cover`, safe-area insets).

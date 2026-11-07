@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#171D2D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Freedom Broker · AIM на телефоне</title>
+  <meta name="description" content="Демо: ассистент AIM внутри копии приложения Freedom Broker. Данные вымышленные.">
+  <link rel="stylesheet" href="/phone/phone.css">
+  <script type="module" src="/phone/app.js"></script>
+</head>
+<body>
+  <div class="ph-stage">
+    <aside class="ph-side" aria-label="О демо">
+      <p class="ph-side-kicker">Freedom Broker · демо</p>
+      <h1 class="ph-side-title">AIM внутри приложения</h1>
+      <p class="ph-side-text">Копия официального приложения Freedom Broker для iOS с ассистентом AIM. AIM объясняет, открывает нужный экран, подсвечивает кнопки и заполняет поля. Деньги и заявки клиент подтверждает сам.</p>
+      <ul class="ph-side-list">
+        <li><b>Меню → Поддержка</b>: первая строка, «AIM · ответ сразу»</li>
+        <li><b>Иконка чата</b> вверху Котировок и Идей</li>
+        <li><b>Кнопка AIM</b> над нижней панелью</li>
+      </ul>
+      <p class="ph-side-note">Все данные вымышленные. Откройте эту ссылку на телефоне: приложение займёт весь экран.</p>
+      <p class="ph-side-log" id="ph-log" aria-live="polite"></p>
+    </aside>
+
+    <div class="ph-device" id="ph-device">
+      <div class="ph-screen" id="ph-screen">
+        <div id="cqa-root" class="fa">
+          <div class="fa-status" aria-hidden="true">
+            <span class="fa-status-time" id="fa-time">9:41</span>
+            <span class="fa-island"></span>
+            <span class="fa-status-icons">
+              <svg viewBox="0 0 18 12" width="18" height="12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <span class="fa-status-net">5G</span>
+              <span class="fa-battery"><span>82</span></span>
+            </span>
+          </div>
+          <main class="fa-main" id="fa-main" tabindex="-1"></main>
+          <nav class="fa-tabs" id="fa-tabs" aria-label="Разделы"></nav>
+          <div class="fa-sheet-layer" id="fa-sheet" hidden></div>
+          <div class="fa-toast" id="fa-toast" role="status" aria-live="polite" hidden></div>
+          <span class="fa-build" aria-hidden="true">32.23.17 · demo</span>
+        </div>
+        <div id="aim-widget"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

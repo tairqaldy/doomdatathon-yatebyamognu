@@ -308,7 +308,8 @@ async function accept(said) {
 }
 async function runFor(msg, actions, language) {
   // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
-  const narrow = matchMedia('(max-width: 860px)').matches;
+  // A host whose app is phone-sized inside a wide page (the /phone demo frame) says so through host.compact().
+  const narrow = app.compact?.() ?? matchMedia('(max-width: 860px)').matches;
   if (narrow) { st.open = false; save(); renderChrome(); }
   msg.actions = await runActions(actions); save(); renderList();
   if (narrow && msg.actions.length) toast(`AIM: ${msg.actions.join(' · ')}`);
