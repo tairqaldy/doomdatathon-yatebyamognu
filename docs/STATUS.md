@@ -300,3 +300,11 @@ How to verify: open `/`, `/support/`, `/admin/` (demo code on the login page), `
 ### 2026-11-07 20:25 +05:00 · team · tair/claude · #18 #22 · one results pipeline
 Done: correction to the entry above. Nazar's official exporter (#22: `eval/control-run.mjs`, `eval/export-results.mjs`, `eval/validate-results.mjs`, format in `docs/case/results-format.md`) is THE pipeline. `npm run results` now runs it; my provisional `scripts/results.mjs` + `results/format.json` are removed so nobody exports the wrong shape at control time. AGENTS.md §1.1, README, TOOLING and research pages point to `npm run results -- --group <CONTROL_ID> --push`.
 How to verify: `node eval/validate-results.mjs results/dev/results.json --dataset data/datasets/DEV.json --expect 65` → valid, 65 ok.
+
+### 2026-11-07 20:40 +05:00 · lane-c · #23 · c/23-call-tone
+Done: tone of voice on calls. New c09 «Тон и подача речи» in `data/checklists/freedom-call-v1.json` (`input: "audio"`, weight 10); `lib/tone.js` sends the mp3 + operator turns to Gemini 3.8 Flash, voice metrics (words/min, long silences) are plain arithmetic. DEV: p4-ru-001 → 4/10, other calls 10/10, ≈ $0.013 per call. Admin call card shows it with metrics; the audio jump now starts at the phrase start (call timestamps mark where a phrase ends). Chat checklist and `results/dev/results.json` are unchanged: the exporter drops audio criteria.
+In progress: none.
+Next: at T+23h, after `npm run results -- --group <ID>`, run `node scripts/tone-run.mjs --group <ID>` so control-set calls get c09 in the card (it never touches results.json).
+Blocked by / Requests: lane B: on main, 0 of 65 committed DEV text answers match the current `lib/evaluator.js` fingerprint (lib/cache.js), so a DEV re-run pays again; my branch leaves evaluator.js unchanged. Browsers that already saved a call checklist in localStorage don't see c09 until it is reset.
+Contracts touched: additive `criterion.input`, `answer.audio_metrics`, `audio_model`, `usage.audio` (CONTRACTS §2–3).
+How to verify: /admin → Диалоги → p4-ru-001 → «09 Тон и подача речи»; `npm test` (12/12); `node eval/export-results.mjs` → 65 ok, unchanged.

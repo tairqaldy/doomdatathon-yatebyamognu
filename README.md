@@ -83,6 +83,7 @@ Gold set: 19 DEV dialogs (9 RU incl. 1 call, 5 KZ, 5 EN), 152 labels, every labe
 | Cost per evaluation | **$0.00114** (GPT-6 Luna, 1 call per dialog) | [`eval/runs/2026-11-07T13-16-16-814Z-DEV.json`](eval/runs/2026-11-07T13-16-16-814Z-DEV.json) |
 | Latency per fresh evaluation | p50 14.9 s · p95 25.8 s; cached ≈ 20 ms | same |
 | Reliability | 0 errors on all 65 DEV dialogs | same |
+| Tone of voice on calls (c09, Gemini 3.8 Flash listens to the mp3) | **≈ $0.013 per call** (5 calls, $0.066); on DEV 1 of 5 calls lowered (p4-ru-001 → 4/10: cold, detached tone the client remarks on), 4 at 10/10 | [`eval/runs/`](eval/runs/) `*-DEV-tone.json` |
 | Call transcription (5 RU calls, Nemotron 3.5) | WER 35.5% · CER 24.4% · $0.041 total | [`eval/runs/2026-11-07T09-59-34-660Z-asr.json`](eval/runs/2026-11-07T09-59-34-660Z-asr.json) |
 
 How we got here (strict agreement): rule-based mock 61.8% → Claude Haiku 5.5 75.7% → GPT-6 Luna 86.2% → prompt eval-v4 91.4%. Two prompt versions were rejected, one of them despite a higher score, because it flagged gross errors on real calls where the operator was only verifying identity. Full story: [our-experiments.md](docs/research/our-experiments.md).
