@@ -2,6 +2,8 @@
 # Pre-merge gate (AGENTS.md §4.4). Run before every merge into main. CI runs it too.
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
+# agent shells often skip ~/.zshrc: also look for user-local Node installs
+export PATH="$PATH:$HOME/.local/node/bin:$HOME/.local/bin"
 fail=0
 ok()   { printf '  ✔ %s\n' "$1"; }
 bad()  { printf '  ✖ %s\n' "$1"; fail=1; }
