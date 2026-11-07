@@ -78,9 +78,15 @@ const tr = (k, vars = {}) => String(S[app.getLang()][k] ?? S.RU[k] ?? k).replace
 const trIn = (lang, k) => String((S[lang] || S[app.getLang()])[k] ?? S.RU[k] ?? k);
 
 // ---------- state ----------
+// Every fresh page load (reload, reopened URL or tab) starts a clean chat (#25): only the voice preference survives.
+// A handoff link from before the reload is just dropped here; the shared live session itself is left untouched.
+// A host that wants the old behaviour (chat restored after reload) sets keepHistory: true in its adapter.
 const load = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch { return null; } };
-let st = load() || { open: false, messages: [], sid: null, speak: false, pending: null };
+const fresh = (speak = false) => ({ open: false, messages: [], sid: null, speak: !!speak, pending: null });
+const saved = load();
+let st = (app.keepHistory && saved) || fresh(saved?.speak);
 const save = () => { try { sessionStorage.setItem(KEY, JSON.stringify(st)); } catch {} };
+if (!(app.keepHistory && saved)) save(); // overwrite the old chat so nothing stale lingers in storage
 let busy = false; let voiceTurn = false;
 
 const maskPII = (s) => String(s).replace(/\b(\d{4})[ -]?\d{4}[ -]?\d{4}[ -]?(\d{1,7})\b/g, (m, a, b) => (m.replace(/\D/g, '').length >= 13 ? `${a} **** **** ${String(b).slice(-4)}` : m)).replace(/\b\d{12}\b/g, '************');

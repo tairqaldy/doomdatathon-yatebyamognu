@@ -21,6 +21,13 @@ Next: streaming TTS (play while the first chunk is still being generated) if fir
 Contracts touched: CONTRACTS §5 (additive): `/api/agent-voice` formats + `server_ms`, `GET/POST /api/speak`, `voice` in `/api/health`.
 How to verify: `npm run dev` → `/support/` (speaker toggle, mic) and `/broker/` (Спросить AIM → speaker, mic); `curl localhost:3000/api/speak`; `node scripts/voice-bench.mjs --http http://localhost:3000`.
 
+### 2026-11-07 20:11 · lane-c · claude · #25 · branch c/25-aim-fresh-chat
+Done: AIM (`broker/agent.js`, used by `/broker/` and `/phone/`) starts a clean chat on every fresh page load (reload, reopened URL or tab). On load only the `speak` preference is kept from sessionStorage; `messages`, `open`, `sid`, `pending` start empty and the stale entry is overwritten. Within one page life nothing changed: consent, handoff, voice, language switch. A handoff `sid` from before the reload is only dropped client-side; the live store is untouched.
+New optional host field `keepHistory: true` (in `window.AIM_HOST` or `broker/agent-host.js`) restores the old behaviour; documented in the agent-host.js comment block. Default false.
+Verified: headless browser on the dev server: `/phone/` open AIM → hello; seeded an old open chat + reload → panel closed, no old message; `/broker/` with `AIM_HOST.keepHistory` restores, default does not; `/broker/` console clean. No paid AI calls.
+Contracts touched: none (AIM host adapter: one optional field).
+How to verify: `npm run dev` → http://localhost:3000/phone/ → open AIM, write something, reload → chat is closed and empty.
+
 ### 2026-11-07 21:00 · lane-a · claude · #21 · branch a/21-phone-demo
 Done: **`/phone/`**, AIM inside a copy of the official Freedom Broker iOS app (from `docs/research/freedom-app.md`). On a laptop it shows an iPhone frame, scaled to fit; ≤500 px wide the app fills the screen. All 6 tabs plus Пополнение, Вывод, Обмен, Отчеты и документы, Настройки (language RU/KZ/EN), the Поддержка sheet, the ticket form, Контакты and FAQ. Mock data only.
 AIM entry points: the first row of the Поддержка sheet («AIM · ответ сразу»), the chat icon on Котировки/Идеи, the round launcher above the tab bar, and FAQ items (they ask AIM). AIM is the unchanged `broker/agent.js`, mounted inside the phone through `window.AIM_HOST` and re-themed dark through scoped overrides in `phone/phone.css`.
