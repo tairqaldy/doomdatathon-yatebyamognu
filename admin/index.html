@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0f1011">
+  <title>Freedom CQA · Администратор</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/shared/theme.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="g">
+  <!-- Login -->
+  <main id="login" class="login g-grain" hidden>
+    <div class="login__glow" aria-hidden="true"></div>
+    <form class="login__card" id="login-form" novalidate>
+      <div class="g-label">Freedom CQA · администратор</div>
+      <h1 class="g-display login__title">Контроль качества<br><em>в одном окне</em></h1>
+      <p class="g-muted login__lead">Обзор оценок, живые диалоги и AI-аналитик. Вход только по коду доступа.</p>
+      <label class="field">
+        <span class="g-label">Код доступа</span>
+        <input id="login-pass" class="input" type="password" name="passcode" autocomplete="current-password" required aria-describedby="login-err login-hint">
+      </label>
+      <p class="login__err" id="login-err" role="alert" aria-live="assertive"></p>
+      <button class="g-btn g-btn--primary login__btn" type="submit" id="login-btn">Войти</button>
+      <p class="g-label login__hint" id="login-hint">Демо-код для жюри: freedom</p>
+    </form>
+  </main>
+
+  <!-- App -->
+  <div id="app" class="shell" hidden>
+    <aside class="rail" aria-label="Разделы">
+      <a class="rail__brand" href="#/overview" aria-label="Freedom CQA, обзор">
+        <span class="rail__mark" aria-hidden="true">F</span>
+        <span class="rail__name"><span class="g-display">Freedom CQA</span><span class="g-label">Администратор</span></span>
+      </a>
+      <nav class="rail__nav" id="nav"></nav>
+      <div class="rail__foot">
+        <button class="rail__item" type="button" data-logout>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></svg>
+          <span>Выйти</span>
+        </button>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="top">
+        <div class="top__titles">
+          <div class="g-label" id="crumb">Администратор / Обзор</div>
+          <h1 class="g-display top__title" id="page-title">Обзор</h1>
+        </div>
+        <div class="top__meta">
+          <span class="badge" id="source-badge" title="Источник оценок"><span class="g-dot" aria-hidden="true"></span><span id="source-text">GPT-6 Luna · 65 диалогов</span></span>
+          <button class="icon-btn top__logout" type="button" data-logout aria-label="Выйти">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></svg>
+          </button>
+        </div>
+      </header>
+      <main id="view" class="view" tabindex="-1"></main>
+    </div>
+  </div>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

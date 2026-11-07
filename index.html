@@ -54,15 +54,17 @@
 </div>
 <script>
   const SURFACES = [
-    { id: 'landing', title: 'Landing', path: 'landing/', desc: 'Product landing for the pitch (Lane D, Dameli). Create landing/index.html', probe: 'landing/index.html' },
-    { id: 'dashboard', title: 'Dashboard', path: 'prototype/#/dialogs', desc: 'All dialogs, averages by language, where points are lost' },
-    { id: 'chat', title: 'Analysis · chat (KZ)', path: 'prototype/#/dialog/p1-kz-011', desc: 'Operator view: timeline, transcript, score, deductions' },
+    { id: 'landing', title: 'Landing', path: 'landing-tair/', desc: 'Surreal story landing → CTA to support', probe: 'landing-tair/index.html' },
+    { id: 'support', title: 'Customer support chat', path: 'support/', desc: 'AIM bot → honest human handoff → CSAT → auto QA', probe: 'support/index.html' },
+    { id: 'admin', title: 'Admin (passcode: freedom)', path: 'admin/', desc: 'Overview, live operator console, dialogs, AI analyst', probe: 'admin/index.html' },
+    { id: 'dashboard', title: 'Analyst workspace', path: 'prototype/#/dialogs', desc: 'All dialogs, averages by language, where points are lost' },
+    { id: 'chat', title: 'Analysis · chat (KZ)', path: 'prototype/#/dialog/p1-kz-011', desc: 'Timeline, transcript, score, deductions' },
     { id: 'call', title: 'Analysis · call (audio)', path: 'prototype/#/dialog/p4-ru-001', desc: 'Call with recording, seek from deduction markers' },
     { id: 'reviewer', title: 'Reviewer · appeals', path: 'prototype/#/appeals', desc: 'Switch role to «Проверяющий» bottom-left' },
-    { id: 'admin', title: 'Admin · checklist editor', path: 'prototype/#/checklist', desc: 'Replace a criterion → new version → re-evaluate' },
+    { id: 'checklist', title: 'Checklist editor', path: 'prototype/#/checklist', desc: 'Replace a criterion → new version → re-evaluate' },
     { id: 'design', title: 'Design system', path: 'prototype/#/design', desc: 'Tokens + components from fbroker.kz' },
     { id: 'health', title: 'API health', path: 'api/health', desc: 'Which keys/models the deploy has (no secrets)' },
-    { id: 'repo', title: 'GitHub repo', path: 'https://github.com/tairqaldy/doomdatathon-yatebyamognu', desc: 'Issues, branches, AGENTS.md', external: true },
+    { id: 'repo', title: 'GitHub · issue #10', path: 'https://github.com/tairqaldy/doomdatathon-yatebyamognu/issues/10', desc: 'Full product loop plan; comment to add context', external: true },
   ];
   const DEVICES = [{ name: 'Phone', w: 390, h: 844, s: 0.5 }, { name: 'Tablet / D365 iframe', w: 820, h: 1100, s: 0.42 }, { name: 'Laptop', w: 1440, h: 900, s: 0.5 }];
   const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

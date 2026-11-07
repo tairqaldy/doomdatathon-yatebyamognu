@@ -1,0 +1,36 @@
+/* Freedom CQA "midnight gallery × sunlit freedom" theme for landing, support and admin.
+   Reference: Refero "Origin Financial" (near-black canvas, whisper serif, mono labels, white primary)
+   + Freedom brand green as the only signal colour + our own surreal film imagery (landing-tair/assets).
+   Fonts (Google, Cyrillic incl. Kazakh): Cormorant Garamond (display), Inter (UI), JetBrains Mono (labels). */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --g-void: #000000; --g-abyss: #090a0b; --g-obsidian: #0f1011; --g-graphite: #1c1d1f; --g-steel: #2e2f31; --g-line: rgba(255,255,255,.08);
+  --g-fog: #6a6b6b; --g-ash: #9f9fa0; --g-silver: #cacaca; --g-cloud: #f5f5f7; --g-pure: #ffffff;
+  --g-green: #00B323; --g-mint: #00E183; --g-sky: #6fa8ff; --g-peach: #ffcfa8; --g-error: #ff6b6b; --g-amber: #ffc24d;
+  --g-gradient: linear-gradient(91deg, #7D8DEE -1.79%, #1CCC9E 25.51%, #1AE276 82.98%);
+  --g-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --g-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --g-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --g-r-sm: 12px; --g-r-md: 20px; --g-r-lg: 28px; --g-r-xl: 40px;
+  --g-ease: cubic-bezier(.2, 0, 0, 1); --g-ease-out: cubic-bezier(0, 0, .2, 1);
+  --g-blur: saturate(140%) blur(24px);
+}
+.g { background: var(--g-obsidian); color: var(--g-cloud); font-family: var(--g-sans); font-weight: 300; -webkit-font-smoothing: antialiased; }
+.g *, .g *::before, .g *::after { box-sizing: border-box; }
+.g-display { font-family: var(--g-serif); font-weight: 300; line-height: .95; letter-spacing: -.01em; }
+.g-label { font-family: var(--g-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--g-ash); }
+.g-muted { color: var(--g-ash); }
+.g-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; padding: 0 26px; border-radius: 999px; border: 1px solid transparent;
+  font: 500 15px/1 var(--g-sans); cursor: pointer; text-decoration: none; transition: transform .3s var(--g-ease), background .3s var(--g-ease), color .3s, box-shadow .3s; }
+.g-btn--primary { background: var(--g-pure); color: var(--g-void); }
+.g-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 10px 40px rgba(255,255,255,.18); }
+.g-btn--ghost { background: rgba(255,255,255,.06); color: var(--g-cloud); border-color: var(--g-line); backdrop-filter: var(--g-blur); }
+.g-btn--ghost:hover { background: rgba(255,255,255,.12); }
+.g-btn:focus-visible { outline: 2px solid var(--g-mint); outline-offset: 3px; }
+.g-glass { background: rgba(15,16,17,.55); border: 1px solid var(--g-line); backdrop-filter: var(--g-blur); -webkit-backdrop-filter: var(--g-blur); border-radius: var(--g-r-lg); }
+.g-card { background: var(--g-graphite); border: 1px solid var(--g-line); border-radius: var(--g-r-md); }
+.g-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g-mint); box-shadow: 0 0 0 4px rgba(0,225,131,.15); }
+.g-grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: reduce) { .g *, .g *::before, .g *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important; } }

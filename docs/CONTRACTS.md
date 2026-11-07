@@ -88,6 +88,9 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 | POST | `/api/transcribe` | `{ conversation_id, group?, language? }` | `{ conversation_id, cached, text, segments?, language, duration, latency_ms, usage, model }` (calls only) |
 | GET | `/api/audio?id=<conversation_id>&group=DEV` | none | `302` → fresh mp3 (organizer links expire in ~1h). Use directly as `<audio src>` |
 | GET | `/api/dataset?group_id=<ID>` | none | organizer payload (§1). Use for the control set at T+23h |
+| POST | `/api/chat` | `{ messages: [{speaker: "client"\|"bot"\|"operator"\|"system", text}] }` | `{ reply, handoff, handoff_reason, topic, language, cached, model, latency_ms, usage, grounded_on }`, the customer-facing AIM bot (`lib/support-bot.js`, prompt `bot-v1`) |
+| POST | `/api/insights` | `Authorization: Bearer <admin token>`, `{ question, stats }` | `{ answer, findings[], actions[{title, detail, impact}], risks[], follow_up_questions[], cached, model, latency_ms }` (`lib/insights.js`) |
+| POST · GET | `/api/admin-login` | `{ passcode }` · GET with Bearer | `{ token, expires_in }` · `200 {ok:true}` / `401` (`lib/auth.js`, `ADMIN_PASSCODE`, demo `freedom`) |
 
 ```ts
 // POST /api/evaluate response. Points/total are NOT included: compute them in the UI with score(checklist, answers)
@@ -111,5 +114,7 @@ interface AIResult {
 ```
 
 **Precomputed results (instant, no API call):** `GET /data/evaluations/DEV.json` → `{ group, model, prompt_version, checklist_id, checklist_version, generated_at, results: Record<conversation_id, AIResult-without-cache-fields + total + gross_error> }`. They are valid only for the **base checklist** (`data/checklists/freedom-chat-v1.json`). After the checklist changes, call `/api/evaluate` (the prototype keys its cache by a hash of the criteria).
+
+**Live support sessions** (`/support` ⇄ `/admin` operator console): `LiveSession` shape and storage (`localStorage cqa-live-v1` + `BroadcastChannel cqa-live`, same browser for the demo) are defined in issue #10 and implemented in `shared/live-store.js`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).
