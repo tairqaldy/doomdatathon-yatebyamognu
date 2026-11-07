@@ -53,10 +53,12 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | TypeScript | _pin_ | app source | A, C | candidate |
 | Tailwind CSS | _pin_ (v3 → `design/tailwind.preset.js`, v4 → `design/theme.css`) | styling via our tokens | A | candidate |
 | Inter (Google Fonts) | variable | fallback font for CoFo Sans (Freedom's licensed font), full Cyrillic + Kazakh | A, D | active in prototype |
+| Postgres (`DATABASE_URL` / `POSTGRES_URL`) | n/a (no npm driver) | shared live sessions in table `cqa_kv`; Neon/Vercel Postgres via SQL-over-HTTP, other hosts via TCP/TLS in `lib/postgres.js` | B | active (optional) |
 
 ## 6. Approaches and development strategies
 | Approach | Why | Where documented |
 |---|---|---|
+| Optional Postgres for live sessions (`lib/postgres.js` + `lib/kv.js` + `/api/sessions`); localStorage remains the offline cache | Vercel isolates and two demo devices cannot share `localStorage` | `DATABASE_URL`, `node scripts/pg-ping.mjs` |
 | Cache every model call (memory → `eval/cache/` files → optional Upstash), key = model + prompt version + input; commit the cache | repeated requests instant and free; teammates/CI/Vercel reuse paid answers; protects the ~$9.5 budget | `lib/cache.js`, AGENTS.md §8.1 |
 | LLM evidence validated against the transcript (indices in range, quotes replaced by real text) | model can't invent evidence | `lib/evaluator.js` `normalize()` |
 | Precomputed AI results committed (`data/evaluations/<group>.json`) | instant demo, works even if the API is down at defense | `scripts/eval-run.mjs` |

@@ -14,7 +14,7 @@ http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/')) {
       const name = url.pathname.slice(5).replace(/[^a-z0-9-]/gi, '');
       const mod = await import(path.resolve('api', `${name}.js`) + `?t=${Date.now()}`);
-      if (req.method === 'POST') { const ch = []; for await (const c of req) ch.push(c); req.body = JSON.parse(Buffer.concat(ch).toString() || '{}'); }
+      if (req.method === 'POST' || req.method === 'PUT') { const ch = []; for await (const c of req) ch.push(c); req.body = JSON.parse(Buffer.concat(ch).toString() || '{}'); }
       return mod.default(req, res);
     }
     let file = path.resolve('.' + decodeURIComponent(url.pathname));

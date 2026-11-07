@@ -83,7 +83,7 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 | Frontend | **TypeScript + Tailwind CSS allowed** (confirmed by organizers 2026-11-07). Source in `app/src/`, compiled to **static HTML/CSS/JS** in `app/dist/`, which is what we demo and what goes into Dynamics 365. Light build only (`tsc` / Vite / Tailwind CLI); no heavy SPA framework unless logged in DECISIONS |
 | Design | Freedom design language (research in `docs/research/design-system.md`); tokens as Tailwind theme + CSS custom properties |
 | Backend | **Vercel serverless functions** in `api/` (plain Node ESM, zero deps), shared code in `lib/`. Same code runs locally via `npm run dev` |
-| Storage | Committed JSON (`data/`), AI cache files (`eval/cache/`), browser localStorage for appeals/checklist versions; optional Upstash Redis |
+| Storage | Committed JSON (`data/`), AI cache files (`eval/cache/`), browser localStorage for appeals/checklist versions; optional Upstash Redis; optional Postgres (`DATABASE_URL`) for live sessions (`cqa_kv`) |
 | LLM | Eval: **OpenAI `gpt-6-luna` via the direct OpenAI API** (`openai:gpt-6-luna`, `OPENAI_API_KEY`; falls back to OpenRouter `openai/gpt-6-luna` if that key is missing). Any OpenRouter id works via `CQA_EVAL_MODEL`. ASR: OpenRouter `nvidia/nemotron-3.5-transcribe`. All routed by `lib/llm.js`. Model, prompt version, cost and latency logged in `eval/runs/` |
 | Hosting / CI/CD | **Vercel Git integration**: every push to any branch = preview URL, `main` = production. GitHub Actions runs `scripts/check.sh` |
 | Target host | Dynamics 365 web resource (later); standalone browser now |

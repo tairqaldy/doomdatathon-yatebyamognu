@@ -83,7 +83,7 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 
 | Method | Path | Request | Response |
 |---|---|---|---|
-| GET | `/api/health` | none | `{ ok, openrouter, openai, organizer_api, shared_cache, models: { eval, transcribe }, prompt_version, commit, branch }` (booleans only, never keys) |
+| GET | `/api/health` | none | `{ ok, openrouter, openai, organizer_api, shared_cache, postgres, models: { eval, transcribe }, prompt_version, commit, branch }` (booleans only, never keys) |
 | POST | `/api/evaluate` | `{ conversation_id, group?: "DEV", checklist: Checklist (§2, at least criteria), model?, force?: bool }` | `AIResult` below. `force` bypasses the cache (re-bills) |
 | POST | `/api/transcribe` | `{ conversation_id, group?, language? }` | `{ conversation_id, cached, text, segments?, language, duration, latency_ms, usage, model }` (calls only) |
 | GET | `/api/audio?id=<conversation_id>&group=DEV` | none | `302` → fresh mp3 (organizer links expire in ~1h). Use directly as `<audio src>` |
@@ -91,6 +91,7 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 | POST | `/api/chat` | `{ messages: [{speaker: "client"\|"bot"\|"operator"\|"system", text}] }` | `{ reply, handoff, handoff_reason, topic, language, cached, model, latency_ms, usage, grounded_on }`, the customer-facing AIM bot (`lib/support-bot.js`, prompt `bot-v1`) |
 | POST | `/api/insights` | `Authorization: Bearer <admin token>`, `{ question, stats }` | `{ answer, findings[], actions[{title, detail, impact}], risks[], follow_up_questions[], cached, model, latency_ms }` (`lib/insights.js`) |
 | POST · GET | `/api/admin-login` | `{ passcode }` · GET with Bearer | `{ token, expires_in }` · `200 {ok:true}` / `401` (`lib/auth.js`, `ADMIN_PASSCODE`, demo `freedom`) |
+| GET · PUT · DELETE | `/api/sessions` | GET list / GET `?id=` / PUT `{id,…}` / DELETE `?id=` | `{ postgres: bool, sessions?: LiveSession[], session?: LiveSession }`. `postgres: false` and empty list when `DATABASE_URL` is unset (UI keeps localStorage) |
 
 ```ts
 // POST /api/evaluate response. Points/total are NOT included: compute them in the UI with score(checklist, answers)
@@ -115,7 +116,7 @@ interface AIResult {
 
 **Precomputed results (instant, no API call):** `GET /data/evaluations/DEV.json` → `{ group, model, prompt_version, checklist_id, checklist_version, generated_at, results: Record<conversation_id, AIResult-without-cache-fields + total + gross_error> }`. They are valid only for the **base checklist** (`data/checklists/freedom-chat-v1.json`). After the checklist changes, call `/api/evaluate` (the prototype keys its cache by a hash of the criteria).
 
-**Live support sessions** (`/support` ⇄ `/admin` operator console): `LiveSession` shape and storage (`localStorage cqa-live-v1` + `BroadcastChannel cqa-live`, same browser for the demo) are defined in issue #10 and implemented in `shared/live-store.js`.
+**Live support sessions** (`/support` ⇄ `/admin` operator console): `LiveSession` in `shared/live-store.js`. Same-browser demo: `localStorage cqa-live-v1` + `BroadcastChannel cqa-live`. Shared demo: set `DATABASE_URL` → `PUT/GET /api/sessions` (`cqa_kv`, ns `live_session`); the store hydrates and polls every 2s. Additive field: `updated_at`.
 Additive fields in use (set by `/support` and `/admin`): on bot messages `latency_ms`, `cached`, `model`; on the session `topic`, `closed_at`, `csat` (1–5), `csat_comment`, `csat_skipped`, `queue_notified`, `evaluation_status` (`pending`/`done`/`error`), `evaluation_error`, `evaluated_at`; `handoff` is `{ at, reason, summary? }`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).

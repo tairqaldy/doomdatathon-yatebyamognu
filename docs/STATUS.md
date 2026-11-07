@@ -3,9 +3,18 @@
 Append a new entry at the **top** at the end of each session (format in AGENTS.md §5). Don't edit other people's entries.
 
 ## Requests / Plans (fallback when GitHub Issues aren't available)
+- **2026-11-07 · lane-b · postgres store · branch `b/postgres-store` (no `gh` on this laptop):** Goal: connect optional Postgres so `/support` and `/admin` share live sessions across devices. Plan: zero-dep `lib/postgres.js` (Neon HTTP + TCP), `cqa_kv` JSON table, `GET/PUT/DELETE /api/sessions`, live-store hydrate/poll with localStorage fallback. Files: `lib/postgres.js`, `lib/kv.js`, `api/sessions.js`, `shared/live-store.js`, `.env.example`, CONTRACTS/DECISIONS/TOOLING/AGENTS. Contracts: additive `/api/sessions` + `health.postgres`. Verify: `node scripts/pg-ping.mjs`, `/api/sessions` without URL returns `{postgres:false}`, `/api/health` shows the flag. Needs a human: paste Neon/Vercel `DATABASE_URL` into `.env` and Vercel env.
 - **tair/claude (no `gh` on this laptop yet):** plan for branch `d/design-system-and-team-rules` was: rules (issue-first, every-prompt pull-rebase, commits, branching, self-merge), TOOLING registry, enforcement (hook, check.sh, CI, templates), design system from fbroker.kz, clickable prototype. Done and merged, see the log entry below. **Someone with `gh`: please run `scripts/setup-labels.sh` and open issues for the lane tasks in "Next".**
 
 ## Log
+
+### 2026-11-07 17:30 · lane-b · postgres store · branch b/postgres-store
+Done: optional Postgres client (`lib/postgres.js`, no npm driver): Neon SQL-over-HTTP on `*.neon.tech`, TCP/TLS + SCRAM/MD5 otherwise. Table `cqa_kv` holds live sessions. `GET/PUT/DELETE /api/sessions`; `shared/live-store.js` hydrates and polls when `postgres: true`, otherwise localStorage. `/api/health` has `postgres` boolean. `node scripts/pg-ping.mjs`.
+In progress: waiting on a real `DATABASE_URL` (none on this laptop: no `.env`, no local Postgres, no Docker).
+Next: paste Neon/Vercel Postgres URL into `.env` and Vercel → freedom-cqa → Environment Variables; `npm run pg:ping`; open `/support` and `/admin` on two devices.
+Blocked by / Requests: **tair: `DATABASE_URL`**. Someone with `gh`: open issue `[lane-b] persist live sessions in Postgres`.
+Contracts touched: CONTRACTS §5 additive `/api/sessions` + `health.postgres`.
+How to verify: `node scripts/pg-ping.mjs` (exits 0 if unset); `GET /api/sessions` → `{postgres:false,sessions:[]}` without the URL.
 
 ### 2026-11-07 16:20 · team · tair/claude · #10 · merged 56d069f
 **Live now:** https://freedom-cqa.vercel.app/landing-tair/ (landing) · /support/ (customer chat) · /admin/ (passcode `freedom`) · / (preview hub)

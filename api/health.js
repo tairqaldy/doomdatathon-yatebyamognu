@@ -10,6 +10,7 @@ export default function handler(req, res) {
     openai: Boolean(process.env.OPENAI_API_KEY), // direct OpenAI for eval models named openai:<id> (lib/llm.js)
     organizer_api: Boolean(process.env.CQA_API_URL),
     shared_cache: Boolean(process.env.UPSTASH_REDIS_REST_URL),
+    postgres: Boolean(process.env.DATABASE_URL || process.env.POSTGRES_URL),
     admin_passcode_set: Boolean(process.env.ADMIN_PASSCODE),
     models: MODELS, prompt_version: PROMPT_VERSION,
     commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || null, branch: process.env.VERCEL_GIT_COMMIT_REF || null,

@@ -2,6 +2,7 @@
 
 One line per decision. Newest on top. `date · decision · why · who`
 
+- 2026-11-07 · Optional Postgres via `DATABASE_URL` (Neon SQL-over-HTTP on `*.neon.tech`, otherwise TCP/TLS, zero npm deps). Live sessions go to `cqa_kv`; without the URL, `/support` stays on localStorage · two devices / two Vercel isolates cannot share localStorage · lane-b
 - 2026-11-07 · Product loop: landing → /support (AIM bot, honest handoff) → auto QA → /admin (passcode) with AI analyst; plan in issue #10 · covers the whole Freedom ask end to end and answers "people don't trust AI" · tair
 - 2026-11-07 · Landing imagery generated in-house (gpt-image-2.6), mood board used only as reference · IP violations disqualify · tair
 - 2026-11-07 · Admin gate = passcode → HMAC token (demo code shown on the login page); no link from public pages · brief says no login needed, but the admin surface must be distinct · tair

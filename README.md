@@ -8,7 +8,7 @@ Prototype for the Freedom Broker case at the NU datathon: automatic, explainable
 
 ```bash
 git clone https://github.com/tairqaldy/doomdatathon-yatebyamognu.git && cd doomdatathon-yatebyamognu
-cp .env.example .env          # add OPENROUTER_API_KEY (+ CQA_API_URL from the team chat)
+cp .env.example .env          # add OPENROUTER_API_KEY (+ CQA_API_URL from the team chat; optional DATABASE_URL for shared live sessions)
 npm run dev                   # Node ≥ 20, no dependencies → http://localhost:3000 (hub) · /prototype/ (app)
 ```
 Without a key the app runs on the built-in MOCK evaluator (clearly labelled). Without Node: `python3 -m http.server 8080` → http://localhost:8080/prototype/ (static only, MOCK, no call audio).
@@ -38,7 +38,7 @@ npm run asr                            # Nemotron transcripts of the 5 calls + W
 ```
 
 ## API (Vercel functions in `api/`, same code runs in `npm run dev`)
-`GET /api/health` · `POST /api/evaluate {conversation_id, checklist}` · `POST /api/transcribe {conversation_id}` · `GET /api/audio?id=` (fresh mp3 link, since organizer links expire after ~1h) · `GET /api/dataset?group_id=`
+`GET /api/health` · `POST /api/evaluate {conversation_id, checklist}` · `POST /api/transcribe {conversation_id}` · `GET /api/audio?id=` (fresh mp3 link, since organizer links expire after ~1h) · `GET /api/dataset?group_id=` · `GET/PUT/DELETE /api/sessions` (live chats; Postgres when `DATABASE_URL` is set)
 
 ## Repo map
 `prototype/` UI (no build, Dynamics 365-friendly) · `design/` design system from fbroker.kz · `lib/` AI client, cache, evaluator · `api/` serverless routes · `scripts/` dev server, eval, ASR, tests · `data/` datasets, checklist, cached evaluations · `docs/` case, research, team logs · **Team and agent rules: [AGENTS.md](AGENTS.md)**
