@@ -35,3 +35,4 @@ One line per decision. Newest on top. `date · decision · why · who`
 - 2026-11-07 · Upstash Redis connected on Vercel for the AI cache and cross-device live chats · phone (support) + laptop (admin) at the defense · tair
 - 2026-11-07 · Demo video recorded from the real product by `scripts/demo/record.mjs` (DevTools Protocol + AVFoundation, no dependencies) · reproducible after UI changes · tair
 - 2026-11-07 · Phone demo runs on real phones as an **Expo Go WebView wrapper** (`mobile/`) around `/phone/`, not a React Native rewrite · one codebase for web + phone, deploys update the app with no rebuild, React Native stays isolated from the static app (AGENTS §11) · lane A
+- 2026-11-08 · Landing motion: leaves fall only on a fast upward flick (> ~2600 px/s); smooth scrolling only for mouse wheels and anchors, trackpads/touch stay native · seasonal touch without distracting readers; no scroll-jacking on devices that already scroll smoothly · tair

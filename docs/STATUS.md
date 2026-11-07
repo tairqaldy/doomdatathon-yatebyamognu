@@ -409,3 +409,7 @@ Control run Sun 11:00: `npm run results -- --group <CONTROL_ID> --push` from an 
 5. *Anyone:* test the voice mic on a real phone (`/support/`, `/phone/`); test a live chat phone → admin laptop (Redis is on now).
 6. *Defense prep:* 5-minute script in AGENTS §1; demo tips: re-evaluate a **chat** live (≈ 30–60 s), weight changes recompute instantly, «Без AI» for bulk re-apply; admin passcode is set on Vercel (ask tair).
 **Rules that bit us tonight** (LESSONS): never rebase branches with merges; chain git steps with `&&`; don't edit `lib/evaluator.js` without measuring (it invalidates every eval cache entry).
+
+### 2026-11-08 00:40 +05:00 · lane-a · tair/claude · #18 · landing polish
+Done: footer leaves redrawn (maple/oak/birch/ginkgo, gradients, veins, corner heaps); leaves fall only on a fast upward flick; smooth mouse-wheel scrolling (`landing-tair/smooth.js`, trackpads untouched) + smooth anchors; one section rhythm (`--sec-y`, `--sec-gap`); text-heavy sections rewritten into short leads + bold points; numbers section now shows eval-v5.3 (95% / 97% / 7 из 7 / $0,006).
+How to verify: production `/`, scroll fast upward once (leaves), scroll to the footer (heaps), wheel-scroll on a mouse.
