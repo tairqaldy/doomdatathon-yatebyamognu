@@ -120,7 +120,8 @@ function latency(rel) {
   const fresh = s.rows.filter((r) => r.cached === false);
   const q = (rows, p) => { const lat = rows.map((r) => r.model_ms).sort((a, b) => a - b); return lat.length ? lat[Math.min(lat.length - 1, Math.floor(p * lat.length))] : null; };
   const chats = fresh.filter((r) => r.id.startsWith('p1-')), calls = fresh.filter((r) => r.id.startsWith('p4-'));
-  return { costPerEval: s.cost_usd_per_eval, costTotal: s.cost_usd_total, n: s.n, fresh: fresh.length, errors: s.errors,
+  const avg = (rows) => (rows.length ? +(rows.reduce((a, r) => a + (r.cost || 0), 0) / rows.length).toFixed(5) : null);
+  return { costPerEval: s.cost_usd_per_eval, costTotal: s.cost_usd_total, n: s.n, fresh: fresh.length, errors: s.errors, chatCost: avg(chats), callCost: avg(calls),
     p50: s.latency_ms_p50, p95: s.latency_ms_p95, chatP50: q(chats, 0.5), chatP95: q(chats, 0.95), callP50: q(calls, 0.5), callP95: q(calls, 0.95) };
 }
 const lat51 = latency(SUMMARY.v51), lat4 = latency(SUMMARY.v4);
@@ -276,5 +277,5 @@ for (const h of history) console.log(`  ${h.label.padEnd(30)} ${f1(pct(h.all)).p
 const sec = (ms) => (ms == null ? '–' : `${(ms / 1000).toFixed(1)} s`);
 console.log('\nCost and latency (fresh model calls, model time)');
 for (const [k, x] of [['v4', lat4], ['v5.1', lat51]]) {
-  console.log(`  ${k.padEnd(5)} $${x.costPerEval}/eval ($${x.costTotal} for ${x.fresh} fresh of ${x.n}, ${x.errors} errors) · chats p50 ${sec(x.chatP50)} p95 ${sec(x.chatP95)} · calls p50 ${sec(x.callP50)} p95 ${sec(x.callP95)}`);
+  console.log(`  ${k.padEnd(5)} $${x.costPerEval}/eval ($${x.costTotal} for ${x.fresh} fresh of ${x.n}, ${x.errors} errors) · chats $${x.chatCost} p50 ${sec(x.chatP50)} p95 ${sec(x.chatP95)} · calls $${x.callCost} p50 ${sec(x.callP50)} p95 ${sec(x.callP95)}`);
 }
