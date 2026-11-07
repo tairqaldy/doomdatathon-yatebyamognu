@@ -91,6 +91,8 @@ For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS
 | POST | `/api/chat` | `{ messages: [{speaker: "client"\|"bot"\|"operator"\|"system", text}] }` | `{ reply, handoff, handoff_reason, topic, language, cached, model, latency_ms, usage, grounded_on }`, the customer-facing AIM bot (`lib/support-bot.js`, prompt `bot-v1`) |
 | POST | `/api/insights` | `Authorization: Bearer <admin token>`, `{ question, stats }` | `{ answer, findings[], actions[{title, detail, impact}], risks[], follow_up_questions[], cached, model, latency_ms }` (`lib/insights.js`) |
 | POST · GET | `/api/admin-login` | `{ passcode }` · GET with Bearer | `{ token, expires_in }` · `200 {ok:true}` / `401` (`lib/auth.js`, `ADMIN_PASSCODE`, demo `freedom`) |
+| POST | `/api/agent` | `{ messages: [{speaker, text}], language: "RU"\|"KZ"\|"EN", page: { screen, catalog: [{ id, title, summary?, targets: [{ id, label, kind: "field"\|"button"\|"section", protected?, options? }] }], dom: [{ id, tag, type, label, value?, protected? }], text } }` | `{ reply, language, handoff, handoff_reason (RU), actions: NavAction[], raw_actions, cached, model, latency_ms, usage, prompt_version }`, the `/broker` navigation agent (`lib/nav-agent.js`, prompt `nav-v1`). Actions are validated server-side against `page` |
+| POST | `/api/agent-voice` | `{ audio: base64, format: "wav"\|"webm"\|"mp4"\|"ogg"\|"mp3", language }` (≤ ~2 MB) | `{ text, language, cached, latency_ms, model }`: push-to-talk via Nemotron 3.5 Transcribe, cached in the gitignored `asr` namespace |
 | GET · PUT · DELETE | `/api/sessions` | GET list / GET `?id=` / PUT `{id,…}` / DELETE `?id=` | `{ postgres: bool, sessions?: LiveSession[], session?: LiveSession }`. `postgres: false` and empty list when `DATABASE_URL` is unset (UI keeps localStorage) |
 
 ```ts
@@ -118,5 +120,17 @@ interface AIResult {
 
 **Live support sessions** (`/support` ⇄ `/admin` operator console): `LiveSession` in `shared/live-store.js`. Same-browser demo: `localStorage cqa-live-v1` + `BroadcastChannel cqa-live`. Shared demo: set `DATABASE_URL` → `PUT/GET /api/sessions` (`cqa_kv`, ns `live_session`); the store hydrates and polls every 2s. Additive field: `updated_at`.
 Additive fields in use (set by `/support` and `/admin`): on bot messages `latency_ms`, `cached`, `model`; on the session `topic`, `closed_at`, `csat` (1–5), `csat_comment`, `csat_skipped`, `queue_notified`, `evaluation_status` (`pending`/`done`/`error`), `evaluation_error`, `evaluated_at`; `handoff` is `{ at, reason, summary? }`.
+
+```ts
+// /api/agent actions (after server-side validation). The page runs them in order.
+type NavAction =
+  | { type: "open_screen"; screen: string }
+  | { type: "highlight"; screen: string; target: string }               // also what a protected target or a prefill on a non-field becomes
+  | { type: "prefill"; screen: string; target: string; value: string }  // only fields; never protected targets
+  | { type: "click"; element_id: string }                               // DOM fallback, never protected / submit elements
+  | { type: "input"; element_id: string; value: string }
+  | { type: "highlight_element"; element_id: string };                  // a click on a protected element is downgraded to this
+```
+`/broker` handoff reuses `LiveSession` (additive fields): session `source: "broker-agent"`, messages may carry `actions: string[]` (what AIM did on screen). Pre-handoff messages keep their real `at` / `timestamp`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).

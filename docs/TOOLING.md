@@ -45,6 +45,9 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | `nvidia/nemotron-3.5-transcribe` via OpenRouter (`CQA_ASR_MODEL`) | transcribe the 5 call recordings; WER/CER vs organizer transcripts (`npm run asr`) | C | ≈$0.06/audio hour ($0.0000167/s, PrimeIntellect) | measure | active |
 | OpenAI `gpt-image-2.6-sunburst` (quality medium, 1536×1024 / 1024×1536, webp) | original surreal film imagery for landing/support (`scripts/gen-images.mjs`), replaces third-party mood-board photos (IP rule) | D | ~1.1k image tokens per image; 8 images | 15–23 s each | active |
 | `openai:gpt-6-luna` as chat model (`CQA_CHAT_MODEL`) | AIM support bot `/api/chat`, grounded on DEV operator answers | B/C | ~$0.001/turn est. | ~2 s | active |
+| `openai:gpt-6-luna` as nav-agent model (`MODELS.chat`) | `/broker` AIM navigation agent `/api/agent`: reply + typed actions (open_screen / highlight / prefill) + DOM fallback, strict JSON, temp 0.2, prompt `nav-v1` | C | ~$0.001–0.002/turn est. (page catalog ≈ 2–3k tokens) | 4–8 s per turn measured locally | active (#14) |
+| `nvidia/nemotron-3.5-transcribe` for push-to-talk (`/api/agent-voice`) | `/broker` voice input; client re-encodes recordings to 16 kHz mono WAV | C | ≈$0.06/audio hour | ~1.4–2 s per short clip | active (#14); RU good on a synthetic clip, KZ poor on a synthetic (macOS `say -v Aru`) clip: test with a real speaker |
+| Browser `speechSynthesis` (Web Speech API) | `/broker` spoken replies (after a voice question or when the speaker toggle is on); silent when the browser has no voice for the language | C | free, on device | instant | active (#14) |
 | Whisper / ElevenLabs | optional live voice / TTS (500 ms target) | C | | target ≤500 ms if live | candidate |
 
 ## 5. Libraries and frameworks
@@ -70,6 +73,7 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Design tokens reverse-engineered from fbroker.kz (site is Nuxt + Tailwind, so its utility names map 1:1) | consistent Freedom look, Tailwind-ready | `docs/research/design-system.md` |
 | Clickable no-build prototype first, then the TS app copies its patterns | fast UX validation; demo exists even if the build breaks | `prototype/` |
 | Gold set + accuracy harness: hand-checked labels per criterion, every evaluator run scored against them (strict / lenient agreement, N/A, gross-error recall, evidence hit rate, total MAE) | measured accuracy instead of claims; catches prompt regressions; mock baseline proves the harness before the LLM exists | `eval/gold/README.md`, `eval/accuracy.ts` |
+| Client navigation agent = **typed app actions first, DOM scan as fallback**: the page declares screens + named targets (`broker/app.js SCREENS`), the model returns actions, the server keeps only actions on declared targets, protected targets (money, orders, requests) can only be highlighted. Concept inspired by the team's own BariWeb project; code written from scratch for this repo | reliable on our app, still works on elements nobody declared, never moves money | `lib/nav-agent.js`, `broker/agent.js`, CONTRACTS §5 |
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
 
 ## 7. Research sources and external docs
