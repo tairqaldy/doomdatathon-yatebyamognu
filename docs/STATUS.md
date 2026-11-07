@@ -7,6 +7,21 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 16:20 · team · tair/claude · #10 · merged 56d069f
+**Live now:** https://freedom-cqa.vercel.app/landing-tair/ (landing) · /support/ (customer chat) · /admin/ (passcode `freedom`) · / (preview hub)
+Done (full product loop from #10):
+- `/landing-tair/`: surreal story landing, 8 ORIGINAL images (gpt-image-2.6, IP-safe), scroll-film transitions, demo-video placeholder (swap comment in HTML), CTA → /support/, no admin link
+- `/support/`: AIM bot via `/api/chat` (grounded on real DEV operator answers, ~2 s), honest handoff card (operator sees chat, < 2 min, queue line after 90 s), live operator messages, CSAT, background QA via `/api/evaluate`
+- `/admin/`: login → overview (KPIs, histogram, language/channel, points lost, heat-map, deduction reasons), live operator console, dialogs (DEV + live), AI analyst (`/api/insights`); "Рабочее место" links to /prototype
+- APIs `/api/chat`, `/api/insights`, `/api/admin-login`; `shared/theme.css`, `shared/live-store.js`; CONTRACTS §5 updated
+**Blocking the live demo (tair, 2 min):** Vercel → freedom-cqa → Settings → Environment Variables: `OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `CQA_API_URL`, optionally `ADMIN_PASSCODE`; then Redeploy. Until then prod chat shows the "call a specialist" fallback and the analyst returns errors.
+Next:
+- Nazar (#10 list): stream `/api/chat` (time-to-first-token), handoff policy/brief, QA of bot turns, voice
+- Dameli: `/prototype` is still light-theme; consider the gallery theme (`shared/theme.css`) so "Рабочее место" matches admin; merge `main` into `a/8-card-evaluation-ux`
+- demo video for the landing placeholder (record the 5-min flow)
+Contracts touched: CONTRACTS §5 (additive: chat/insights/admin-login, LiveSession fields).
+How to verify: open /support/ and /admin/#/live in two windows of the same browser; hand off from the chat, accept and reply from admin, close, rate, then see the evaluation in admin.
+
 ### 2026-11-07 15:10 · lane-c/b/d · tair/claude · branch c/full-dev-eval-hub
 Done:
 - Verified Akanov's OpenAI + OpenRouter router (#7) end to end with real keys (both valid; OpenRouter $14.97 left of $15). No duplicate implementation.

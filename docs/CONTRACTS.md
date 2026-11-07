@@ -116,5 +116,6 @@ interface AIResult {
 **Precomputed results (instant, no API call):** `GET /data/evaluations/DEV.json` → `{ group, model, prompt_version, checklist_id, checklist_version, generated_at, results: Record<conversation_id, AIResult-without-cache-fields + total + gross_error> }`. They are valid only for the **base checklist** (`data/checklists/freedom-chat-v1.json`). After the checklist changes, call `/api/evaluate` (the prototype keys its cache by a hash of the criteria).
 
 **Live support sessions** (`/support` ⇄ `/admin` operator console): `LiveSession` shape and storage (`localStorage cqa-live-v1` + `BroadcastChannel cqa-live`, same browser for the demo) are defined in issue #10 and implemented in `shared/live-store.js`.
+Additive fields in use (set by `/support` and `/admin`): on bot messages `latency_ms`, `cached`, `model`; on the session `topic`, `closed_at`, `csat` (1–5), `csat_comment`, `csat_skipped`, `queue_notified`, `evaluation_status` (`pending`/`done`/`error`), `evaluation_error`, `evaluated_at`; `handoff` is `{ at, reason, summary? }`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).
