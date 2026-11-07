@@ -3,7 +3,8 @@
 //                        them in order, so the first sentence starts as soon as it is ready. Text → blob-URL map: a
 //                        repeated phrase plays at once with no request. No server voice (501) → speechSynthesis.
 //   stop()             → stops playback and drops the queue (called when the client starts talking or sends).
-//   prefetch(text)     → warms the map (greetings), ui: true marks fixed UI phrases the server may commit to its cache.
+//   prefetch(text)     → warms the map (greetings); ui: true marks a fixed UI phrase whose first chunk the server keeps
+//                        in the committed tts-ui cache, so a fresh deploy starts the greeting at once.
 //   recorder({...})    → push-to-talk: tap to start / tap to stop, or hold and release. Stops playback on start.
 //   transcribe(blob)   → POST /api/agent-voice; sends the browser's own webm/mp4 when the server's ASR takes it
 //                        (Whisper), else 16 kHz mono WAV (Nemotron fallback).
@@ -12,7 +13,7 @@
 const SILENT_WAV = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=';
 const MAP_MAX = 150;
 const FIRST_MAX = 160; // first chunk: one sentence, so audio starts fast
-const FIRST_SPLIT = 90; // a longer first sentence is cut at a comma/semicolon before this many characters
+const FIRST_SPLIT = 70; // a longer first sentence is cut at a comma/semicolon/dash before this many characters
 const CHUNK_MAX = 260; // later chunks: a few sentences each, fetched in parallel while the first one plays
 
 /** Split a reply into speakable chunks: first sentence alone, then sentences grouped up to CHUNK_MAX characters. */
@@ -39,7 +40,7 @@ export function chunksOf(text) {
   if (pieces[0]?.length > FIRST_SPLIT) {
     const head = pieces[0].slice(0, FIRST_SPLIT);
     const cut = Math.max(head.lastIndexOf(', '), head.lastIndexOf('; '), head.lastIndexOf(' — '), head.lastIndexOf(': '));
-    if (cut > 30) pieces.splice(0, 1, pieces[0].slice(0, cut + 1).trim(), pieces[0].slice(cut + 1).trim());
+    if (cut > 20) pieces.splice(0, 1, pieces[0].slice(0, cut + 1).trim(), pieces[0].slice(cut + 1).trim());
   }
   // Chunk 0 is one sentence (it only grows while it is a tiny greeting like «Здравствуйте!»);
   // chunks 1+ group sentences up to CHUNK_MAX, so a long reply is a few requests, not one per sentence.
@@ -125,7 +126,9 @@ export function createVoice({ apiBase = '', getLang = () => 'RU' } = {}) {
     const cfg = await config();
     if (my !== gen) return;
     if (!cfg.tts || !serverTts) { browserSpeak(text, lang); return; }
-    const jobs = parts.map((p) => urlFor(p, lang, ui)); // all in parallel; played strictly in order
+    // All chunks in parallel, played strictly in order. Only chunk 0 of a UI phrase is committable (tts-ui): it is the
+    // one that decides how fast the greeting starts; the rest is ready long before chunk 0 ends.
+    const jobs = parts.map((p, i) => urlFor(p, lang, ui && i === 0));
     speaking = true;
     try {
       for (let i = 0; i < jobs.length; i++) {
@@ -147,7 +150,7 @@ export function createVoice({ apiBase = '', getLang = () => 'RU' } = {}) {
   async function prefetch(text, lang = getLang(), { ui = false } = {}) {
     const cfg = await config();
     if (!cfg.tts || !serverTts) return;
-    await Promise.all(chunksOf(text).map((p) => urlFor(p, lang, ui)));
+    await Promise.all(chunksOf(text).map((p, i) => urlFor(p, lang, ui && i === 0)));
   }
 
   // ---------- speech-to-text ----------
