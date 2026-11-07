@@ -40,7 +40,7 @@ Status: `active` (in use) · `trial` (being evaluated) · `candidate` (proposed,
 Log: model id, provider, why, temperature, prompt version, **cost per evaluation (all calls)**, latency p50/p95. README must state model + cost per evaluation (organizer requirement).
 | Model | Used for | Lane | Cost / eval | Latency | Status |
 |---|---|---|---|---|---|
-| `anthropic/claude-haiku-5.5` via OpenRouter (default, `CQA_EVAL_MODEL`) | criterion answers + explanation + deduction reason + evidence, strict JSON schema, temp 0, prompt `eval-v1` | C | ≈$0.001 est. ($0.10/$0.50 per M tok); measured in `eval/runs/` | measure | active (compare vs `nvidia/nemotron-3.5-lightning`, `qwen/qwen3.7-flash` per Dameli's plan) |
+| `anthropic/claude-haiku-5.5` via OpenRouter (default, `CQA_EVAL_MODEL`) | criterion answers + explanation + deduction reason + evidence, strict JSON schema, temp 0, prompt `eval-v1` | C | **measured $0.00177/eval** (19 dialogs, $0.034 total, one call each, 2026-11-07); rates $0.10/$0.50 per M tok | **p50 13.4 s · p95 18.0 s** (concurrency 4) | active; gold accuracy 75.7% strict / 92.1% lenient (`eval/runs/haiku-5.5-eval-v1.metrics.json`) (compare vs `nvidia/nemotron-3.5-lightning`, `qwen/qwen3.7-flash` per Dameli's plan) |
 | `nvidia/nemotron-3.5-transcribe` via OpenRouter (`CQA_ASR_MODEL`) | transcribe the 5 call recordings; WER/CER vs organizer transcripts (`npm run asr`) | C | ≈$0.06/audio hour ($0.0000167/s, PrimeIntellect) | measure | active |
 | Whisper / ElevenLabs | optional live voice / TTS (500 ms target) | C | | target ≤500 ms if live | candidate |
 

@@ -7,6 +7,19 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-c · claude · #6 · branch c/6-llm-accuracy
+Done: first real accuracy run. `anthropic/claude-haiku-5.5`, prompt `eval-v1`, 19 reviewed gold dialogs, 19 calls, **$0.034 total = $0.00177 per evaluation**, p50 13.4 s / p95 18.0 s, 0 errors. Cache committed (`eval/cache/`) so re-runs are free.
+| Metric | Mock | Haiku 5.5 |
+|---|---|---|
+| strict / lenient agreement | 61.8% / 75.0% | **75.7% / 92.1%** |
+| gross-error recall | 0/7 | **6/7**, 0 false positives |
+| evidence hit rate · invalid refs | 73.3% · 0 | **95.5%** · 0/182 |
+| total MAE | 22.74 | 14.06 |
+Weak spots, for prompt v2: (1) c04 under-scored: 15 instead of 20 in 5 dialogs where the request was fully closed; (2) avoids N/A: c02 "no" on clear requests (6×), c07 "no" after a lost connection (3×), c03 "no" on p1-ru-018; (3) missed the KZ confidential-disclosure gross error in p1-kz-015. These drive most of the total MAE.
+Next: prompt v2 targeting the three points (bump `PROMPT_VERSION`), re-run the same 19 and compare; then batch all 65 DEV. Lane D: README cost line can use the measured $0.00177/eval.
+Contracts touched: none.
+How to verify: `node eval/accuracy.ts eval/runs/2026-11-07T09-36-59-522Z-DEV-anthropic_claude-haiku-5.5.evaluations.json --reviewed-only --verbose`
+
 ### 2026-11-07 13:15 · lane-d · product/pitch
 Done: researched text, transcription and voice model candidates, 500 ms latency and evaluation metrics in docs/research/models-and-metrics.md.
 In progress: model comparison is research only; no benchmarks run.
