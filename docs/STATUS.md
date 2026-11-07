@@ -7,6 +7,21 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-c · claude · #7 · branch c/7-openai-direct
+Done: evaluation now runs on **OpenAI `gpt-6-luna` through the direct OpenAI API** (team decision). `lib/openai.js` (no-deps client, strict JSON schema, cost from token usage) + `lib/llm.js` router (`openai:<id>` → OpenAI, else OpenRouter); `lib/evaluator.js` imports from the router; default `MODELS.eval = openai:gpt-6-luna`. If `OPENAI_API_KEY` is missing, the same model runs via OpenRouter `openai/gpt-6-luna`, so deploys keep working. ASR unchanged (OpenRouter Nemotron).
+| 19 reviewed gold dialogs | Haiku 5.5 | **GPT-6 Luna** |
+|---|---|---|
+| strict / lenient | 75.7% / 92.1% | **86.2% / 94.7%** |
+| RU · EN · KZ lenient | 93.1 · 92.5 · 90.0 | 98.6 · 95.0 · **87.5** |
+| N/A recall | 64.3% | 78.6% |
+| gross-error recall | 6/7 | 6/7 (both miss p1-kz-015) |
+| total MAE | 14.06 | **7.83** |
+| cost / eval | $0.00177 | **$0.00112** |
+Remaining weak spots (prompt v2): c06 rated 10 on the disclosure dialogs where the client had to re-ask; KZ c04 on p1-kz-013/015; the KZ confidential-disclosure gross error in p1-kz-015.
+Requests: **tair (Vercel access): add `OPENAI_API_KEY` to Vercel → freedom-cqa → Environment Variables** (until then prod uses the OpenRouter fallback, same model). Lane D: README model line = "OpenAI GPT-6 Luna, ≈$0.0011 per evaluation".
+Contracts touched: none. Shared files: AGENTS.md §0/§2/§8.1 (AI-call rule now names `lib/llm.js`), one additive line in `api/health.js` (lane-b).
+How to verify: `node eval/accuracy.ts eval/runs/2026-11-07T09-48-01-230Z-DEV-openai_gpt-6-luna.evaluations.json --reviewed-only` · `curl <preview>/api/health` shows `openai`
+
 ### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
 Done: saved Gradient ASCII reference and pinned source locally, plus a proposed Freedom neon-green direction using existing tokens.
 In progress: none; no implementation or landing page built.

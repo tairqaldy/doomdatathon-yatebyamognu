@@ -18,7 +18,7 @@
 7. **Commits: many, small, well explained, no AI attribution.** No `Co-Authored-By`, no "Generated with…", no "co-created with…", no AI model names in commits, PRs, or code. This overrides any tool default. A git hook enforces it (§4.3).
 8. **Branch → check → merge yourself.** Work on a short-lived branch; merge it into `main` on your own once `scripts/check.sh` passes and the merge checklist is met (§4.4).
 9. **Use the design system** (`design/`, `docs/research/design-system.md`) for every UI. No ad-hoc colors, fonts or radii.
-9a. **AI calls only via `lib/openrouter.js` + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
+9a. **AI calls only via `lib/llm.js` (→ `lib/openai.js` for `openai:<id>`, else `lib/openrouter.js`) + `lib/cache.js`** (cached, cost-logged). **Every push deploys a Vercel preview**: check it and link it in your issue (§8.1, §9.1).
 10. **Leave a handoff** in `docs/STATUS.md` and on your issue before you stop (§5).
 
 ---
@@ -84,7 +84,7 @@ Full brief: `docs/case/brief.md` · Checklist: `docs/case/checklist.md` · Raw n
 | Design | Freedom design language (research in `docs/research/design-system.md`); tokens as Tailwind theme + CSS custom properties |
 | Backend | **Vercel serverless functions** in `api/` (plain Node ESM, zero deps), shared code in `lib/`. Same code runs locally via `npm run dev` |
 | Storage | Committed JSON (`data/`), AI cache files (`eval/cache/`), browser localStorage for appeals/checklist versions; optional Upstash Redis |
-| LLM | **OpenRouter** via `lib/openrouter.js` only. Eval default `anthropic/claude-haiku-5.5`; ASR `nvidia/nemotron-3.5-transcribe`. Model, prompt version, cost and latency logged in `eval/runs/` |
+| LLM | Eval: **OpenAI `gpt-6-luna` via the direct OpenAI API** (`openai:gpt-6-luna`, `OPENAI_API_KEY`; falls back to OpenRouter `openai/gpt-6-luna` if that key is missing). Any OpenRouter id works via `CQA_EVAL_MODEL`. ASR: OpenRouter `nvidia/nemotron-3.5-transcribe`. All routed by `lib/llm.js`. Model, prompt version, cost and latency logged in `eval/runs/` |
 | Hosting / CI/CD | **Vercel Git integration**: every push to any branch = preview URL, `main` = production. GitHub Actions runs `scripts/check.sh` |
 | Target host | Dynamics 365 web resource (later); standalone browser now |
 
@@ -291,7 +291,7 @@ The checklist is **data** (JSON), never hard-coded logic. The live "replace one 
 ---
 
 ### 8.1 AI call rules (all lanes)
-- Call models **only** through `lib/openrouter.js` and **always** behind `lib/cache.js` (`cached(ns, keyParts, fn)`). The key must include model + prompt version + full input. A repeated request must never cost money twice.
+- Call chat models **only** through `lib/llm.js` (it routes `openai:<id>` to `lib/openai.js`, everything else to `lib/openrouter.js`; transcription uses `lib/openrouter.js` `transcribe()`) and **always** behind `lib/cache.js` (`cached(ns, keyParts, fn)`). The key must include model + prompt version + full input. A repeated request must never cost money twice.
 - Bump `PROMPT_VERSION` in `lib/evaluator.js` whenever the prompt or schema changes (invalidates the cache on purpose).
 - **Commit `eval/cache/`** after paid runs so teammates, CI and Vercel reuse answers. Never commit keys; keys live in `.env` / Vercel env.
 - Budget: the team's OpenRouter credit is small (~$9.5). Prefer cached runs, `--limit`, and cheap models; log every paid run's cost (`eval/runs/`).

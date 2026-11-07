@@ -2,6 +2,7 @@
 
 One line per decision. Newest on top. `date · decision · why · who`
 
+- 2026-11-07 · Eval default = OpenAI `gpt-6-luna` via the **direct OpenAI API** (`openai:gpt-6-luna`, `lib/openai.js` through `lib/llm.js`); ASR stays OpenRouter `nvidia/nemotron-3.5-transcribe`; without `OPENAI_API_KEY` the same model runs via OpenRouter `openai/gpt-6-luna` · team chose the OpenAI API; on the 19 reviewed gold dialogs Luna scored 86.2% strict / 94.7% lenient vs Haiku 5.5 75.7% / 92.1%, total MAE 7.83 vs 14.06, $0.00112 vs $0.00177 per eval (#7) · lane-c
 - 2026-11-07 · Vercel (not Cloudflare) for CI/CD: Git integration gives a preview URL per branch + prod from main, zero-dep Node functions for the AI proxy · fastest path, MCP access for checks · tair
 - 2026-11-07 · OpenRouter for all models; eval default claude-haiku-5.5, ASR nemotron-3.5-transcribe; everything cached and cost-logged · one key, cheap, ~$9.5 budget · tair
 - 2026-11-07 · Prototype UI rebuilt to Freedom's "QA workspace" slide layout (speaker timeline, understanding strip, deduction reasons, dispute button) · that's the jury's mental model · tair
