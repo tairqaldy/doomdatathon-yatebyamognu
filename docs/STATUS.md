@@ -8,6 +8,17 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 18:40 · lane-c · claude · #14 · branch c/14-broker-agent
+Done: **client navigation agent on a mock Freedom Broker app**, our own BariWeb-style experience written from scratch.
+- `/broker/`: demo client app (portfolio with trading vs D account, quotes with bond search + "Использовать маржу", deposit by card / Kaspi / bank details, withdraw, tariffs, documents incl. 1042-S, profile), RU/KZ/EN, design tokens, phone layout. Each screen declares agent targets; money / order / request buttons are `protected`.
+- `POST /api/agent` (`lib/nav-agent.js`, prompt `nav-v1`, `openai:gpt-6-luna`): reply + typed actions (`open_screen`, `highlight`, `prefill`) with a DOM-scan fallback (`click`, `input`). Server keeps only actions on declared targets; protected targets can only be highlighted; IIN / card numbers masked.
+- Widget `broker/agent.js`: runs actions with visible highlights + an action log, minimises on phones while acting, **handoff** → `LiveSession` (`source: "broker-agent"`, real timestamps, RU brief) → `/admin/#/live` → operator replies show live → QA evaluation on close.
+- **Voice**: push-to-talk → 16 kHz WAV in the browser → `POST /api/agent-voice` (Nemotron) → text; replies via browser `speechSynthesis`.
+Verified in the browser pane: RU deposit request filled method/currency/amount and highlighted bank details; bonds + margin off + qty 10, Buy only highlighted; DOM fallback click; KZ withdrawal question → handoff → admin accept, reply, close → evaluation done; WAV + transcription; 375 px layout.
+Known gaps: Kazakh push-to-talk was poor on a synthetic macOS voice (test with a real speaker); `eval/cache/nav/` is gitignored, so every agent turn is a fresh call (~4–8 s); the hub at `/` has no `/broker` tile yet (lane A/D, one link).
+Contracts touched: CONTRACTS §5 additive (`/api/agent`, `/api/agent-voice`, `NavAction`, LiveSession `source` + message `actions`).
+How to verify: `npm run dev` → http://localhost:3000/broker/ → "Спросить AIM" → «Хочу пополнить счёт на 50 000 ₸ переводом из банка»; then «почему заблокирован вывод?» and open http://localhost:3000/admin/#/live (local passcode `freedom`).
+
 ### 2026-11-07 18:20 · lane-c · claude · #13 · branch c/13-prompt-v2
 Done: evaluator prompt **eval-v4** (default model `openai:gpt-6-luna`). Five general rules added to the SYSTEM prompt in `lib/evaluator.js` (by criterion meaning, not id, so a replaced criterion still works): N/A for need-identification on clear requests; N/A for closing when the system/client ended the chat; a hand-off counts as a correct next step when the client is told what happens next, gross violations don't lower the consultation, client left before asking → consultation N/A; re-asking caused by the operator → "client has to re-ask" step, bot→operator queue time ignored; account facts before verification = disclosure (gross error + identification "no"), but steps of the verification procedure itself are not.
 | 19 reviewed gold dialogs | eval-v1 | v2 (rejected) | v3 (rejected) | **eval-v4** |
