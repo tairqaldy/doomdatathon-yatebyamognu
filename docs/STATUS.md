@@ -7,6 +7,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 13:05 · lane-b · tair/claude
+Done: fetched DEV dataset → `data/datasets/DEV.json` (65 records, matches brief). API URL moved to `.env` (gitignored, template in `.env.example`); how to re-fetch / fetch control set in `data/README.md`.
+Next: Lane B builds the proxy/cache endpoint on top of this; Lane C can start prompts against the local file now.
+Contracts touched: none (raw shape = CONTRACTS §1).
+How to verify: `python3 -c "import json;print(len(json.load(open('data/datasets/DEV.json'))['data']['records']))"` → 65
+
 ### 2026-11-07 · lane-d · tair/claude
 Done: AGENTS.md (team + agent rules), CLAUDE.md pointer, case docs extracted to `docs/case/`, draft contracts, checklist seed JSON.
 In progress: nothing.
