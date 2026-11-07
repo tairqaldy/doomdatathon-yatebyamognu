@@ -71,6 +71,11 @@ function showLogin(reason = '') {
   $('#login-err').textContent = reason;
   $('#login-pass').value = '';
   setTimeout(() => $('#login-pass').focus(), 30);
+  // The "freedom" hint is only true while ADMIN_PASSCODE is unset on the server; never reveal a custom passcode.
+  fetch('/api/health', { cache: 'no-store' }).then((r) => r.json()).then((h) => {
+    const hint = $('#login-hint');
+    if (hint && h.admin_passcode_set) hint.textContent = 'Код доступа выдаёт команда';
+  }).catch(() => {});
 }
 
 $('#login-form').addEventListener('submit', async (e) => {
