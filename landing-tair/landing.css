@@ -358,3 +358,19 @@ body.l { margin: 0; overflow-x: clip; }
   .hero__img, .assist__img, .pace__img, .quality__img, .sky__strip, .cta__glow, [data-par] { animation: none !important; transform: none !important; }
   .water { display: none !important; }
 }
+
+/* ── autumn leaves (leaves.js): a few fall from the top when scrolling up, a pile lies along the footer ── */
+.leaves { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
+.leaf { position: absolute; top: 0; left: 0; will-change: transform, opacity; }
+.leaf__sway { display: block; animation: leaf-sway 2.4s ease-in-out infinite alternate; }
+.leaf svg, .leaf-pile svg { display: block; filter: drop-shadow(0 2px 2px rgba(14,21,28,.12)); }
+@keyframes leaf-sway { from { transform: translateX(calc(var(--sway, 30px) * -.5)) rotate(-14deg); } to { transform: translateX(calc(var(--sway, 30px) * .5)) rotate(14deg); } }
+.foot { position: relative; overflow: hidden; padding-bottom: 88px; }
+.leaf-pile { position: absolute; left: 0; right: 0; bottom: 0; height: 60px; pointer-events: none; }
+.leaf-pile__leaf { position: absolute; transform: translateY(-120px) rotate(0deg); opacity: 0;
+  transition: transform 1.1s var(--l-ease-out) var(--d, 0ms), opacity .6s ease var(--d, 0ms); }
+.leaf-pile.is-in .leaf-pile__leaf { transform: translateY(0) rotate(var(--r, 0deg)); opacity: .95; }
+@media (prefers-reduced-motion: reduce) {
+  .leaves { display: none; }
+  .leaf-pile__leaf { transition: none; }
+}
