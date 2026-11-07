@@ -10,6 +10,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 20:20 · lane-c · claude · #19 · branch c/19-nav-direct
+Done: AIM now **acts right away when the client explicitly asks** («открой за меня», «перекинь меня на вывод», "take me to the tariffs page", «Тарифтерді ашып беріңізші»), even after an earlier «нет». Prompt `nav-v6` returns `direct`; the server also checks the last client message against an act-phrase pattern (`ACT_RE`) so it doesn't depend on the model alone. Widget: while a yes/no offer is open, act words count as yes and win over a leading «нет»; `direct` responses run without a question. Plain «нет» still declines; normal questions still get steps + the question.
+Verified locally: the reported chat (offer → «Нет» → «нет, открой за меня» → opened «Пополнение»), act words during an open offer, plain «нет», direct first message (RU), EN and KZ direct requests, normal question still asks.
+Planned (not done): Redis cache for frequent AIM questions via the shared `lib/cache.js` tier (#18); the `nav` key is the whole conversation + page context today, so first-turn questions need a narrower key to get hits.
+Contracts touched: CONTRACTS §5 `/api/agent` adds `direct` (additive).
+
 ### 2026-11-07 19:55 · lane-c · claude · #17 · branch c/17-widget-isolation
 Done: the AIM widget is now **self-contained**, so it survives the switch to a Freedom-designed demo page. Own stylesheet `broker/agent.css` (scoped under `#aim-widget`, `all: initial` root + element reset, its own Freedom colour values, optional `--aim-*` theming), loaded by `agent.js` itself and hidden until loaded. Mounted on `<body>` outside `#cqa-root`, with its own toast. All page knowledge moved into `broker/agent-host.js` (or `window.AIM_HOST`); generic defaults (language from `<html lang>`, DOM scan of `<main>`, wrapped-label detection) work on any page. Widget rules removed from `broker/broker.css`; no other app changes.
 Verified: /broker flow (ask → steps → yes → fields filled + highlight) unchanged; hostile page CSS (global button/p/li/textarea/body/`.br button` rules) → 0 computed-style differences across 11 widget parts; bare test page without the broker app → widget in English, scan finds Amount / Pay [protected] / Help and skips the widget itself; 375 px: no overflow, no overlap.

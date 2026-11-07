@@ -248,6 +248,8 @@ async function send(text, { voice = false } = {}) {
   if (s) { if (s.status !== 'closed') store.addMessage(st.sid, 'client', clean); return renderAll(); }
   if (st.pending) {
     // A typed answer to «Хотите, я помогу?» is handled locally; anything else drops the offer and goes to AIM.
+    // «нет, открой за меня» is a request to act, not a refusal: act words win over a leading «нет» (#19).
+    if (ACT.test(clean) && clean.length <= 80) return accept(clean);
     if (YES.test(clean) && clean.length <= 40) return accept(clean);
     if (NO.test(clean) && clean.length <= 40) return decline(clean);
     dropPending();
@@ -260,7 +262,14 @@ async function send(text, { voice = false } = {}) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
     const msg = { speaker: 'bot', text: data.reply || '…', actions: [], at: new Date().toISOString() };
-    // Nothing runs yet: show how to do it yourself, ask, and keep the proposed actions until the client says yes (#15).
+    // The client explicitly asked AIM to do it («открой за меня»): run now, no question (#19).
+    if (data.direct && data.actions?.length && !data.handoff) {
+      msg.text = data.done_reply || data.reply || trIn(data.language, 'done_default');
+      st.messages.push(msg); save(); renderAll(); setStatus('');
+      await runFor(msg, data.actions, data.language);
+      return;
+    }
+    // Otherwise nothing runs yet: show how to do it yourself, ask, and keep the proposed actions until the client says yes (#15).
     if (data.actions?.length && !data.handoff) {
       const steps = (data.steps || []).map((x, i) => `${i + 1}. ${String(x).replace(/^\s*\d+[.)]\s*/, '')}`);
       msg.text = [data.reply, ...steps, trIn(data.language, 'ask_help')].filter(Boolean).join('\n');
@@ -277,6 +286,8 @@ async function send(text, { voice = false } = {}) {
 
 const YES = /^(да|ага|угу|давай|давайте|помоги|помогите|конечно|хочу|ок|окей|ok|okay|yes|yeah|yep|sure|please|иә|ия|йә|жарайды|көмектес)/i;
 const NO = /^(нет|не надо|не нужно|не хочу|сам|сама|no|nope|not now|жоқ|керек емес|өзім)/i;
+// Keep in sync with ACT_RE in lib/nav-agent.js (the server applies the same check).
+const ACT = /(откро[йи]|откройте|открыть за|перейд[иь]|перейдите|перекин|переведи меня|отведи|перенаправ|заполни|заполните|сделай за|сделайте за|сделай сам|за меня|сразу открой|давай сразу|open (it|the|that)|take me|bring me|go to the|do it for me|fill (it|them|in)|for me\b|ашып бер|ашыңыз|ашшы|өтіп бер|апарыңыз|апар|толтырып бер|толтырыңыз|мен үшін)/i;
 
 function dropPending() {
   const m = st.messages.find((x) => x.at === st.pending?.at); if (m) m.consent = 'skipped';
@@ -290,14 +301,15 @@ async function accept(said) {
   const msg = { speaker: 'bot', text: p.done_reply || trIn(p.language, 'done_default'), actions: [], at: new Date().toISOString() };
   st.messages.push(msg); save(); renderAll();
   busy = true;
-  try {
-    // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
-    const narrow = matchMedia('(max-width: 860px)').matches;
-    if (narrow) { st.open = false; save(); renderChrome(); }
-    msg.actions = await runActions(p.actions); save(); renderList();
-    if (narrow && msg.actions.length) toast(`AIM: ${msg.actions.join(' · ')}`);
-    if (st.speak || voiceTurn) speak(msg.text, p.language);
-  } finally { busy = false; }
+  try { await runFor(msg, p.actions, p.language); } finally { busy = false; }
+}
+async function runFor(msg, actions, language) {
+  // On phones the sheet covers the app: minimise it while AIM acts so the client sees the highlight.
+  const narrow = matchMedia('(max-width: 860px)').matches;
+  if (narrow) { st.open = false; save(); renderChrome(); }
+  msg.actions = await runActions(actions); save(); renderList();
+  if (narrow && msg.actions.length) toast(`AIM: ${msg.actions.join(' · ')}`);
+  if (st.speak || voiceTurn) speak(msg.text, language);
 }
 function decline(said) {
   const p = st.pending; if (!p) return;
