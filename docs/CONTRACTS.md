@@ -131,6 +131,8 @@ type NavAction =
   | { type: "input"; element_id: string; value: string }
   | { type: "highlight_element"; element_id: string };                  // a click on a protected element is downgraded to this
 ```
+**AIM widget embedding (#17):** the widget is self-contained: `<script type="module" src="/broker/agent.js">` loads `broker/agent.css` itself and mounts `#aim-widget` on `<body>`. Page knowledge lives in one adapter, `broker/agent-host.js` (or `window.AIM_HOST` set before the script): `getLang, onLang, currentScreen, catalog, go, findTarget, contentRoot, apiBase, checklistUrl`; all optional, defaults work on any page via the DOM scan. Optional theming on the host: `--aim-accent`, `--aim-accent-ink`, `--aim-dark`, `--aim-font`, `--aim-z`.
+
 `/broker` handoff reuses `LiveSession` (additive fields): session `source: "broker-agent"`, messages may carry `actions: string[]` (what AIM did on screen). Pre-handoff messages keep their real `at` / `timestamp`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).

@@ -1,0 +1,154 @@
+/* AIM widget, self-contained (#17). Loaded by broker/agent.js itself; works on any host page.
+   Everything is scoped under #aim-widget (id specificity beats class-based page rules), the root resets
+   inherited styles with `all: initial`, and values are the widget's own (Freedom palette).
+   A host page may theme it by setting these on :root or body:
+     --aim-accent  (main green)   --aim-accent-ink (dark green text)   --aim-dark (launcher/client bubble)
+     --aim-font    (font stack)   --aim-z (z-index base)                                                  */
+
+#aim-widget {
+  all: initial;
+  --_accent: var(--aim-accent, #00B323);
+  --_accent-2: #00E183;
+  --_accent-ink: var(--aim-accent-ink, #00801F);
+  --_accent-soft: #DFF5EC;
+  --_dark: var(--aim-dark, #1D1D1B);
+  --_white: #FFFFFF;
+  --_text: #323335;
+  --_muted: #6A788A;
+  --_faint: #B2BCC8;
+  --_surface: #F5F5F5;
+  --_hover: #EDF4FF;
+  --_line: #F0F2F5;
+  --_line-strong: #E7E7EA;
+  --_warn: #F9B000;
+  --_warn-bg: #FFF8D5;
+  --_warn-ink: #8A6200;
+  --_err-bg: #FDECEC;
+  --_err-ink: #C93A3A;
+  --_shadow: 8px 12px 40px rgba(3, 9, 17, .2);
+  --_ring: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--_accent);
+  --_ease: cubic-bezier(.4, 0, .2, 1);
+  --_font: var(--aim-font, "CoFo Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+  --_z: var(--aim-z, 2147483000);
+  --_fs: 14px; --_fs-s: 12px; --_fs-l: 16px;
+  --_s1: 4px; --_s2: 8px; --_s3: 12px; --_s4: 16px; --_s5: 20px; --_s6: 24px;
+  --_r12: 12px; --_r16: 16px; --_r20: 20px; --_rf: 9999px;
+  display: block;
+  font-family: var(--_font); font-size: var(--_fs); line-height: 1.5; font-weight: 400;
+  color: var(--_text); text-align: start; direction: ltr; letter-spacing: normal; word-spacing: normal;
+  -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;
+}
+#aim-widget *, #aim-widget *::before, #aim-widget *::after { box-sizing: border-box; }
+/* element reset: host rules like `button {…}` or `.page p {…}` must not reach inside */
+#aim-widget :where(div, section, header, form, h2, p, ol, ul, li, span, button, textarea, input) {
+  margin: 0; padding: 0; border: 0; background: none; box-shadow: none; outline: none;
+  font: inherit; color: inherit; line-height: inherit; letter-spacing: inherit; text-align: inherit;
+  text-transform: none; text-decoration: none; text-shadow: none; list-style: none; float: none;
+  width: auto; height: auto; max-width: none; max-height: none;
+  position: static; opacity: 1; filter: none; transform: none; border-radius: 0;
+}
+#aim-widget :where(button) { cursor: pointer; -webkit-appearance: none; appearance: none; }
+#aim-widget :where(textarea, input) { -webkit-appearance: none; appearance: none; }
+#aim-widget svg { display: block; flex: none; }
+#aim-widget [hidden] { display: none !important; }
+
+/* launcher */
+#aim-widget .ag-fab { position: fixed; right: var(--_s6); bottom: var(--_s6); z-index: var(--_z);
+  display: inline-flex; align-items: center; gap: var(--_s3); min-height: 52px; max-width: calc(100vw - 32px);
+  padding: 0 var(--_s5) 0 var(--_s4); border-radius: var(--_rf); background: var(--_dark); color: var(--_white);
+  font-size: var(--_fs); font-weight: 600; line-height: 1; white-space: nowrap; box-shadow: var(--_shadow);
+  transition: transform 150ms var(--_ease); }
+#aim-widget .ag-fab:hover { transform: translateY(-1px); }
+#aim-widget .ag-fab-dot { position: relative; width: 10px; height: 10px; flex: none; border-radius: var(--_rf);
+  background: var(--_accent-2); box-shadow: 0 0 0 4px color-mix(in srgb, var(--_accent-2) 28%, transparent); }
+#aim-widget .ag-fab-text { overflow: hidden; text-overflow: ellipsis; }
+
+/* panel */
+#aim-widget .ag-panel { position: fixed; right: var(--_s6); bottom: var(--_s6); z-index: calc(var(--_z) + 1);
+  width: min(400px, calc(100vw - 32px)); height: min(620px, calc(100vh - 48px));
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--_white); border-radius: var(--_r20); box-shadow: var(--_shadow); }
+#aim-widget .ag-head { display: flex; align-items: center; gap: var(--_s2); padding: var(--_s3) var(--_s3) var(--_s3) var(--_s5); border-bottom: 1px solid var(--_line); }
+#aim-widget .ag-head-mid { flex: 1; min-width: 0; }
+#aim-widget .ag-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--_fs-l); font-weight: 600; line-height: 1.3; }
+#aim-widget .ag-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--_muted); font-size: var(--_fs-s); }
+#aim-widget .ag-sub[data-state="waiting_operator"] { color: var(--_warn-ink); }
+#aim-widget .ag-sub[data-state="operator"] { color: var(--_accent-ink); }
+
+/* icon buttons */
+#aim-widget .ag-icon { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: var(--_rf); color: var(--_text); }
+#aim-widget .ag-icon:hover { background: var(--_hover); }
+#aim-widget .ag-icon[aria-pressed="true"] { background: var(--_accent-soft); color: var(--_accent-ink); }
+#aim-widget .ag-mic[aria-pressed="true"] { background: var(--_err-bg); color: var(--_err-ink); animation: aim-rec 1s var(--_ease) infinite; }
+@keyframes aim-rec { 50% { box-shadow: 0 0 0 6px #FDECEC; } }
+#aim-widget .ag-send { background: var(--_accent); color: var(--_white); }
+#aim-widget .ag-send:hover { background: var(--_accent-ink); }
+#aim-widget .ag-send:disabled { opacity: .5; cursor: wait; }
+
+/* messages */
+#aim-widget .ag-list { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: var(--_s3); padding: var(--_s4); }
+#aim-widget .ag-list > * { flex: none; }
+#aim-widget .ag-msg { min-width: 0; max-width: 86%; overflow-wrap: anywhere; padding: var(--_s2) var(--_s3); border-radius: var(--_r16); background: var(--_surface); }
+#aim-widget .ag-msg p { white-space: pre-wrap; overflow-wrap: anywhere; }
+#aim-widget .ag-client { align-self: flex-end; background: var(--_dark); color: var(--_white); }
+#aim-widget .ag-operator { background: var(--_accent-soft); }
+#aim-widget .ag-who { display: block; font-size: var(--_fs-s); color: var(--_muted); }
+#aim-widget .ag-client .ag-who { color: var(--_faint); }
+#aim-widget .ag-acts { display: flex; flex-direction: column; gap: 2px; margin-top: var(--_s2); }
+#aim-widget .ag-acts li { font-size: var(--_fs-s); color: var(--_accent-ink); }
+#aim-widget .ag-acts li::before { content: '↳ '; }
+#aim-widget .ag-sys { align-self: center; max-width: 100%; overflow-wrap: anywhere; text-align: center; font-size: var(--_fs-s); color: var(--_muted); }
+#aim-widget .ag-card { overflow-wrap: anywhere; padding: var(--_s3); border-radius: var(--_r12); background: var(--_warn-bg); color: var(--_text); }
+
+/* chips and consent buttons */
+#aim-widget .ag-chips { display: flex; flex-wrap: wrap; gap: var(--_s2); padding: 0 var(--_s4) var(--_s2); }
+#aim-widget .ag-chips:empty { display: none; }
+#aim-widget .ag-chip { max-width: 100%; overflow-wrap: anywhere; text-align: start; padding: var(--_s1) var(--_s3);
+  border: 1px solid var(--_line-strong); border-radius: var(--_rf); background: var(--_white); font-size: var(--_fs-s); line-height: 1.4; }
+#aim-widget .ag-chip:hover { background: var(--_hover); }
+#aim-widget .ag-chip-human { border-color: var(--_warn); }
+#aim-widget .ag-consent { display: flex; flex-wrap: wrap; gap: var(--_s2); margin-top: var(--_s2); }
+#aim-widget .ag-chip-yes { border-color: var(--_accent); background: var(--_accent); color: var(--_white); font-weight: 600; }
+#aim-widget .ag-chip-yes:hover { background: var(--_accent-ink); border-color: var(--_accent-ink); }
+
+/* status, input */
+#aim-widget .ag-status { padding: 0 var(--_s4) var(--_s2); font-size: var(--_fs-s); color: var(--_muted); }
+#aim-widget .ag-form { display: flex; align-items: flex-end; gap: var(--_s1); padding: var(--_s3); border-top: 1px solid var(--_line); }
+#aim-widget .ag-input { flex: 1; min-width: 0; min-height: 40px; max-height: 120px; overflow-y: hidden; resize: none;
+  padding: var(--_s2) var(--_s3); border: 1px solid var(--_line-strong); border-radius: var(--_r12); background: var(--_white); line-height: 1.4; }
+#aim-widget .ag-input::placeholder { color: var(--_muted); opacity: 1; }
+#aim-widget .ag-input:focus { border-color: var(--_accent); }
+
+/* toast (phones: what AIM did while the sheet is minimised) */
+#aim-widget .ag-toast { position: fixed; left: 50%; bottom: 88px; z-index: calc(var(--_z) + 2); transform: translateX(-50%);
+  max-width: min(520px, calc(100vw - 32px)); padding: var(--_s3) var(--_s5); border-radius: var(--_r12);
+  background: var(--_dark); color: var(--_white); box-shadow: var(--_shadow); overflow-wrap: anywhere; }
+
+/* keyboard focus: visible ring, round controls stay round */
+#aim-widget :focus-visible { box-shadow: var(--_ring); }
+#aim-widget .ag-fab:focus-visible { box-shadow: var(--_ring), var(--_shadow); }
+#aim-widget .ag-input:focus-visible { box-shadow: none; }
+
+/* narrower screens: floating panel; phones: bottom sheet */
+@media (max-width: 860px) {
+  #aim-widget .ag-fab { right: var(--_s4); bottom: var(--_s4); }
+  #aim-widget .ag-panel { right: var(--_s4); bottom: var(--_s4); height: min(620px, calc(100vh - 32px)); }
+}
+@media (max-width: 600px) {
+  #aim-widget .ag-panel { right: 0; bottom: 0; width: 100vw; height: min(85vh, calc(100vh - 48px)); height: min(85dvh, calc(100dvh - 48px)); border-radius: var(--_r20) var(--_r20) 0 0; }
+  #aim-widget .ag-msg { max-width: 92%; }
+  #aim-widget .ag-form { padding-bottom: max(var(--_s3), env(safe-area-inset-bottom)); }
+  #aim-widget .ag-input { font-size: var(--_fs-l); } /* 16 px: no iOS zoom on focus */
+}
+
+/* highlight drawn on HOST elements (outside the widget), so it carries its own colours */
+.ag-hl { position: relative; scroll-margin: 120px;
+  box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 6px var(--aim-accent, #00B323), 8px 12px 40px rgba(45, 213, 119, .2) !important;
+  animation: aim-pulse 1.2s cubic-bezier(.4, 0, .2, 1) 3; }
+@keyframes aim-pulse { 50% { box-shadow: 0 0 0 3px #FFFFFF, 0 0 0 10px #00E183, 8px 12px 40px rgba(45, 213, 119, .2); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-hl, #aim-widget .ag-mic[aria-pressed="true"] { animation: none; }
+  #aim-widget .ag-fab { transition: none; }
+}

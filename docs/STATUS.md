@@ -10,6 +10,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 19:55 · lane-c · claude · #17 · branch c/17-widget-isolation
+Done: the AIM widget is now **self-contained**, so it survives the switch to a Freedom-designed demo page. Own stylesheet `broker/agent.css` (scoped under `#aim-widget`, `all: initial` root + element reset, its own Freedom colour values, optional `--aim-*` theming), loaded by `agent.js` itself and hidden until loaded. Mounted on `<body>` outside `#cqa-root`, with its own toast. All page knowledge moved into `broker/agent-host.js` (or `window.AIM_HOST`); generic defaults (language from `<html lang>`, DOM scan of `<main>`, wrapped-label detection) work on any page. Widget rules removed from `broker/broker.css`; no other app changes.
+Verified: /broker flow (ask → steps → yes → fields filled + highlight) unchanged; hostile page CSS (global button/p/li/textarea/body/`.br button` rules) → 0 computed-style differences across 11 widget parts; bare test page without the broker app → widget in English, scan finds Amount / Pay [protected] / Help and skips the widget itself; 375 px: no overflow, no overlap.
+To embed on a new page: include `/broker/agent.js` (and `/shared/live-store.js` stays available for handoff); write an adapter only if you want typed screens/targets.
+Contracts touched: CONTRACTS §5 note on embedding (no shape change).
+
 ### 2026-11-07 19:25 · lane-c · claude · #16 · branch c/16-widget-polish
 Done: AIM widget polish on /broker. The «Спросить AIM» launcher had dark text on a dark pill because `.br button { color: inherit }` out-ranked `.ag-fab`; the reset is now `:where(.br)` so component colours apply, and the launcher was restyled (white text, halo dot, 52 px). Overflow audit with a stress conversation at 1024 / 800 / 375 px: system lines with long words stuck out of the panel → wrapping and min-width fixes; floating panel kept down to 601 px (D365 iframe), bottom sheet only on phones (dvh, safe area, 16 px input); shorter placeholders; no idle scrollbar in the input; round controls stay round on keyboard focus.
 Contracts touched: none.
