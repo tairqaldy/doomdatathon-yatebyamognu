@@ -1,0 +1,464 @@
+{
+  "generated_at": "2026-11-07T09:55:19.516Z",
+  "node": "v24.18.0",
+  "branch": "audit/evaluator-readiness",
+  "head": "da2a721bc2c898886b4dda35772936ea3d77f71a",
+  "inspected_origin_main": "369c15c02dd1426dadde5b069dfa4bc12b3f70d6",
+  "evaluator_implementation_matches_origin_main": false,
+  "local_gold_status": [
+    {
+      "id": "p1-en-006",
+      "status": "draft"
+    },
+    {
+      "id": "p1-en-009",
+      "status": "draft"
+    },
+    {
+      "id": "p1-en-013",
+      "status": "draft"
+    },
+    {
+      "id": "p1-en-014",
+      "status": "draft"
+    },
+    {
+      "id": "p1-en-015",
+      "status": "draft"
+    },
+    {
+      "id": "p1-kz-003",
+      "status": "draft"
+    },
+    {
+      "id": "p1-kz-008",
+      "status": "draft"
+    },
+    {
+      "id": "p1-kz-011",
+      "status": "draft"
+    },
+    {
+      "id": "p1-kz-013",
+      "status": "draft"
+    },
+    {
+      "id": "p1-kz-015",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-003",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-006",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-009",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-012",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-018",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-022",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-025",
+      "status": "draft"
+    },
+    {
+      "id": "p1-ru-029",
+      "status": "draft"
+    },
+    {
+      "id": "p4-ru-001",
+      "status": "draft"
+    }
+  ],
+  "remote_gold_reviewed": 19,
+  "gold_answers_and_alternatives_match_origin_main": true,
+  "configuration": {
+    "env_file_present": false,
+    "api_key_present": false,
+    "model_override_present": false,
+    "remote_cache_configured": false,
+    "local_cache_files": 0,
+    "precomputed_files": 0
+  },
+  "inference": {
+    "actual_network_requests": 0,
+    "paid_calls": 0,
+    "fresh_llm_inference": false,
+    "saved_llm_rescoring_available": true,
+    "reason": "This runner measures mock and contract behavior only. Saved LLM rescoring is a separate offline step."
+  },
+  "saved_llm_review": {
+    "file": "eval/runs/readiness-llm-summary.json",
+    "source_commit": "8feeb262cccacd0541ddb5fcec6379cd15fa33b9",
+    "source_path": "eval/runs/2026-11-07T09-36-59-522Z-DEV-anthropic_claude-haiku-5.5.evaluations.json",
+    "validation_errors": [],
+    "metrics": {
+      "strict": 75.66,
+      "lenient": 92.11,
+      "gross_violation_recall": 85.71,
+      "tp": 6,
+      "fn": 1,
+      "fp": 0,
+      "total_mae_existing_engine": 14.06,
+      "total_mae_official_formula": 14.055789473684214,
+      "per_language": {
+        "EN": {
+          "n": 40,
+          "strict": 70,
+          "lenient": 92.5
+        },
+        "KZ": {
+          "n": 40,
+          "strict": 72.5,
+          "lenient": 90
+        },
+        "RU": {
+          "n": 72,
+          "strict": 80.56,
+          "lenient": 93.06
+        }
+      },
+      "per_criterion": {
+        "c01": {
+          "n": 19,
+          "strict": 100,
+          "lenient": 100,
+          "scale_within_1": null
+        },
+        "c02": {
+          "n": 19,
+          "strict": 68.42,
+          "lenient": 89.47,
+          "scale_within_1": null
+        },
+        "c03": {
+          "n": 19,
+          "strict": 94.74,
+          "lenient": 94.74,
+          "scale_within_1": null
+        },
+        "c04": {
+          "n": 19,
+          "strict": 42.11,
+          "lenient": 68.42,
+          "scale_within_1": 88.89
+        },
+        "c05": {
+          "n": 19,
+          "strict": 73.68,
+          "lenient": 94.74,
+          "scale_within_1": null
+        },
+        "c06": {
+          "n": 19,
+          "strict": 52.63,
+          "lenient": 89.47,
+          "scale_within_1": 100
+        },
+        "c07": {
+          "n": 19,
+          "strict": 78.95,
+          "lenient": 100,
+          "scale_within_1": null
+        },
+        "c08": {
+          "n": 19,
+          "strict": 94.74,
+          "lenient": 100,
+          "scale_within_1": null
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "name": "mock c08 regression",
+      "command": "node --test --test-reporter=tap eval/readiness/c08-regression.test.mjs",
+      "exit_code": 1,
+      "signal": null,
+      "tests": 20,
+      "passed": 13,
+      "failed": 7,
+      "log": "eval/runs/readiness-c08-mock.tap.log"
+    },
+    {
+      "name": "LLM contract regression with synthetic responses",
+      "command": "node --test --test-reporter=tap eval/readiness/evaluator-contract.test.mjs",
+      "exit_code": 1,
+      "signal": null,
+      "tests": 19,
+      "passed": 11,
+      "failed": 8,
+      "log": "eval/runs/readiness-contract.tap.log"
+    },
+    {
+      "name": "mock full gold run",
+      "command": "node eval/run-mock.ts --out eval/runs/readiness-mock.json",
+      "exit_code": 0,
+      "signal": null,
+      "tests": null,
+      "passed": null,
+      "failed": null,
+      "log": "eval/runs/readiness-mock-run.log"
+    },
+    {
+      "name": "existing accuracy harness",
+      "command": "node eval/accuracy.ts eval/runs/readiness-mock.json --json eval/runs/readiness-mock.metrics.json",
+      "exit_code": 0,
+      "signal": null,
+      "tests": null,
+      "passed": null,
+      "failed": null,
+      "log": "eval/runs/readiness-accuracy.log"
+    },
+    {
+      "name": "existing scoring self-tests",
+      "command": "node scripts/test-scoring.mjs",
+      "exit_code": 0,
+      "signal": null,
+      "tests": null,
+      "passed": null,
+      "failed": null,
+      "log": "eval/runs/readiness-scoring.log"
+    }
+  ],
+  "run_inventory": [
+    {
+      "file": "eval/runs/gold-audit-mock.json",
+      "evaluations": 19,
+      "models": [
+        "mock-heuristics (prototype/mock-evaluator.js)"
+      ]
+    },
+    {
+      "file": "eval/runs/gold-audit-mock.metrics.json",
+      "evaluations": 0,
+      "models": []
+    },
+    {
+      "file": "eval/runs/gold-audit-self.json",
+      "evaluations": 19,
+      "models": [
+        "gold self-consistency fixture"
+      ]
+    },
+    {
+      "file": "eval/runs/gold-audit-self.metrics.json",
+      "evaluations": 0,
+      "models": []
+    },
+    {
+      "file": "eval/runs/mock-baseline.json",
+      "evaluations": 19,
+      "models": [
+        "mock-heuristics (prototype/mock-evaluator.js)"
+      ]
+    },
+    {
+      "file": "eval/runs/mock-baseline.metrics.json",
+      "evaluations": 0,
+      "models": []
+    }
+  ],
+  "c08_cases": [
+    {
+      "conversation_id": "p1-en-013",
+      "language": "EN",
+      "category": "private_paid_service",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-kz-013",
+      "language": "KZ",
+      "category": "private_paid_service",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "language": "RU",
+      "category": "private_paid_service",
+      "violation_turns": [
+        9,
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "language": "RU",
+      "category": "insult",
+      "violation_turns": [
+        9
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "language": "EN",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        10
+      ],
+      "context_turns": [
+        10,
+        11,
+        12
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-kz-015",
+      "language": "KZ",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        9
+      ],
+      "context_turns": [
+        9,
+        10,
+        11
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    },
+    {
+      "conversation_id": "p1-ru-009",
+      "language": "RU",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "observed_mock": "no"
+    }
+  ],
+  "mock_metrics": {
+    "dialogs": 19,
+    "strict_accuracy": 61.84,
+    "lenient_accuracy": 75,
+    "gross_violation_recall": 0,
+    "gross_tp": 0,
+    "gross_fn": 7,
+    "gross_fp": 0,
+    "total_mae_existing_engine": 22.74,
+    "total_mae_official_formula": 22.736315789473686
+  },
+  "protected_file_hashes": {
+    "api/audio.js": "08881054a600a5372fc2c9378826f24de24ce2b1a80d8b810888f2f3edbfc000",
+    "api/dataset.js": "ec7eb8d0bad989b56e643ccfb1911fa1f4072c3e74063165d612c6e559e457b7",
+    "api/evaluate.js": "f0079debfccfc6580f8efce8489974eb1626644819d239718f9d0c0a6eb4393f",
+    "api/health.js": "3ba9aa82f808d6ede3f6dfdb6b3f1b6e83ee9c5e5d4ca065d12315d0f10fd541",
+    "api/transcribe.js": "feac4a6f8447a85686ac4d3d8e869eb0cbc8dd18ec1e1220ee883f7bdf801d5e",
+    "data/README.md": "4d376dfccc36193c630d0d29653320bf151b21add84624b540b6d32420758050",
+    "data/checklists/freedom-chat-v1.json": "42e0a9edf17461e6ab0461e977c42a629e41da3d21581065e947032fbe2bd2d5",
+    "data/datasets/DEV.json": "e386aa2d8e5ac362af62c144f7e1cd6f2fe0a64fae0aa10a4892225ac22d1566",
+    "eval/GOLD_AUDIT_REPORT.md": "24170df973969b2e5490d9cd8dca056535c5f34f980e2ef6d3a70ac2f0f9f1de",
+    "eval/accuracy.ts": "614fdeb1fa23cb1f27e0222eca83e8626e07a0a7b27c67512cfe11106858f6af",
+    "eval/audit-gold.mjs": "1fea7b0c2e301d287b84b6885afc95bde67eea99f5ce6359043e8788f0975862",
+    "eval/gold/README.md": "499c818d08ab96377eaf00060f0cd646864d73f14bfd8326490c0ccf80759699",
+    "eval/gold/p1-en-006.json": "b2cf9d7b57536318e8b371911bf141f6d3317bc901fc84e9760221cc22374f0c",
+    "eval/gold/p1-en-009.json": "061e618c9c028a8fd803c3ff17b9f9a74192140c179e48d530a81cf53a138578",
+    "eval/gold/p1-en-013.json": "0064c870b69eb32cf169d6e3a9423f1aa113faf25074244b337d1b3326c56fe4",
+    "eval/gold/p1-en-014.json": "70e0745cae9531f7b3382961ddbe04ed35e8d5a6fa0731fdef28a7444fe3feb3",
+    "eval/gold/p1-en-015.json": "878e802b4f610e0aebd76ea7bc77226f3631ec9cf66688889787eb8d90e0da03",
+    "eval/gold/p1-kz-003.json": "fd0fdddcf87cda7ff016d12bf26d4b245c148ac9282d1d4408fae85cb9ffe7e3",
+    "eval/gold/p1-kz-008.json": "79f1fca6f4fc2c25ba8be7fddcd94f0817a9edeecfed53ec2e48c35cd8a553e7",
+    "eval/gold/p1-kz-011.json": "f6d3951272b25a3458bb17de330efcc88ef4f6fc170846076879fc095835c56c",
+    "eval/gold/p1-kz-013.json": "57850ebba3e7352e0e7f0fa5b517265dd90af650bd656ea49cd85a98e6d6818a",
+    "eval/gold/p1-kz-015.json": "b27ad133af41318acdc0f2384b954ba3fe1ed2f8c8f6aedcfe482d8f72e9703c",
+    "eval/gold/p1-ru-003.json": "717d450f58b2ae7eb0abd632524a88339149dff13ccdc2c83097a95a66b403c3",
+    "eval/gold/p1-ru-006.json": "fe396069a23bb8bdfdf092c7be42aa57fb73257390cbc3801e7373a6f95b0c6f",
+    "eval/gold/p1-ru-009.json": "01d15b68a427020c6acde0ffdde2df0f4f1755437e66e84b39691656dd42fd8e",
+    "eval/gold/p1-ru-012.json": "61704102c25cd6e4fdafcd8864ee1ad8f25900dda8bbee87d64e52781945330a",
+    "eval/gold/p1-ru-018.json": "8df2bd2318ec65abc2415d423d04ed82f8e205d19248052325f5f0aed61cc34f",
+    "eval/gold/p1-ru-022.json": "411aba58d349616b177abb9247cb97fac5af7668fc7c5768990ded433b5b904e",
+    "eval/gold/p1-ru-025.json": "0359fd7601cbcf59abc55d036019ef9a7baf02f46400fd73677f8db3856e60b4",
+    "eval/gold/p1-ru-029.json": "6c4e2bf9cc5ce5a3a9acc92c500067086eb19179299c15c2604b224b3cd390af",
+    "eval/gold/p4-ru-001.json": "6252c34759bd85746936a22a225db7c5d87aaebf3fd3f58afe11551c28e4cc6c",
+    "eval/lib.ts": "f9de3ae46c3b9b7a2f7dcc4e4e34540c0d93f64c8f5f626ba4be1c486487939e",
+    "eval/run-mock.ts": "9e626e2b1740070b01a03c12a0d0fcb669e91a2469bc3d672539b67c994c5cb0",
+    "eval/runs/gold-audit-mock.json": "11e05ad457e4389c024d4b36f8b25bf6811be4a3801e95774c39807a54dc3554",
+    "eval/runs/gold-audit-mock.metrics.json": "45793b58f0c6ba6791077281bab4e0f82fb0c0f95b24d8ea50c9d5f665b01ff8",
+    "eval/runs/gold-audit-self.json": "a2d69f8e7a5033df5fd87b3d5d17dd913510b202130bf233b5740e73fd09c471",
+    "eval/runs/gold-audit-self.metrics.json": "5b8c5c24d3ffc674defa92ff3d13839d6de22d903c928af5d80444edd24e465b",
+    "eval/runs/mock-baseline.json": "d72cfe4692380764bb3d2657ff72bad6607778c9c335e0473709201b8e361a87",
+    "eval/runs/mock-baseline.metrics.json": "2b8fbfaa74abab22e7678b16055ad8bcbbf9cf1f01c1951e17d47fb333171d53",
+    "lib/audio.js": "f7ab23d2ebc434777fd7f595fbf02879de595ac35521c66c3a9590a0f849af5b",
+    "lib/cache.js": "6ce6fd97d981241d66236c79131dfdc56a195d8a8d3af7ccf5e1c69727c52803",
+    "lib/data.js": "47c73003bec3c0ab9190d3381127b7c859f73407ef8b929bc2164562b296c7e3",
+    "lib/evaluator.js": "e148cc332f6c9848696b8cf3efda068a424c754279c9479e7336b8a68535745a",
+    "lib/http.js": "7b91f3999ec93d29913172865602b70ecac1cf3cfee85f59a40e4ef04aa1a809",
+    "lib/openrouter.js": "06cfefaf0766104bb91fde2f731da6e127c257523851e661dcf8a985e3a99517",
+    "prototype/README.md": "63f6c950a48df8201b98e0c3cf10a868c0152412b5edf9a05afa122caeb9be38",
+    "prototype/app.js": "ce64fea4a22c59e61784a20543dcf53acce523f1f0fbd0a07c7bdd644efae653",
+    "prototype/index.html": "8901f428fcc9455cce27b477712d8a78254f27a608b17e4849fd1d82fd5d94f2",
+    "prototype/mock-evaluator.js": "0e9cb35b8caa6f5b74af72267235fca4ee3065c0f95c1ced58d101d6a0029c48",
+    "prototype/prototype.css": "6689caefacb413905c46e33ff2a5aab6011d597a4bb3761745feeb136f455aae",
+    "prototype/scoring.js": "96ecd6944d13587bee9a4b4f465a5404ae4710f5e8e05b34a60e517eaaa48f6b",
+    "scripts/asr-run.mjs": "1c89e875a6d4311dbd363363d9204d32da5f0311d2c4682f0a1a935bc0c1b8cb",
+    "scripts/check.sh": "3c94ad4ed6143e3f81085a528a29bf38086e3235bf2f2773fadf779fa2262e6e",
+    "scripts/dev-server.mjs": "a6f6462f1a6281e00e6efe7f28a202f15bb7909f50bf466d882cb42d7e413c73",
+    "scripts/env.mjs": "844e2d976c1b9994fd1b0b36d90e0289d318563474ac6f03f0f2f094d1e925f1",
+    "scripts/eval-run.mjs": "b02c97884deb3b2fe71238c99b58517671a170ddc0c7266809527feaabe131c0",
+    "scripts/setup-labels.sh": "3d239f8b1ff0e1fd1bffd214d21c98405dde737ee3e3672ce7e72f7f8d7faf9c",
+    "scripts/test-scoring.mjs": "20895bebe456ecabbe978773e7b99ce5763b837ded16ddd25d0061ab60a671be"
+  },
+  "changed_protected_files": []
+}

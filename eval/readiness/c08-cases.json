@@ -1,0 +1,13 @@
+{
+  "purpose": "Fixed gold-derived regression cases; never use as an independent holdout after tuning on them.",
+  "index_base": 0,
+  "cases": [
+    { "conversation_id": "p1-en-013", "language": "EN", "category": "private_paid_service", "violation_turns": [11], "context_turns": [9, 10, 11, 12, 13], "expected_answer": "yes" },
+    { "conversation_id": "p1-kz-013", "language": "KZ", "category": "private_paid_service", "violation_turns": [11], "context_turns": [9, 10, 11, 12, 13], "expected_answer": "yes" },
+    { "conversation_id": "p1-ru-022", "language": "RU", "category": "private_paid_service", "violation_turns": [9, 11], "context_turns": [9, 10, 11, 12, 13], "expected_answer": "yes" },
+    { "conversation_id": "p1-ru-029", "language": "RU", "category": "insult", "violation_turns": [9], "context_turns": [9, 10, 11, 12, 13], "expected_answer": "yes" },
+    { "conversation_id": "p1-en-014", "language": "EN", "category": "unverified_account_disclosure", "violation_turns": [10], "context_turns": [10, 11, 12], "expected_answer": "yes" },
+    { "conversation_id": "p1-kz-015", "language": "KZ", "category": "unverified_account_disclosure", "violation_turns": [9], "context_turns": [9, 10, 11], "expected_answer": "yes" },
+    { "conversation_id": "p1-ru-009", "language": "RU", "category": "unverified_account_disclosure", "violation_turns": [11], "context_turns": [11, 12, 13], "expected_answer": "yes" }
+  ]
+}
