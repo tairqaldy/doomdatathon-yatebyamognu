@@ -114,16 +114,16 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    A["Transcript<br/>chat or call, RU / KZ / EN"] --> B["GPT-6 Luna, 3 independent samples in parallel<br/>each fills dialog facts first,<br/>then one check line and one answer per criterion"]
-    B --> C{"Evidence guard<br/>cited turn exists, quote matches it"}
-    C -- "problem found: one repair call" --> B
-    C --> D["Built-in rules on the facts<br/>C7 literal closing<br/>disclosure before verification: C3 no, C8 yes"]
-    D --> E["Majority vote per criterion<br/>share of agreeing samples kept"]
-    E --> F["prototype/scoring.js<br/>weights, N/A redistribution,<br/>half-up to 2 decimals, once"]
-    F --> G["Analysis card<br/>reason, points, jump to line or audio"]
-    G --> H["Appeal, then reviewer decision"]
+    A["Transcript<br/>chat or call<br/>RU, KZ, EN"] --> B["GPT-6 Luna × 3 samples<br/>facts first, then<br/>check + answer<br/>per criterion"]
+    B --> C["Evidence guard<br/>turn exists,<br/>quote matches"]
+    C -- "fails: 1 repair call" --> B
+    C --> D["Built-in rules<br/>C7 literal closing<br/>disclosure: C3 no, C8 yes"]
+    D --> E["Majority vote<br/>per criterion"]
+    E --> F["scoring.js<br/>weights, N/A,<br/>half-up rounding"]
+    F --> G["Analysis card<br/>jump to line or audio"]
+    F --> I["results.json<br/>JSON 1.0"]
+    G --> H["Appeal and<br/>reviewer decision"]
     H -- "new answer" --> F
-    F --> I["results.json, format JSON 1.0<br/>results/dev and results/prod"]
 ```
 
 | Step | What it does | Why |
