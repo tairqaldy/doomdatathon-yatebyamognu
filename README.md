@@ -19,7 +19,7 @@ Production: **https://freedom-cqa.vercel.app**
 | Landing | [/](https://freedom-cqa.vercel.app/) | The product story and the way into support |
 | Customer chat | [/support/](https://freedom-cqa.vercel.app/support/) | AIM answers, says it is AI, hands off to a live operator with the whole chat, asks for CSAT; the operator's part is then evaluated |
 | QA workspace | [/admin/](https://freedom-cqa.vercel.app/admin/) | Обзор, Диалоги, analysis card, Апелляции, Чек-лист, Живые чаты, AI-аналитик. The demo passcode is printed on the login page |
-| Client app demos | [/broker/](https://freedom-cqa.vercel.app/broker/) · [/phone/](https://freedom-cqa.vercel.app/phone/) | A broker web app and a copy of the Freedom iOS app with AIM inside: explains steps, acts only after the client agrees, never presses money buttons |
+| Client app demos | [/broker/](https://freedom-cqa.vercel.app/broker/) · [/phone/](https://freedom-cqa.vercel.app/phone/) | A broker web app and a copy of the Freedom iOS app with AIM inside: explains steps, acts only after the client agrees, never presses money buttons. `/phone/` also runs as a native app through Expo Go ([mobile/](mobile/README.md)) |
 | Original workspace | [/prototype/](https://freedom-cqa.vercel.app/prototype/) | The first analyst workspace, kept in sync with `/admin/` |
 | Preview hub | [/preview-hub/](https://freedom-cqa.vercel.app/preview-hub/) | Every surface on phone, tablet and laptop, build and AI status |
 
@@ -317,6 +317,8 @@ node scripts/readme-charts.mjs            # accuracy numbers and README charts
 npm run asr                               # transcribe the 5 calls, WER/CER vs organizer transcripts
 scripts/check.sh                          # pre-merge gate: JSON valid, no secrets, tests
 ```
+
+Phone demo as a native app (Expo Go): `cd mobile && npm install && npx expo start`, then scan the QR code with Expo Go. It wraps `/phone/` in a full-screen WebView; troubleshooting is in [mobile/README.md](mobile/README.md).
 
 Accuracy harness and blind comparison: see [Accuracy](#accuracy). Useful `npm run eval` flags: `--only <ids>`, `--prompt eval-v4`, `--samples <k>`, `--concurrency <n>`.
 

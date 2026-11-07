@@ -34,3 +34,4 @@ One line per decision. Newest on top. `date · decision · why · who`
 - 2026-11-07 · Live evaluation: `api/evaluate.js` maxDuration 300 s (Fluid compute), vote over samples done within 240 s; admin waits up to 280 s · 3 votes take 30–60 s on chats, up to ~2.5 min on calls · tair
 - 2026-11-07 · Upstash Redis connected on Vercel for the AI cache and cross-device live chats · phone (support) + laptop (admin) at the defense · tair
 - 2026-11-07 · Demo video recorded from the real product by `scripts/demo/record.mjs` (DevTools Protocol + AVFoundation, no dependencies) · reproducible after UI changes · tair
+- 2026-11-07 · Phone demo runs on real phones as an **Expo Go WebView wrapper** (`mobile/`) around `/phone/`, not a React Native rewrite · one codebase for web + phone, deploys update the app with no rebuild, React Native stays isolated from the static app (AGENTS §11) · lane A

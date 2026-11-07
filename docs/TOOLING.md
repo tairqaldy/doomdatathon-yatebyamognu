@@ -67,6 +67,7 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | TypeScript | _pin_ | app source | A, C | candidate |
 | Tailwind CSS | _pin_ (v3 → `design/tailwind.preset.js`, v4 → `design/theme.css`) | styling via our tokens | A | candidate |
 | Inter (Google Fonts) | variable | fallback font for CoFo Sans (Freedom's licensed font), full Cyrillic + Kazakh | A, D | active in prototype |
+| Expo SDK 58 + React Native 0.88 + `react-native-webview` 14 + `react-native-safe-area-context` 5 (MIT) | ~58.0.23 / 0.88.1 / 14.0.1 / ~5.11.1 | `mobile/`: Expo Go wrapper that shows `/phone/` as a native app on a real phone (#24). Own `package.json`, root app stays dependency-free | A | active |
 | Postgres (`DATABASE_URL` / `POSTGRES_URL`) | n/a (no npm driver) | shared live sessions in table `cqa_kv`; Neon/Vercel Postgres via SQL-over-HTTP, other hosts via TCP/TLS in `lib/postgres.js` | B | active (optional) |
 
 ## 6. Approaches and development strategies
@@ -97,6 +98,8 @@ Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <eva
 | Independent gold audit, runtime shape/reference validation and separate unrounded arithmetic | Review all 19 DEV gold dialogs without changing application code; Node v24.18.0, PowerShell and Git Bash, no new dependencies or paid calls | `node eval/audit-gold.mjs`; `eval/GOLD_AUDIT_REPORT.md`; `eval/runs/gold-audit-*`. Exit 1: gold errors; exit 2: existing scoring mismatch; exit 0: both pass. GitHub API read via web failed; gh/Python unavailable locally. |
 
 Phone-app research (2026-11-07, #20): macOS iPhone Mirroring + `screencapture -l <windowId> -o -x` (2x Retina) in a 1.5 s loop that keeps changed frames only (md5), while the account owner taps through the app. Colors and edges read with small CoreGraphics Swift scripts (dominant color + far-from-background "ink" per region, run-length edges along a line). Raw frames stay out of git (real client data). Method and results: `docs/research/freedom-app.md`.
+
+Expo Go phone demo (2026-11-07, #24): `npx create-expo-app@5.0.0 mobile --template blank-typescript`, deps through `npx expo install` (SDK-matched), `npx expo-doctor` 20/20. Run: `cd mobile && npm install && npx expo start`, scan the QR with Expo Go (`--tunnel` on restrictive Wi-Fi). iOS Simulator: `npx expo start --ios`. The template's `.claude/settings.json` (enables an Expo plugin) was removed so teammates' agent config isn't changed; its `AGENTS.md` was kept with a pointer to the root rules.
 
 ## 7. Research sources and external docs
 N/A/cache compatibility (2026-11-07): existing Node built-ins and Python regression runner only. Versioned findings separate schema, evidence, transcription, applicability and publication; replay reads all existing cache files without rewriting or model calls. No new dependencies. Reproduce the compatibility tests and `eval/fairness/run-compatibility.py`.
