@@ -46,6 +46,9 @@ function modelName(results) {
 
 export function buildResults({ dataset, evaluations, checklist, teamName }) {
   const results = evaluations.results || {};
+  // The official file has exactly the 8 checklist criteria. Our audio extension (input: "audio", e.g. c09 tone of
+  // voice, #23) is shown in the card only, so it is neither exported nor counted in final_score.
+  checklist = { ...checklist, criteria: checklist.criteria.filter((c) => c.input !== 'audio') };
   const crit = [...checklist.criteria].sort((a, b) => a.order - b.order);
   const out = dataset.map((conv) => {
     const id = conv.conversation_id;

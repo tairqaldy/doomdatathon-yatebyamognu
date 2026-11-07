@@ -1,0 +1,131 @@
+{
+  "group": "DEV",
+  "model": "google/gemini-3.8-flash",
+  "prompt_version": "tone-v4",
+  "criteria": [
+    "c09"
+  ],
+  "at": "2026-11-07T15:29:59.107Z",
+  "calls": 5,
+  "fresh_calls": 0,
+  "cost_usd_total": 0,
+  "cost_usd_per_call": null,
+  "rows": [
+    {
+      "id": "p4-ru-003",
+      "cached": true,
+      "answers": {
+        "c09": 10
+      },
+      "total": 77.14,
+      "audio_tokens": 0,
+      "cost": 0.011659,
+      "latency_ms": 14199,
+      "problems": [],
+      "metrics": {
+        "op_turns": 25,
+        "op_words": 220,
+        "op_wpm_median": 116,
+        "measured_turns": 10,
+        "long_waits": []
+      }
+    },
+    {
+      "id": "p4-ru-002",
+      "cached": true,
+      "answers": {
+        "c09": 10
+      },
+      "total": 84.21,
+      "audio_tokens": 0,
+      "cost": 0.017767,
+      "latency_ms": 13511,
+      "problems": [],
+      "metrics": {
+        "op_turns": 51,
+        "op_words": 482,
+        "op_wpm_median": 143,
+        "measured_turns": 26,
+        "long_waits": [
+          {
+            "turn_index": 31,
+            "at": "03:42",
+            "wait_s": 31
+          },
+          {
+            "turn_index": 54,
+            "at": "06:17",
+            "wait_s": 66
+          },
+          {
+            "turn_index": 56,
+            "at": "07:28",
+            "wait_s": 21
+          },
+          {
+            "turn_index": 57,
+            "at": "07:50",
+            "wait_s": 55
+          }
+        ]
+      }
+    },
+    {
+      "id": "p4-ru-001",
+      "cached": true,
+      "answers": {
+        "c09": 4
+      },
+      "total": 64.29,
+      "audio_tokens": 0,
+      "cost": 0.012462,
+      "latency_ms": 16926,
+      "problems": [],
+      "metrics": {
+        "op_turns": 13,
+        "op_words": 205,
+        "op_wpm_median": 124,
+        "measured_turns": 8,
+        "long_waits": []
+      }
+    },
+    {
+      "id": "p4-ru-005",
+      "cached": true,
+      "answers": {
+        "c09": 10
+      },
+      "total": 48.57,
+      "audio_tokens": 0,
+      "cost": 0.010551,
+      "latency_ms": 9540,
+      "problems": [],
+      "metrics": {
+        "op_turns": 30,
+        "op_words": 314,
+        "op_wpm_median": 120,
+        "measured_turns": 15,
+        "long_waits": []
+      }
+    },
+    {
+      "id": "p4-ru-004",
+      "cached": true,
+      "answers": {
+        "c09": 10
+      },
+      "total": 91.43,
+      "audio_tokens": 0,
+      "cost": 0.013841,
+      "latency_ms": 15562,
+      "problems": [],
+      "metrics": {
+        "op_turns": 39,
+        "op_words": 332,
+        "op_wpm_median": 136,
+        "measured_turns": 20,
+        "long_waits": []
+      }
+    }
+  ]
+}

@@ -253,7 +253,8 @@ export function jumpTo(conv, indices, sec, { keepPage = false } = {}) {
     const r = box.getBoundingClientRect();
     if (!keepPage && (r.top < 64 || r.top > innerHeight * 0.6)) box.closest('.tx-card')?.scrollIntoView({ behavior, block: 'start' });
   }
-  const t = sec ?? offsetSec(conv, indices[0]);
+  // call timestamps mark where a phrase ENDS, so a jump to a turn starts the audio at the previous timestamp
+  const t = sec ?? (isCall(conv) && indices[0] > 0 ? offsetSec(conv, indices[0] - 1) : offsetSec(conv, indices[0]));
   setPlayhead(t, duration(conv));
   if (audioEl) { try { audioEl.currentTime = t; } catch {} }
 }
@@ -285,6 +286,7 @@ function openCriterion(conv, critId) {
     <div class="spread">${answerBadge(c, E.finalAnswers[critId])}<span class="num"><b>${row.points == null ? '—' : fmt(row.points, 2)}</b> / ${row.effective_weight == null ? '—' : fmt(row.effective_weight, 2)} <span class="muted small">(вес ${c.weight})</span></span></div>
     <p class="muted small">${esc(c.description)}</p>
     <div class="note"><span class="kicker">${E.src === 'ai' ? 'Объяснение AI' : 'Объяснение (без AI)'}</span><p>${esc(r.explanation || '—')}</p>${r.deduction_reason ? `<p><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}</div>
+    ${c.input === 'audio' ? `<p class="muted small">Оценено по записи звонка, не по тексту${r.audio_metrics ? ` · темп оператора ≈ ${r.audio_metrics.op_wpm_median ?? '—'} слов/мин · долгое молчание: ${r.audio_metrics.long_waits.length ? r.audio_metrics.long_waits.map((w) => `${w.at} (${w.wait_s} с)`).join(', ') : 'нет'}` : ''}</p>` : ''}
     <div class="field"><span class="field__label">Доказательство</span>${fragment(conv, r.evidence)}</div>
     ${ap.length ? `<ol class="steps"><li><b>Автооценка:</b> ${esc(answerText(c, r.answer))}</li>${ap.map((a) => `<li class="steps__appeal"><b>Апелляция:</b> «${esc(a.comment)}»</li>${a.decision ? `<li class="steps__${a.status}"><b>Решение:</b> ${a.status === 'changed' ? `изменено на «${esc(answerText(c, a.decision.new_answer))}»` : 'подтверждено'} · ${esc(a.decision.reason)}</li>` : ''}`).join('')}</ol>` : ''}`,
     `<button class="btn" type="button" data-close>Закрыть</button>${hasEv ? '<button class="btn" type="button" id="cr-jump">К реплике</button>' : ''}<button class="btn btn--primary" type="button" id="cr-appeal">Оспорить</button>`);

@@ -35,6 +35,9 @@ interface Criterion {
   na_allowed: boolean;
   na_condition?: string;              // when N/A is valid (fed to LLM)
   scale?: { value: number; label: string }[]; // for type "scale"; max value = full weight
+  input?: "audio";                    // additive (#23): judged from the call recording by lib/tone.js, not from the
+                                      // transcript; N/A when there is no recording. Absent = text. Not exported to
+                                      // the official results file (eval/export-results.mjs keeps the 8 official criteria)
 }
 ```
 
@@ -117,7 +120,14 @@ interface AIResult {
     explanation: string;         // RU, 1–2 sentences
     deduction_reason: string;    // "" when full points; otherwise "why points were lost" (shown in «Причина снижения оценки»)
     evidence: Evidence[];        // §3; indices validated against the transcript, quotes = real line text
+    audio_metrics?: {            // additive (#23), input: "audio" criteria only; arithmetic on transcript timestamps
+      op_turns: number; op_words: number; op_wpm_median: number | null; measured_turns: number;
+      long_waits: { turn_index: number; at: string /*mm:ss*/; wait_s: number }[];
+    };
   }>;
+  audio_model?: string;          // additive (#23), e.g. "google/gemini-3.8-flash", when audio criteria were judged
+  audio_prompt_version?: string; // e.g. "tone-v4"
+  // usage.audio = the tone call's own usage + cached flag; usage.cost counts fresh spend only
   problems: string[];            // normalisation notes (invalid answers snapped, evidence dropped)
   usage: { prompt_tokens?: number; completion_tokens?: number; cost: number | null };
   latency_ms: number; attempts: number;

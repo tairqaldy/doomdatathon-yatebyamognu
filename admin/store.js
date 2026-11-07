@@ -23,7 +23,7 @@ export const emit = (type, detail) => bus.dispatchEvent(new CustomEvent(type, { 
 /* ---------- hashing (identical to the prototype) ---------- */
 const strHash = (s) => { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
 export { strHash };
-export const clHash = (cl) => strHash(JSON.stringify(cl.criteria.map(({ id, title, description, type, weight, na_allowed, na_condition, scale }) => [id, title, description, type, weight, na_allowed, na_condition, scale])));
+export const clHash = (cl) => strHash(JSON.stringify(cl.criteria.map(({ id, title, description, type, weight, na_allowed, na_condition, scale, input }) => [id, title, description, type, weight, na_allowed, na_condition, scale, ...(input ? [input] : [])])));
 const aiKey = (convId, cl) => `${convId}|${clHash(cl)}`;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 

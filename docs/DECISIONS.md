@@ -24,3 +24,4 @@ One line per decision. Newest on top. `date · decision · why · who`
 - 2026-11-07 · Scoring arithmetic lives in deterministic `app/src/scoring.ts`, LLM only picks answers + evidence · reproducible totals, matches checklist rules exactly, cheap to re-score after appeals · tair
 - 2026-11-07 · Checklist is JSON data (`data/checklists/`), never hard-coded · live "replace one criterion" test at defense · tair
 - 2026-11-07 · Coordination via GitHub Issues + `docs/STATUS.md` + `docs/CONTRACTS.md`; no AI attribution in commits · 4 people × multiple agents need one shared brain · tair
+- 2026-11-07 · Tone of voice on calls = criterion c09 in the call checklist (`input: "audio"`, scale 10/7/4/0, weight 10), judged by Gemini 3.8 Flash from the recording; kept out of the official results file · intonation is not in the transcript; gpt-audio-mini failed an "what is said at 03:00" check, Gemini passed · lane C (#23)

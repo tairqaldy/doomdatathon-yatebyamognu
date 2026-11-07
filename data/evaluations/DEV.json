@@ -3531,6 +3531,30 @@
        "quote": "Да я вас понимаю, но видимо вас неправильно проинформировали про нашу поддержку. Мы такими делами не занимаемся. Мы изначально были технической поддержкой и так и являемся. Ну у вас, видимо, неправиль"
       }
      ]
+    },
+    "c09": {
+     "answer": 4,
+     "explanation": "Оператор говорит подчёркнуто безучастно, холодно и сухо, отвечая односложно. Из-за такого тона клиент напрямую замечает усталость сотрудника и ощущение, что она навязывается.",
+     "deduction_reason": "Холодный и безучастный тон оператора, вызвавший у клиента дискомфорт.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 23,
+       "quote": "Да."
+      },
+      {
+       "kind": "message",
+       "turn_index": 39,
+       "quote": "Нет, не делаем."
+      }
+     ],
+     "audio_metrics": {
+      "op_turns": 13,
+      "op_words": 205,
+      "op_wpm_median": 124,
+      "measured_turns": 8,
+      "long_waits": []
+     }
     }
    },
    "summary": {
@@ -3638,7 +3662,16 @@
     "cost": 0.02152
    },
    "total": 68.33,
-   "gross_error": false
+   "gross_error": false,
+   "audio_model": "google/gemini-3.8-flash",
+   "audio_prompt_version": "tone-v4",
+   "audio_usage": {
+    "prompt_tokens": 10581,
+    "audio_tokens": 0,
+    "completion_tokens": 1207,
+    "cost": 0.012462
+   },
+   "call_checklist_total": 64.29
   },
   "p1-ru-008": {
    "answers": {
@@ -11368,6 +11401,56 @@
        "quote": "Да, сейчас уточнили, вот трейдеров мы сейчас проверили по ценной бумаги. К сожалению, его на бирже нельзя купить его можно купить только по уйти всей сделки."
       }
      ]
+    },
+    "c09": {
+     "answer": 10,
+     "explanation": "Оператор говорит вежливо, спокойно и доброжелательно, в комфортном темпе и с хорошей дикцией. Паузы ожидания корректно озвучены, общение выдержано в деловом тоне.",
+     "deduction_reason": "",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Да, всё верно. Спасибо за информацию. Сейчас прошу вас ожидать на линии."
+      },
+      {
+       "kind": "message",
+       "turn_index": 59,
+       "quote": "[Имя скрыто], благодарю вас за ожидание."
+      },
+      {
+       "kind": "message",
+       "turn_index": 70,
+       "quote": "Благодарю вас за уделенное время всего хорошего до свидания."
+      }
+     ],
+     "audio_metrics": {
+      "op_turns": 51,
+      "op_words": 482,
+      "op_wpm_median": 143,
+      "measured_turns": 26,
+      "long_waits": [
+       {
+        "turn_index": 31,
+        "at": "03:42",
+        "wait_s": 31
+       },
+       {
+        "turn_index": 54,
+        "at": "06:17",
+        "wait_s": 66
+       },
+       {
+        "turn_index": 56,
+        "at": "07:28",
+        "wait_s": 21
+       },
+       {
+        "turn_index": 57,
+        "at": "07:50",
+        "wait_s": 55
+       }
+      ]
+     }
     }
    },
    "summary": {
@@ -11436,7 +11519,16 @@
     "cost": 0.010039
    },
    "total": 82.35,
-   "gross_error": false
+   "gross_error": false,
+   "audio_model": "google/gemini-3.8-flash",
+   "audio_prompt_version": "tone-v4",
+   "audio_usage": {
+    "prompt_tokens": 18934,
+    "audio_tokens": 0,
+    "completion_tokens": 951,
+    "cost": 0.017767
+   },
+   "call_checklist_total": 84.21
   },
   "p4-ru-003": {
    "answers": {
@@ -11589,6 +11681,30 @@
        "quote": "Лежу, на данный момент там вот имеется поручение и поручение принято."
       }
      ]
+    },
+    "c09": {
+     "answer": 10,
+     "explanation": "Оператор говорит спокойно, вежливо и доброжелательно, в комфортном темпе и с понятной дикцией. За случайное перебивание сразу корректно извинился.",
+     "deduction_reason": "",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Здравствуйте, Фридом брокер меня зовут [Имя скрыто], чем могу помочь?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 21,
+       "quote": "Приятно познакомиться в юрию. Прошу причин, что перебил вас. Подскажите, пожалуйста, случайно не мы разговаривали буквально полчаса назад."
+      }
+     ],
+     "audio_metrics": {
+      "op_turns": 25,
+      "op_words": 220,
+      "op_wpm_median": 116,
+      "measured_turns": 10,
+      "long_waits": []
+     }
     }
    },
    "summary": {
@@ -11672,7 +11788,16 @@
     "cost": 0.016374
    },
    "total": 74.74,
-   "gross_error": false
+   "gross_error": false,
+   "audio_model": "google/gemini-3.8-flash",
+   "audio_prompt_version": "tone-v4",
+   "audio_usage": {
+    "prompt_tokens": 13115,
+    "audio_tokens": 0,
+    "completion_tokens": 486,
+    "cost": 0.011659
+   },
+   "call_checklist_total": 77.14
   },
   "p4-ru-005": {
    "answers": {
@@ -11794,6 +11919,30 @@
        ]
       }
      ]
+    },
+    "c09": {
+     "answer": 10,
+     "explanation": "Оператор общается вежливо, спокойно и доброжелательно. Тон ровный и деловой, темп комфортный, дикция понятная.",
+     "deduction_reason": "",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 16,
+       "quote": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 28,
+       "quote": "Это очень приятно. Здравствуйте, можем удалить ваш домой счет, но это будет не сегодня, скорее всего, вам пока стоит не заходить в мобильное приложение некоторое время, и у нас появится возможность уд"
+      }
+     ],
+     "audio_metrics": {
+      "op_turns": 30,
+      "op_words": 314,
+      "op_wpm_median": 120,
+      "measured_turns": 15,
+      "long_waits": []
+     }
     }
    },
    "summary": {
@@ -11903,7 +12052,16 @@
     "cost": 0.018387
    },
    "total": 43.16,
-   "gross_error": false
+   "gross_error": false,
+   "audio_model": "google/gemini-3.8-flash",
+   "audio_prompt_version": "tone-v4",
+   "audio_usage": {
+    "prompt_tokens": 12068,
+    "audio_tokens": 0,
+    "completion_tokens": 400,
+    "cost": 0.010551
+   },
+   "call_checklist_total": 48.57
   },
   "p4-ru-004": {
    "answers": {
@@ -12031,6 +12189,35 @@
        "quote": "Всё верно, боужин коблошимович, я наблюдаю, что вы выставляли приказ на покупку."
       }
      ]
+    },
+    "c09": {
+     "answer": 10,
+     "explanation": "Оператор общается спокойно, вежливо и доброжелательно, сохраняет профессиональный тон и терпеливо повторяет информацию клиенту.",
+     "deduction_reason": "",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 83,
+       "quote": "Хорошо, хорошо [Имя скрыто] [Имя скрыто], я не питаюсь с вами спорить, я вам говорю лишь то, что у вас указано на брокерском счете."
+      },
+      {
+       "kind": "message",
+       "turn_index": 86,
+       "quote": "Я понял болжанка облошим и счастливы мне дадите шанс досказать, я вам все объясню."
+      },
+      {
+       "kind": "message",
+       "turn_index": 109,
+       "quote": "Вы можете либо звонить, либо писать, как вам удобнее."
+      }
+     ],
+     "audio_metrics": {
+      "op_turns": 39,
+      "op_words": 332,
+      "op_wpm_median": 136,
+      "measured_turns": 20,
+      "long_waits": []
+     }
     }
    },
    "summary": {
@@ -12171,7 +12358,16 @@
     "cost": 0.023831
    },
    "total": 90.53,
-   "gross_error": false
+   "gross_error": false,
+   "audio_model": "google/gemini-3.8-flash",
+   "audio_prompt_version": "tone-v4",
+   "audio_usage": {
+    "prompt_tokens": 14844,
+    "audio_tokens": 0,
+    "completion_tokens": 722,
+    "cost": 0.013841
+   },
+   "call_checklist_total": 91.43
   }
  }
 }
