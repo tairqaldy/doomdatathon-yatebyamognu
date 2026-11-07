@@ -120,7 +120,7 @@ export function viewCard(view, convId, query) {
               ${gross ? '<span class="small verdict-note">Баллы за флаг не снимаются, но диалог нужно разобрать.</span>' : ''}
               <span class="muted small">${runInfo}</span>
               <span class="muted small">Применён: ${esc(clLabel)}</span>
-              <span class="muted small">Применимый вес ${finalScore.applicable_weight} из ${finalScore.nominal_weight}, итог нормирован до 100</span>
+              <span class="muted small">${total == null ? 'Нет применимых критериев с весом: все ответы N/A или без оценки' : `Применимый вес ${fmt(finalScore.applicable_weight, 2)} из ${fmt(finalScore.nominal_weight, 2)}, итог нормирован до 100`}</span>
             </div>
           </div>
           ${decided.length ? `<div class="history" aria-label="История оценки">
@@ -148,7 +148,8 @@ export function viewCard(view, convId, query) {
               <p class="ded__why">${esc(reasonOf(E, d.c))}</p>
               ${i != null ? evChip(conv, i, q) : ''}
               <div class="ded__foot">${ap?.status === 'open' ? `<span class="l-chip l-chip--warn">Апелляция на рассмотрении</span>${reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${ap.id}">Принять решение</button>` : ''}` : ap?.status === 'changed' ? '<span class="l-chip l-chip--info">Оценка изменена</span>' : `<button class="btn btn--s btn--ghost" type="button" data-appeal="${d.c.id}">Оспорить</button>`}</div>
-            </article>`; }).join('')}</div>` : `<div class="banner banner--ok">${icon('check')}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
+            </article>`; }).join('')}</div>` : total == null ? `<div class="banner banner--info">${icon('dash')}<div>Итог не рассчитан: ни один критерий с весом не применим к этому диалогу. Причины N/A — ниже, в обосновании по критериям.</div></div>`
+            : `<div class="banner banner--ok">${icon('check')}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
         </section>
 
         <section class="card crit-card" aria-labelledby="crit-h">
@@ -166,7 +167,8 @@ export function viewCard(view, convId, query) {
               </header>
               <p class="crit__why">${esc(r.explanation || '—')}</p>
               ${lost && r.deduction_reason ? `<p class="crit__lost"><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}
-              ${a === 'na' ? `<p class="crit__na"><b>Почему N/A:</b> ${esc(na?.quote || c.na_condition || r.explanation || '')}</p>` : ''}
+              ${a === 'na' ? `<p class="crit__na"><b>Условие N/A из чек-листа:</b> ${esc(c.na_condition || 'не задано')}${na?.quote && na.quote !== c.na_condition ? `<br><b>Основание:</b> «${esc(na.quote)}»` : ''}</p>` : ''}
+              ${a != null && row?.error ? `<p class="crit__lost"><b>Ответ не по правилам чек-листа:</b> ${esc(row.error)}. В итог не входит, нажмите «Оценить заново».</p>` : ''}
               ${i != null && a !== 'na' ? `<div class="crit__ev">${evChip(conv, i, ev.quote)}${ev.kind === 'range' ? `<span class="muted small">проверен участок #${ev.range[0]}–${ev.range[1]}</span>` : ''}</div>` : ''}
               ${ap ? `<p class="crit__appeal">${ap.status === 'open' ? `Апелляция: «${esc(ap.comment)}»` : ap.status === 'changed' ? `Изменено проверяющим: ${esc(answerText(c, r.answer))} → ${esc(answerText(c, ap.decision.new_answer))} · «${esc(ap.decision.reason)}»` : `Подтверждено проверяющим · «${esc(ap.decision.reason)}»`}</p>` : ''}
             </article>`;
