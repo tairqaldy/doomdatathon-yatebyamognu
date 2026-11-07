@@ -35,6 +35,7 @@ Status: `active` (in use) · `trial` (being evaluated) · `candidate` (proposed,
 | Paper MCP | design canvas the team asked for | D | **not connected yet**: add it in the Claude app's connectors, then log the setup here | candidate |
 | graphify 0.9.103 (`graphifyy` on PyPI, canonical repo Graphify-Labs/graphify, Apache-2.0) | knowledge graph of the repo so agents read `graphify-out/GRAPH_REPORT.md` instead of re-reading files | all | `uv tool install --python 3.12 graphifyy && graphify install --platform claude` (and `codex`); build: `graphify update .` (code only, no LLM). User-level skill; project CLAUDE.md untouched. `graphify-out/` gitignored | active |
 | unslop 2.3.0 (theclaymethod/unslop) | de-AI pass on README / pitch / slide copy (`/unslop cleanup`) | D | `git clone https://github.com/theclaymethod/unslop ~/dev/unslop && ln -s ~/dev/unslop ~/.claude/skills/unslop` (also `~/.codex/skills`). SKILL.md says MIT but repo has no LICENSE → **local use only, never vendored** (IP rule) | active |
+| REA (`rea-agents` MCP) native-UI capture | screenshot of one exact app window (iPhone Mirroring) for app research | D | REA MCP in the Claude app; `open_binary` on `/System/Applications/iPhone Mirroring.app`, then `observe_native_ui` with pid + window id. Needs Screen Recording for the bundled `claude` binary (see `docs/research/freedom-app.md` §0). Can't tap inside the mirrored phone (video surface, no AX elements) | active |
 
 ## 4. AI models (evaluation, ASR, TTS)
 Log: model id, provider, why, temperature, prompt version, **cost per evaluation (all calls)**, latency p50/p95. README must state model + cost per evaluation (organizer requirement).
@@ -83,12 +84,15 @@ Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <eva
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
 | Independent gold audit, runtime shape/reference validation and separate unrounded arithmetic | Review all 19 DEV gold dialogs without changing application code; Node v24.18.0, PowerShell and Git Bash, no new dependencies or paid calls | `node eval/audit-gold.mjs`; `eval/GOLD_AUDIT_REPORT.md`; `eval/runs/gold-audit-*`. Exit 1: gold errors; exit 2: existing scoring mismatch; exit 0: both pass. GitHub API read via web failed; gh/Python unavailable locally. |
 
+Phone-app research (2026-11-07, #20): macOS iPhone Mirroring + `screencapture -l <windowId> -o -x` (2x Retina) in a 1.5 s loop that keeps changed frames only (md5), while the account owner taps through the app. Colors and edges read with small CoreGraphics Swift scripts (dominant color + far-from-background "ink" per region, run-length edges along a line). Raw frames stay out of git (real client data). Method and results: `docs/research/freedom-app.md`.
+
 ## 7. Research sources and external docs
 | Source | What we took from it | Saved where |
 |---|---|---|
 | Official CQA student guide (PDF) | task, timeline, data format, defense script | `docs/case/brief.md` |
 | Official chat quality checklist (PDF) | 8 criteria, weights, scoring rules | `docs/case/checklist.md`, `data/checklists/freedom-chat-v1.json` |
 | Freedom Holding deck (PDF) | company facts for the pitch | `docs/case/freedom-company.md` |
+| Live Freedom Broker iOS app v32.23.17 (via iPhone Mirroring) | screens, nav, palette, type, components for the phone demo | `docs/research/freedom-app.md` (no raw screenshots: personal data) |
 | In-person briefing | business pain, bot→human handoff, trust | `docs/case/briefing-notes.md` |
 | Refero style "Origin Financial" (https://styles.refero.design/style/c60f05ff-2420-4a24-92db-80c4b6a74683) | midnight-gallery direction: near-black canvas, whisper serif display, mono labels, white primary | `shared/theme.css` |
 | Tair's Pinterest mood board (sky, meadow, bird, horse, sea) | mood only; NOT used as assets (third-party, IP rule); re-created as original generated images | `landing-tair/assets/` |
