@@ -53,7 +53,11 @@ Most values match **Tailwind's default palette** exactly or within capture noise
 | `fa-bg` | `#171D2D` | screen, tab bar, cash card, menu rows | custom navy |
 | `fa-bg-deep` | `#121828` | Идеи feed background (slightly darker) | custom |
 | `fa-surface` | `#1A2536` | search field, account pill, lower panel on Портфель, language/account chips | custom |
-| `fa-surface-2` | `#212838` | instrument card inside an idea | custom |
+| `fa-surface-2` | `#212838` | instrument card inside an idea; outline button `#212C3B` | custom |
+| `fa-input` | `#0F131F` | text area fill (support form) | custom |
+| `fa-backdrop` | `#121521` | blurred, darkened screen behind a bottom sheet | custom |
+| `fa-disabled` | `#2C3444` / text `#6A7181` | disabled button; also input borders | custom |
+| `fa-grabber` | `#4D5464` | bottom-sheet grabber | custom |
 | `fa-segment-track` | `#474D5D` | segmented control track | custom |
 | `fa-segment-thumb` | `#2C3444` | segmented control selected thumb | custom |
 | `fa-blue-deep` | `#0D2E64` | promo card «Долгосрочные размещения», selected account row, icon tiles, «Все новости» pill, inactive chips | custom |
@@ -107,6 +111,16 @@ Most values match **Tailwind's default palette** exactly or within capture noise
 | **Account row** | «FFG #XXXXXXX» + «Текущий» blue pill tag, amount right; selected row fill `#0D2E64`. Savings row sub-line «Накопительный счет - 3.94% USD, 2.41% EUR, 16.55% KZT» |
 | **Allocation bar** | 8 pt rounded bar, green part + red part |
 | **Empty state** | centered line icon (blue), grey text, link-style chips «С начала месяца», «С начала года», «Укажите период», «Все фильтры» |
+| **Bottom sheet** | backdrop = blurred, darkened screen (reads `#121521`), sheet `#171D2D` with ~16 pt top radius, grabber 60×4 pt `#4D5464`, 20 pt semibold title, rows as cards (below) |
+| **Sheet row card** | `#1A2536`, radius ~10 pt, 56 pt tall, 8 pt gap, 16 pt insets, blue glyph (no tile) + 17 pt white label + grey chevron |
+| **Push nav bar** | «← Назад» blue `#3B82F6` 17 pt left, 17 pt semibold white title centered, optional right icons (mail, ⋮) |
+| **Text area** | fill `#0F131F`, 1 px border `#2C3444`, radius ~8 pt, ~140 pt tall, placeholder `#606573` |
+| **Checkbox** | 20 pt rounded square; on = `#3B82F6` fill + white tick, off = 1.5 px blue-grey border; 15 pt label |
+| **Outline button** | «Выберите файл»: fill `#212C3B`, 1 px border `#2C3444`, white 17 pt label, 48 pt tall |
+| **Disabled button** | fill `#2C3444`, label `#6A7181` («Отправить» until text is entered) |
+| **Underline tabs** | «Активные 0 / Закрытые 2»: active label blue + 2 pt blue underline, count badge pill (blue for active, `#394050` for inactive) |
+| **Key/value table** | Контакты: grey label left (13 pt), white value right (15 pt), hairline dividers, rounded group `#171D2D` on `#121828` |
+| **Rate modal** | full-screen starfield/space background, Freedom Broker logo (green F + white «FREEDOM BROKER»), «Оцените приложение», two round glass buttons «Есть вопросы» (thumb down) / «Нравится» (thumb up), «Отменить» top left |
 
 ---
 
@@ -122,17 +136,25 @@ Most values match **Tailwind's default palette** exactly or within capture noise
 | 6 | **Идеи** | promo banner (Freedom bonds 8.5%) · chips Инвестидеи / Обзоры рынка / Подборки · heading «Инвестиционные идеи», «Идей рекомендовано: 4005» · idea cards |
 | 7 | **Счета** | blue header · «Общие активы $…» · allocation bar · Инвестиции / Банк / Крипто segments · «Freedom Broker» section · account rows |
 | 8 | **Меню** | language + QR · avatar · «Счет #… ⌄» chip · client name · «Моя визитка» · Пополнить / Вывести · menu rows |
-| – | not captured yet | instrument page (e.g. AAPL.US), **Поддержка** and the chat icon screen |
+| 9 | **Меню → Поддержка** (bottom sheet) | over a blurred Меню: «Поддержка» + rows **Написать в поддержку** · **FAQ** · **Контакты** · **Оцените приложение** |
+| 10 | Поддержка → Написать в поддержку | push screen «← Назад · Поддержка» (mail + ⋮ icons), segments **Тикеты / Уведомления**, text area «Опишите возникшую у Вас проблему или пожелание», ☑ «Отправить копию ответа на Email», ☐ «Уведомить об ответе по SMS (услуга платная)», «Выберите файл», disabled «Отправить», «Ваши обращения» with «Активные 0 / Закрытые 2» |
+| 11 | Поддержка → FAQ | push screen «FAQ», loads a web view («Загрузка…») |
+| 12 | Поддержка → Контакты | key/value table: Название «Freedom Finance Global PLC» · Город «г. Астана» · Улица «район Есиль, улица Достык, здание 16, внп. 2 (Talan Towers)» · Номер телефона «+7 7172 67 77 55» · E-mail «info@fbroker.kz» · Часы работы «09:00 - 21:00 (по времени г. Астана)» (public company data, fine to reuse) |
+| 13 | Поддержка → Оцените приложение | rate modal (see components) |
+| – | not captured yet | instrument page (e.g. AAPL.US), and what the top-right chat icon on Котировки opens |
 
 ---
 
 ## 6. Where AIM goes (proposal)
 
-The real app already has two support entry points. Using them makes the widget look native, not bolted on.
+**What support looks like today:** «Написать в поддержку» is an **asynchronous ticket form**. The client describes the problem, picks email/SMS for the reply, attaches a file and waits («Ваши обращения: Активные / Закрытые»). There is no instant answer anywhere in the app. That's the gap AIM fills, and it's a strong line for the pitch.
 
-1. **Chat icon (top right of Котировки / Идеи)**: the main entry. Tapping it opens AIM as a full-height bottom sheet over the current tab, styled with the tokens above (`fa-bg` sheet, `fa-surface` input, `fa-blue` send button).
-2. **Меню → Поддержка**: the same AIM sheet. The menu row stays exactly as in the app.
-3. **Optional floating button**: only if judges need it to be obvious. 52 pt blue circle above the tab bar, bottom right. Hide it while the sheet is open.
+The app already has the entry points. Using them makes the widget look native, not bolted on.
+
+1. **Меню → Поддержка sheet**: add one row at the **top** of the existing sheet, above «Написать в поддержку»: «AIM · ответ сразу» with a blue sparkle glyph, same row-card style. Tapping it opens AIM as a full-height sheet in the same style (grabber, `#171D2D` sheet, `#1A2536` input, blue send button).
+2. **Hand-off to a human = the existing ticket form.** When AIM can't solve it, or the client asks for a person, AIM offers «Передать специалисту». That opens «Написать в поддержку» with the text area pre-filled with a summary of the conversation. This is the bot → human hand-off from the briefing, built on a screen Freedom already has.
+3. **Chat icon (top right of Котировки / Идеи)**: open the same AIM sheet. Not captured yet, so we don't know what it opens today. In the demo it opens AIM.
+4. **Optional floating button**: only if judges need it to be obvious. 52 pt blue circle above the tab bar, bottom right. Hide it while the sheet is open.
 
 AIM's navigation actions (`open_screen`, `highlight`, `prefill`, see #14 / #19) map to the 6 tabs and the sub-tabs above: switch tab, switch segment, scroll to and pulse a row (e.g. «Отчеты и документы»), open «Пополнить». Protected actions (deposit, withdraw, buy) stay client-pressed, as in `broker/`.
 
@@ -152,6 +174,6 @@ AIM's navigation actions (`open_screen`, `highlight`, `prefill`, see #14 / #19) 
 
 ## 8. Gaps / next capture
 
-- Instrument page (chart, order buttons), «Поддержка» / chat screen, «Отчеты и документы», «Настройки».
+- Instrument page (chart, order buttons), what the Котировки chat icon opens, «Отчеты и документы», «Настройки». Поддержка was captured in a second pass (screens 9–13).
 - Light theme (if the app has one): check Настройки.
 - KZ / EN language variants of tab labels.
