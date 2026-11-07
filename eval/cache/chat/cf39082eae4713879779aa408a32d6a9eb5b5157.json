@@ -1,0 +1,16 @@
+{
+ "data": {
+  "reply": "Здравствуйте! Текущий тариф удобнее посмотреть в веб-кабинете. В приложении этот раздел может быть неочевиден.",
+  "handoff": false,
+  "handoff_reason": "",
+  "topic": "Просмотр тарифа",
+  "language": "RU"
+ },
+ "model": "openai:gpt-6-luna",
+ "usage": {
+  "prompt_tokens": 797,
+  "completion_tokens": 108,
+  "cost": 0.000134
+ },
+ "latency_ms": 2108
+}

@@ -1,0 +1,16 @@
+{
+ "data": {
+  "reply": "Текущий тариф можно посмотреть в веб-кабинете: его название указано под вашим именем.",
+  "handoff": false,
+  "handoff_reason": "",
+  "topic": "Просмотр тарифа",
+  "language": "RU"
+ },
+ "model": "openai:gpt-6-luna",
+ "usage": {
+  "prompt_tokens": 704,
+  "completion_tokens": 102,
+  "cost": 0.000121
+ },
+ "latency_ms": 1837
+}
