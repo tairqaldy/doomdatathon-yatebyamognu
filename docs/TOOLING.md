@@ -11,7 +11,10 @@ Status: `active` (in use) · `trial` (being evaluated) · `candidate` (proposed,
 | GitHub CLI `gh` | Issues, PRs, labels from the terminal; required for the issue-first rule | all | `brew install gh` / `winget install GitHub.cli`, then `gh auth login` | free | active (not yet installed on tair's Mac) |
 | Node.js LTS + npm | TS + Tailwind build for `app/` | A, C | nodejs.org LTS installer | free | candidate (decide version in DECISIONS) |
 | Python 3 | data scripts, JSON checks in `scripts/check.sh` | B, C | ships with Xcode CLT on macOS | free | active |
-| `python3 -m http.server` | serve `prototype/` and `data/` locally (fetch needs http, not file://) | A | `python3 -m http.server 8080` from repo root | free | active |
+| `python3 -m http.server` | serve `prototype/` and `data/` locally (fetch needs http, not file://) | A | `python3 -m http.server 8080` from repo root, or the `prototype` entry in `.claude/launch.json` | free | active |
+| Claude desktop built-in browser | click-testing the prototype, screenshots, console checks | A, D | opens via `.claude/launch.json` | free | active |
+| curl + Python (`re`) | reverse-engineering fbroker.kz CSS into tokens | D | see `docs/research/design-system.md` §0 | free | active |
+| macOS PDFKit via `osascript -l JavaScript` | extracting text from the organizers' PDFs without extra installs | D | used once, outputs in `docs/case/` | free | active |
 | `.githooks/commit-msg` | blocks AI attribution in commits | all | `git config core.hooksPath .githooks` | free | active |
 | `scripts/check.sh` | pre-merge gate (JSON valid, no secrets, no AI attribution, build/test if present) | all | `scripts/check.sh` | free | active |
 | GitHub Actions `check.yml` | runs `scripts/check.sh` on every push/PR | all | `.github/workflows/check.yml` | free (public repo) | active |
