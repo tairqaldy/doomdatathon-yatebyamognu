@@ -1,0 +1,94 @@
+{
+  "conversation_id": "p1-kz-015",
+  "language": "KZ",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "identification-violation",
+    "confidential-disclosure"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c02": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "The request was clear from the start; nothing needed clarifying."
+    },
+    "c03": {
+      "answer": "no",
+      "evidence": [
+        9,
+        10,
+        11
+      ],
+      "also_acceptable": [],
+      "note": "Disclosed the restriction before verification; said verification is not needed."
+    },
+    "c04": {
+      "answer": 5,
+      "evidence": [
+        13
+      ],
+      "also_acceptable": [
+        10
+      ],
+      "note": "Reason never given; only \"will send for checking\"."
+    },
+    "c05": {
+      "answer": "no",
+      "evidence": [
+        10,
+        11
+      ],
+      "also_acceptable": [
+        "yes"
+      ],
+      "note": ""
+    },
+    "c06": {
+      "answer": 4,
+      "evidence": [
+        11,
+        12
+      ],
+      "also_acceptable": [
+        7
+      ],
+      "note": "Client had to ask for the reason again."
+    },
+    "c07": {
+      "answer": "yes",
+      "evidence": [
+        13
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "Next step plus goodbye (minimal)."
+    },
+    "c08": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [
+        "no"
+      ],
+      "note": "Account restriction disclosed to an unverified person."
+    }
+  }
+}

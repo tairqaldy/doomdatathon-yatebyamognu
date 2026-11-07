@@ -1,0 +1,82 @@
+{
+  "conversation_id": "p1-ru-006",
+  "language": "RU",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "identification-done",
+    "model-answer"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c02": {
+      "answer": "yes",
+      "evidence": [
+        12
+      ],
+      "also_acceptable": [],
+      "note": "Asked the transfer currency before passing the case on."
+    },
+    "c03": {
+      "answer": "yes",
+      "evidence": [
+        9,
+        11
+      ],
+      "also_acceptable": [],
+      "note": "Identity confirmed (system event) before checking the account."
+    },
+    "c04": {
+      "answer": 20,
+      "evidence": [
+        12,
+        14
+      ],
+      "also_acceptable": [],
+      "note": "Correct next step: case forwarded, answer will come in this chat."
+    },
+    "c05": {
+      "answer": "yes",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": "Acknowledged the client is worried about the payment."
+    },
+    "c06": {
+      "answer": 10,
+      "evidence": [
+        9,
+        12,
+        14
+      ],
+      "also_acceptable": [],
+      "note": ""
+    },
+    "c07": {
+      "answer": "yes",
+      "evidence": [
+        14
+      ],
+      "also_acceptable": [],
+      "note": "Summary of next step plus goodbye."
+    },
+    "c08": {
+      "answer": "no",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "No insult, off-company paid offer or confidential disclosure."
+    }
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "run": "eval/runs/mock-baseline.json",
+  "meta": {
+    "evaluator": "mock",
+    "dataset": "data/datasets/DEV.json",
+    "checklist": "freedom-chat@v1",
+    "created_at": "2026-11-07T09:07:51.038Z",
+    "count": 19
+  },
+  "gold_dialogs": 19,
+  "scored_dialogs": 19,
+  "draft_gold": 19,
+  "missing": [],
+  "overall": {
+    "n": 152,
+    "strict": 57.89,
+    "lenient": 71.05,
+    "scale_within_1": 67.57
+  },
+  "per_criterion": {
+    "c01": {
+      "n": 19,
+      "strict": 68.42,
+      "lenient": 68.42,
+      "scale_within_1": null
+    },
+    "c02": {
+      "n": 19,
+      "strict": 57.89,
+      "lenient": 68.42,
+      "scale_within_1": null
+    },
+    "c03": {
+      "n": 19,
+      "strict": 78.95,
+      "lenient": 78.95,
+      "scale_within_1": null
+    },
+    "c04": {
+      "n": 19,
+      "strict": 31.58,
+      "lenient": 57.89,
+      "scale_within_1": 83.33
+    },
+    "c05": {
+      "n": 19,
+      "strict": 57.89,
+      "lenient": 84.21,
+      "scale_within_1": null
+    },
+    "c06": {
+      "n": 19,
+      "strict": 42.11,
+      "lenient": 52.63,
+      "scale_within_1": 52.63
+    },
+    "c07": {
+      "n": 19,
+      "strict": 63.16,
+      "lenient": 78.95,
+      "scale_within_1": null
+    },
+    "c08": {
+      "n": 19,
+      "strict": 63.16,
+      "lenient": 78.95,
+      "scale_within_1": null
+    }
+  },
+  "per_language": {
+    "EN": {
+      "n": 40,
+      "strict": 62.5,
+      "lenient": 72.5
+    },
+    "KZ": {
+      "n": 40,
+      "strict": 70,
+      "lenient": 80
+    },
+    "RU": {
+      "n": 72,
+      "strict": 48.61,
+      "lenient": 65.28
+    }
+  },
+  "na": {
+    "precision": 81.82,
+    "recall": 64.29,
+    "gold": 28,
+    "model": 22
+  },
+  "gross_error": {
+    "tp": 0,
+    "fn": 7,
+    "fp": 0,
+    "recall": 0,
+    "precision": null
+  },
+  "evidence": {
+    "hit_rate": 73.27,
+    "checked": 101,
+    "invalid_refs": 0,
+    "refs": 138
+  },
+  "total": {
+    "mae": 21.55,
+    "dialogs": 19,
+    "null_mismatch": 0
+  },
+  "disagreements": [
+    {
+      "conversation_id": "p1-en-006",
+      "criterion_id": "c04",
+      "gold": 20,
+      "model": 15,
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-en-006",
+      "criterion_id": "c06",
+      "gold": 10,
+      "model": 4,
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-en-013",
+      "criterion_id": "c08",
+      "gold": "yes",
+      "model": "no",
+      "note": "Asks for a personal number to sell private paid advice."
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "criterion_id": "c05",
+      "gold": "no",
+      "model": "yes",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Client's question answered with \"Goodbye.\""
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "criterion_id": "c07",
+      "gold": "no",
+      "model": "yes",
+      "note": "Ignored the client's question and left with a bare goodbye."
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "criterion_id": "c02",
+      "gold": "no",
+      "model": "na",
+      "note": "Did not ask app vs website; the bot had already asked it."
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "criterion_id": "c03",
+      "gold": "na",
+      "model": "no",
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "criterion_id": "c04",
+      "gold": 20,
+      "model": 10,
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Client had to ask \"Settings where?\"."
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "criterion_id": "c07",
+      "gold": "no",
+      "model": "yes",
+      "note": "Bare \"Bye.\""
+    },
+    {
+      "conversation_id": "p1-kz-003",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-kz-003",
+      "criterion_id": "c04",
+      "gold": 20,
+      "model": 15,
+      "note": "Transfer forwarded; report question answered fully."
+    },
+    {
+      "conversation_id": "p1-kz-003",
+      "criterion_id": "c06",
+      "gold": 10,
+      "model": 4,
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-kz-008",
+      "criterion_id": "c02",
+      "gold": "no",
+      "model": "yes",
+      "note": "Asked for the site the client had already named."
+    },
+    {
+      "conversation_id": "p1-kz-008",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Client had to repeat information."
+    },
+    {
+      "conversation_id": "p1-kz-011",
+      "criterion_id": "c03",
+      "gold": "na",
+      "model": "no",
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    {
+      "conversation_id": "p1-kz-013",
+      "criterion_id": "c08",
+      "gold": "yes",
+      "model": "no",
+      "note": "Asks for the client's personal number to give paid advice privately."
+    },
+    {
+      "conversation_id": "p1-kz-015",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Client had to ask for the reason again."
+    },
+    {
+      "conversation_id": "p1-ru-003",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-ru-003",
+      "criterion_id": "c03",
+      "gold": "na",
+      "model": "no",
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    {
+      "conversation_id": "p1-ru-003",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Reply to the commission question repeats the tariff location; client left without an answer."
+    },
+    {
+      "conversation_id": "p1-ru-006",
+      "criterion_id": "c02",
+      "gold": "yes",
+      "model": "na",
+      "note": "Asked the transfer currency before passing the case on."
+    },
+    {
+      "conversation_id": "p1-ru-006",
+      "criterion_id": "c04",
+      "gold": 20,
+      "model": 15,
+      "note": "Correct next step: case forwarded, answer will come in this chat."
+    },
+    {
+      "conversation_id": "p1-ru-009",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-ru-009",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Off-topic reply about the app freezing; client had to repeat the question."
+    },
+    {
+      "conversation_id": "p1-ru-012",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-ru-018",
+      "criterion_id": "c02",
+      "gold": "no",
+      "model": "na",
+      "note": "Answered without asking which bond or order; client points this out."
+    },
+    {
+      "conversation_id": "p1-ru-018",
+      "criterion_id": "c04",
+      "gold": 0,
+      "model": 10,
+      "note": "Unfounded claim, then \"I don't know\"."
+    },
+    {
+      "conversation_id": "p1-ru-018",
+      "criterion_id": "c05",
+      "gold": "no",
+      "model": "yes",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-ru-018",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Contradictory replies; client had to push back."
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": ""
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "criterion_id": "c02",
+      "gold": "no",
+      "model": "na",
+      "note": "No clarification of goals; jumped straight to a private offer."
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "criterion_id": "c04",
+      "gold": 0,
+      "model": 20,
+      "note": "No proper answer; the only recommendation is to send money to the operator."
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "criterion_id": "c08",
+      "gold": "yes",
+      "model": "no",
+      "note": "Asks the client to send money to his personal card, outside the company."
+    },
+    {
+      "conversation_id": "p1-ru-025",
+      "criterion_id": "c04",
+      "gold": "na",
+      "model": 15,
+      "note": "Chat ended before the client stated a request."
+    },
+    {
+      "conversation_id": "p1-ru-025",
+      "criterion_id": "c07",
+      "gold": "na",
+      "model": "no",
+      "note": "Client left right after the greeting."
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "criterion_id": "c01",
+      "gold": "yes",
+      "model": "no",
+      "note": "Greeted and introduced; the insult is graded in c05 / c08."
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "criterion_id": "c04",
+      "gold": 20,
+      "model": 15,
+      "note": "Correct site given; client logged in."
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "criterion_id": "c05",
+      "gold": "no",
+      "model": "yes",
+      "note": "Insulted the client; the client objected."
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "criterion_id": "c07",
+      "gold": "no",
+      "model": "yes",
+      "note": "Bare \"goodbye\" after the complaint; no summary or offer of help."
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "criterion_id": "c08",
+      "gold": "yes",
+      "model": "no",
+      "note": "\"Вы вообще читать умеете?\" = insult."
+    },
+    {
+      "conversation_id": "p4-ru-001",
+      "criterion_id": "c02",
+      "gold": "na",
+      "model": "yes",
+      "note": "Question \"how do you help me?\" was clear."
+    },
+    {
+      "conversation_id": "p4-ru-001",
+      "criterion_id": "c03",
+      "gold": "na",
+      "model": "no",
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    }
+  ]
+}

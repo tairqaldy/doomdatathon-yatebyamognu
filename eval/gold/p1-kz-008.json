@@ -1,0 +1,89 @@
+{
+  "conversation_id": "p1-kz-008",
+  "language": "KZ",
+  "channel": "agent chat",
+  "checklist_id": "freedom-chat",
+  "checklist_version": 1,
+  "status": "draft",
+  "labeled_by": "lane-c/claude",
+  "reviewed_by": null,
+  "tags": [
+    "no-introduction",
+    "repeated-question"
+  ],
+  "labels": {
+    "c01": {
+      "answer": "no",
+      "evidence": [
+        9
+      ],
+      "also_acceptable": [],
+      "note": "Informal \"Сәлем\" and no introduction."
+    },
+    "c02": {
+      "answer": "no",
+      "evidence": [
+        9,
+        10
+      ],
+      "also_acceptable": [],
+      "note": "Asked for the site the client had already named."
+    },
+    "c03": {
+      "answer": "na",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "General / navigation question: no account data disclosed, no protected action."
+    },
+    "c04": {
+      "answer": 20,
+      "evidence": [
+        11,
+        12
+      ],
+      "also_acceptable": [
+        15
+      ],
+      "note": ""
+    },
+    "c05": {
+      "answer": "no",
+      "evidence": [
+        10,
+        11
+      ],
+      "also_acceptable": [
+        "yes"
+      ],
+      "note": "Client was irritated at repeating themselves; operator did not acknowledge it."
+    },
+    "c06": {
+      "answer": 4,
+      "evidence": [
+        9,
+        10
+      ],
+      "also_acceptable": [
+        7
+      ],
+      "note": "Client had to repeat information."
+    },
+    "c07": {
+      "answer": "no",
+      "evidence": [
+        11,
+        12
+      ],
+      "also_acceptable": [
+        "na"
+      ],
+      "note": "Chat ends after the client's thanks with no farewell."
+    },
+    "c08": {
+      "answer": "no",
+      "evidence": [],
+      "also_acceptable": [],
+      "note": "No insult, off-company paid offer or confidential disclosure."
+    }
+  }
+}
