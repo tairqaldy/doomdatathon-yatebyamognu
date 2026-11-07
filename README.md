@@ -2,14 +2,14 @@
 
 Prototype for the Freedom Broker case at the NU datathon: automatic, explainable quality checks of operator chats and calls (RU / KZ / EN) against a configurable checklist, with evidence links, appeals and reviewer decisions.
 
-**Live:** deployed on Vercel from `main`; every branch gets its own preview URL (see the Deployments tab or the PR comment).
+**Live:** https://freedom-cqa.vercel.app: the **preview hub** (build, AI status, measured accuracy, every surface on phone / tablet / laptop). The app is at [`/prototype/`](https://freedom-cqa.vercel.app/prototype/). Every push to `main` redeploys automatically; every other branch gets its own preview URL.
 
 ## Run locally (2 minutes)
 
 ```bash
 git clone https://github.com/tairqaldy/doomdatathon-yatebyamognu.git && cd doomdatathon-yatebyamognu
 cp .env.example .env          # add OPENROUTER_API_KEY (+ CQA_API_URL from the team chat)
-npm run dev                   # Node ≥ 20, no dependencies → http://localhost:3000/prototype/
+npm run dev                   # Node ≥ 20, no dependencies → http://localhost:3000 (hub) · /prototype/ (app)
 ```
 Without a key the app runs on the built-in MOCK evaluator (clearly labelled). Without Node: `python3 -m http.server 8080` → http://localhost:8080/prototype/ (static only, MOCK, no call audio).
 
@@ -24,10 +24,10 @@ Without a key the app runs on the built-in MOCK evaluator (clearly labelled). Wi
 The LLM only decides each criterion's answer, explanation, deduction reason and evidence (validated against the transcript). Points and totals come from a deterministic engine ([prototype/scoring.js](prototype/scoring.js)) that implements the checklist rules: yes = full weight, scale proportional, N/A weight redistributed, 2-decimal rounding, gross errors flagged separately. Tests: `npm test`.
 
 ## AI, cost and caching
-| Job | Model (OpenRouter) | Cost |
+| Job | Model | Measured |
 |---|---|---|
-| Evaluate a dialog | `anthropic/claude-haiku-5.5` (default, `CQA_EVAL_MODEL`) | ≈ $0.001 per evaluation (~5k input + ~1k output tokens at $0.10/$0.50 per M). Measured numbers: `eval/runs/` |
-| Transcribe a call | `nvidia/nemotron-3.5-transcribe` | ≈ $0.06 per audio hour |
+| Evaluate a dialog | **`openai:gpt-6-luna`** (default, direct OpenAI; falls back to OpenRouter's `openai/gpt-6-luna` without `OPENAI_API_KEY`). Any OpenRouter id works via `CQA_EVAL_MODEL` | **$0.00105 per evaluation**, p50 13.3 s, 0 errors on all 65 DEV dialogs. Gold set (19 reviewed dialogs): **86.2 % strict agreement**, 94.7 % lenient, gross-error recall 6/7 with 0 false positives, evidence hit rate 95.5 %, total MAE 7.8 points. Haiku 5.5 for comparison: 75.7 % strict |
+| Transcribe a call | `nvidia/nemotron-3.5-transcribe` (OpenRouter) | $0.04 for all 5 calls, 10–18 s each; WER 35.5 % / CER 24.4 % vs organizer transcripts (themselves ASR incl. IVR prompts, so this is agreement, not accuracy) |
 
 Every model call is cached (memory → `eval/cache/` files → optional Upstash), keyed by model + prompt version + input. A repeated request is instant and free; committed cache files let teammates and Vercel reuse paid answers.
 

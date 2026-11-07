@@ -78,12 +78,38 @@ interface Appeal {
 // Card shows: original Evaluation, Appeal(s) + decision, and a final Evaluation recomputed by scoring.ts.
 ```
 
-## 5. Backend endpoints (Lane B proposes, fill in)
-| Method | Path | Body / returns |
-|---|---|---|
-| GET | `/api/conversations?group_id=DEV` | proxied + cached dataset |
-| GET/PUT | `/api/checklists/:id` | Checklist |
-| POST | `/api/evaluate` | `{conversation_id, checklist_id}` → Evaluation |
-| POST | `/api/evaluate/batch` | `{group_id, checklist_id}` → job status |
-| GET | `/api/evaluations?conversation_id=` | Evaluation[] |
-| POST | `/api/appeals` · PATCH `/api/appeals/:id` | Appeal |
+## 5. Backend endpoints (live: `api/*.js`, same in `npm run dev` and on Vercel)
+For UI work (Dameli): call these with relative URLs (`/api/...`). All JSON, CORS open (D365 can embed).
+
+| Method | Path | Request | Response |
+|---|---|---|---|
+| GET | `/api/health` | none | `{ ok, openrouter, openai, organizer_api, shared_cache, models: { eval, transcribe }, prompt_version, commit, branch }` (booleans only, never keys) |
+| POST | `/api/evaluate` | `{ conversation_id, group?: "DEV", checklist: Checklist (§2, at least criteria), model?, force?: bool }` | `AIResult` below. `force` bypasses the cache (re-bills) |
+| POST | `/api/transcribe` | `{ conversation_id, group?, language? }` | `{ conversation_id, cached, text, segments?, language, duration, latency_ms, usage, model }` (calls only) |
+| GET | `/api/audio?id=<conversation_id>&group=DEV` | none | `302` → fresh mp3 (organizer links expire in ~1h). Use directly as `<audio src>` |
+| GET | `/api/dataset?group_id=<ID>` | none | organizer payload (§1). Use for the control set at T+23h |
+
+```ts
+// POST /api/evaluate response. Points/total are NOT included: compute them in the UI with score(checklist, answers)
+// from prototype/scoring.js (→ app/src/scoring.ts) so appeals/overrides recompute instantly.
+interface AIResult {
+  conversation_id: string;
+  cached: boolean; cache_tier: "memory" | "file" | "upstash" | "none"; served_ms: number;
+  model: string;                 // e.g. "openai:gpt-6-luna"
+  prompt_version: string;        // e.g. "eval-v1"
+  summary: { reason: string; operator_actions: string; outcome: string } | null;  // "Понимание" strip
+  answers: Record<string /*criterion_id*/, {
+    answer: Answer;              // §3: "yes" | "no" | "na" | number (scale step)
+    explanation: string;         // RU, 1–2 sentences
+    deduction_reason: string;    // "" when full points; otherwise "why points were lost" (shown in «Причина снижения оценки»)
+    evidence: Evidence[];        // §3; indices validated against the transcript, quotes = real line text
+  }>;
+  problems: string[];            // normalisation notes (invalid answers snapped, evidence dropped)
+  usage: { prompt_tokens?: number; completion_tokens?: number; cost: number | null };
+  latency_ms: number; attempts: number;
+}
+```
+
+**Precomputed results (instant, no API call):** `GET /data/evaluations/DEV.json` → `{ group, model, prompt_version, checklist_id, checklist_version, generated_at, results: Record<conversation_id, AIResult-without-cache-fields + total + gross_error> }`. They are valid only for the **base checklist** (`data/checklists/freedom-chat-v1.json`). After the checklist changes, call `/api/evaluate` (the prototype keys its cache by a hash of the criteria).
+
+**Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).
