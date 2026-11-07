@@ -102,6 +102,9 @@ body { min-height: 100vh; }
 .ag-chip { padding: var(--cqa-space-1) var(--cqa-space-3); border: 1px solid var(--cqa-divider-strong); border-radius: var(--cqa-radius-full); background: var(--cqa-bg-white); cursor: pointer; font-size: var(--cqa-fs-small); }
 .ag-chip:hover { background: var(--cqa-bg-hover); }
 .ag-chip-human { border-color: var(--cqa-notify); }
+.ag-consent { display: flex; flex-wrap: wrap; gap: var(--cqa-space-2); margin-top: var(--cqa-space-2); }
+.ag-chip-yes { border-color: var(--cqa-brand-primary); background: var(--cqa-brand-primary); color: var(--cqa-text-inverse); font-weight: 600; }
+.ag-chip-yes:hover { background: var(--cqa-brand-primary); filter: brightness(0.95); }
 .ag-status { margin: 0; padding: 0 var(--cqa-space-4) var(--cqa-space-2); font-size: var(--cqa-fs-small); color: var(--cqa-text-tertiary); }
 .ag-status[hidden] { display: none; }
 .ag-form { display: flex; align-items: flex-end; gap: var(--cqa-space-1); padding: var(--cqa-space-3); border-top: 1px solid var(--cqa-divider); }
