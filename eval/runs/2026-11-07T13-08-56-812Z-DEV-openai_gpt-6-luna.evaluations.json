@@ -1,0 +1,2975 @@
+{
+ "meta": {
+  "evaluator": "openai:gpt-6-luna",
+  "prompt_version": "eval-v3",
+  "dataset": "DEV",
+  "checklist": "freedom-chat@v1",
+  "created_at": "2026-11-07T13:08:56.812Z",
+  "count": 19
+ },
+ "evaluations": [
+  {
+   "id": "openai:gpt-6-luna-p1-ru-006",
+   "conversation_id": "p1-ru-006",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 11586,
+    "cost_usd": 0.000855
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 10,
+     "effective_weight": 10,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор уточнил валюту перевода, чтобы добавить сведения к обращению.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+      },
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "В тенге."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "yes",
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Личность клиента подтверждена до передачи вопроса специалистам.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Личность клиента подтверждена."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Оператор передал вопрос специалистам, собрал валюту перевода и сообщил, где клиент получит ответ.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+      },
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор вежливо отреагировал на беспокойство клиента из-за платежа.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Ответы оператора ясные и последовательные; явного ожидания во время работы оператора не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Спасибо. Я передал вопрос по зачислению специалистам. Укажите, пожалуйста, в какой валюте был перевод, чтобы я добавил это к обращению."
+      },
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "yes",
+     "points": 5,
+     "effective_weight": 5,
+     "explanation": "Оператор сообщил дальнейший шаг и попрощался.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Добавил. Когда по платежу будет ответ, мы сообщим вам в этом чате. Спасибо, что подождали. До свидания!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложений услуг в обход компании или раскрытия конфиденциальных данных нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Роман. Понимаю, что вы переживаете из-за платежа. Сначала нужно подтвердить личность, чтобы проверить счёт."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-012",
+   "conversation_id": "p1-ru-012",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 16301,
+    "cost_usd": 0.00111
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 16.67,
+     "effective_weight": 16.67,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Вопрос о наличии формы на русском был полностью ясен, уточнение не требовалось.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Данных для ответа хватало с самого начала: клиент спросил, есть ли форма 1042-S на русском."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Клиент запросил общую информацию о языке формы; идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Общий вопрос о языке формы, без запроса данных по счёту или защищённого действия."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 33.33,
+     "effective_weight": 33.33,
+     "explanation": "Оператор ответил по существу: форма предоставляется на английском языке, следовательно, на русском её нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор общался вежливо; клиент не выражал недовольства или неудобства.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Ответ был ясным и связным; ожидания во время работы оператора не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "После сообщения клиента о завершении разговора соединение прервала система, не оставив оператору возможности попрощаться.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Система прервала соединение после реплики клиента «это всё что хотел узнать»."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения услуг в обход компании или раскрытия конфиденциальных данных нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-003",
+   "conversation_id": "p1-ru-003",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 19053,
+    "cost_usd": 0.001159
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 12.5,
+     "effective_weight": 12.5,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Клиент уточнил международный рынок и что речь о покупке, но оператор не учёл эти детали в ответе и не уточнил необходимое.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        10,
+        14
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос касался общей информации о тарифе и комиссиях, а не данных по конкретному счёту или защищённого действия.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации: клиент спрашивал об общей комиссии тарифа."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 10,
+     "points": 12.5,
+     "effective_weight": 25,
+     "explanation": "Оператор подсказал, где посмотреть название тарифа, но существенный вопрос о комиссии остался открытым.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        14
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 18.75,
+     "effective_weight": 18.75,
+     "explanation": "Оператор общался вежливо; клиент не выражал недовольства или неудобства, на которое требовалось отреагировать.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "После нерелевантного ответа оператору пришлось бы ответить на вопрос о комиссии, который клиент повторно сформулировал.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Да, «Инвестор». А комиссию где искать?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь; вопрос клиента остался без ответа.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Название тарифа смотрите там же. Хорошего дня!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения платной услуги в обход компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        10,
+        14
+       ]
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 40
+    },
+    {
+     "section_id": "s2",
+     "score": 50
+    },
+    {
+     "section_id": "s3",
+     "score": 60
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 51.25,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-009",
+   "conversation_id": "p1-ru-009",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 23176,
+    "cost_usd": 0.001465
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 10,
+     "effective_weight": 10,
+     "explanation": "В первом ответе оператор поздоровался и представился на русском языке.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор уточнил, какое сообщение появляется, прежде чем проверять ситуацию.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 20,
+     "explanation": "Оператор раскрыл ограничение по конкретному счёту до подтверждения личности и затем заявил, что подтверждение не нужно.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+      },
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 5,
+     "points": 5,
+     "effective_weight": 20,
+     "explanation": "Оператор сообщил об ограничении и передаче вопроса на проверку, но не объяснил причину и дальнейший порядок ответа.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 15,
+       "quote": "Передам вопрос на проверку. До свидания."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 15,
+     "explanation": "Клиент сообщил, что кнопка вывода не нажимается, но оператор не отреагировал на эту конкретную проблему.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 6,
+     "effective_weight": 15,
+     "explanation": "Оператор ответил не на вопрос о причине ограничения, и клиенту пришлось повторить вопрос.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "yes",
+     "points": 5,
+     "effective_weight": 5,
+     "explanation": "Оператор обозначил следующий шаг и попрощался.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 15,
+       "quote": "Передам вопрос на проверку. До свидания."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оператор раскрыл конфиденциальные сведения о счёте до подтверждения личности клиента.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 12.5
+    },
+    {
+     "section_id": "s3",
+     "score": 31.43
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 41,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-018",
+   "conversation_id": "p1-ru-018",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 16325,
+    "cost_usd": 0.001112
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 12.5,
+     "effective_weight": 12.5,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Для точного ответа не хватало данных о приказе, но оператор не уточнил их и сделал категоричный вывод.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        9,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос касался общего способа узнать причину отклонения и не требовал доступа к защищённым данным или действиям.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации: «Где посмотреть причину?»"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 0,
+     "points": 0,
+     "effective_weight": 25,
+     "explanation": "Оператор не выяснил причину и дал неподтверждённое объяснение, после чего признал, что не знает.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Тогда не знаю."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Когда клиент указал, что оператор не знает, какую бумагу он пытался купить, оператор не признал ошибку и не отреагировал на это.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Почему точно? Я даже бумагу вам не назвал."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Тогда не знаю."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "Клиенту пришлось оспорить вывод оператора, поскольку тот ответил категорично без данных о бумаге.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+      },
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Почему точно? Я даже бумагу вам не назвал."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "У оператора была возможность завершить разговор, но он не подвёл итог и не попрощался до закрытия чата.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        11,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения платной услуги в обход компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 40
+    },
+    {
+     "section_id": "s2",
+     "score": 0
+    },
+    {
+     "section_id": "s3",
+     "score": 17.14
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 20,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-025",
+   "conversation_id": "p1-ru-025",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 10347,
+    "cost_usd": 0.000805
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор поздоровалась и представилась в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте! Меня зовут Валерия, поддержка Freedom Broker. С чем помочь?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос соединить с оператором был ясен; дополнительных уточнений для его выполнения не требовалось.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Сразу подключите оператора, я ему объясню."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос на соединение с оператором не требовал идентификации.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Сразу подключите оператора, я ему объясню."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Чат закончился до того, как клиент сформулировал вопрос по существу.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Клиент покинул чат до формулировки вопроса."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 37.5,
+     "effective_weight": 37.5,
+     "explanation": "Оператор общалась вежливо.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте! Меня зовут Валерия, поддержка Freedom Broker. С чем помочь?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 37.5,
+     "effective_weight": 37.5,
+     "explanation": "Реплика оператора ясная и связная; ожидания во время работы оператора не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте! Меня зовут Валерия, поддержка Freedom Broker. С чем помочь?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Клиент покинул чат сразу после ответа оператора, до возможности завершить диалог.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Клиент покинул чат."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения услуг в обход компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте! Меня зовут Валерия, поддержка Freedom Broker. С чем помочь?"
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": null
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-022",
+   "conversation_id": "p1-ru-022",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 17084,
+    "cost_usd": 0.001186
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 12.5,
+     "effective_weight": 12.5,
+     "explanation": "В первом ответе оператор поздоровался и представился.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Оператор не уточнил запрос клиента и не выяснил, какую консультацию тот ожидал.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        9,
+        11
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для общей консультации по выбору облигаций идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации: клиент спрашивал общую консультацию, а не сведения по счёту или защищённое действие."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 0,
+     "points": 0,
+     "effective_weight": 25,
+     "explanation": "Оператор не ответил на запрос о консультации и предложил ошибочную и небезопасную рекомендацию.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Да, это я лично предлагаю, через компанию оформлять не надо."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Оператор проигнорировал потребность клиента и предложил перевести деньги ему лично.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "Клиенту пришлось пояснить, что он спрашивал именно консультацию.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Вы серьёзно? Я про консультацию в приложении спрашивал."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "После отказа клиента оператор не подвёл итог, не предложил помощь и не попрощался.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        13
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оператор предложил клиенту перевести деньги лично ему, в обход компании.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Да, это я лично предлагаю, через компанию оформлять не надо."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 40
+    },
+    {
+     "section_id": "s2",
+     "score": 0
+    },
+    {
+     "section_id": "s3",
+     "score": 17.14
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 20,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-ru-029",
+   "conversation_id": "p1-ru-029",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 14925,
+    "cost_usd": 0.001099
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 12.5,
+     "effective_weight": 12.5,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Оператор не уточнил, какой именно сайт или вход имеет в виду клиент; клиенту пришлось отдельно спросить, на какой сайт перейти.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        9,
+        9
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Вопрос касался навигации к веб-версии и не требовал идентификации.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос о том, на какой сайт перейти для входа."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор указал адрес веб-версии, после чего клиент сообщил, что вошёл.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Откройте tradernet.global, там вход в веб-версию."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Вошёл. Но со мной так говорить не надо."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Оператор ответил на просьбу клиента о помощи оскорблением.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "Оператор сначала не ответил на вопрос, и клиенту пришлось повторно уточнить, на какой сайт перейти.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Не понимаю, на какой сайт перейти."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "До свидания."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оператор оскорбил клиента.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 40
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 17.14
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 45,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-kz-003",
+   "conversation_id": "p1-kz-003",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 15373,
+    "cost_usd": 0.001105
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 10,
+     "effective_weight": 10,
+     "explanation": "Оператор в первом ответе поздоровался по-казахски и представился.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Сәлеметсіз бе, мен Дана. Ақша көрінбей қалса, алаңдайтыныңыз түсінікті. Нақты төлемді тексеру үшін жеке басыңызды растау қажет."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор уточнил валюту и примерное время перевода перед передачей вопроса специалистам.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Рақмет. Төлем туралы сұрағыңызды мамандарға жолдаймын. Ақшаны қай валютамен аудардыңыз?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 16,
+       "quote": "Әзірге түбіртекті жібермей тұрыңыз. Алдымен аударымның шамамен қашан жасалғанын айтыңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "yes",
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Оператор запросил подтверждение личности до работы с конкретным переводом; личность была подтверждена.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Сәлеметсіз бе, мен Дана. Ақша көрінбей қалса, алаңдайтыныңыз түсінікті. Нақты төлемді тексеру үшін жеке басыңызды растау қажет."
+      },
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Рақмет. Төлем туралы сұрағыңызды мамандарға жолдаймын. Ақшаны қай валютамен аудардыңыз?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Вопрос о переводе передан специалистам, оператор собрал нужные сведения и сообщил, что ответ будет в этом чате; также ответил на вопрос об отчёте.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 18,
+       "quote": "Уақытын да сұрағыңызға қостым."
+      },
+      {
+       "kind": "message",
+       "turn_index": 21,
+       "quote": "Қосымшадағы «Отчёты и документы» бөлімін ашып, «Отчёт брокера» тармағын таңдаңыз."
+      },
+      {
+       "kind": "message",
+       "turn_index": 25,
+       "quote": "Жақсы, аударымға қатысты жауапты осында жібереміз. Сау болыңыз!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор был вежлив и признал беспокойство клиента из-за задержки перевода.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Сәлеметсіз бе, мен Дана. Ақша көрінбей қалса, алаңдайтыныңыз түсінікті. Нақты төлемді тексеру үшін жеке басыңызды растау қажет."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Ответы последовательны и понятны; клиент получил инструкции и смог продолжить без повторных уточнений из-за непонятных ответов.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 21,
+       "quote": "Қосымшадағы «Отчёты и документы» бөлімін ашып, «Отчёт брокера» тармағын таңдаңыз."
+      },
+      {
+       "kind": "message",
+       "turn_index": 23,
+       "quote": "Иә, керекті кезеңнің басы мен соңын көрсетіп, есепті жүктеңіз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "yes",
+     "points": 5,
+     "effective_weight": 5,
+     "explanation": "Оператор подтвердил дальнейший шаг и попрощался.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 25,
+       "quote": "Жақсы, аударымға қатысты жауапты осында жібереміз. Сау болыңыз!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения платных услуг в обход компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Сәлеметсіз бе, мен Дана. Ақша көрінбей қалса, алаңдайтыныңыз түсінікті. Нақты төлемді тексеру үшін жеке басыңызды растау қажет."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-kz-011",
+   "conversation_id": "p1-kz-011",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 12457,
+    "cost_usd": 0.001047
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 16.67,
+     "effective_weight": 16.67,
+     "explanation": "Оператор поздоровался на казахском и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос был понятен с самого начала, дополнительных уточнений не требовалось.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Данных для ответа хватало с самого начала."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Это общий вопрос о назначении счетов, идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 33.33,
+     "effective_weight": 33.33,
+     "explanation": "Оператор ответил на вопрос и подтвердил, что для покупки акций нужно выбрать торговый счёт.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор был вежлив; клиент не выражал недовольства или неудобства.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Ответы оператора ясные и последовательные; ожидания во время его работы не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Связь прервалась после подтверждения клиента, до возможности оператора завершить разговор.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Чат оборвался до возможности его завершить."
+      },
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Клиентпен байланыс үзілді."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, обхода компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-kz-008",
+   "conversation_id": "p1-kz-008",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 17157,
+    "cost_usd": 0.0012
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 12.5,
+     "explanation": "Оператор поздоровался, но не представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Клиент уже назвал сайт, но оператор повторно спросил, на какой сайт он вошёл.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        9,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для подсказки о входе на сайт идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Общая навигационная консультация; защищённые данные или действия не запрашивались."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор указал подходящие способы входа, после чего клиент сообщил, что всё открылось.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 18.75,
+     "effective_weight": 18.75,
+     "explanation": "Оператор вежливо и по существу отреагировал на проблему клиента, указав, где войти в торговый счёт.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "Клиенту пришлось повторить, какой сайт он имеет в виду, хотя уже сообщил это ранее.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        9,
+        10
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "После сообщения клиента об успехе оператор не подвёл итог и не попрощался.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        12
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, обходного предложения платной услуги или раскрытия конфиденциальных сведений нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 0
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 60
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 51.25,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-en-006",
+   "conversation_id": "p1-en-006",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 10322,
+    "cost_usd": 0.000883
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 10,
+     "effective_weight": 10,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор уточнил валюту и примерное время перевода, необходимые для проверки.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Thanks. What currency did you send?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 18,
+       "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "yes",
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Личность была подтверждена до проверки данных счёта.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Customer identity verified."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 20,
+     "effective_weight": 20,
+     "explanation": "Случай передан на проверку; оператор сообщил, что обновление будет в этом чате, и добавил к делу нужные сведения.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 15,
+       "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+      },
+      {
+       "kind": "message",
+       "turn_index": 20,
+       "quote": "I've added that timing to the case. The team will check the brokerage side."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор вежливо признал беспокойство клиента и отреагировал на его проблему.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Ответы оператора ясные и последовательные; заметного ожидания во время его работы не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 18,
+       "quote": "Hold off on the screenshot for now. Can you tell me roughly when you sent the transfer?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 22,
+       "quote": "You can return to this chat. The details you've given me are already in the case."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "yes",
+     "points": 5,
+     "effective_weight": 5,
+     "explanation": "Оператор напомнил о следующем шаге и попрощался.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 29,
+       "quote": "You're welcome. We'll follow up here about the transfer. Goodbye!"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, обхода компании или раскрытия конфиденциальных данных не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hello, I'm Sam. I understand why you'd want to check. We'll need to verify your identity before we look at the account."
+      },
+      {
+       "kind": "message",
+       "turn_index": 15,
+       "quote": "I've sent the case for review with the currency you provided. We'll follow up in this chat once there's an update."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-kz-013",
+   "conversation_id": "p1-kz-013",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 18903,
+    "cost_usd": 0.001179
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 15.38,
+     "effective_weight": 15.38,
+     "explanation": "Оператор поздоровался на казахском и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос был понятен с самого начала: клиент спросил, где смотреть облигации.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Облигацияларды қайдан қараймын?"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для общей подсказки по навигации в приложении идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "«Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 30.77,
+     "effective_weight": 30.77,
+     "explanation": "Оператор указал раздел и способ поиска; клиент подтвердил, что нашёл облигации.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 23.08,
+     "effective_weight": 23.08,
+     "explanation": "Оператор общался вежливо; клиент не выражал недовольства или неудобства.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 23.08,
+     "effective_weight": 23.08,
+     "explanation": "Ответы оператора были понятными и связными; ожидания по ходу работы не было.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 7.69,
+     "explanation": "После отказа клиента оператор закрыл чат, не попрощавшись и не подведя итог.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        13
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оператор предложил платную консультацию вне компании, связавшись по личному номеру.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Жеке нөміріңізді қалдырсаңыз, жұмыстан кейін хабарласып, қандай қағаз алу керегін ақылы түрде айтып беремін."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 85.72
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 92.31,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-en-009",
+   "conversation_id": "p1-en-009",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 12580,
+    "cost_usd": 0.000866
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 16.67,
+     "effective_weight": 16.67,
+     "explanation": "Оператор поздоровался и представился в первом ответе на английском языке.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Leo. Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос был ясен с самого начала: клиент спросил, как отключить Use Margin, и уточнил, что ещё не отправил ордер.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "There's a Use Margin option on the order screen. How do I switch it off?"
+      },
+      {
+       "kind": "na_condition",
+       "quote": "I haven't sent the order yet."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для общей инструкции по настройке ордера идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 33.33,
+     "effective_weight": 33.33,
+     "explanation": "Оператор дал прямую инструкцию, как отключить Use Margin до отправки ордера.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Leo. Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор был вежлив; клиент не выражал недовольства или неудобства.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Leo. Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Ответ оператора ясный и последовательный; ожидание до подключения оператора не учитывается.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Leo. Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Соединение оборвалось после благодарности клиента, до возможности оператора завершить разговор.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Connection to customer lost."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложения услуг в обход компании или раскрытия конфиденциальных данных нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Leo. Open Order Settings and untick Use Margin before you submit the order."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 100
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 100,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-kz-015",
+   "conversation_id": "p1-kz-015",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 21474,
+    "cost_usd": 0.001335
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 11.76,
+     "effective_weight": 11.76,
+     "explanation": "Оператор қазақ тілінде сәлемдесіп, өзін таныстырды.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Клиенттің сұрағы басынан анық болды, қосымша нақтылау қажет емес еді.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Сұрау толық түсінікті болды: клиент шотынан ақша шығару неге жабық екенін тексеруді сұрады."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 23.53,
+     "explanation": "Оператор жеке басы расталмай тұрып шоттағы нақты шектеу туралы ақпаратты ашты әрі растау қажет емес деді.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+      },
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Қазір растаудың қажеті жоқ."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 5,
+     "points": 5.88,
+     "effective_weight": 23.53,
+     "explanation": "Оператор тек тексеруге жіберетінін айтты, бірақ себебін ашпады және клиентке бұдан кейін не болатынын түсіндірмеді.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 17.65,
+     "explanation": "Клиент жеке басын растаған жоқ екенін айтқанда, оператор оның алаңдаушылығын түсіндіріп не нақты жауап бермеді.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Қазір растаудың қажеті жоқ."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 10,
+     "points": 17.65,
+     "effective_weight": 17.65,
+     "explanation": "Оператордың жауаптары қысқа әрі түсінікті; диалогтың жүру тәртібі шатасқан жоқ.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "yes",
+     "points": 5.88,
+     "effective_weight": 5.88,
+     "explanation": "Оператор тексеруге жіберетінін айтып, қоштасты.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Жеке шоттағы шектеу туралы ақпарат сәйкестендіру расталмай тұрып ашылды.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 12.49
+    },
+    {
+     "section_id": "s3",
+     "score": 57.14
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 41.17,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-en-015",
+   "conversation_id": "p1-en-015",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 12198,
+    "cost_usd": 0.000882
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 12.5,
+     "explanation": "В первом ответе оператор не поздоровался и не представился.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Open settings then go back and log in again."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 18.75,
+     "explanation": "Перед советом нужно было уточнить, где клиент пытается войти; первоначальная инструкция оказалась неуместной для сайта компании.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Open settings then go back and log in again."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос касался общей навигации для входа, а не данных конкретного счёта или защищённого действия.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 25,
+     "effective_weight": 25,
+     "explanation": "Оператор указал нужный сайт для входа, после чего клиент подтвердил, что это сработало.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 18.75,
+     "effective_weight": 18.75,
+     "explanation": "Оператор вежливо отреагировал на затруднение и дал конкретное решение.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 7.5,
+     "effective_weight": 18.75,
+     "explanation": "Клиенту пришлось переспросить после неясной и неподходящей первой инструкции.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Open settings then go back and log in again."
+      },
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Settings where? I'm on the company website and there's no login."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 6.25,
+     "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Bye."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, обхода компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 0
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 60
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 51.25,
+   "gross_error": false
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-en-013",
+   "conversation_id": "p1-en-013",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 22214,
+    "cost_usd": 0.001431
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 15.38,
+     "effective_weight": 15.38,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Запрос о том, как найти облигации в приложении, был понятен с самого начала и не требовал уточнений.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Данных для ответа хватало с самого начала: клиент спросил, как найти облигации в приложении."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для общей инструкции по навигации в приложении идентификация не требовалась.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос касался общего поиска облигаций в приложении, а не данных счёта или защищённого действия."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 20,
+     "points": 30.77,
+     "effective_weight": 30.77,
+     "explanation": "Оператор дал понятный следующий шаг: открыть Quotes и искать облигацию по названию или тикеру.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 9,
+       "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 23.08,
+     "explanation": "Предложение личной платной консультации не было клиентоориентированным; после уточнения клиента оператор не отреагировал на его просьбу.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "No, I'm only asking for help with the app."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 9.23,
+     "effective_weight": 23.08,
+     "explanation": "После неуместного предложения клиенту пришлось повторно обозначить, что ему нужна только помощь с приложением.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "No, I'm only asking for help with the app."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 7.69,
+     "explanation": "У оператора была возможность завершить разговор, но он закрыл чат без итога или прощания.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        13
+       ]
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оператор предложил клиенту личную платную консультацию в обход компании.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 11,
+       "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 100
+    },
+    {
+     "section_id": "s3",
+     "score": 17.14
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 55.38,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p1-en-014",
+   "conversation_id": "p1-en-014",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 23682,
+    "cost_usd": 0.001553
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 10,
+     "effective_weight": 10,
+     "explanation": "Оператор поздоровался и представился в первом ответе.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 15,
+     "explanation": "Для проверки счёта требовалось подтвердить личность клиента, но оператор предложил пропустить проверку.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "We can skip that. I'll send it to the team to check the reason."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 20,
+     "explanation": "Оператор раскрыл сведения об ограничении по счёту до подтверждения личности и предложил пропустить проверку.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+      },
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "We can skip that. I'll send it to the team to check the reason."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 5,
+     "points": 5,
+     "effective_weight": 20,
+     "explanation": "Оператор предложил передать вопрос на проверку, но не объяснил дальнейший порядок и не ответил, придёт ли ответ в этом чате.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "We can skip that. I'll send it to the team to check the reason."
+      },
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Goodbye."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "yes",
+     "points": 15,
+     "effective_weight": 15,
+     "explanation": "Оператор общался без грубости; клиент не выражал недовольства или неудобства, требующего отдельной реакции.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "We can skip that. I'll send it to the team to check the reason."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 6,
+     "effective_weight": 15,
+     "explanation": "Оператор оставил без ответа вопрос клиента о том, придёт ли ответ в этом чате.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 13,
+       "quote": "Will I hear back here?"
+      },
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Goodbye."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 5,
+     "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь; последний вопрос клиента остался без ответа.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 14,
+       "quote": "Goodbye."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "yes",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "До подтверждения личности оператор сообщил о конкретном ограничении на счёте клиента.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 10,
+       "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 40
+    },
+    {
+     "section_id": "s2",
+     "score": 12.5
+    },
+    {
+     "section_id": "s3",
+     "score": 60
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 36,
+   "gross_error": true
+  },
+  {
+   "id": "openai:gpt-6-luna-p4-ru-001",
+   "conversation_id": "p4-ru-001",
+   "checklist_id": "freedom-chat",
+   "checklist_version": 1,
+   "created_at": "2026-11-07T13:08:56.812Z",
+   "model": {
+    "name": "openai:gpt-6-luna",
+    "prompt_version": "eval-v3",
+    "latency_ms": 31115,
+    "cost_usd": 0.001786
+   },
+   "criteria": [
+    {
+     "criterion_id": "c01",
+     "answer": "yes",
+     "points": 16.67,
+     "effective_weight": 16.67,
+     "explanation": "Оператор поздоровался и представился в первой реплике.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 12,
+       "quote": "Компания в виду меня зовут [Имя скрыто] Здравствуйте, чем могу вам помочь."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c02",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Для ответа на общий вопрос о функциях поддержки данных было достаточно; уточнять детали для этого ответа не требовалось.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Данных для ответа о функциях поддержки хватало с самого начала."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c03",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Клиент спрашивал о функциях поддержки, защищённых действий и раскрытия данных по счёту не было.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Запрос не требовал идентификации: клиент спрашивал об общих функциях поддержки."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c04",
+     "answer": 10,
+     "points": 16.67,
+     "effective_weight": 33.33,
+     "explanation": "Оператор объяснил, что поддержка не даёт рекомендаций по ценным бумагам, но не прояснил, что делать клиенту без персонального менеджера.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 25,
+       "quote": "Нет, вы сейчас обращаетесь в техническую поддержку клиентов. Мы со своей стороны помогаем вам отвечать на вопросы касательно брокерской части, но консультацию никакую по ценным бумагам. К сожалению, м"
+      },
+      {
+       "kind": "message",
+       "turn_index": 29,
+       "quote": "Вы самостоятельно совершаете торги, никакую консультацию. Мы со своей стороны, к сожалению, не можем вам предоставлять. Мы отвечаем только вот за техническую часть приложения. Возможно, у вас возникну"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c05",
+     "answer": "no",
+     "points": 0,
+     "effective_weight": 25,
+     "explanation": "На слова клиента о неприятном ощущении оператор ответил общим сочувствием и предположением, что её неправильно проинформировали, не отреагировав на конкретную проблему.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 42,
+       "quote": "Да я вас понимаю, но видимо вас неправильно проинформировали про нашу поддержку. Мы такими делами не занимаемся. Мы изначально были технической поддержкой и так и являемся. Ну у вас, видимо, неправиль"
+      }
+     ]
+    },
+    {
+     "criterion_id": "c06",
+     "answer": 4,
+     "points": 10,
+     "effective_weight": 25,
+     "explanation": "Клиенту пришлось повторно спрашивать, что значит техническая помощь и что делать без персонального менеджера; одна из реплик оператора была неясной.",
+     "evidence": [
+      {
+       "kind": "message",
+       "turn_index": 29,
+       "quote": "Вы самостоятельно совершаете торги, никакую консультацию. Мы со своей стороны, к сожалению, не можем вам предоставлять. Мы отвечаем только вот за техническую часть приложения. Возможно, у вас возникну"
+      },
+      {
+       "kind": "message",
+       "turn_index": 37,
+       "quote": "Мы откроем делаем."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c07",
+     "answer": "na",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Клиент завершил разговор, пока оператор ещё вёл диалог, поэтому возможности попрощаться не было.",
+     "evidence": [
+      {
+       "kind": "na_condition",
+       "quote": "Клиент завершил разговор."
+      }
+     ]
+    },
+    {
+     "criterion_id": "c08",
+     "answer": "no",
+     "points": null,
+     "effective_weight": null,
+     "explanation": "Оскорблений, предложений услуг в обход компании или раскрытия конфиденциальной информации нет.",
+     "evidence": [
+      {
+       "kind": "range",
+       "range": [
+        12,
+        42
+       ]
+      }
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "section_id": "s1",
+     "score": 100
+    },
+    {
+     "section_id": "s2",
+     "score": 50.02
+    },
+    {
+     "section_id": "s3",
+     "score": 20
+    },
+    {
+     "section_id": "s4",
+     "score": null
+    }
+   ],
+   "total": 43.34,
+   "gross_error": false
+  }
+ ]
+}
