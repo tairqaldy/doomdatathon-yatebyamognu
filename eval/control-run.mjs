@@ -8,6 +8,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { loadEnv } from '../scripts/env.mjs';
+import { datasetUrl } from '../lib/data.js';
 import { buildResults } from './export-results.mjs';
 import { validate } from './validate-results.mjs';
 
@@ -32,7 +33,7 @@ if (!existsSync(datasetPath)) {
   // Direct organizer API if .env has the real link; otherwise our deployed proxy (/api/dataset), which has it in Vercel.
   const base = process.env.CQA_API_URL;
   const direct = base && !base.includes('<') && /^https?:\/\//.test(base);
-  const url = direct ? `${base}&group_id=${encodeURIComponent(group)}`
+  const url = direct ? datasetUrl(base, group)
     : `${process.env.CQA_PROXY_URL || 'https://freedom-cqa.vercel.app'}/api/dataset?group_id=${encodeURIComponent(group)}`;
   console.log(direct ? 'fetching from the organizers\' API (CQA_API_URL)' : `CQA_API_URL missing or a placeholder → fetching through ${url.split('/api/')[0]}/api/dataset`);
   const res = await fetch(url);
