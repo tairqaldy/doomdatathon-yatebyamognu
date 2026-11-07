@@ -27,17 +27,17 @@ Production: **https://freedom-cqa.vercel.app**
 
 ### At a glance
 
-| Question | Answer (evaluator `eval-v5.1`) | Source |
+| Question | Answer (evaluator `eval-v5.3`) | Source |
 |---|---|---|
-| Agreement with our gold labels, per criterion answer | **96.1% strict**, 98.7% lenient (19 dialogs, 152 answers) | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) |
-| Same, on the 7 held-out gold dialogs | **94.6% strict**, 98.2% lenient (56 answers) | same |
-| Agreement with two blind AI labelers, 24 other DEV chats | **96.8%** (179 of the 185 answers they agree on) | [`eval/blind/`](eval/blind/blind-24.json) |
-| Gross errors on gold | **7 of 7 found, 0 false alarms** | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) |
-| Cost per evaluation | $0.0070 average (chats $0.0061, calls $0.018) | [run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
-| 10 control chats | about 3 minutes and $0.07 | [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6 |
+| Agreement with our gold labels, per criterion answer | **95.4% strict**, 98.7% lenient (19 dialogs, 152 answers) | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
+| Same, on the 7 held-out gold dialogs | **96.4% strict**, 100% lenient (56 answers) | same |
+| Agreement with two blind AI labelers, 24 other DEV chats | **97.3%** (180 of the 185 answers they agree on) | [`eval/blind/`](eval/blind/blind-24.json) |
+| Gross errors on gold | **7 of 7 found, 0 false alarms** | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
+| Cost per evaluation | ≈ $0.006 per chat, ≈ $0.016 per call (3 votes, all calls); $0.0070 average over all 65 DEV dialogs | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.1 run](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
+| 10 control chats | 79 s and $0.064 in a full rehearsal of the 11:00 procedure, error path included | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
 | Tone of voice on calls (c09, Gemini 3.8 Flash listens to the mp3) | ≈ $0.013 per call; on DEV 1 of 5 calls lowered (p4-ru-001 → 4/10: cold, detached tone the client remarks on) | [`eval/runs/`](eval/runs/) `*-DEV-tone.json` |
 
-> **Update, Saturday evening: production now runs `eval-v5.3`** (adopted by the same rule: held-out and blind consensus must not drop, gross errors must stay 7/7 with 0 false alarms). Held-out gold **54/56 strict (96.4%)**, 56/56 lenient; all 19 gold 145/152 strict (95.4%), 150/152 lenient; blind consensus **180/185 (97.3%)**; gross errors 7/7, 0 false alarms. C2 and C5 improved (an operator's clarifying question can no longer be marked N/A; a follow-up left open caps C4 at 15), C6 got noisier. Control-set rehearsal: 10 chats in 79 s, $0.064, valid file, error path tested. Report: [`v53-report.md`](eval/runs/2026-11-07T16-05-00Z-v53-report.md). The charts below still compare v4 with v5.1 and will be regenerated.
+> `eval-v5.3` replaced `eval-v5.1` on Saturday evening under the rule we fixed in advance: held-out and blind consensus must not drop, gross errors must stay 7/7 with 0 false alarms. v5.1 scored 96.1% on all gold but 94.6% held-out and 96.8% blind; v5.3 trades one all-gold answer for better held-out, blind and C2/C5 consistency. Full comparison: [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md).
 
 Every number in this README is recomputed by `node scripts/readme-charts.mjs` from committed files, or quoted from the linked run file or report.
 
@@ -58,7 +58,7 @@ The organizers listed what they will ask for in the live demo ([telegram-qa.md](
 
 | Ask | Where | What happens |
 |---|---|---|
-| Show all dialogs with gross errors and why | Обзор → KPI «Грубые ошибки», or Диалоги → «Грубые ошибки» | A list of every flagged dialog with the AI explanation and the operator line that proves it. On DEV, eval-v5.1 flags 8 of 65 dialogs |
+| Show all dialogs with gross errors and why | Обзор → KPI «Грубые ошибки», or Диалоги → «Грубые ошибки» | A list of every flagged dialog with the AI explanation and the operator line that proves it. On DEV, eval-v5.3 flags 8 of 65 dialogs |
 | Send a result to appeal | Card → «Оспорить» on a criterion → comment → save | The appeal goes to «Апелляции» with the disputed answer, the comment and the dialog fragment |
 | Reviewer decision | Role switch «Проверяющий» → «Принять решение» | Confirm or change the answer with a reason. `prototype/scoring.js` recomputes the total; the card shows the original score, the decision and the final score |
 | Change the checklist and re-evaluate | Чек-лист → add, edit, replace, reorder a criterion or change a weight → «Сохранить vN и переоценить» | A new checklist version is saved and every dialog is evaluated again with it. Chats and calls have separate checklists |
@@ -135,7 +135,7 @@ flowchart TD
 | Playbook procedures | The prompt carries a decision procedure per criterion, written by meaning (greeting, need, identification, resolution, empathy, dialog management, closing, gross violation), with RU / KZ / EN cues | An edited or new criterion falls back to its own text, so the live "replace a criterion" test needs no code change ([scoring playbook](docs/playbook/scoring-playbook.md)) |
 | Evidence guard | Turn indices must exist, quotes must match the cited line, every scored or flagged answer needs a reference, N/A evidence only for an allowed N/A. Any problem triggers one repair call; still incomplete → an error, never a half result | Judges can invent evidence; the organizers said "don't invent facts" (#2981) |
 | Built-in rules | For the unchanged official criteria only: C7 from the closing facts (literal ruling), disclosure before verification → C3 "no" and C8 "yes", insult or off-company offer → C8 "yes". Turned off when a criterion's text, type or N/A rule is edited | Mechanical rules belong in code ([MLflow on judge calibration](https://mlflow.org/articles/llm-judge-calibration/)). On 65 DEV dialogs × 3 samples they never had to override the model; they are a safety net |
-| 3 samples + vote | Majority per criterion; ties go to the median scale step, else the most central sample. The agreement share is returned per criterion so low-agreement answers can go to a human first | Judges are self-inconsistent; a majority over 3 runs beat single runs ([Rating Roulette](https://arxiv.org/pdf/2510.27106)). eval-v4 runs flipped 6.6% of answers; v5.1 is estimated at about 2% |
+| 3 samples + vote | Majority per criterion; ties go to the median scale step, else the most central sample. The agreement share is returned per criterion so low-agreement answers can go to a human first | Judges are self-inconsistent; a majority over 3 runs beat single runs ([Rating Roulette](https://arxiv.org/pdf/2510.27106)). eval-v4 runs flipped 6.6% of answers; v5.x is estimated at about 2% |
 | Deterministic scoring | [`prototype/scoring.js`](prototype/scoring.js), one pure function used by the UI, the API, the exporter and the accuracy harness | The model never does arithmetic. Re-scoring after an appeal costs nothing and is reproducible |
 | Appeal → review | A disputed answer is replaced by the reviewer's answer and scored by the same function. Original, decision and final are kept | Freedom's slide: "a human keeps control" ([opening ceremony](docs/case/opening-ceremony.md)) |
 
@@ -149,7 +149,7 @@ flowchart TD
 | No applicable weighted criterion → total not calculated | `total: null` |
 | Gross errors (C8) carry no points and never zero the total; shown as a separate red flag | `gross_error` |
 
-Worked example, DEV chat `p1-ru-001` (eval-v5.1): C2 and C3 are N/A (clear request, no account data), so 35 of 100 weight drops out. C7 is "no": «Пожалуйста. Хорошего вечера!» has a goodbye but no summary and no offer of help. Points 10 + 20 + 15 + 15 + 0 = 60 of an applicable 65 → **92.31**.
+Worked example, DEV chat `p1-ru-001` (eval-v5.3): C2 and C3 are N/A (clear request, no account data), so 35 of 100 weight drops out. C7 is "no": «Пожалуйста. Хорошего вечера!» has a goodbye but no summary and no offer of help. Points 10 + 20 + 15 + 15 + 0 = 60 of an applicable 65 → **92.31**.
 
 ### Organizer rulings we follow
 
@@ -171,18 +171,18 @@ From the Q&A chat ([telegram-qa.md](docs/case/telegram-qa.md)); where each one l
 
 The organizers pick the top 50 mainly by **per-criterion agreement with expert labels on 10 unseen control chats** ([telegram-qa.md](docs/case/telegram-qa.md), #2292, #2978). We measure the same thing.
 
-![Strict agreement per criterion, eval-v4 vs eval-v5.1](docs/media/charts/accuracy-per-criterion.svg)
+![Strict agreement per criterion, eval-v4 vs eval-v5.3](docs/media/charts/accuracy-per-criterion.svg)
 
 ![Overall strict agreement on held-out gold, all gold and the blind labelers' consensus](docs/media/charts/accuracy-overall.svg)
 
-| Check | Answers | eval-v4 | eval-v5.1 |
+| Check | Answers | eval-v4 | eval-v5.3 |
 |---|---|---|---|
-| Held-out gold (7 dialogs) | 56 | 92.9% strict / 96.4% lenient | **94.6% / 98.2%** |
-| All gold (19 dialogs) | 152 | 91.4% / 96.7% | **96.1% / 98.7%** |
-| Blind labelers' consensus (24 other chats) | 185 | 91.9% (170) | **96.8% (179)** |
-| C6 dialog management, all gold | 19 | 57.9% | **84.2%** |
+| Held-out gold (7 dialogs) | 56 | 92.9% strict / 96.4% lenient | **96.4% / 100%** |
+| All gold (19 dialogs) | 152 | 91.4% / 96.7% | **95.4% / 98.7%** |
+| Blind labelers' consensus (24 other chats) | 185 | 91.9% (170) | **97.3% (180)** |
+| C6 dialog management, all gold | 19 | 57.9% | **78.9%** (94.7% lenient) |
 | Gross errors on gold | 7 | 7 found, 0 false | 7 found, 0 false |
-| By language, all gold, strict | RU 72 · KZ 40 · EN 40 | 87.5 · 92.5 · 97.5 | 93.1 · 97.5 · 100 |
+| By language, all gold, strict | RU 72 · KZ 40 · EN 40 | 87.5 · 92.5 · 97.5 | 91.7 · 97.5 · 100 |
 
 ### What these numbers mean
 
@@ -192,22 +192,20 @@ The organizers pick the top 50 mainly by **per-criterion agreement with expert l
 - **Blind double labeling** checks that we did not just fit our own reading. Two independent AI labelers (separate Claude sessions, a different model family from our GPT evaluator) saw only the checklist and the organizer rulings, no playbook and no model output, and labeled 24 non-gold DEV chats. They agreed with each other on 185 of 192 answers (96.4%); we score against those 185. They are not people and not Freedom's experts: a consistency check, not ground truth ([`blind-24.json`](eval/blind/blind-24.json)).
 - **The real test** is the 10 control chats graded by Freedom's experts. We have no labels for them.
 
-### Where eval-v5.1 still disagrees with gold
+### Where eval-v5.3 still disagrees with gold
 
-6 of 152 answers differ; 2 are outside the accepted alternatives ([v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §4).
+7 of 152 answers differ from gold; 2 are outside the accepted alternatives ([v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md)):
 
-| Dialog | Criterion | Ours vs gold | Whose mistake |
+| Dialog | Criterion | Ours vs gold | Note |
 |---|---|---|---|
-| p1-ru-009 | C2 | N/A vs yes | ours: the operator did ask «Какое сообщение вы видите?» |
-| p1-ru-022 | C6 | 4 vs 10 | ambiguous: the client had to restate the question; we think 7 is fair |
-| p1-kz-008 | C5 | yes vs no | ours: the client's irritation «Жоғарыда жаздым ғой» was not acknowledged |
-| p1-ru-029 | C6 | 4 vs 7 | ambiguous, gold accepts 4 |
-| p4-ru-001 (call) | C5 | yes vs no | likely gold: the operator said «я вас понимаю» and explained |
-| p4-ru-001 (call) | C6 | 4 vs 7 | ambiguous, gold accepts 4 |
+| p1-kz-015 | C6 | 10 vs 4 | ours: the client had to ask for the reason again; C6 is the noisiest criterion (two draws differ on 3 of 10 C6 answers) |
+| p4-ru-001 (call) | C4 | 20 vs 10 | ours: the operator explained the support scope, not how to get a personal manager |
+
+Fixed since eval-v5.1: p1-ru-009 C2 (the operator's clarifying question can no longer be N/A), p1-kz-008 C5 (irritation at being asked again), the EN/RU twins p1-en-007 / p1-ru-007 now get the same C2 and C5.
 
 ### How we got here
 
-![Strict agreement per evaluator version, from a keyword mock to eval-v5.1](docs/media/charts/accuracy-history.svg)
+![Strict agreement per evaluator version, from a keyword mock to eval-v5.3](docs/media/charts/accuracy-history.svg)
 
 - **GPT-6 Luna over Claude Haiku 5.5** on the same prompt: 86.2% vs 75.7% strict, total score error 7.83 vs 14.06 points, $0.00112 vs $0.00177 per evaluation ([our-experiments.md](docs/research/our-experiments.md) §4).
 - **eval-v3 was rejected despite the higher score.** On dialogs outside the gold set it flagged gross errors on two real calls where the operator was only verifying identity. A false gross error on a real operator is worse than one point of agreement.
@@ -244,7 +242,7 @@ Full pages and sources: [research index](docs/research/README.md). Outside facts
 |---|---|
 | A strong judge can match human–human agreement (over 80% on MT-Bench, [Zheng et al. 2023](https://arxiv.org/abs/2306.05685)), but agreement swings with the task: 11 LLMs on 20 datasets ([Bavaresco et al., ACL 2025](https://arxiv.org/abs/2406.18403)) | Validate per criterion, never one overall number. C6 was 57.9% under eval-v4 and got its own procedure |
 | Judges are biased: answer order alone made one model win 66 of 80 comparisons; writing evidence before the verdict reduced bias ([Wang et al., ACL 2024](https://arxiv.org/abs/2305.17926)) | Facts and a check line come before every answer; the guard rejects evidence that is not in the transcript |
-| Judges are inconsistent across runs; a majority vote over 3 runs beat single runs ([Rating Roulette](https://arxiv.org/pdf/2510.27106)) | 3 samples and a vote. Measured flips between two eval-v4 runs: 10 of 152 answers (6.6%); eval-v5.1 estimated at about 2% |
+| Judges are inconsistent across runs; a majority vote over 3 runs beat single runs ([Rating Roulette](https://arxiv.org/pdf/2510.27106)) | 3 samples and a vote. Measured flips between two eval-v4 runs: 10 of 152 answers (6.6%); eval-v5.x estimated at about 2% |
 
 ### Kazakh, Russian, English → [languages-kz-ru-en.md](docs/research/languages-kz-ru-en.md)
 
@@ -288,13 +286,13 @@ Full pages and sources: [research index](docs/research/README.md). Outside facts
 
 | Job | Model | Via | Cost | Latency |
 |---|---|---|---|---|
-| **Evaluate a dialog** | `openai:gpt-6-luna`, prompt `eval-v5.1`, 3 samples, strict JSON schema | OpenAI API (falls back to OpenRouter `openai/gpt-6-luna` without `OPENAI_API_KEY`) | **$0.0070 per evaluation**, all calls (3 samples + repair calls on about 9% of samples). Chats $0.0061, calls $0.018 | chats p50 32 s / p95 62 s; calls p50 128 s / p95 153 s; cached ≈ 20 ms |
+| **Evaluate a dialog** | `openai:gpt-6-luna`, prompt `eval-v5.3`, 3 samples, strict JSON schema | OpenAI API (falls back to OpenRouter `openai/gpt-6-luna` without `OPENAI_API_KEY`) | **$0.0070 per evaluation**, all calls (3 samples + repair calls on about 9% of samples). Chats $0.0061, calls $0.018 | chats p50 32 s / p95 62 s; calls p50 128 s / p95 153 s; cached ≈ 20 ms |
 | AIM support bot, navigation agent | `openai:gpt-6-luna` | OpenAI API | ≈ $0.001 per turn (estimate) | ≈ 2 s chat; 4–8 s navigation (local) |
 | AIM microphone | OpenAI `whisper-1`; fallback NVIDIA Nemotron 3.5 Transcribe | OpenAI / OpenRouter | $0.006 per audio minute | p50 1.2 s / p95 2.5 s cold; 3–5 ms cached |
 | AIM voice | OpenAI `gpt-4o-mini-tts`, voice `sage` | OpenAI | ≈ $0.015 per spoken minute (estimate) | p50 1.4 s / p95 1.75 s per chunk cold; first sentence 1.1–1.5 s |
 | Call transcription experiment | `nvidia/nemotron-3.5-transcribe` | OpenRouter | $0.041 for all 5 calls | 10–18 s per call |
 
-Sources: [eval-v5.1 run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) (65 DEV dialogs, 0 errors, $0.457 total), [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6, voice benchmarks in `eval/runs/voice-bench-*.json`, [TOOLING.md](docs/TOOLING.md) §4. Latency is model time per dialog with the 3 samples in parallel. eval-v5.1 costs about 6× eval-v4 ($0.0012) and takes about 2× as long; we pay that for the accuracy above.
+Sources: [eval-v5.1 run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) (all 65 DEV dialogs fresh, 0 errors, $0.457 total), [eval-v5.3 run summary](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json) (22 fresh: chats $0.0058, p50 27.5 s / p95 44.8 s; calls $0.016, ≈ 155 s), [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6, voice benchmarks in `eval/runs/voice-bench-*.json`, [TOOLING.md](docs/TOOLING.md) §4. Latency is model time per dialog with the 3 samples in parallel. eval-v5.x costs about 6× eval-v4 ($0.0012) and takes about 2× as long; we pay that for the accuracy above.
 
 - **Caching.** Every model call goes through [`lib/cache.js`](lib/cache.js). The key holds the model, prompt version, conversation, full transcript, checklist criteria, sample number and a fingerprint of the logic file (`lib/evaluator.js` for evaluation). An identical request is free and returns in milliseconds; any change to the evaluator code or the checklist produces a fresh answer. Paid answers are committed in `eval/cache/`, so teammates and Vercel reuse them.
 - **Re-scoring is free.** An appeal decision only re-runs `prototype/scoring.js` on stored answers. A checklist change re-runs the model, as the organizers ruled.
@@ -375,7 +373,7 @@ API: `POST /api/evaluate` · `GET /api/dataset?group_id=` · `GET /api/audio?id=
 - **Weakest criteria:** C6 dialog management (84.2% strict) and C5 empathy (89.5%). C4 is slightly harsh on handoffs that were a correct next step.
 - **Calls.** ASR noise can make an operator look worse on C1 and C6. An offline audit by Amina found call moments that need listening to the audio before any automatic fix ([TRANSCRIPT_FAIRNESS.md](docs/TRANSCRIPT_FAIRNESS.md), [TRANSCRIPT_VALIDATION.md](docs/TRANSCRIPT_VALIDATION.md), [NA_CACHE_COMPATIBILITY.md](docs/NA_CACHE_COMPATIBILITY.md)); its stricter guard is not wired into production.
 - **Latency and limits.** 3 samples take about 32 s per chat. On Vercel's 60 s limit the vote uses the samples finished within 45 s.
-- **Stability.** The 2% flip rate for eval-v5.1 is estimated from sample agreement, not measured with a paid repeat run.
+- **Stability.** The 2% flip rate for eval-v5.x is estimated from sample agreement, not measured with a paid repeat run.
 - **Shared state.** Appeals and checklist versions live in the reviewer's browser (localStorage), not on a server.
 - **Handoff wait time** in `/support/` is a fixed demo text; in production it must come from real queue data.
 - **Kazakh voice** has not been tested with a real speaker.

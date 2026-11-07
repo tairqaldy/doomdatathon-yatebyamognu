@@ -384,3 +384,21 @@ Done (all on main → production):
 - Amina's audit PRs #26–#28 merged earlier tonight.
 Next: regenerate README charts for v5.3 (`scripts/readme-charts.mjs` RUNS → the v5.3 DEV run); a possible final video re-record from the video branch; C6 procedure experiment if budget allows. Demo tip: re-evaluate a chat live (≈30 s), not a call (can pass 60 s); weight changes recompute instantly.
 Control run Sun 11:00: `npm run results -- --group <CONTROL_ID> --push` from an up-to-date main with `.env`.
+
+### 2026-11-07 22:30 +05:00 · team · tair/claude · #18 · HANDOFF while tair is offline (read this first)
+**State of main = production** (https://freedom-cqa.vercel.app, `/api/health` shows commit, `prompt_version: eval-v5.3`, `shared_cache: redis`, `sessions_store: redis`):
+- Evaluator **eval-v5.3** (lane C): held-out gold 96.4% strict, all gold 95.4%, blind consensus 180/185, gross 7/7 with 0 FP. Playbook with a "why" per rule: `docs/playbook/scoring-playbook.md`. Reports in `eval/runs/*-v5-report.md`, `*-v53-report.md`.
+- **Results**: `results/dev/results.json` valid 65/65 (official JSON 1.0). Control at **Sun 11:00**: from an up-to-date `main` with `.env`: `npm run results -- --group <CONTROL_ID> --push` (≈ 80 s for 10 chats, ≈ $0.07; error records are written, never fake scores). Check: `node eval/validate-results.mjs results/prod/results.json --expect 10`.
+- **Admin**: 19 UI-audit fixes + tonight's: «Оценить заново» waits up to 280 s (server 300 s), search click, gross filter, banner wording; `/admin` without a slash now redirects. Overview shows v5.3 accuracy.
+- **Landing**: demo video (`landing-tair/assets/demo.mp4`, 3:17, re-record with `node scripts/demo/record.mjs`), autumn leaves (`landing-tair/leaves.js`). README rewritten for the jury with v5.3 charts (`node scripts/readme-charts.mjs`).
+- **Voice**: Whisper mic + `gpt-4o-mini-tts` replies in `/support`, `/broker`, `/phone` (not yet tested with a real microphone on a phone).
+- Amina's audit PRs #26–#28 merged.
+
+**Open items, pick one and claim it here (gh is logged out on tair's laptop; use issues if yours works):**
+1. *Lane C (Nazar):* C6 is the noisiest criterion (3 of 10 answers differ between draws). One-sentence C6 procedure experiment on tuning/held-out/blind, adopt only by the rule in AGENTS §8.1. Budget ≈ $0.5.
+2. *Lane C:* `eval/fairness/candidate.test.mjs` 2 failing tests (Amina's older candidate; see the 21:05 entry).
+3. *Lane A (Dameli):* prototype shows call appeals with the chat checklist (call appeals made in admin don't appear there).
+4. *Lane A:* AIM (support bot) hands simple Kazakh FAQs to a human too often: retrieval matches mostly Russian examples (`lib/support-bot.js`).
+5. *Anyone:* test the voice mic on a real phone (`/support/`, `/phone/`); test a live chat phone → admin laptop (Redis is on now).
+6. *Defense prep:* 5-minute script in AGENTS §1; demo tips: re-evaluate a **chat** live (≈ 30–60 s), weight changes recompute instantly, «Без AI» for bulk re-apply; admin passcode is set on Vercel (ask tair).
+**Rules that bit us tonight** (LESSONS): never rebase branches with merges; chain git steps with `&&`; don't edit `lib/evaluator.js` without measuring (it invalidates every eval cache entry).

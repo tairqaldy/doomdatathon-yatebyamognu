@@ -31,10 +31,12 @@ const RUNS = {
   // Full-DEV eval-v4 run; its 19 gold answers are the cached answers of the shipped 13:13 run ("v4a" in the v5 report).
   v4: 'eval/runs/2026-11-07T13-16-16-814Z-DEV-openai_gpt-6-luna.evaluations.json',
   v51: 'eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV-openai_gpt-6-luna.evaluations.json',
+  v53: 'eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV-openai_gpt-6-luna.evaluations.json',
 };
 const SUMMARY = {
   v4: 'eval/runs/2026-11-07T13-16-16-814Z-DEV.json',
   v51: 'eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json',
+  v53: 'eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json',
 };
 const CRITS = ['c01', 'c02', 'c03', 'c04', 'c05', 'c06', 'c07', 'c08'];
 const checklist = readJson('data/checklists/freedom-chat-v1.json');
@@ -102,9 +104,9 @@ function vsBlind(run) {
 }
 
 // ---------- numbers ----------
-const g4 = vsGold(runs.v4), g51 = vsGold(runs.v51);
-const h4 = vsGold(runs.v4, (g) => held.has(g.conversation_id)), h51 = vsGold(runs.v51, (g) => held.has(g.conversation_id));
-const b4 = vsBlind(runs.v4), b51 = vsBlind(runs.v51);
+const g4 = vsGold(runs.v4), g51 = vsGold(runs.v53); // current default
+const h4 = vsGold(runs.v4, (g) => held.has(g.conversation_id)), h51 = vsGold(runs.v53, (g) => held.has(g.conversation_id));
+const b4 = vsBlind(runs.v4), b51 = vsBlind(runs.v53);
 const history = [
   { key: 'mock', label: 'Keyword mock, no AI', note: 'baseline' },
   { key: 'haiku', label: 'Claude Haiku 5.5 · eval-v1', note: 'model trial, not chosen' },
@@ -112,7 +114,8 @@ const history = [
   { key: 'v2', label: 'GPT-6 Luna · eval-v2', note: 'rejected: hand-offs scored 5 of 20' },
   { key: 'v3', label: 'GPT-6 Luna · eval-v3', note: 'rejected: false gross errors on 2 real calls' },
   { key: 'v4', label: 'GPT-6 Luna · eval-v4', note: 'previous default' },
-  { key: 'v51', label: 'GPT-6 Luna · eval-v5.1', note: 'current default', current: true },
+  { key: 'v51', label: 'GPT-6 Luna · eval-v5.1', note: 'facts first + 3 votes' },
+  { key: 'v53', label: 'GPT-6 Luna · eval-v5.3', note: 'current default', current: true },
 ].map((h) => ({ ...h, ...vsGold(runs[h.key]) }));
 
 function latency(rel) {
@@ -124,8 +127,8 @@ function latency(rel) {
   return { costPerEval: s.cost_usd_per_eval, costTotal: s.cost_usd_total, n: s.n, fresh: fresh.length, errors: s.errors, chatCost: avg(chats), callCost: avg(calls),
     p50: s.latency_ms_p50, p95: s.latency_ms_p95, chatP50: q(chats, 0.5), chatP95: q(chats, 0.95), callP50: q(calls, 0.5), callP95: q(calls, 0.95) };
 }
-const lat51 = latency(SUMMARY.v51), lat4 = latency(SUMMARY.v4);
-const grossDev = [...runs.v51.entries()].filter(([, a]) => a.c08 === 'yes').map(([id]) => id).sort();
+const lat51 = latency(SUMMARY.v53), lat4 = latency(SUMMARY.v4);
+const grossDev = [...runs.v53.entries()].filter(([, a]) => a.c08 === 'yes').map(([id]) => id).sort();
 
 // ---------- SVG ----------
 const C = {
@@ -190,14 +193,14 @@ function dumbbell({ rows, min, max, ticks, top, rowH, labelW = 230, colW = 118, 
 function chartPerCriterion() {
   const rows = CRITS.map((c) => ({ label: critLabel(c), a: pct(g4.per[c]), b: pct(g51.per[c]) }));
   const top = 128, rowH = 34;
-  const d = dumbbell({ rows, min: 50, max: 100, ticks: [50, 60, 70, 80, 90, 100], top, rowH, beforeName: 'v4', afterName: 'v5.1' });
+  const d = dumbbell({ rows, min: 50, max: 100, ticks: [50, 60, 70, 80, 90, 100], top, rowH, beforeName: 'v4', afterName: 'v5.3' });
   const h = d.bottom + 48;
   return frame(h, {
     title: 'Agreement with gold labels, per criterion',
     subtitle: `Strict agreement on all ${g51.all.n / 8} human-reviewed gold dialogs, ${g51.all.n} answers. Overall ${f1(pct(g4.all))}% → ${f1(pct(g51.all))}%.`,
-    desc: `Dot plot comparing eval-v4 and eval-v5.1 per checklist criterion. ${rows.map((r) => `${r.label}: ${f1(r.a)}% to ${f1(r.b)}%`).join('; ')}.`,
-    source: 'Source: eval/gold, eval/runs (v4 13-16-16, v5.1 15-00-49) · node scripts/readme-charts.mjs',
-  }, legend(108, [{ color: C.before, label: 'eval-v4, previous default' }, { color: C.greenInk, label: 'eval-v5.1, current default' }]) + d.svg);
+    desc: `Dot plot comparing eval-v4 and eval-v5.3 per checklist criterion. ${rows.map((r) => `${r.label}: ${f1(r.a)}% to ${f1(r.b)}%`).join('; ')}.`,
+    source: 'Source: eval/gold, eval/runs (v4 13-16-16, v5.3 16-02-37) · node scripts/readme-charts.mjs',
+  }, legend(108, [{ color: C.before, label: 'eval-v4, previous default' }, { color: C.greenInk, label: 'eval-v5.3, current default' }]) + d.svg);
 }
 
 function chartOverall() {
@@ -207,14 +210,14 @@ function chartOverall() {
     { label: 'Blind labelers, consensus', sub: `${blindIds.length} other DEV chats, ${b51.n} answers both labelers agree on`, a: (100 * b4.strict) / b4.n, b: (100 * b51.strict) / b51.n },
   ];
   const top = 128, rowH = 52;
-  const d = dumbbell({ rows, min: 85, max: 100, ticks: [85, 90, 95, 100], top, rowH, labelW: 300, beforeName: 'v4', afterName: 'v5.1' });
+  const d = dumbbell({ rows, min: 85, max: 100, ticks: [85, 90, 95, 100], top, rowH, labelW: 300, beforeName: 'v4', afterName: 'v5.3' });
   const h = d.bottom + 48;
   return frame(h, {
     title: 'Overall agreement on three checks',
     subtitle: 'Strict agreement (same answer). The held-out and blind checks guard against fitting our own gold labels.',
-    desc: `Dot plot comparing eval-v4 and eval-v5.1. ${rows.map((r) => `${r.label}: ${f1(r.a)}% to ${f1(r.b)}%`).join('; ')}.`,
+    desc: `Dot plot comparing eval-v4 and eval-v5.3. ${rows.map((r) => `${r.label}: ${f1(r.a)}% to ${f1(r.b)}%`).join('; ')}.`,
     source: 'Source: eval/gold, docs/playbook/split.md, eval/blind/blind-24.json, eval/runs · node scripts/readme-charts.mjs',
-  }, legend(108, [{ color: C.before, label: 'eval-v4' }, { color: C.greenInk, label: 'eval-v5.1' }]) + d.svg);
+  }, legend(108, [{ color: C.before, label: 'eval-v4' }, { color: C.greenInk, label: 'eval-v5.3' }]) + d.svg);
 }
 
 function chartHistory() {
@@ -260,22 +263,22 @@ for (const [name, svg] of Object.entries(files)) writeFileSync(P(`${OUT}/${name}
 // ---------- printed summary (the README numbers) ----------
 const line = (label, x) => `${label.padEnd(34)} ${f1(pct(x)).padStart(5)}% strict  ${f1(pctL(x)).padStart(5)}% lenient  (n=${x.n})`;
 console.log(`Charts → ${OUT}/ (${Object.keys(files).join(', ')})\n`);
-console.log('Per criterion, all gold (v4 → v5.1, strict | v5.1 lenient)');
+console.log('Per criterion, all gold (v4 → v5.3, strict | v5.3 lenient)');
 for (const c of CRITS) console.log(`  ${critLabel(c).padEnd(28)} ${f1(pct(g4.per[c])).padStart(5)} → ${f1(pct(g51.per[c])).padStart(5)}   | ${f1(pctL(g51.per[c]))}`);
 console.log('\nOverall');
-console.log(line('  held-out v4', h4.all)); console.log(line('  held-out v5.1', h51.all));
-console.log(line('  all gold v4', g4.all)); console.log(line('  all gold v5.1', g51.all));
+console.log(line('  held-out v4', h4.all)); console.log(line('  held-out v5.3', h51.all));
+console.log(line('  all gold v4', g4.all)); console.log(line('  all gold v5.3', g51.all));
 console.log(`  blind consensus v4                 ${b4.strict}/${b4.n} = ${f1((100 * b4.strict) / b4.n)}%`);
-console.log(`  blind consensus v5.1               ${b51.strict}/${b51.n} = ${f1((100 * b51.strict) / b51.n)}%`);
+console.log(`  blind consensus v5.3               ${b51.strict}/${b51.n} = ${f1((100 * b51.strict) / b51.n)}%`);
 console.log(`  labelers agree with each other     ${labelersAgree}/${blindIds.length * 8} = ${f1((100 * labelersAgree) / (blindIds.length * 8))}%`);
-console.log('\nv5.1 by language (all gold)');
+console.log('\nv5.3 by language (all gold)');
 for (const [l, x] of Object.entries(g51.lang).sort()) console.log(line(`  ${l}`, x));
-console.log(`\nGross errors on gold: v4 ${g4.gross.tp}/${g4.gross.tp + g4.gross.fn} found, ${g4.gross.fp} false · v5.1 ${g51.gross.tp}/${g51.gross.tp + g51.gross.fn} found, ${g51.gross.fp} false`);
-console.log(`v5.1 flags gross errors in ${grossDev.length} of ${runs.v51.size} DEV dialogs: ${grossDev.join(', ')}`);
+console.log(`\nGross errors on gold: v4 ${g4.gross.tp}/${g4.gross.tp + g4.gross.fn} found, ${g4.gross.fp} false · v5.3 ${g51.gross.tp}/${g51.gross.tp + g51.gross.fn} found, ${g51.gross.fp} false`);
+console.log(`v5.3 flags gross errors in ${grossDev.length} of ${runs.v53.size} DEV dialogs: ${grossDev.join(', ')}`);
 console.log('\nHistory (all gold, strict)');
 for (const h of history) console.log(`  ${h.label.padEnd(30)} ${f1(pct(h.all)).padStart(5)}%  gross ${h.gross.tp}/${h.gross.tp + h.gross.fn}, ${h.gross.fp} false`);
 const sec = (ms) => (ms == null ? '–' : `${(ms / 1000).toFixed(1)} s`);
 console.log('\nCost and latency (fresh model calls, model time)');
-for (const [k, x] of [['v4', lat4], ['v5.1', lat51]]) {
+for (const [k, x] of [['v4', lat4], ['v5.3', lat51]]) {
   console.log(`  ${k.padEnd(5)} $${x.costPerEval}/eval ($${x.costTotal} for ${x.fresh} fresh of ${x.n}, ${x.errors} errors) · chats $${x.chatCost} p50 ${sec(x.chatP50)} p95 ${sec(x.chatP95)} · calls $${x.callCost} p50 ${sec(x.callP50)} p95 ${sec(x.callP95)}`);
 }

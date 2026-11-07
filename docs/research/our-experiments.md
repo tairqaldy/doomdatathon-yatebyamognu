@@ -102,9 +102,20 @@ Total cost $0.041 for all 5 calls.
 
 **Caveat, read before quoting:** the reference is the organizer transcript, which is itself machine output and includes IVR prompts. These numbers measure agreement between two ASR systems, not accuracy. Five Russian calls are far too few for any claim about Kazakh or English. Nemotron's raw output contained first names that the organizer transcripts mask, so raw ASR text is never committed, only metrics ([LESSONS](../LESSONS.md)). We grade calls on the organizer transcripts.
 
-## 10. Open issues
+## 10. eval-v5.x (Saturday evening)
 
-- C6 dialog management is the weakest criterion (57.9% strict).
-- C1 on calls without a recorded greeting should be N/A per the organizers; the v1 checklist does not allow it yet.
+| Version | What changed | Held-out gold (56) | All gold (152) | Blind consensus (185) | Decision |
+|---|---|---|---|---|---|
+| eval-v4 | rules for N/A, hand-offs, disclosure | 92.9% | 91.4% | 170 | replaced |
+| eval-v5.1 | facts first, playbook procedures per criterion, deterministic C7 and C3→C8, 3 samples + majority vote | 94.6% | 96.1% | 179 | replaced |
+| eval-v5.2 | rules taken from the blind labels | −2 vs v5.1 | 90.8% | 181 | rejected: held-out dropped |
+| **eval-v5.3** | C2 "need" facts (a clarifying question can't be N/A), C4 cap at 15 while a follow-up is open, C5 irritation cues | **96.4%** | 95.4% | **180** | **adopted** |
+
+Rule fixed in advance: held-out and blind must not drop, gross errors stay 7/7 with 0 false positives. The blind set is two independent AI labelers who saw only the checklist and rulings ([`eval/blind/`](../../eval/blind/)). Reports: [v5](../../eval/runs/2026-11-07T15-15-00Z-v5-report.md), [v5.3](../../eval/runs/2026-11-07T16-05-00Z-v53-report.md). Cost ≈ $0.006 per chat (3 calls), chats p50 ≈ 30 s.
+
+## 11. Open issues
+
+- C6 dialog management is now 78.9% strict (94.7% lenient) on gold and the noisiest criterion: two draws differ on 3 of 10 C6 answers.
 - The gold set is small (5 KZ, 5 EN dialogs) and was used for tuning. Per-language differences of a few points are within noise.
-- Results export to `results/dev/results.json` and `results/prod/results.json`: `npm run results -- --group <ID>` (`eval/control-run.mjs`, official JSON 1.0, validated).
+- C7 is read literally («Пожалуйста. Хорошего дня!» = no). If the experts read it leniently we lose C7 on many chats; `closingAnswer()` flips it.
+- Results export: `npm run results -- --group <ID> --push` (`eval/control-run.mjs`, official JSON 1.0, validated).
