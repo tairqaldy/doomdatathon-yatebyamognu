@@ -82,7 +82,7 @@ async function apiHealth() {
   } catch { S.api = { ok: false, ai: false, model: null }; }
 }
 async function loadMetrics() {
-  for (const u of ['/eval/runs/gpt-6-luna-eval-v4.metrics.json', '/eval/runs/gpt-6-luna-eval-v1.metrics.json']) {
+  for (const u of ['/eval/runs/gpt-6-luna-eval-v5.1.metrics.json', '/eval/runs/gpt-6-luna-eval-v4.metrics.json', '/eval/runs/gpt-6-luna-eval-v1.metrics.json']) {
     try { const r = await fetch(u, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch {}
   }
   return null;
