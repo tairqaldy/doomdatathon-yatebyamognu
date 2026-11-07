@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="/landing-tair/landing.css">
   <script type="module" src="/landing-tair/landing.js"></script>
   <script type="module" src="/landing-tair/leaves.js"></script>
+  <script type="module" src="/landing-tair/smooth.js"></script>
 </head>
 <body class="l">
   <span id="top" class="top-sentinel" aria-hidden="true"></span>
@@ -104,7 +105,12 @@
       <div class="wrap handoff__grid">
         <div class="handoff__text">
           <h2 id="handoff-title" class="l-h2" data-reveal>Дверь к человеку всегда открыта.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Вопросы о выводе денег, данных счёта и идентификации AIM передаёт специалисту. Так же он поступает, если клиент просит человека или раздражён. Специалист видит всю переписку, и клиенту не нужно повторять вопрос.</p>
+          <p class="l-lead" data-reveal style="--d:100">AIM не решает за специалиста. Он передаёт разговор человеку, когда:</p>
+          <ul class="l-points" data-reveal style="--d:160">
+            <li>вопрос касается <b>вывода денег, данных счёта или идентификации</b>;</li>
+            <li>клиент <b>просит человека</b> или <b>раздражён</b>.</li>
+          </ul>
+          <p class="l-after" data-reveal style="--d:220">Специалист видит всю переписку, поэтому клиенту не нужно повторять вопрос.</p>
         </div>
 
         <div class="chat l-card" data-reveal role="group" aria-label="Пример чата: AIM передаёт разговор специалисту">
@@ -202,10 +208,10 @@
           <h2 id="quality-title" class="l-h2" data-reveal>Каждый чат и звонок проверяется по чек-листу Freedom.</h2>
           <p class="l-lead" data-reveal style="--d:100">Те же 8 пунктов, по которым оценивают проверяющие Freedom. У каждой оценки есть ссылка на строку чата или на момент в записи звонка.</p>
           <ul class="ticks" data-reveal style="--d:180">
-            <li>Если пункт к разговору не относится, ставится N/A с объяснением, а его вес делится между остальными пунктами.</li>
-            <li>Оскорбление клиента, платная услуга в обход компании и раскрытие конфиденциальных данных отмечаются красным флагом отдельно от баллов.</li>
-            <li>Проверяющий может оспорить любую оценку. Итог пересчитывается сразу, исходная оценка остаётся в карточке.</li>
-            <li>После чата клиент оценивает разговор. Администратор видит, где проседает качество, и может спросить ИИ-аналитика, что поменять.</li>
+            <li><b>N/A с объяснением.</b> Если пункт к разговору не относится, его вес делится между остальными.</li>
+            <li><b>Красный флаг.</b> Оскорбление, платная услуга в обход компании и раскрытие данных отмечаются отдельно от баллов.</li>
+            <li><b>Апелляция.</b> Любую оценку можно оспорить. Итог пересчитывается сразу, исходная оценка остаётся в карточке.</li>
+            <li><b>Аналитика.</b> Клиент оценивает разговор, администратор видит, где проседает качество, и спрашивает ИИ-аналитика, что поменять.</li>
           </ul>
         </div>
         <figure class="quality__photo" data-reveal>
@@ -220,7 +226,11 @@
       <div class="wrap">
         <div class="checklist__head">
           <h2 id="checklist-title" class="l-h2" data-reveal>8 пунктов, 100 баллов.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Модель выбирает ответ по каждому пункту и цитату из разговора. Баллы считает обычный код по формуле чек-листа. Пункты можно поменять в интерфейсе, без правок в коде.</p>
+          <ul class="l-points" data-reveal style="--d:100">
+            <li><b>Модель</b> выбирает ответ по каждому пункту и цитату из разговора.</li>
+            <li><b>Баллы</b> считает обычный код по формуле чек-листа, без модели.</li>
+            <li><b>Пункты</b> меняются в интерфейсе, без правок в коде.</li>
+          </ul>
         </div>
         <ul class="crits" aria-label="Пункты чек-листа Freedom">
           <li class="crit" data-reveal style="--d:0">
@@ -326,14 +336,14 @@
     <!-- Numbers: one big-number strip, measured on reviewed reference dialogs -->
     <section class="sec numbers" aria-labelledby="numbers-title">
       <div class="wrap">
-        <h2 id="numbers-title" class="numbers__title" data-reveal>Сверили с проверяющими на 19 размеченных разговорах.</h2>
+        <h2 id="numbers-title" class="numbers__title" data-reveal>Проверили на размеченных разговорах до того, как показывать вам.</h2>
         <dl class="stats">
-          <div class="stat" data-reveal style="--d:0"><dt>ответов по пунктам совпали с проверяющими</dt><dd>91%</dd></div>
-          <div class="stat" data-reveal style="--d:80"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
-          <div class="stat" data-reveal style="--d:160"><dt>баллов из 100: средняя разница в итоговой оценке</dt><dd>≈6</dd></div>
-          <div class="stat" data-reveal style="--d:240"><dt>стоимость одной проверки</dt><dd>$0,001</dd></div>
+          <div class="stat" data-reveal style="--d:0"><dt>ответов по пунктам совпали с ручной разметкой 19 разговоров</dt><dd>95%</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>совпадений с независимой разметкой ещё 24 чатов</dt><dd>97%</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>стоимость проверки одного чата, три независимые оценки</dt><dd>$0,006</dd></div>
         </dl>
-        <p class="numbers__note" data-reveal>Эталон: 19 разговоров, которые вручную оценили проверяющие. Версия промпта <span class="l-mono">eval-v4</span>.</p>
+        <p class="numbers__note" data-reveal>Эталон: 19 разговоров, размеченных командой и проверенных вручную, плюс 24 чата, которые независимо разметили две отдельные ИИ-сессии, видевшие только чек-лист. Версия оценщика <span class="l-mono">eval-v5.3</span>. Главная проверка впереди: 10 новых чатов, которые оценят эксперты Freedom.</p>
       </div>
     </section>
 
