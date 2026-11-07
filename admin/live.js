@@ -95,7 +95,7 @@ export function viewLive(view, id) {
   };
 
   const evalBlock = (s) => {
-    if (evaluating.has(s.id)) return `<div class="run run--pending" role="status"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает чат: чек-лист чатов v${checklist().version}</b><span class="muted small">Обычно 5–15 секунд</span></div></div>`;
+    if (evaluating.has(s.id)) return `<div class="run run--pending" role="status"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает чат: чек-лист чатов v${checklist().version}</b><span class="muted small">Обычно 20–40 секунд, оценка проходит несколько прогонов</span></div></div>`;
     if (!s.evaluation?.answers) return `<div class="eval-empty"><div><b>Оценка качества</b><p class="muted small">Чат ещё не оценён. AI проверит его по активному чек-листу.</p>${evalErrors.get(s.id) ? `<p class="field__err" role="alert">${esc(evalErrors.get(s.id))}</p>` : ''}</div><button class="btn btn--primary btn--s" type="button" id="l-eval">Оценить</button></div>`;
     const E = liveEvaluation(s); const total = E.finalScore.total; const t = tier(total);
     return `
