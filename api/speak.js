@@ -8,11 +8,12 @@
 import { send, preflight, body, fail } from '../lib/http.js';
 import { speak, voiceConfig } from '../lib/llm.js';
 import { cached } from '../lib/cache.js';
+import { TTS_INSTRUCTIONS } from '../lib/openai.js';
 
 export const config = { maxDuration: 30 };
 const MAX_CHARS = 600; // clients send one sentence at a time; this caps a single request (≈ 40 s of speech)
 const UI_MAX_CHARS = 240;
-// Bumped when the voice instructions change, so cached audio regenerates (like PROMPT_VERSION for evaluations).
+// The key holds the tone instructions themselves, so editing them regenerates audio; bump this for anything else.
 export const VOICE_VERSION = 'tts-v1';
 
 export default async function handler(req, res) {
@@ -28,7 +29,7 @@ export default async function handler(req, res) {
     const cfg = voiceConfig();
     if (!cfg.tts) return send(res, 501, { error: 'no server voice configured: use the browser voice', code: 'tts_unavailable' });
     const ns = b.ui === true && text.length <= UI_MAX_CHARS ? 'tts-ui' : 'tts';
-    const r = await cached(ns, [VOICE_VERSION, cfg.tts, cfg.voice, text], () => speak({ text, format: 'mp3' }));
+    const r = await cached(ns, [VOICE_VERSION, cfg.tts, cfg.voice, TTS_INSTRUCTIONS, text], () => speak({ text, format: 'mp3' }));
     const v = r.value;
     send(res, 200, {
       audio: v.audio, mime: v.mime, format: v.format, chars: v.chars,

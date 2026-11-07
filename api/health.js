@@ -4,6 +4,7 @@ import { sharedBackend, logicFingerprint, LOGIC } from '../lib/cache.js';
 import { backend as sessionsBackend } from '../lib/kv.js';
 import { MODELS } from '../lib/openrouter.js';
 import { PROMPT_VERSION } from '../lib/evaluator.js';
+import { voiceConfig } from '../lib/llm.js';
 
 export default function handler(req, res) {
   send(res, 200, {
@@ -17,6 +18,7 @@ export default function handler(req, res) {
     sessions_store: sessionsBackend(),        // 'postgres' | 'redis' | null (null = live chats stay in one browser)
     admin_passcode_set: Boolean(process.env.ADMIN_PASSCODE),
     models: MODELS, prompt_version: PROMPT_VERSION,
+    voice: voiceConfig(),                     // AIM speech: { asr, asr_formats, tts, voice }; tts null = browser speechSynthesis
     commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || null, branch: process.env.VERCEL_GIT_COMMIT_REF || null,
   });
 }
