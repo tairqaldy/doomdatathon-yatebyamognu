@@ -1,7 +1,7 @@
 // Чек-лист: edit / add / replace / reorder criteria, change weights → save as a new version → re-evaluate all dialogs.
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
-import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced } from './ui.js';
+import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced, signed } from './ui.js';
 import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
@@ -235,7 +235,7 @@ function runBlock(b) {
     const r = lastRun; const d = r.after != null && r.before != null ? r.after - r.before : null;
     return `<section class="card run-card run-card--done" role="status">
       <div class="run-card__head">${icon('check')}<b>${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалог переоценён', 'диалога переоценены', 'диалогов переоценены'])} за ${fmt(r.ms / 1000, 1)} с</b></div>
-      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${d > 0 ? '+' : ''}${fix(d, 1)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
+      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
       <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a></div>
     </section>`;
   }

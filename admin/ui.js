@@ -6,7 +6,9 @@ export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&a
 export const fmt = (x, d = 2) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { maximumFractionDigits: d }));
 /** Exactly `d` decimals. */
 export const fix = (x, d = 1) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d }));
-export const plural = (n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
+/** Signed delta with a real minus sign, like the "−7,69" deductions: +16,67 · −20. */
+export const signed = (x, d = 2, f = fmt) => (x > 0 ? '+' : x < 0 ? '−' : '') + f(Math.abs(x), d);
+export const plural =(n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
 export const LANG = { RU: 'Русский', KZ: 'Қазақша', EN: 'English' };
 export const CHAN = { chat: 'Чат', call: 'Звонок' };
 export const TIER_LABEL = { high: '85 и выше', mid: '60–84', low: 'ниже 60' };

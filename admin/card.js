@@ -2,7 +2,7 @@
 // Header → per-speaker timeline with deduction markers + call audio → understanding strip →
 // transcript (left) | score ring, history, sections, deduction reasons, justification of every criterion (right).
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
-import { $, $$, esc, fmt, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
+import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel } from './store.js';
 
@@ -126,7 +126,7 @@ export function viewCard(view, convId, query) {
           ${decided.length ? `<div class="history" aria-label="История оценки">
             <div class="history__step"><span>Автооценка</span><b class="num">${fmt(aiScore.total, 2)}</b></div>
             <div class="history__step"><span>Решение проверяющего</span><b>${decided.filter((a) => a.status === 'changed').length ? `изменено: ${decided.filter((a) => a.status === 'changed').length}` : ''}${decided.filter((a) => a.status === 'changed').length && decided.filter((a) => a.status === 'confirmed').length ? ' · ' : ''}${decided.filter((a) => a.status === 'confirmed').length ? `подтверждено: ${decided.filter((a) => a.status === 'confirmed').length}` : ''}</b></div>
-            <div class="history__step history__step--final"><span>Итог</span><b class="num">${fmt(total, 2)}</b>${total !== aiScore.total && total != null && aiScore.total != null ? `<span class="delta ${total > aiScore.total ? 'delta--up' : 'delta--down'}">${total > aiScore.total ? '+' : ''}${fmt(total - aiScore.total, 2)}</span>` : ''}</div>
+            <div class="history__step history__step--final"><span>Итог</span><b class="num">${fmt(total, 2)}</b>${total !== aiScore.total && total != null && aiScore.total != null ? `<span class="delta ${total > aiScore.total ? 'delta--up' : 'delta--down'}">${signed(total - aiScore.total)}</span>` : ''}</div>
           </div>
           <ul class="decisions">${decided.map((a) => { const c = cl.criteria.find((x) => x.id === a.criterion_id); return c ? `<li><b>${esc(c.title)}</b>: ${a.status === 'changed' ? `${esc(answerText(c, answers[c.id]?.answer))} → ${esc(answerText(c, a.decision.new_answer))}` : 'оценка подтверждена'}<span class="muted"> · «${esc(a.decision.reason)}»</span></li>` : ''; }).join('')}</ul>` : ''}
           ${finalScore.sections.some((s) => s.max > 0) ? `<div class="sections" aria-label="Итоги по секциям">${finalScore.sections.filter((s) => s.max > 0).map((s) => `
@@ -137,7 +137,7 @@ export function viewCard(view, convId, query) {
           </div>
           ${single?.pending ? `<div class="run run--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает диалог: ${esc(clLabel)}</b><span class="muted small">Запрос к /api/evaluate · <span class="num" id="run-t">0,0</span> с. Текущая оценка остаётся на экране.</span></div></div>`
             : single?.error ? `<div class="run run--error" role="alert">${icon('alert')}<div><b>Не удалось оценить</b><span class="small">${esc(single.error)} Текущая оценка сохранена.</span></div></div>`
-            : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ''}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${single.done.delta > 0 ? '+' : ''}${fmt(single.done.delta, 2)}`) : ''}</span></div></div>` : ''}
+            : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ''}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>
 
         <section class="card reasons-card" aria-labelledby="ded-h">
@@ -338,7 +338,7 @@ export function openReview(appealId) {
   const preview = () => {
     const base = evaluation(conv.conversation_id); const ans = { ...base.finalAnswers, [c.id]: mode === 'change' ? pick : base.finalAnswers[c.id] };
     const nt = score(cl, ans).total, ot = base.finalScore.total;
-    w.querySelector('#rv-preview').innerHTML = `${icon('refresh')}<div>Итог после решения: <b class="num">${fmt(ot, 2)}</b> → <b class="num">${fmt(nt, 2)}</b> ${nt !== ot && nt != null && ot != null ? `<span class="delta ${nt > ot ? 'delta--up' : 'delta--down'}">${nt > ot ? '+' : ''}${fmt(nt - ot, 2)}</span>` : ''}</div>`;
+    w.querySelector('#rv-preview').innerHTML = `${icon('refresh')}<div>Итог после решения: <b class="num">${fmt(ot, 2)}</b> → <b class="num">${fmt(nt, 2)}</b> ${nt !== ot && nt != null && ot != null ? `<span class="delta ${nt > ot ? 'delta--up' : 'delta--down'}">${signed(nt - ot)}</span>` : ''}</div>`;
   };
   w.querySelector('#rv-mode').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.m; w.querySelectorAll('#rv-mode button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); w.querySelector('#rv-new').hidden = mode !== 'change'; preview(); });
   w.querySelector('#rv-answer').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; pick = ['yes', 'no', 'na'].includes(b.dataset.v) ? b.dataset.v : Number(b.dataset.v); w.querySelectorAll('#rv-answer button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); preview(); });
