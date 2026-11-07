@@ -50,9 +50,12 @@ export function viewAppeals(view) {
           <a class="btn btn--s btn--ghost" href="#/dialog/${encodeURIComponent(a.conversation_id)}">Открыть диалог</a>
           ${a.status === 'open' && reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${a.id}" ${sameVer ? '' : 'disabled title="Апелляция к другой версии чек-листа"'}>Принять решение</button>` : ''}
         </footer>
-      </li>`; }).join('')}</ol>` : `<div class="empty empty--s"><p>${filter === 'open' ? 'Открытых апелляций нет.' : 'Решённых апелляций пока нет.'}</p></div>`}</div>`;
+      </li>`; }).join('')}</ol>` : `<div class="empty empty--s"><p>${filter === 'open' ? 'Открытых апелляций нет.' : 'Решённых апелляций пока нет.'}</p>${filter === 'open' && st.changed + st.confirmed ? `<button class="btn btn--s" type="button" data-filter="done">Показать решённые · ${st.changed + st.confirmed}</button>` : ''}</div>`}</div>`;
 
   $('#ap-filter', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; filter = b.dataset.v; viewAppeals(view); });
   $('#ap-role', view)?.addEventListener('click', () => setRole('reviewer'));
-  $('.appeals', view).addEventListener('click', (e) => { const b = e.target.closest('[data-review]'); if (b) openReview(b.dataset.review); });
+  $('.appeals', view).addEventListener('click', (e) => {
+    const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; viewAppeals(view); $('#ap-filter button[aria-pressed="true"]', view)?.focus(); return; }
+    const b = e.target.closest('[data-review]'); if (b) openReview(b.dataset.review);
+  });
 }

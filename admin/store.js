@@ -204,6 +204,26 @@ export async function reevaluateAll(mode, label, kind = 'chat') {
   return res;
 }
 
+/** Same questions for the evaluator: same criteria ids and the same text, type, N/A rule and scale.
+ *  Only weights, order or sections differ, so the AI answers stay valid and only the arithmetic changes. */
+const QUESTION = (c) => JSON.stringify([c.title, c.description || '', c.type, !!c.na_allowed, c.na_allowed ? c.na_condition || '' : '', c.scale || null]);
+export function sameQuestions(a, b) {
+  if (a.criteria.length !== b.criteria.length) return false;
+  const m = new Map(a.criteria.map((c) => [c.id, QUESTION(c)]));
+  return b.criteria.every((c) => m.get(c.id) === QUESTION(c));
+}
+/** Reuse the AI answers of `fromCl` for `toCl` (weights/order changed only). Returns how many dialogs got them. */
+export function carryAnswers(kind, fromCl, toCl) {
+  const a = clHash(fromCl), b = clHash(toCl); let n = 0;
+  for (const c of S.convs) {
+    if (kindOf(c) !== kind) continue;
+    const src = S.ai[`${c.conversation_id}|${a}`];
+    if (src && !S.ai[`${c.conversation_id}|${b}`]) { S.ai[`${c.conversation_id}|${b}`] = { ...src, carried_from: fromCl.version }; n++; }
+  }
+  persist(); emit('change');
+  return n;
+}
+
 /* ---------- rows + aggregates ---------- */
 function rowFrom(id, source, E) {
   const dd = deductions(E);

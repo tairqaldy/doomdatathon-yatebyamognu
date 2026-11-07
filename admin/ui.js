@@ -6,7 +6,9 @@ export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&a
 export const fmt = (x, d = 2) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { maximumFractionDigits: d }));
 /** Exactly `d` decimals. */
 export const fix = (x, d = 1) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d }));
-export const plural = (n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
+/** Signed delta with a real minus sign, like the "−7,69" deductions: +16,67 · −20. */
+export const signed = (x, d = 2, f = fmt) => (x > 0 ? '+' : x < 0 ? '−' : '') + f(Math.abs(x), d);
+export const plural =(n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
 export const LANG = { RU: 'Русский', KZ: 'Қазақша', EN: 'English' };
 export const CHAN = { chat: 'Чат', call: 'Звонок' };
 export const TIER_LABEL = { high: '85 и выше', mid: '60–84', low: 'ниже 60' };
@@ -74,6 +76,14 @@ export function drawer(title, body, foot, { wide = false } = {}) {
   document.body.appendChild(wrap);
   wrap.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => closeDrawer()));
   document.addEventListener('keydown', escClose);
+  // aria-modal sheet: Tab / Shift+Tab cycle inside it instead of walking into the page behind the scrim
+  wrap.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = [...wrap.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
+    else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+  });
   setTimeout(() => (wrap.querySelector('textarea, select, input') || wrap.querySelector('.drawer__head .icon-btn'))?.focus(), 60);
   return wrap;
 }

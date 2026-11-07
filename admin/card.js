@@ -2,7 +2,7 @@
 // Header → per-speaker timeline with deduction markers + call audio → understanding strip →
 // transcript (left) | score ring, history, sections, deduction reasons, justification of every criterion (right).
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
-import { $, $$, esc, fmt, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
+import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel } from './store.js';
 
@@ -43,9 +43,12 @@ export function viewCard(view, convId, query) {
   const open = E.appeals.filter((a) => a.status === 'open');
   const reviewer = S.role === 'reviewer';
   const lastAppeal = (cid) => E.appeals.filter((x) => x.criterion_id === cid).at(-1);
-  const verdict = total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
+  // A gross error carries no points, so the total can stay high: the verdict must still say the dialog needs review.
+  const gross = finalScore.gross_error;
+  const verdict = gross ? 'Грубая ошибка' : total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
+  const verdictColor = gross ? 'var(--bad-ink)' : tierVar(tier(total));
   const runInfo = E.src === 'ai'
-    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}`
+    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}${E.base.carried_from ? ` · ответы из v${E.base.carried_from}, баллы по весам v${cl.version}` : ''}`
     : 'Предварительная оценка без AI. Нажмите «Оценить заново», чтобы оценил AI';
   const clLabel = checklistLabel(cl);
   setHead('Анализ диалога', `${conv.conversation_id} · ${clLabel}`);
@@ -113,16 +116,17 @@ export function viewCard(view, convId, query) {
           <div class="score-head">
             <div class="ring-wrap" id="ring-wrap">${ring(prev ?? 0, tier(total))}<span class="ring-wrap__num num" id="total">${prev == null ? '—' : fmt(prev, 2)}</span><span class="ring-wrap__of">из 100</span></div>
             <div class="score-head__text">
-              <b class="verdict" style="color:${tierVar(tier(total))}">${verdict}</b>
+              <b class="verdict" style="color:${verdictColor}">${verdict}</b>
+              ${gross ? '<span class="small verdict-note">Баллы за флаг не снимаются, но диалог нужно разобрать.</span>' : ''}
               <span class="muted small">${runInfo}</span>
               <span class="muted small">Применён: ${esc(clLabel)}</span>
-              <span class="muted small">Применимый вес ${finalScore.applicable_weight} из ${finalScore.nominal_weight}, итог нормирован до 100</span>
+              <span class="muted small">${total == null ? 'Нет применимых критериев с весом: все ответы N/A или без оценки' : `Применимый вес ${fmt(finalScore.applicable_weight, 2)} из ${fmt(finalScore.nominal_weight, 2)}, итог нормирован до 100`}</span>
             </div>
           </div>
           ${decided.length ? `<div class="history" aria-label="История оценки">
             <div class="history__step"><span>Автооценка</span><b class="num">${fmt(aiScore.total, 2)}</b></div>
             <div class="history__step"><span>Решение проверяющего</span><b>${decided.filter((a) => a.status === 'changed').length ? `изменено: ${decided.filter((a) => a.status === 'changed').length}` : ''}${decided.filter((a) => a.status === 'changed').length && decided.filter((a) => a.status === 'confirmed').length ? ' · ' : ''}${decided.filter((a) => a.status === 'confirmed').length ? `подтверждено: ${decided.filter((a) => a.status === 'confirmed').length}` : ''}</b></div>
-            <div class="history__step history__step--final"><span>Итог</span><b class="num">${fmt(total, 2)}</b>${total !== aiScore.total && total != null && aiScore.total != null ? `<span class="delta ${total > aiScore.total ? 'delta--up' : 'delta--down'}">${total > aiScore.total ? '+' : ''}${fmt(total - aiScore.total, 2)}</span>` : ''}</div>
+            <div class="history__step history__step--final"><span>Итог</span><b class="num">${fmt(total, 2)}</b>${total !== aiScore.total && total != null && aiScore.total != null ? `<span class="delta ${total > aiScore.total ? 'delta--up' : 'delta--down'}">${signed(total - aiScore.total)}</span>` : ''}</div>
           </div>
           <ul class="decisions">${decided.map((a) => { const c = cl.criteria.find((x) => x.id === a.criterion_id); return c ? `<li><b>${esc(c.title)}</b>: ${a.status === 'changed' ? `${esc(answerText(c, answers[c.id]?.answer))} → ${esc(answerText(c, a.decision.new_answer))}` : 'оценка подтверждена'}<span class="muted"> · «${esc(a.decision.reason)}»</span></li>` : ''; }).join('')}</ul>` : ''}
           ${finalScore.sections.some((s) => s.max > 0) ? `<div class="sections" aria-label="Итоги по секциям">${finalScore.sections.filter((s) => s.max > 0).map((s) => `
@@ -133,7 +137,7 @@ export function viewCard(view, convId, query) {
           </div>
           ${single?.pending ? `<div class="run run--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает диалог: ${esc(clLabel)}</b><span class="muted small">Запрос к /api/evaluate · <span class="num" id="run-t">0,0</span> с. Текущая оценка остаётся на экране.</span></div></div>`
             : single?.error ? `<div class="run run--error" role="alert">${icon('alert')}<div><b>Не удалось оценить</b><span class="small">${esc(single.error)} Текущая оценка сохранена.</span></div></div>`
-            : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ''}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${single.done.delta > 0 ? '+' : ''}${fmt(single.done.delta, 2)}`) : ''}</span></div></div>` : ''}
+            : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ''}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>
 
         <section class="card reasons-card" aria-labelledby="ded-h">
@@ -144,7 +148,8 @@ export function viewCard(view, convId, query) {
               <p class="ded__why">${esc(reasonOf(E, d.c))}</p>
               ${i != null ? evChip(conv, i, q) : ''}
               <div class="ded__foot">${ap?.status === 'open' ? `<span class="l-chip l-chip--warn">Апелляция на рассмотрении</span>${reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${ap.id}">Принять решение</button>` : ''}` : ap?.status === 'changed' ? '<span class="l-chip l-chip--info">Оценка изменена</span>' : `<button class="btn btn--s btn--ghost" type="button" data-appeal="${d.c.id}">Оспорить</button>`}</div>
-            </article>`; }).join('')}</div>` : `<div class="banner banner--ok">${icon('check')}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
+            </article>`; }).join('')}</div>` : total == null ? `<div class="banner banner--info">${icon('dash')}<div>Итог не рассчитан: ни один критерий с весом не применим к этому диалогу. Причины N/A — ниже, в обосновании по критериям.</div></div>`
+            : `<div class="banner banner--ok">${icon('check')}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
         </section>
 
         <section class="card crit-card" aria-labelledby="crit-h">
@@ -162,7 +167,8 @@ export function viewCard(view, convId, query) {
               </header>
               <p class="crit__why">${esc(r.explanation || '—')}</p>
               ${lost && r.deduction_reason ? `<p class="crit__lost"><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}
-              ${a === 'na' ? `<p class="crit__na"><b>Почему N/A:</b> ${esc(na?.quote || c.na_condition || r.explanation || '')}</p>` : ''}
+              ${a === 'na' ? `<p class="crit__na"><b>Условие N/A из чек-листа:</b> ${esc(c.na_condition || 'не задано')}${na?.quote && na.quote !== c.na_condition ? `<br><b>Основание:</b> «${esc(na.quote)}»` : ''}</p>` : ''}
+              ${a != null && row?.error ? `<p class="crit__lost"><b>Ответ не по правилам чек-листа:</b> ${esc(row.error)}. В итог не входит, нажмите «Оценить заново».</p>` : ''}
               ${i != null && a !== 'na' ? `<div class="crit__ev">${evChip(conv, i, ev.quote)}${ev.kind === 'range' ? `<span class="muted small">проверен участок #${ev.range[0]}–${ev.range[1]}</span>` : ''}</div>` : ''}
               ${ap ? `<p class="crit__appeal">${ap.status === 'open' ? `Апелляция: «${esc(ap.comment)}»` : ap.status === 'changed' ? `Изменено проверяющим: ${esc(answerText(c, r.answer))} → ${esc(answerText(c, ap.decision.new_answer))} · «${esc(ap.decision.reason)}»` : `Подтверждено проверяющим · «${esc(ap.decision.reason)}»`}</p>` : ''}
             </article>`;
@@ -187,11 +193,13 @@ export function viewCard(view, convId, query) {
     };
   }
   const scrub = $('#scrub', view);
-  scrub.addEventListener('click', (e) => { const r = e.currentTarget.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur); });
-  scrub.addEventListener('keydown', (e) => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); const cur = Number(scrub.getAttribute('aria-valuenow')) || 0; seekTo(conv, Math.max(0, Math.min(dur, cur + (e.key === 'ArrowRight' ? 5 : -5)))); });
-  $$('.track__lane', view).forEach((lane) => lane.addEventListener('click', (e) => { if (e.target.closest('[data-jump]')) return; const r = lane.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur); }));
+  // on a call, seeking from the timeline/player keeps the player on screen (only the transcript box scrolls)
+  const keepPage = { keepPage: call };
+  scrub.addEventListener('click', (e) => { const r = e.currentTarget.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur, keepPage); });
+  scrub.addEventListener('keydown', (e) => { if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return; e.preventDefault(); const cur = Number(scrub.getAttribute('aria-valuenow')) || 0; seekTo(conv, Math.max(0, Math.min(dur, cur + (e.key === 'ArrowRight' ? 5 : -5))), keepPage); });
+  $$('.track__lane', view).forEach((lane) => lane.addEventListener('click', (e) => { if (e.target.closest('[data-jump]')) return; const r = lane.getBoundingClientRect(); seekTo(conv, ((e.clientX - r.left) / r.width) * dur, keepPage); }));
   view.addEventListener('click', (e) => {
-    const j = e.target.closest('[data-jump]'); if (j) { jumpTo(conv, [Number(j.dataset.jump)]); return; }
+    const j = e.target.closest('[data-jump]'); if (j) { jumpTo(conv, [Number(j.dataset.jump)], undefined, { keepPage: call && !!j.closest('.timeline-card') }); return; }
     const o = e.target.closest('[data-open]'); if (o) { openCriterion(conv, o.dataset.open); return; }
     const a = e.target.closest('[data-appeal]'); if (a) { openAppeal(conv, a.dataset.appeal); return; }
     const r = e.target.closest('[data-review]'); if (r) { openReview(r.dataset.review); }
@@ -228,19 +236,22 @@ function setPlayhead(sec, dur) {
   const t = $('#tpos'); if (t) t.textContent = mmss(sec);
   $('#scrub')?.setAttribute('aria-valuenow', String(Math.round(sec)));
 }
-function seekTo(conv, sec) {
+function seekTo(conv, sec, opts) {
   let best = 0; for (let i = 0; i < conv.transcript.length; i++) if (offsetSec(conv, i) <= sec) best = i;
-  jumpTo(conv, [best], sec);
+  jumpTo(conv, [best], sec, opts);
 }
-export function jumpTo(conv, indices, sec) {
+export function jumpTo(conv, indices, sec, { keepPage = false } = {}) {
   $$('.tx-row.is-evidence').forEach((el) => el.classList.remove('is-evidence', 'is-flash'));
   indices.forEach((i) => { const el = $(`#m-${i}`); if (el) { el.classList.add('is-evidence'); void el.offsetWidth; el.classList.add('is-flash'); } });
   const first = $(`#m-${indices[0]}`); const box = $('#transcript');
   const behavior = reduced() ? 'auto' : 'smooth';
   if (first && box) {
-    box.scrollTo({ top: first.offsetTop - box.clientHeight / 3, behavior });
+    // row position inside the scroll box (offsetTop is relative to the card and includes its header);
+    // when the page stays put the box may be only partly on screen, so put the row near its top edge
+    const inBox = first.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    box.scrollTo({ top: inBox - (keepPage ? 12 : box.clientHeight / 3), behavior });
     const r = box.getBoundingClientRect();
-    if (r.top < 64 || r.top > innerHeight * 0.6) box.closest('.tx-card')?.scrollIntoView({ behavior, block: 'start' });
+    if (!keepPage && (r.top < 64 || r.top > innerHeight * 0.6)) box.closest('.tx-card')?.scrollIntoView({ behavior, block: 'start' });
   }
   const t = sec ?? offsetSec(conv, indices[0]);
   setPlayhead(t, duration(conv));
@@ -332,7 +343,7 @@ export function openReview(appealId) {
   const preview = () => {
     const base = evaluation(conv.conversation_id); const ans = { ...base.finalAnswers, [c.id]: mode === 'change' ? pick : base.finalAnswers[c.id] };
     const nt = score(cl, ans).total, ot = base.finalScore.total;
-    w.querySelector('#rv-preview').innerHTML = `${icon('refresh')}<div>Итог после решения: <b class="num">${fmt(ot, 2)}</b> → <b class="num">${fmt(nt, 2)}</b> ${nt !== ot && nt != null && ot != null ? `<span class="delta ${nt > ot ? 'delta--up' : 'delta--down'}">${nt > ot ? '+' : ''}${fmt(nt - ot, 2)}</span>` : ''}</div>`;
+    w.querySelector('#rv-preview').innerHTML = `${icon('refresh')}<div>Итог после решения: <b class="num">${fmt(ot, 2)}</b> → <b class="num">${fmt(nt, 2)}</b> ${nt !== ot && nt != null && ot != null ? `<span class="delta ${nt > ot ? 'delta--up' : 'delta--down'}">${signed(nt - ot)}</span>` : ''}</div>`;
   };
   w.querySelector('#rv-mode').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.m; w.querySelectorAll('#rv-mode button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); w.querySelector('#rv-new').hidden = mode !== 'change'; preview(); });
   w.querySelector('#rv-answer').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; pick = ['yes', 'no', 'na'].includes(b.dataset.v) ? b.dataset.v : Number(b.dataset.v); w.querySelectorAll('#rv-answer button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); preview(); });
