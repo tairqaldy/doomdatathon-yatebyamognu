@@ -1,7 +1,7 @@
 // Чек-лист: edit / add / replace / reorder criteria, change weights → save as a new version → re-evaluate all dialogs.
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
-import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix } from './ui.js';
+import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced } from './ui.js';
 import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
@@ -41,6 +41,23 @@ function diffOf(cl, d) {
   return out;
 }
 const weightSum = (d) => d.criteria.filter((c) => c.type !== 'flag').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const DESC_PH = { binary: 'Да — оператор …', scale: 'Высший балл — оператор …', flag: 'Нарушение — оператор …' };
+/** First thing that blocks saving: { c, k, msg } (c/k point at the field to focus) or null. */
+function problemOf(d) {
+  for (const c of [...d.criteria].sort((a, b) => a.order - b.order)) {
+    const name = String(c.title).trim() ? `«${String(c.title).trim()}»` : `Критерий ${String(c.order).padStart(2, '0')}`;
+    if (!String(c.title).trim()) return { c, k: 'title', msg: `${name}: укажите название` };
+    if (!String(c.description || '').trim()) return { c, k: 'description', msg: `${name}: опишите, что оценивается. По этому тексту AI ставит ответ` };
+    if (c.type !== 'flag' && !(Number(c.weight) >= 0)) return { c, k: 'weight', msg: `${name}: вес должен быть числом от 0` };
+    if (c.type === 'scale') {
+      const v = (c.scale || []).map((s) => s.value);
+      if (v.length < 2 || !(Math.max(...v) > 0)) return { c, k: 'scale', msg: `${name}: нужна шкала минимум из двух ступеней, высшая больше 0` };
+    }
+    if (c.na_allowed && !String(c.na_condition || '').trim()) return { c, k: 'na_condition', msg: `${name}: опишите, когда ставить N/A` };
+  }
+  if (!d.criteria.some((c) => c.type !== 'flag' && Number(c.weight) > 0)) return { msg: 'Нужен хотя бы один критерий с весом больше 0' };
+  return null;
+}
 const devAvg = (k) => compute(rows().filter((r) => r.source === 'DEV' && r.E.kind === k)).avg;
 
 export function viewChecklist(view, _arg, query) {
@@ -98,7 +115,7 @@ export function viewChecklist(view, _arg, query) {
             </div>
           </div>
           <div class="crit-edit__more">
-            <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description">${esc(c.description || '')}</textarea></label>
+            <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description" placeholder="${DESC_PH[c.type] || ''}">${esc(c.description || '')}</textarea></label>
             ${c.na_allowed ? `<label class="field"><span class="field__label">Когда ставить N/A</span><input class="input" data-k="na_condition" value="${esc(c.na_condition || '')}" placeholder="Например: клиент сам дал все данные"></label>` : ''}
             ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((s) => s.value).join(', ')}"></label>` : ''}
             ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((s) => `<option value="${s.id}" ${s.id === c.section_id ? 'selected' : ''}>${esc(s.title)}</option>`).join('')}</select></label>` : ''}
@@ -136,7 +153,7 @@ export function viewChecklist(view, _arg, query) {
     if (k === 'weight') { c.weight = Math.max(0, Number(e.target.value) || 0); e.target.value = String(c.weight); summary(); return; }
     if (['title', 'description', 'na_condition'].includes(k)) { c[k] = e.target.value; summary(); return; }
     if (k === 'na_allowed') { c.na_allowed = e.target.checked; if (!c.na_allowed) delete c.na_condition; }
-    else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).map(Number).filter(Number.isFinite); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
+    else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).filter(Boolean).map(Number).filter((v) => Number.isFinite(v) && v >= 0); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
     else if (k === 'type') { c.type = e.target.value; if (c.type === 'scale' && !c.scale) c.scale = [10, 5, 0].map((v) => ({ value: v, label: String(v) })); if (c.type === 'flag') { c.weight = 0; c.na_allowed = false; delete c.na_condition; } }
     else c[k] = e.target.value;
     viewChecklist(view);
@@ -162,7 +179,7 @@ export function viewChecklist(view, _arg, query) {
     const flagOrder = draft.criteria.find((c) => c.type === 'flag')?.order;
     const order = flagOrder ?? draft.criteria.length + 1;
     draft.criteria.forEach((c) => { if (c.order >= order) c.order++; });
-    draft.criteria.push({ id: newId, order, section_id: draft.sections?.find((s) => s.id !== 's4')?.id || draft.sections?.[0]?.id, title: 'Новый критерий', description: 'Да — …', type: 'binary', weight: 10, na_allowed: false });
+    draft.criteria.push({ id: newId, order, section_id: draft.sections?.find((s) => s.id !== 's4')?.id || draft.sections?.[0]?.id, title: 'Новый критерий', description: '', type: 'binary', weight: 10, na_allowed: false });
     viewChecklist(view);
     const el = view.querySelector(`[data-id="${newId}"] [data-k="title"]`); el?.focus(); el?.select();
   };
@@ -171,11 +188,17 @@ export function viewChecklist(view, _arg, query) {
   $('#cl-kind', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.dataset.v === kind) return; switchKind(b.dataset.v); history.replaceState(null, '', `#/checklist?kind=${kind}`); emit('change'); });
   $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
   $('#save', view).onclick = async () => {
-    const bad = draft.criteria.find((c) => !String(c.title).trim()) ? 'У каждого критерия должно быть название'
-      : draft.criteria.find((c) => c.type === 'scale' && (!c.scale || c.scale.length < 2)) ? `У «${draft.criteria.find((c) => c.type === 'scale' && (!c.scale || c.scale.length < 2)).title}» нужна шкала минимум из двух ступеней`
-      : draft.criteria.some((c) => c.type !== 'flag' && !(Number(c.weight) >= 0)) ? 'Вес должен быть числом от 0'
-      : !draft.criteria.some((c) => c.type !== 'flag' && Number(c.weight) > 0) ? 'Нужен хотя бы один критерий с весом больше 0' : null;
-    if (bad) { toast(bad, 'warn'); return; }
+    const bad = problemOf(draft);
+    if (bad) {
+      toast(bad.msg, 'warn');
+      const el = bad.c && view.querySelector(`[data-id="${bad.c.id}"] [data-k="${bad.k}"]`);
+      if (el) {
+        el.setAttribute('aria-invalid', 'true');
+        el.addEventListener('input', () => el.removeAttribute('aria-invalid'), { once: true });
+        el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' }); el.focus({ preventScroll: true });
+      }
+      return;
+    }
     const before = devAvg(kind); const fromV = cl.version; const k = kind;
     const { __base: _, ...clean } = draft;
     clean.criteria = clean.criteria.map((c) => ({ ...c, weight: Number(c.weight) || 0 }));
