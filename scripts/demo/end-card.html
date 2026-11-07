@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- Last frame of the demo video (scripts/demo/record.mjs renders it at 1440×900). Numbers come from the measured
+     eval-v5.1 runs: see docs/playbook/scoring-playbook.md and eval/runs/. Update both places together. -->
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Freedom CQA · итог демо</title>
+  <link rel="stylesheet" href="/shared/theme-light.css">
+  <style>
+    html, body { margin: 0; height: 100%; }
+    body { display: grid; place-items: center; background: var(--l-bg-soft); }
+    .end { width: 1180px; display: flex; flex-direction: column; gap: 40px; }
+    .end__top { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .end__logo { height: 40px; width: auto; }
+    .end__team { font-size: 18px; color: var(--l-ink-3); }
+    .end__title { font-size: 64px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.04; margin: 0; color: var(--l-ink); }
+    .end__lead { font-size: 22px; color: var(--l-ink-2); margin: 14px 0 0; max-width: 46ch; }
+    .end__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat { background: #fff; border: 1px solid var(--l-line); border-radius: 22px; padding: 24px 22px 22px; box-shadow: var(--l-shadow); display: flex; flex-direction: column; gap: 10px; }
+    .stat b { font-size: 46px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--l-forest); font-variant-numeric: tabular-nums; }
+    .stat span { font-size: 16px; line-height: 1.4; color: var(--l-ink-2); }
+    .stat small { font-size: 14px; color: var(--l-ink-3); }
+    .end__foot { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .url { display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 28px; border-radius: 999px; background: var(--l-forest); color: #fff;
+      font-size: 26px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
+    .url i { width: 10px; height: 10px; border-radius: 50%; background: var(--l-green); }
+    .end__note { font-size: 16px; color: var(--l-ink-3); max-width: 40ch; text-align: right; }
+  </style>
+</head>
+<body class="l">
+  <main class="end">
+    <div class="end__top">
+      <img class="end__logo" src="/shared/brand/freedom-broker-logo.svg" alt="Freedom Broker" width="178" height="40">
+      <span class="end__team">Команда YaTebyaMognu · NU Datathon, кейс Freedom Broker</span>
+    </div>
+    <div>
+      <h1 class="end__title">Freedom CQA</h1>
+      <p class="end__lead">Проверяет чаты и звонки поддержки по чек-листу, объясняет каждый балл и ведёт апелляции.</p>
+    </div>
+    <div class="end__grid">
+      <div class="stat"><b>96,1%</b><span>совпадений с нашей ручной проверкой</span><small>19 диалогов</small></div>
+      <div class="stat"><b>96,8%</b><span>совпадений с двумя независимыми разметчиками</span><small>ещё 24 диалога, разметка вслепую</small></div>
+      <div class="stat"><b>7 из 7</b><span>грубых ошибок найдено, ложных срабатываний нет</span><small>те же 19 диалогов</small></div>
+      <div class="stat"><b>≈ $0,007</b><span>за оценку одного чата</span><small>GPT-6 Luna, 3 прогона с голосованием</small></div>
+    </div>
+    <div class="end__foot">
+      <a class="url" href="https://freedom-cqa.vercel.app"><i aria-hidden="true"></i>freedom-cqa.vercel.app</a>
+      <p class="end__note">Код открыт, запуск локально: npm run dev</p>
+    </div>
+  </main>
+</body>
+</html>

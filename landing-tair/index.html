@@ -25,14 +25,6 @@
 
   <!-- Water shimmer filters. Each <svg> holds one SMIL animation so landing.js can pause it
        separately (svg.pauseAnimations) when its photo leaves the screen. -->
-  <svg class="fx-defs" id="fx-water-shore" data-fx-svg aria-hidden="true" focusable="false" width="0" height="0">
-    <filter id="water-shore" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.005 0.06" numOctaves="2" seed="4" result="noise">
-        <animate attributeName="baseFrequency" dur="11s" values="0.005 0.06;0.007 0.075;0.005 0.06" repeatCount="indefinite"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
   <svg class="fx-defs" id="fx-water-door" data-fx-svg aria-hidden="true" focusable="false" width="0" height="0">
     <filter id="water-door" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency="0.006 0.07" numOctaves="2" seed="9" result="noise">
@@ -73,42 +65,18 @@
       </div>
     </section>
 
-    <!-- Demo: compact 16:9 frame that fits one laptop screen together with its caption -->
+    <!-- Demo: 16:10 frame (the recording is 1440×900) that fits one laptop screen together with its caption.
+         The video is recorded from the real product by `node scripts/demo/record.mjs`. -->
     <section class="demo" id="demo" aria-labelledby="demo-title">
-      <div class="demo__inner" data-reveal>
-        <figure class="demo__frame">
-          <!--
-            HOW TO SWAP IN THE REAL VIDEO
-            Replace the .demo__poster block and the .demo__play button with ONE of these
-            (keep the .demo__frame wrapper: it gives the 16:9 ratio and the 28px corners):
-
-              <video controls playsinline preload="metadata"
-                     poster="/landing-tair/assets/shore.webp" src="/landing-tair/assets/demo.mp4"></video>
-
-              <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
-                      title="Демо Freedom CQA" loading="lazy"
-                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                      allowfullscreen></iframe>
-
-            landing.css already sizes a <video> or <iframe> inside .demo__frame to fill it.
-            initDemo() in landing.js does nothing once the button is gone.
-          -->
-          <div class="demo__poster" style="--pos: 50% 50%; --wf: 0.42">
-            <img class="demo__img" src="/landing-tair/assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async"
-                 alt="Белый деревянный стул стоит в мелкой воде у берега, закатное небо">
-            <div class="water" data-loop data-fx="fx-water-shore" style="filter: url(#water-shore)" aria-hidden="true">
-              <img src="/landing-tair/assets/shore.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
-            </div>
-          </div>
-          <button class="demo__play" type="button" aria-describedby="demo-note">
-            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor"/></svg>
-            <span class="sr-only">Воспроизвести демо</span>
-          </button>
-          <span class="demo__soon" aria-hidden="true">Скоро</span>
+      <div class="demo__inner demo__inner--video" data-reveal>
+        <figure class="demo__frame demo__frame--video">
+          <video controls playsinline preload="metadata" width="1440" height="900"
+                 poster="/landing-tair/assets/demo-poster.jpg" src="/landing-tair/assets/demo.mp4"
+                 aria-describedby="demo-note"></video>
         </figure>
         <div class="demo__caption">
-          <h2 id="demo-title" class="demo__title">Демо на 2 минуты</h2>
-          <p id="demo-note" class="demo__note" aria-live="polite">Видео монтируем. В нём один разговор целиком: вопрос клиента, передача специалисту и оценка по чек-листу.</p>
+          <h2 id="demo-title" class="demo__title">Демо, 3 минуты</h2>
+          <p id="demo-note" class="demo__note">Запись настоящего продукта, без звука, с подписями. Клиент пишет в поддержку, AIM передаёт его специалисту. Дальше разбор оценки, апелляция, правка чек-листа и AI-аналитик.</p>
         </div>
       </div>
     </section>
