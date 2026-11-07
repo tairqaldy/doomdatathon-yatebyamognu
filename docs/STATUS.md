@@ -13,7 +13,8 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 ### 2026-11-07 20:40 · lane-d · claude · #20 · branch d/20-freedom-app-research
 Done: captured the live **Freedom Broker iOS app v32.23.17** through iPhone Mirroring (28 frames, all 6 tabs, read-only) and wrote `docs/research/freedom-app.md`: app shell, 6-tab nav, palette (mostly Tailwind defaults on navy `#171D2D`, accent blue-500), type scale, components, screen inventory, where AIM goes (chat icon + Меню → Поддержка), phone-demo plan. **The app is dark navy + blue, not the light green fbroker.kz look**, so the phone demo must use this file, not `design-system.md`.
 Raw frames stay out of git (real client name, account numbers, balances).
-Next: second capture (instrument page, Поддержка / chat), then lane-A phone-frame demo page with mock data; Expo Go wrapper optional.
+Second capture added Поддержка: bottom sheet (Написать в поддержку · FAQ · Контакты · Оцените приложение) and the ticket form. **Support today is an async ticket form, with no instant answers**, so AIM goes at the top of that sheet and hands off to the ticket form pre-filled (bot → human).
+Next: lane-A phone-frame demo page with mock data (Expo Go wrapper optional). Not captured: instrument page, what the Котировки chat icon opens.
 Contracts touched: none.
 How to verify: read `docs/research/freedom-app.md`; method in its §0 and TOOLING §6.
 
