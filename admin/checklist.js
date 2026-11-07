@@ -187,7 +187,7 @@ export function viewChecklist(view, _arg, query) {
   $('#reset', view).onclick = () => { draft = null; replaced.clear(); newId = null; viewChecklist(view); };
   $('#mode', view)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.v; $$('#mode button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
   $('#cl-kind', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.dataset.v === kind) return; switchKind(b.dataset.v); history.replaceState(null, '', `#/checklist?kind=${kind}`); emit('change'); });
-  $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
+  $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; lastRun = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
   $('#save', view).onclick = async () => {
     const bad = problemOf(draft);
     if (bad) {
