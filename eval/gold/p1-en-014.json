@@ -18,11 +18,16 @@
         10
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (10) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        4,
+        6,
+        9
+      ],
       "also_acceptable": [
         "no"
       ],
@@ -46,7 +51,7 @@
       "also_acceptable": [
         10
       ],
-      "note": ""
+      "note": "Only promises referral (12), without reason for restriction or answering where follow-up arrives (13-14). Whether referral merits 5, 10 or 20 requires review."
     },
     "c05": {
       "answer": "no",
@@ -55,7 +60,7 @@
         12
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Client objects to missing identity verification (11); operator dismisses that concern (12)."
     },
     "c06": {
       "answer": 4,

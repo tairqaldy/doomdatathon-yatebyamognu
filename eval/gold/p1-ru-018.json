@@ -18,7 +18,7 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (9) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "no",
@@ -31,7 +31,11 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        9,
+        11
+      ],
       "also_acceptable": [],
       "note": "General / navigation question: no account data disclosed, no protected action."
     },
@@ -50,7 +54,7 @@
         11
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Dismissive final response in 11 gives no assistance after the client challenges an unsupported assertion in 10; politeness versus client orientation needs calibration."
     },
     "c06": {
       "answer": 4,
@@ -75,7 +79,10 @@
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        9,
+        11
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }

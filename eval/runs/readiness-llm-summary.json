@@ -1,0 +1,422 @@
+{
+  "source_commit": "8feeb262cccacd0541ddb5fcec6379cd15fa33b9",
+  "source_path": "eval/runs/2026-11-07T09-36-59-522Z-DEV-anthropic_claude-haiku-5.5.evaluations.json",
+  "source_sha256": "98dcd807519712b8b743ed0a5a4e786c2370a1067d5901da24fbf74e138efdb4",
+  "replayed_at": "2026-11-07T09:54:26.633Z",
+  "new_api_calls": 0,
+  "new_cost_usd": 0,
+  "mode": "Offline rescoring of a teammate-provided saved LLM run; not a new inference run",
+  "remote_reviewed": 19,
+  "local_gold_status_preserved": true,
+  "validation": {
+    "dialogs": 19,
+    "criteria": 152,
+    "message_and_range_refs": 182,
+    "errors": [],
+    "cache_matches": 19,
+    "cache_attempts": [
+      {
+        "id": "p1-ru-006",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-012",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-009",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-003",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-022",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-018",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-025",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-ru-029",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-kz-003",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-kz-011",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-kz-008",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-kz-013",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-kz-015",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-en-006",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-en-009",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-en-013",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-en-014",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p1-en-015",
+        "attempts": 1,
+        "problems": []
+      },
+      {
+        "id": "p4-ru-001",
+        "attempts": 1,
+        "problems": []
+      }
+    ]
+  },
+  "metrics": {
+    "strict": 75.66,
+    "lenient": 92.11,
+    "gross_violation_recall": 85.71,
+    "tp": 6,
+    "fn": 1,
+    "fp": 0,
+    "total_mae_existing_engine": 14.06,
+    "total_mae_official_formula": 14.055789473684214,
+    "per_language": {
+      "EN": {
+        "n": 40,
+        "strict": 70,
+        "lenient": 92.5
+      },
+      "KZ": {
+        "n": 40,
+        "strict": 72.5,
+        "lenient": 90
+      },
+      "RU": {
+        "n": 72,
+        "strict": 80.56,
+        "lenient": 93.06
+      }
+    },
+    "per_criterion": {
+      "c01": {
+        "n": 19,
+        "strict": 100,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c02": {
+        "n": 19,
+        "strict": 68.42,
+        "lenient": 89.47,
+        "scale_within_1": null
+      },
+      "c03": {
+        "n": 19,
+        "strict": 94.74,
+        "lenient": 94.74,
+        "scale_within_1": null
+      },
+      "c04": {
+        "n": 19,
+        "strict": 42.11,
+        "lenient": 68.42,
+        "scale_within_1": 88.89
+      },
+      "c05": {
+        "n": 19,
+        "strict": 73.68,
+        "lenient": 94.74,
+        "scale_within_1": null
+      },
+      "c06": {
+        "n": 19,
+        "strict": 52.63,
+        "lenient": 89.47,
+        "scale_within_1": 100
+      },
+      "c07": {
+        "n": 19,
+        "strict": 78.95,
+        "lenient": 100,
+        "scale_within_1": null
+      },
+      "c08": {
+        "n": 19,
+        "strict": 94.74,
+        "lenient": 100,
+        "scale_within_1": null
+      }
+    }
+  },
+  "c08_cases": [
+    {
+      "conversation_id": "p1-en-013",
+      "language": "EN",
+      "category": "private_paid_service",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оператор предложил платную частную консультацию с личным номером, что является грубой ошибкой.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 11,
+            "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-kz-013",
+      "language": "KZ",
+      "category": "private_paid_service",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оператор предложил оставить личный номер для платной консультации вне официального канала компании.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 11,
+            "quote": "Жеке нөміріңізді қалдырсаңыз, жұмыстан кейін хабарласып, қандай қағаз алу керегін ақылы түрде айтып беремін."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "language": "RU",
+      "category": "private_paid_service",
+      "violation_turns": [
+        9,
+        11
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оператор предложил перевести деньги ему лично в обход компании, что является грубой ошибкой.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 9,
+            "quote": "Здравствуйте, я Кирилл. Скиньте деньги мне на карту, я сам их вложу с выгодой."
+          },
+          {
+            "kind": "message",
+            "turn_index": 11,
+            "quote": "Да, это я лично предлагаю, через компанию оформлять не надо."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "language": "RU",
+      "category": "insult",
+      "violation_turns": [
+        9
+      ],
+      "context_turns": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Фраза «Вы вообще читать умеете?» является оскорбительной для клиента.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 9,
+            "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "language": "EN",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        10
+      ],
+      "context_turns": [
+        10,
+        11,
+        12
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оператор раскрыл информацию о ограничении счёта до проверки личности, что является раскрытием конфиденциальных данных.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 10,
+            "quote": "Hi, I'm Tyler. I can see a withdrawal restriction on your account."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-kz-015",
+      "language": "KZ",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        9
+      ],
+      "context_turns": [
+        9,
+        10,
+        11
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "no",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оскорбления, платных услуг в обход компании и раскрытия конфиденциальной информации не выявлено.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 13,
+            "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+          }
+        ]
+      }
+    },
+    {
+      "conversation_id": "p1-ru-009",
+      "language": "RU",
+      "category": "unverified_account_disclosure",
+      "violation_turns": [
+        11
+      ],
+      "context_turns": [
+        11,
+        12,
+        13
+      ],
+      "expected_answer": "yes",
+      "result": {
+        "criterion_id": "c08",
+        "answer": "yes",
+        "points": null,
+        "effective_weight": null,
+        "explanation": "Оператор раскрыл информацию о счёте клиенту, не подтвердившему свою личность, что является раскрытием конфиденциальной информации.",
+        "evidence": [
+          {
+            "kind": "message",
+            "turn_index": 11,
+            "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "saved LLM accuracy",
+      "exit_code": 0,
+      "tests": null,
+      "passed": null,
+      "failed": null,
+      "log": "eval/runs/readiness-llm-accuracy.log"
+    },
+    {
+      "name": "saved LLM c08 regression",
+      "exit_code": 1,
+      "tests": 20,
+      "passed": 19,
+      "failed": 1,
+      "log": "eval/runs/readiness-c08-llm.tap.log"
+    }
+  ]
+}

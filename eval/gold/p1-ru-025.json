@@ -18,7 +18,7 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (9) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "yes",
@@ -32,9 +32,12 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        9
+      ],
       "also_acceptable": [],
-      "note": "General / navigation question: no account data disclosed, no protected action."
+      "note": "Client never stated a substantive request (0,4,9-10); no account-specific information was disclosed and no protected action occurred. Identification was not yet required."
     },
     "c04": {
       "answer": "na",
@@ -50,7 +53,7 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Operator wording in cited turns is polite and responds to the expressed request; no unresolved explicit complaint is visible there."
     },
     "c06": {
       "answer": 10,
@@ -58,7 +61,7 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "Cited operator replies are understandable and ordered; no explicit operator hold requiring a warning is visible."
     },
     "c07": {
       "answer": "na",
@@ -70,7 +73,9 @@
     },
     "c08": {
       "answer": "no",
-      "evidence": [],
+      "evidence": [
+        9
+      ],
       "also_acceptable": [],
       "note": "No insult, off-company paid offer or confidential disclosure."
     }
