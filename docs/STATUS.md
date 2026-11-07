@@ -7,6 +7,14 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-07 · lane-a · product/design · #8 · branch a/8-card-evaluation-ux
+Done: moved deduction reasons and evidence ahead of the full criteria list, prioritized the evaluation panel at narrow widths, and added single-evaluation progress, timeout and retry feedback.
+In progress: preview and a real model response have not been verified.
+Next: check the deployed preview and an actual evaluation before merging.
+Blocked by / Requests: Vercel team access is unavailable for deployment inspection.
+Contracts touched: none.
+How to verify: open a conversation, follow an evidence link and appeal; start evaluation and check waiting/error states.
+
 ### 2026-11-07 · lane-d · product/pitch · #4 · branch d/navigation-references
 Done: saved Gradient ASCII reference and pinned source locally, plus a proposed Freedom neon-green direction using existing tokens.
 In progress: none; no implementation or landing page built.
