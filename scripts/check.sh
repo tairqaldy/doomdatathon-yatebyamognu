@@ -35,7 +35,7 @@ found=0
 while IFS= read -r pj; do
   found=1; d=$(dirname "$pj")
   if command -v npm >/dev/null; then
-    ( cd "$d" && [ -d node_modules ] || npm ci --silent ) && \
+    ( cd "$d" && { [ -d node_modules ] || [ ! -f package-lock.json ] || npm ci --silent; } ) && \
     ( cd "$d" && npm run --if-present build >/dev/null && npm run --if-present test >/dev/null ) \
       && ok "$d build/test ok" || bad "$d build/test failed"
   else bad "npm not installed but $pj exists"; fi
