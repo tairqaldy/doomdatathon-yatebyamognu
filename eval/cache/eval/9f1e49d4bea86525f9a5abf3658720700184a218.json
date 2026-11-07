@@ -1,0 +1,180 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Первый ответ содержит приветствие и представление на языке клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не учёл, что клиент не назвал бумагу, и дал уверенный неподтверждённый ответ.",
+   "deduction_reason": "Не уточнил недостающие данные и ответил наугад о причине отклонения.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Почему точно? Я даже бумагу вам не назвал."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос был общим вопросом о причине отклонения и не требовал идентификации для ответа.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор не проверял счёт или приказ и не сообщал данные о них."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 0,
+   "explanation": "Существенный вопрос остался без ответа, а ключевое утверждение о причине отклонения было ошибочным.",
+   "deduction_reason": "Не объяснил, где посмотреть причину, и без проверки назвал её.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тогда не знаю."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал по существу на возражение клиента и не скорректировал ситуацию.",
+   "deduction_reason": "После возражения клиента оператор не объяснил ошибку и отмахнулся ответом «Тогда не знаю».",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Почему точно? Я даже бумагу вам не назвал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тогда не знаю."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось переспросить из-за ошибочного и необоснованно уверенного ответа.",
+   "deduction_reason": "Клиенту пришлось уточнять, почему оператор назвал причину без данных о бумаге.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Почему точно? Я даже бумагу вам не назвал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тогда не знаю."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Диалог был закрыт без надлежащего завершения.",
+   "deduction_reason": "Перед закрытием чата оператор не попрощался и не назвал итог или следующий шаг.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тогда не знаю."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Оператор закрыл чат."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок по указанным основаниям не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, меня зовут Саша. Сейчас точно биржа отменяет ваш приказ, ничего не сделать."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тогда не знаю."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать причину отклонения приказа на покупку облигации и попросил подключить специалиста.",
+  "operator_actions": "Оператор без уточнения назвал причиной действия биржи, затем сообщил, что не знает.",
+  "outcome": "Причина отклонения и способ её проверки остались невыясненными."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где посмотреть причину отклонения приказа на покупку облигации.",
+    "status": "wrong_answer"
+   },
+   {
+    "turn": 4,
+    "request": "Подключить специалиста.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_wrong_answer"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 37398,
+ "usage": {
+  "prompt_tokens": 4913,
+  "completion_tokens": 3521,
+  "cost": 0.002252
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор бірінші репликасында сәлемдесіп, атын айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Операторға дейін клиент тикері барын айтқан; нақты тикерді білмей-ақ оны қолдану жолын түсіндіруге болатын.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Жауапқа қажетті деректер жеткілікті болды: клиент тикері бар екенін алдын ала хабарлаған."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Сұраулар навигация және жалпы сатып алу қадамдары туралы болды, сәйкестендіру талап етілмеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Сұрау нақты шотты тексеруді немесе ондағы әрекетті талап етпеді."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиенттің сұрақтарына нақты нұсқаулар беріліп, өтінімді жіберу міндетті емес екені түсіндірілді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Сол қағазды таңдап, сатып алу өтінімінің параметрлерін толтырыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "Жарайды. Параметрлерді қарап шығыңыз. Сатып алуды қаласаңыз ғана өтінімді жіберіңіз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сыпайы сөйлеп, клиенттің сұрақтарына жауап берді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалогта оператор тарапынан байқалған түсініксіздік, қайшылық немесе ескертусіз ұзақ күту болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Сізде нақты тикер болса, соған сәйкес келетін нәтижені ашыңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу болды, бірақ қорытынды да, әрі қарай көмек ұсыну да болмады.",
+   "deduction_reason": "Қорытынды немесе көмек ұсынбай, тек қоштасты.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубое нарушение в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент тикері бар бағалы қағазды қалай табуды және сатып алу өтінімін қалай рәсімдеуді сұрады.",
+  "operator_actions": "Оператор тикер бойынша іздеуді, сәйкес қағазды таңдауды және өтінімді толтыруды түсіндірді.",
+  "outcome": "Клиент қағазды тапты және өтінімді жібермей тұрып қарап шығуға болатынын түсінді."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 19,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Компания атауы бойынша бірнеше бағалы қағаздың ішінен керегін анықтау жолын сұрады.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Операторға қосуды сұрады.",
+    "status": "resolved"
+   },
+   {
+    "turn": 11,
+    "request": "Бағалы қағазды тапқаннан кейін сатып алу үшін не істеу керегін сұрады.",
+    "status": "resolved"
+   },
+   {
+    "turn": 14,
+    "request": "Атаулары ұқсас, бірақ тикерлері әртүрлі екі қағаздың арасынан таңдау туралы нақтылады.",
+    "status": "resolved"
+   },
+   {
+    "turn": 16,
+    "request": "Өтінімді жібермей тұрып қарап шығуға болатынын нақтылады.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 39057,
+ "usage": {
+  "prompt_tokens": 5235,
+  "completion_tokens": 4081,
+  "cost": 0.002564
+ }
+}

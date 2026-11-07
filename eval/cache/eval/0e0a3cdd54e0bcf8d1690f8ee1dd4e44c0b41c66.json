@@ -1,0 +1,162 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hello, I'm Daniel. On the Freedom Holding Corp. website, go to Investors, then Financial Information."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала, и недостающих данных для ответа не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где найти финансовую отчётность компании [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по публичной информации и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал публичный раздел сайта [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал конкретную инструкцию, и клиент подтвердил, что она привела его к нужной странице.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hello, I'm Daniel. On the Freedom Holding Corp. website, go to Investors, then Financial Information."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "That's the page I was after. Thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив; повода реагировать на недовольство клиента не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hello, I'm Daniel. On the Freedom Holding Corp. website, go to Investors, then Financial Information."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы оператора ясные и связные; заметных сбоев в ведении диалога нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hello, I'm Daniel. On the Freedom Holding Corp. website, go to Investors, then Financial Information."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "That's the page I was after. Thanks."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание есть, однако заключительная реплика содержит только вежливую формулу и пожелание хорошего дня.",
+   "deduction_reason": "Не хватило итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hello, I'm Daniel. On the Freedom Holding Corp. website, go to Investors, then Financial Information."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал финансовую отчётность компании и нужный раздел на сайте.",
+  "operator_actions": "Оператор указал путь: Investors → Financial Information.",
+  "outcome": "Клиент подтвердил, что нашёл нужную страницу."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Найти финансовую отчётность компании, а не отчёты по своему счёту.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором, который подскажет нужный раздел меню.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 23008,
+ "usage": {
+  "prompt_tokens": 4864,
+  "completion_tokens": 2436,
+  "cost": 0.001704
+ }
+}

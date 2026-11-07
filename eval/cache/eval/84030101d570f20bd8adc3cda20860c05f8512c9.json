@@ -1,0 +1,152 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал своё имя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Марк. Откройте «Котировки». Если знаете название или тикер, введите его в строку поиска."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому применяется N/A.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Как найти облигации в приложении? Хочу посмотреть, что есть."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации: речь шла о навигации в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Откройте «Котировки»."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос решён: клиент получил инструкцию и подтвердил, что видит результат. Последующее недопустимое предложение оценивается отдельно и не снижает консультацию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Марк. Откройте «Котировки». Если знаете название или тикер, введите его в строку поиска."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Вижу, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Клиент спокойно подтвердил результат и отказался от предложения; грубости или отмахивания от опасения не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Нет, не надо."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог шёл последовательно, клиенту не пришлось переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Марк. Откройте «Котировки». Если знаете название или тикер, введите его в строку поиска."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Вижу, спасибо."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть только прощание, без итога или предложения помощи.",
+   "deduction_reason": "Не выполнено требование завершить диалог прощанием и итогом либо предложением дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошо. Всего доброго."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено предложение частной платной консультации.",
+   "deduction_reason": "Предложил оплатить консультацию лично оператору.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Можете дать личный номер? Вечером созвонюсь с вами и за плату объясню, какие бумаги взять. Это будет моя частная консультация."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти облигации в приложении.",
+  "operator_actions": "Оператор объяснил, как искать бумаги, затем предложил частную платную консультацию.",
+  "outcome": "Клиент нашёл нужный раздел и отказался от консультации."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, как найти облигации в приложении и посмотреть доступные бумаги.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 25806,
+ "usage": {
+  "prompt_tokens": 4971,
+  "completion_tokens": 2489,
+  "cost": 0.001742
+ }
+}

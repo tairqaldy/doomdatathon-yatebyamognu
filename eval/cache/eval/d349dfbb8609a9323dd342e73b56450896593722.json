@@ -1,0 +1,176 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Ирина. Сейчас проверю путь."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Оператору хватало информации, чтобы дать инструкцию; запрос был понятен до его ответа.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где обновить персональные данные [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации в приложении и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил путь в приложении [11, 13]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос и уточнение о банковских реквизитах решены; клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Поняла, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежливо и по существу отреагировал на опасение клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Подключите оператора, пожалуйста. Поручений много, боюсь выбрать не то."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Единственный заметный сбой — ожидание свыше двух минут без предварительного предупреждения; после ответа клиент понял инструкцию и продолжил.",
+   "deduction_reason": "Снижение за заметное ожидание без предупреждения.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание было, однако заключительная реплика содержит только вежливую формулу и прощание.",
+   "deduction_reason": "В заключительной реплике нет итога или следующего шага и предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Пожалуйста. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал, где в приложении изменить персональные данные, и опасался выбрать неверное поручение.",
+  "operator_actions": "Оператор указал путь через меню и подтвердил, что нужно выбрать «Изменение сведений» для анкетных данных.",
+  "outcome": "Клиент понял инструкцию; диалог завершился прощанием оператора."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где в приложении обновить персональные данные?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Подключить оператора, так как клиент боится выбрать неправильное поручение",
+    "status": "resolved"
+   },
+   {
+    "turn": 12,
+    "request": "Уточнить, не является ли «Изменение сведений» пунктом для банковских реквизитов",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   4
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 32870,
+ "usage": {
+  "prompt_tokens": 5013,
+  "completion_tokens": 3467,
+  "cost": 0.002235
+ }
+}

@@ -1,0 +1,216 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "В первом ответе есть приветствие и представление на русском языке.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Фридом брокера [Имя скрыто] Здравствуйте, чем могу вам помочь?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Для проверки конкретной операции оператор уточнил данные, которых не было в сообщениях клиента. Повторный запрос тикера был после того, как клиент не назвал его.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 33,
+     "quote": "Тикер можете на дом, пожалуйста."
+    },
+    {
+     "kind": "message",
+     "turn_index": 37,
+     "quote": "Хорошо, подскажите, пожалуйста, можно им проверишь брокерский счёт?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "yes",
+   "explanation": "Оператор запросил проверочные данные и код; после подтверждения их корректности перешёл к сведениям о приказе. Реплики о несовпадении номера дома были частью проверки, а не раскрытием данных счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 78,
+     "quote": "Всё верно, боужин коблошимович, я наблюдаю, что вы выставляли приказ на покупку."
+    },
+    {
+     "kind": "message",
+     "turn_index": 70,
+     "quote": "[Имя скрыто] [Имя скрыто], у вас указан другой номер дома? Подскажите, пожалуйста, шестизначный код, о который я вам направил на номер телефона вам пришёл."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил объяснение по покупке облигации и конкретные способы передать приказ трейдерам. На вопрос о необходимости писать при каждой покупке оператор предложил на выбор почту или звонок.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 89,
+     "quote": "Я наблюдаю, что вы выставляли приказ на покупку облигации мфбр Финанс 13 выпуск на них вы их вы самостоятельно купить. К сожалению, не можете. Вы можете позвонить нам, мы соединим вас с трейдерами для"
+    },
+    {
+     "kind": "message",
+     "turn_index": 111,
+     "quote": "Можете писать на эту почту, либо звонить на номер 73 пятерки, и мы соединим с трейдером для выставления приказа."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор предложил почту как альтернативу разговору по телефону, то есть отреагировал на неудобство клиента. Общался вежливо.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 90,
+     "quote": "Мне это объясняли, я просто не могу постоянно звонить. Я тоже работаю при коллегах, надо на работе, я так и информацию не могу разглашать, понимаете?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 93,
+     "quote": "Вы можете написать им на почту деск собака в брокер точка kissed."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Ответы о почте и звонке повторялись, но не сразу снимали неясность клиента; ему пришлось несколько раз переспрашивать. Это заметные сбои по вине оператора.",
+   "deduction_reason": "Снижено за неоднократные переспрашивания клиента из-за неясных и повторяющихся ответов.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 98,
+     "quote": "Так как ещё раз?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 110,
+     "quote": "На эту почту надо писать постоянно, что ли?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Разговор оборвался по инициативе клиента до возможности завершения оператором.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент завершил разговор"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Признаков грубого нарушения не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      14,
+      114
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог самостоятельно купить облигацию и хотел узнать, как обойтись без звонков при коллегах.",
+  "operator_actions": "Проверил личность, просмотрел приказ и объяснил, что его можно передать трейдерам по почте или телефону.",
+  "outcome": "Клиент получил варианты обращения и подтвердил, что понял; затем сам завершил звонок."
+ },
+ "problems": [
+  "c02: quote not found in turn 33",
+  "c02: quote not found in turn 37",
+  "c03: quote not found in turn 78",
+  "c03: quote not found in turn 70",
+  "c05: quote not found in turn 90"
+ ],
+ "facts": {
+  "operator_first_turn": 14,
+  "identity_verified_turn": 78,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 114,
+  "client_requests": [
+   {
+    "turn": 19,
+    "request": "Не получается купить облигации; клиент хочет понять, как действовать.",
+    "status": "resolved"
+   },
+   {
+    "turn": 21,
+    "request": "Спрашивает, как решить вопрос так, чтобы не звонить, поскольку неудобно обсуждать это при коллегах.",
+    "status": "partly"
+   },
+   {
+    "turn": 96,
+    "request": "Спрашивает, нужно ли писать на почту при каждой покупке.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 79,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 81,
+    "cause": "operator_ignored_question"
+   },
+   {
+    "turn": 98,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 100,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 103,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 108,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 110,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   28,
+   40,
+   84,
+   90,
+   91
+  ],
+  "ending": "client_left_or_hung_up",
+  "cut_before_operator_could_close": true
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 2,
+ "latency_ms": 116609,
+ "usage": {
+  "prompt_tokens": 18856,
+  "completion_tokens": 10999,
+  "cost": 0.007385
+ }
+}

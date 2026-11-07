@@ -1,0 +1,192 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был понятен с самого начала: клиент сообщил о проблеме с выводом и попросил проверить счёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Условие N/A: запрос клиента был ясен с самого начала."
+    },
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Вчера вывод работал, сегодня нет. Посмотрите, что с моим счётом?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор раскрыл наличие ограничения на вывод без предварительной проверки личности.",
+   "deduction_reason": "Данные по конкретному счёту сообщены до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Клиент не получил ответа, почему вывод ограничен. Есть только общая передача вопроса на проверку без дальнейших сроков или канала ответа.",
+   "deduction_reason": "Главный вопрос о причине ограничения остался без ответа, а следующий шаг обозначен неполно.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Я спрашиваю, почему вывод ограничен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Передам вопрос на проверку. До свидания."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал должным образом на опасение клиента о проверке личности и продолжил разговор так, будто проверка не нужна.",
+   "deduction_reason": "Опасение клиента по поводу подтверждения личности было отмахнуто, а не корректно обработано.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Подождите, я ещё не подтверждал, что это мой счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "После сообщения клиента о причине ограничения оператор не ответил на этот вопрос, и клиенту пришлось повторить его.",
+   "deduction_reason": "Клиенту пришлось переспрашивать из-за пропущенного вопроса.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Я спрашиваю, почему вывод ограничен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "В последней реплике есть и следующий шаг, и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Передам вопрос на проверку. До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено раскрытие конфиденциальной информации до подтверждения личности.",
+   "deduction_reason": "Оператор раскрыл наличие ограничения на вывод по счёту.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сообщил, что вывод средств перестал работать, и попросил проверить счёт и объяснить ограничение.",
+  "operator_actions": "Оператор сообщил об ограничении до подтверждения личности и затем сказал, что передаст вопрос на проверку.",
+  "outcome": "Причина ограничения не выяснена, а дальнейшие сроки или способ получения ответа не указаны."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 11,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить, почему сегодня не работает вывод со счёта.",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Переключить на оператора.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Проверить счёт; клиент сообщает, что кнопка вывода не нажимается.",
+    "status": "partly"
+   },
+   {
+    "turn": 14,
+    "request": "Объяснить, почему вывод ограничен.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "reaction_to_misconduct"
+   },
+   {
+    "turn": 14,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12,
+   14
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 40441,
+ "usage": {
+  "prompt_tokens": 5001,
+  "completion_tokens": 4081,
+  "cost": 0.002541
+ }
+}

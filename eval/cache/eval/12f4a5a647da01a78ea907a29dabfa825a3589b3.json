@@ -1,0 +1,169 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому уточнять запрос не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент указал брокерский отчёт за прошлый год [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации в приложении и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор дал общие шаги для получения отчёта [9, 11]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор объяснил, где найти отчёт, как выбрать даты и скачать его; клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked. Thanks!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В диалоге оператор был вежлив, повода реагировать на недовольство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и связные; заметного ожидания без предупреждения или сбоев по вине оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, но отсутствуют итог или следующий шаг и предложение помощи.",
+   "deduction_reason": "Не выполнено условие завершения: к прощанию не добавлены итог или предложение дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужен брокерский отчёт за прошлый год.",
+  "operator_actions": "Оператор объяснил, где найти отчёт, как выбрать период и скачать его.",
+  "outcome": "Клиент подтвердил, что инструкция сработала."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Нужен брокерский отчёт за прошлый год, а не только текущий баланс.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Просьба провести по шагам через получение отчёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 6,
+    "request": "Подтверждение подключения оператора.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнение, нужно ли скачать отчёт после выбора дат.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 26222,
+ "usage": {
+  "prompt_tokens": 4900,
+  "completion_tokens": 2567,
+  "cost": 0.001773
+ }
+}

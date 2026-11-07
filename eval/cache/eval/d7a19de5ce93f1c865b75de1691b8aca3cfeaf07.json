@@ -1,0 +1,189 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор учёл запрос о месте подачи, но оставил без ответа вопрос, когда можно повторить вывод.",
+   "deduction_reason": "Не уточнено и не объяснено, когда клиент сможет повторить вывод.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Can you put me through to an agent? Where do I submit that and when can I retry?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общего пути в приложении, поэтому идентификация для ответа не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Указана навигация по меню; конкретный счёт или операция не проверялись."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса решена: клиент нашёл нужный раздел. Существенные вопросы о том, когда повторить вывод и можно ли сделать это сразу, не закрыты.",
+   "deduction_reason": "Снижено за оставленные без ответа вопросы о сроке и возможности повторного вывода.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Chris. Go to Menu, Orders, Personal Details, then Change of Details."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I found it. Can I submit the withdrawal right after this?"
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Грубости или пренебрежительного отношения нет; признаков недовольства клиента также нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Ответы были понятны, однако клиенту пришлось бы продолжать уточнение: вопрос о повторном выводе проигнорирован, и диалог на этом закончился.",
+   "deduction_reason": "Снижено за оставленный без ответа вопрос клиента.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      11
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь; последний вопрос клиента остался без ответа.",
+   "deduction_reason": "В заключительной реплике нет итога или дальнейшего шага либо предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I found it. Can I submit the withdrawal right after this?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "That's where the profile request is. Thanks for contacting us. Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      11
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести средства, поскольку приложение потребовало обновить данные профиля.",
+  "operator_actions": "Оператор указал путь к разделу изменения данных в приложении.",
+  "outcome": "Клиент нашёл раздел, но не получил ответа, когда можно повторить вывод."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 10,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, как решить проблему с выводом из-за необходимости обновить данные профиля.",
+    "status": "partly"
+   },
+   {
+    "turn": 4,
+    "request": "Подключить оператора.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, где подать запрос на изменение данных.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, когда можно повторить попытку вывода.",
+    "status": "open"
+   },
+   {
+    "turn": 10,
+    "request": "Узнать, можно ли повторить вывод сразу после отправки запроса на изменение данных.",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 33980,
+ "usage": {
+  "prompt_tokens": 4878,
+  "completion_tokens": 3583,
+  "cost": 0.002279
+ }
+}

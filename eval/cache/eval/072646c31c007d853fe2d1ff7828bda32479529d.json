@@ -1,0 +1,192 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал себя и поддержку.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор ответил только на вопрос, где найти название тарифа, и не разобрал запрос о комиссии.",
+   "deduction_reason": "Не учтён основной вопрос клиента о комиссии за покупку акций.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Международный рынок. И где вообще глянуть свой тариф? Можно оператора?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Именно на покупку, не на вывод."
+    },
+    {
+     "kind": "range",
+     "range": [
+      13,
+      14
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общих условий тарифа и навигации, поэтому идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о комиссии по тарифу и где посмотреть название тарифа."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса решена: клиент нашёл свой тариф, но существенный вопрос о комиссии не получил ответа.",
+   "deduction_reason": "Комиссия за покупку акций не была объяснена, хотя это был основной вопрос.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Откройте «Кабинет», название тарифа под ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Да, «Инвестор». А комиссию где искать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Грубости или пренебрежительного тона нет; клиент не сообщал о неудобстве или недовольстве.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за ответа не на заданный вопрос клиенту пришлось повторить запрос, который так и остался без ответа.",
+   "deduction_reason": "Клиенту пришлось повторить вопрос о комиссии, но оператор снова не ответил по существу.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Да, «Инвестор». А комиссию где искать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Одного прощания недостаточно: оператор не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В заключительной реплике было только пожелание хорошего дня, а вопрос о комиссии проигнорирован.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в сообщениях оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      14
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать комиссию на тарифе «Инвестор» при покупке акций и где посмотреть свой тариф.",
+  "operator_actions": "Оператор подсказал, где найти название тарифа, но на вопрос о комиссии не ответил.",
+  "outcome": "Клиент нашёл тариф, однако вопрос о комиссии остался открытым."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 13,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать комиссию на тарифе «Инвестор» при покупке акций; позднее уточнил, что речь о международном рынке и покупке, не выводе.",
+    "status": "open"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, где посмотреть свой тариф.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Соединить с оператором.",
+    "status": "resolved"
+   },
+   {
+    "turn": 13,
+    "request": "Узнать, где посмотреть комиссию.",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 13,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 35976,
+ "usage": {
+  "prompt_tokens": 4983,
+  "completion_tokens": 3691,
+  "cost": 0.002344
+ }
+}

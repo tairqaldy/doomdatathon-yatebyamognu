@@ -1,0 +1,166 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор бірінші репликасында амандасып, атын айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Сұраныс басынан анық болды және қосымша нақтылау қажет болғаны диалогтан көрінбейді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Деректер жауап беру үшін басынан жеткілікті болды: клиент нақты өз шотындағы ақша шығарудың себебін тексеруді сұрады [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор растау жүргізілмей тұрып нақты шоттағы шектеу туралы мәліметті ашты.",
+   "deduction_reason": "Жеке басы расталмай тұрып шот туралы дерек ашылды.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    },
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Тексеруге жіберу туралы жалпы қадам берілді, бірақ себебі айтылмады және жауаптың қашан не қайда берілетіні нақтыланбады.",
+   "deduction_reason": "Негізгі сұраққа жауап берілмей, тексеру нәтижесінің келесі қадамы түсіндірілмеді.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор клиенттің нақты шот мәліметі расталмай тұрып айтылғанына қатысты алаңдаушылығын елемеді.",
+   "deduction_reason": "Клиенттің жеке басын растамағаны туралы алаңдаушылығына мәні бойынша жауап берілмеді.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Мен әлі жеке басымды растаған жоқпын ғой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қазір растаудың қажеті жоқ."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиент оператор жауап бермеген негізгі сұрақты қайталауға мәжбүр болды.",
+   "deduction_reason": "Себеп туралы сұраққа жауап берілмегендіктен, клиент оны қайта сұрады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Менің шотымда неге ақша шығару жабық екенін қарап беріңізші."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Ал себебі қандай?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Қорытынды репликада келесі қадам айтылып, қоштасу болды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор жеке басы расталмаған кезде құпия шот мәліметін ашты.",
+   "deduction_reason": "Растауға дейін нақты шоттағы шектеу туралы ақпарат ашылды.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент нақты шотында ақша шығарудың неге жабық екенін сұрады.",
+  "operator_actions": "Оператор растауға дейін шектеу барын айтты және оны тексеруге жіберетінін мәлімдеді.",
+  "outcome": "Шектеудің себебі анықталмады, жауаптың қашан берілетіні айтылмады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 9,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сұрағындағы нақты шотта ақша шығарудың неге жабық екенін тексеруді сұрады.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "reaction_to_misconduct"
+   },
+   {
+    "turn": 12,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.1",
+ "attempts": 1,
+ "latency_ms": 41515,
+ "usage": {
+  "prompt_tokens": 5000,
+  "completion_tokens": 3705,
+  "cost": 0.002352
+ }
+}
