@@ -2,6 +2,7 @@
 
 One line per decision. Newest on top. `date · decision · why · who`
 
+- 2026-11-07 · AIM voice on OpenAI: Whisper (`whisper-1`) for the mic, `gpt-4o-mini-tts` voice `sage` for replies, both through `lib/llm.js` + `lib/cache.js`; replies spoken chunk by chunk (first sentence first, all chunks fetched in parallel); fallbacks Nemotron (mic) and browser `speechSynthesis` (replies) without `OPENAI_API_KEY` · human-sounding voice incl. Kazakh, ~1.4 s to first audio cold and instant when cached, one key for eval + voice; `gpt-4o-transcribe` measured faster and can replace Whisper by env · tair/lane-c
 - 2026-11-07 · Optional Postgres via `DATABASE_URL` (Neon SQL-over-HTTP on `*.neon.tech`, otherwise TCP/TLS, zero npm deps). Live sessions go to `cqa_kv`; without the URL, `/support` stays on localStorage · two devices / two Vercel isolates cannot share localStorage · lane-b
 - 2026-11-07 · Product loop: landing → /support (AIM bot, honest handoff) → auto QA → /admin (passcode) with AI analyst; plan in issue #10 · covers the whole Freedom ask end to end and answers "people don't trust AI" · tair
 - 2026-11-07 · Landing imagery generated in-house (gpt-image-2.6), mood board used only as reference · IP violations disqualify · tair
