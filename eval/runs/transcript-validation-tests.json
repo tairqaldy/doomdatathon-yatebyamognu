@@ -1,0 +1,470 @@
+{
+  "scope": "offline regression, not independent model accuracy",
+  "baseline_commit": "fbb45c2",
+  "baseline": {
+    "passed": 7,
+    "total": 18,
+    "false_supports": 5,
+    "cases": [
+      {
+        "id": "descriptive-fine",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "descriptive-problem",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "company-not-name",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "negated-name-en",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "negated-name-ru",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "negated-greeting",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "incomplete-name",
+        "expected": "needs_review",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "incomplete-name-ru",
+        "expected": "needs_review",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "mixed-en-ru",
+        "expected": "needs_review",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "mixed-kk-ru",
+        "expected": "needs_review",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "clear-ru-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "clear-en-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "clear-kk-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "masked-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "quoted-other",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "real-name-finn",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-name-from-support",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "en-name-from-support",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      }
+    ]
+  },
+  "candidate": {
+    "passed": 18,
+    "total": 18,
+    "false_supports": 0,
+    "cases": [
+      {
+        "id": "descriptive-fine",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "descriptive-problem",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "company-not-name",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "negated-name-en",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "negated-name-ru",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "negated-greeting",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "incomplete-name",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "incomplete-name-ru",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "mixed-en-ru",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "mixed-kk-ru",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "clear-ru-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "clear-en-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "clear-kk-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "masked-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "quoted-other",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "real-name-finn",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-name-from-support",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "en-name-from-support",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      }
+    ]
+  },
+  "prior_development_regression": {
+    "passed": 19,
+    "total": 19,
+    "false_supports": 0,
+    "cases": [
+      {
+        "id": "ru-clear",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-brand-typo",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-no-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-masked-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-short-intro",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-asr-greeting",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "ru-no-intro",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "ru-role-only",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-substring-hi",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-clear",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "en-contraction",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "en-apology-not-name",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-quoted-greeting",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "kk-bare-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "kk-name-suffix",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "kk-full-intro",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-low-confidence",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "unknown-language",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "late-turn",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      }
+    ]
+  },
+  "prior_synthetic_regression": {
+    "passed": 10,
+    "total": 10,
+    "false_supports": 0,
+    "cases": [
+      {
+        "id": "h-ru-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-ru-2",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-ru-3",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-2",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-3",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-kk-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-kk-2",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-uncertain",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "h-empty",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      }
+    ]
+  },
+  "source_sha256": "236110d2b4eafcc3115ca7d6aa6146222313881a866194a7f7fe862f57138452",
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\aktae\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "eval/fairness",
+        "-p",
+        "test_guard.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_adversarial_examples (test_guard.GuardTests.test_adversarial_examples) ... ok\ntest_bot_and_customer_not_credited (test_guard.GuardTests.test_bot_and_customer_not_credited) ... ok\ntest_english_hi_uses_word_boundaries (test_guard.GuardTests.test_english_hi_uses_word_boundaries) ... ok\ntest_low_confidence_requires_review (test_guard.GuardTests.test_low_confidence_requires_review) ... ok\ntest_nested_export (test_guard.GuardTests.test_nested_export) ... ok\ntest_no_confirmed_asr_error_from_fuzzy_brand (test_guard.GuardTests.test_no_confirmed_asr_error_from_fuzzy_brand) ... ok\ntest_string_timestamps (test_guard.GuardTests.test_string_timestamps) ... ok\ntest_unhashable_export_is_rejected (test_guard.GuardTests.test_unhashable_export_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.011s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "eval/fairness/candidate.test.mjs",
+        "eval/fairness/validation.test.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "✔ candidate preserves transcript, checklist, original prompt and index anchors (2.0366ms)\n✔ uncertain voice deduction is withheld from confirmed score; no unauthorized N/A (1.9731ms)\n✔ quality uncertainty never clears a detected critical violation (0.4818ms)\n✔ clear case preserves existing deterministic total (0.8573ms)\n✔ missing criteria or evaluator validation problems prevent confirmation (0.7885ms)\n✔ dynamic criterion replacement does not trigger obsolete c01 policy (0.8321ms)\n✔ editing criterion meaning with the same ID also disables the greeting policy (1.1474ms)\n✔ missing probe fails closed (3.3311ms)\n✔ unbound legacy probe fails closed (0.7668ms)\n✔ probe from another dialog fails closed (0.9588ms)\n✔ editing transcript invalidates old probe (0.5635ms)\n✔ missing quality check fails closed (0.5141ms)\n✔ bot turn cannot be used as first operator probe (0.5697ms)\n✔ unknown probe status fails closed (0.5294ms)\n✔ missing answers is a diagnostic, not an exception (0.6182ms)\n✔ null result is a diagnostic, not an exception (0.7452ms)\n✔ missing model metadata prevents scoring (0.5696ms)\n✔ missing summary prevents scoring (0.4428ms)\n✔ invalid binary answer cannot become a pass (0.4824ms)\n✔ scale answer must be an actual configured step (0.3637ms)\n✔ prohibited NA cannot hide uncertainty (0.3817ms)\n✔ missing explanation is rejected (0.4147ms)\n✔ invented quote is rejected (0.6334ms)\n✔ nonexistent evidence index is rejected (0.3832ms)\n✔ reversed range is rejected (0.4997ms)\n✔ bot greeting is not operator evidence (0.4837ms)\n✔ consultation verdict cannot cite only a customer question (0.503ms)\n✔ severe violation cannot be attributed from bot-only evidence (0.5331ms)\n✔ customer assertion alone does not establish completed identity verification (0.4931ms)\n✔ ambiguous identity context needs review, not an automatic failed identity answer (0.7051ms)\n✔ missing audio segment prevents final publication (0.4391ms)\n✔ low confidence cannot be hidden by a clean probe (0.422ms)\n✔ unknown extra verdict cannot survive a changed checklist (0.3569ms)\n✔ duplicate checklist IDs are rejected (0.3677ms)\n✔ invalid scale cannot reach scoring (0.3987ms)\n✔ null checklist returns diagnostics (0.218ms)\n✔ non-array transcript cannot crash validation (0.7649ms)\n✔ no arithmetic is performed on malformed verdict fields (0.5223ms)\n✔ injected incorrect-recommendation verdict is never upgraded because the opening is uncertain (0.3841ms)\n✔ injected unresolved-request verdict is never upgraded because the opening is uncertain (0.3078ms)\n✔ a matching cache context is revalidated, and corrupting its quote is caught (0.8133ms)\n✔ editing a criterion invalidates cache even when the answer still fits its type (0.5098ms)\n✔ cache without input provenance fails closed and never invokes an LLM (0.723ms)\n✔ formatted criterion contains score, verdict, original evidence and separate review state (0.4427ms)\n✔ all seven saved gold critical violations remain visible even while pending (4.6855ms)\nℹ tests 45\nℹ suites 0\nℹ pass 45\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 113.5869\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "scripts/test-scoring.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "✔ all yes → 100\n✔ N/A redistributes, still 100\n✔ c04=10 of 20 with weight 20 → 90\n✔ gross flag never adds points\n✔ N/A where allowed + worst elsewhere → 0\n✔ nothing applicable → total null (not calculated)\n✔ mixed case rounds to 2 decimals (88.82)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "eval/fairness/audit-validation.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"dialogs\": 65,\n  \"publishable\": 4,\n  \"pending\": 61,\n  \"reasons\": {\n    \"missing_original_reference\": 58,\n    \"evidence_speaker_mismatch\": 5,\n    \"invalid_na_evidence\": 1,\n    \"transcript_uncertainty\": 3\n  },\n  \"file_cache_hits\": 65,\n  \"metrics\": {\n    \"scope\": \"Saved answers against existing development gold; not audio-grounded fairness rates.\",\n    \"labels\": 152,\n    \"strict\": 91.45,\n    \"lenient\": 96.71,\n    \"comparable_weighted_pairs\": 104,\n    \"downward_disagreements\": 8,\n    \"upward_disagreements\": 3,\n    \"false_penalty_proxy_pct\": 7.69,\n    \"false_pass_proxy_pct\": 2.88,\n    \"lenient_false_penalty_proxy_pct\": 2.88,\n    \"lenient_false_pass_proxy_pct\": 0.96,\n    \"na_mismatches\": 2,\n    \"gross\": {\n      \"tp\": 7,\n      \"fp\": 0,\n      \"fn\": 0,\n      \"recall_pct\": 100\n    },\n    \"mae\": 6.06\n  }\n}\n",
+      "stderr": ""
+    }
+  ]
+}

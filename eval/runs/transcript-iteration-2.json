@@ -1,0 +1,2518 @@
+{
+  "kind": "offline guard experiment, not LLM accuracy",
+  "iteration": "iteration-2",
+  "fixture_sha256": "9781fcb9b6b2e94bf54ea13e3885cda65508c342aa29bbf20d04f8ecf1d2e328",
+  "guard_sha256": "a4629a99b9e297e906668433885c22cee95870682f80d58d528dc8d44e88ddfe",
+  "baseline": {
+    "passed": 9,
+    "total": 19,
+    "false_supports": 3,
+    "cases": [
+      {
+        "id": "ru-clear",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-brand-typo",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-no-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-masked-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-short-intro",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "ru-asr-greeting",
+        "expected": "needs_review",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "ru-no-intro",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "ru-role-only",
+        "expected": "not_supported",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "en-substring-hi",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-clear",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "en-contraction",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "en-apology-not-name",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-quoted-greeting",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "kk-bare-name",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "kk-name-suffix",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "kk-full-intro",
+        "expected": "supported",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "ru-low-confidence",
+        "expected": "needs_review",
+        "actual": "supported",
+        "passed": false
+      },
+      {
+        "id": "unknown-language",
+        "expected": "needs_review",
+        "actual": "not_supported",
+        "passed": false
+      },
+      {
+        "id": "late-turn",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      }
+    ]
+  },
+  "candidate": {
+    "passed": 19,
+    "total": 19,
+    "false_supports": 0,
+    "cases": [
+      {
+        "id": "ru-clear",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-brand-typo",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-no-brand",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-masked-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-short-intro",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-asr-greeting",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "ru-no-intro",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "ru-role-only",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-substring-hi",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-clear",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "en-contraction",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "en-apology-not-name",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "en-quoted-greeting",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "kk-bare-name",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "kk-name-suffix",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "kk-full-intro",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "ru-low-confidence",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "unknown-language",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "late-turn",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      }
+    ]
+  },
+  "baseline_dataset": {
+    "error": "Unknown schema: expected array or an object containing conversations/dialogs/dialogues/items/data array"
+  },
+  "dataset": {
+    "dialog_count": 65,
+    "warnings": [],
+    "flags_by_kind": {},
+    "c01_candidates": [
+      {
+        "id": "p1-ru-001",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-006",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-007",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-008",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-009",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-010",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-015",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-016",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-017",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-018",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-019",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-020",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-021",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-022",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-023",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-024",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-025",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-026",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-027",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-028",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-029",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-ru-030",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p1-kz-001",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-003",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-006",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-007",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-009",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-010",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-014",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-kz-015",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        }
+      },
+      {
+        "id": "p1-en-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-003",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-006",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-007",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-008",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-009",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-010",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p1-en-014",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        }
+      },
+      {
+        "id": "p4-ru-003",
+        "message_index": 12,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p4-ru-002",
+        "message_index": 2,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": false,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p4-ru-001",
+        "message_index": 12,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p4-ru-005",
+        "message_index": 16,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      },
+      {
+        "id": "p4-ru-004",
+        "message_index": 14,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        }
+      }
+    ],
+    "c01_probes": [
+      {
+        "id": "p1-ru-001",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-003",
+        "message_index": 10,
+        "status": "not_supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-006",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-007",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-008",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-009",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-010",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-014",
+        "message_index": 9,
+        "status": "not_supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-015",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-016",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-017",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-018",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-019",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-020",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-021",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-022",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-023",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-024",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-025",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-026",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-027",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-028",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-029",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-ru-030",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-001",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-003",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-006",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-007",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-008",
+        "message_index": 9,
+        "status": "not_supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-009",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-010",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-014",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-kz-015",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "kk"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-001",
+        "message_index": 9,
+        "status": "not_supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-002",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-003",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-004",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-005",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-006",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-007",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-008",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-009",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-010",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-011",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-012",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-013",
+        "message_index": 9,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-014",
+        "message_index": 10,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p1-en-015",
+        "message_index": 9,
+        "status": "not_supported",
+        "evidence": {
+          "greeting": false,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "en"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p4-ru-003",
+        "message_index": 12,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p4-ru-002",
+        "message_index": 2,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": false,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Voice opening is incomplete or unsupported in text; check audio before penalizing."
+      },
+      {
+        "id": "p4-ru-001",
+        "message_index": 12,
+        "status": "supported",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": true,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      },
+      {
+        "id": "p4-ru-005",
+        "message_index": 16,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": false,
+            "method": "none",
+            "confidence": "low"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Voice opening is incomplete or unsupported in text; check audio before penalizing."
+      },
+      {
+        "id": "p4-ru-004",
+        "message_index": 14,
+        "status": "needs_review",
+        "evidence": {
+          "greeting": true,
+          "fuzzy_greeting": false,
+          "self_introduction": false,
+          "brand": {
+            "detected": true,
+            "method": "known_variant",
+            "confidence": "high"
+          },
+          "first_agent_turn": true,
+          "language": "ru"
+        },
+        "note": "Probe only: needs_review must not become an automatic penalty."
+      }
+    ],
+    "scope": "Heuristic review signals only; no score changes or confirmed ASR errors without audio review."
+  },
+  "holdout": {
+    "passed": 10,
+    "total": 10,
+    "false_supports": 0,
+    "cases": [
+      {
+        "id": "h-ru-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-ru-2",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-ru-3",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-2",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-en-3",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-kk-1",
+        "expected": "supported",
+        "actual": "supported",
+        "passed": true
+      },
+      {
+        "id": "h-kk-2",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      },
+      {
+        "id": "h-uncertain",
+        "expected": "needs_review",
+        "actual": "needs_review",
+        "passed": true
+      },
+      {
+        "id": "h-empty",
+        "expected": "not_supported",
+        "actual": "not_supported",
+        "passed": true
+      }
+    ]
+  }
+}

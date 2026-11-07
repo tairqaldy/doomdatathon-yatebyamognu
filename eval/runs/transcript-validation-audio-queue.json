@@ -1,0 +1,47 @@
+[
+  {
+    "conversation_id": "p4-ru-002",
+    "criterion_id": "c01",
+    "turn_index": 2,
+    "timestamp": "2026-11-03T13:49:47.2615709+00:00",
+    "original_transcript": "Да компания федеброкер меня зовут [Имя скрыто], [Имя скрыто], мы с вами ранее разговаривали.",
+    "audio_endpoint": "/api/audio?id=p4-ru-002",
+    "verbatim_audio": null,
+    "corrected_transcript": null,
+    "recording_start_complete": null,
+    "reviewer": null,
+    "decision": null,
+    "score_effect": null,
+    "status": "awaiting_human_audio_review"
+  },
+  {
+    "conversation_id": "p4-ru-005",
+    "criterion_id": "c01",
+    "turn_index": 16,
+    "timestamp": "2026-11-03T15:29:21.2631163+00:00",
+    "original_transcript": "Компания fernetbark и операции Здравствуйте, чем могу вам помочь?",
+    "audio_endpoint": "/api/audio?id=p4-ru-005",
+    "verbatim_audio": null,
+    "corrected_transcript": null,
+    "recording_start_complete": null,
+    "reviewer": null,
+    "decision": null,
+    "score_effect": null,
+    "status": "awaiting_human_audio_review"
+  },
+  {
+    "conversation_id": "p4-ru-004",
+    "criterion_id": "c01",
+    "turn_index": 14,
+    "timestamp": "2026-11-03T12:50:10.7436505+00:00",
+    "original_transcript": "Фридом брокера [Имя скрыто] Здравствуйте, чем могу вам помочь?",
+    "audio_endpoint": "/api/audio?id=p4-ru-004",
+    "verbatim_audio": null,
+    "corrected_transcript": null,
+    "recording_start_complete": null,
+    "reviewer": null,
+    "decision": null,
+    "score_effect": null,
+    "status": "awaiting_human_audio_review"
+  }
+]
