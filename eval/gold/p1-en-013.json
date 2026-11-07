@@ -18,11 +18,15 @@
         9
       ],
       "also_acceptable": [],
-      "note": ""
+      "note": "First operator reply (9) greets in the client's language and introduces the operator."
     },
     "c02": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        4,
+        6
+      ],
       "also_acceptable": [
         "yes"
       ],
@@ -30,7 +34,11 @@
     },
     "c03": {
       "answer": "na",
-      "evidence": [],
+      "evidence": [
+        0,
+        9,
+        11
+      ],
       "also_acceptable": [],
       "note": "General / navigation question: no account data disclosed, no protected action."
     },
@@ -43,7 +51,7 @@
       "also_acceptable": [
         15
       ],
-      "note": ""
+      "note": "Bond search navigation answered (9), client found search (10). Private paid offer (11) is separately flagged; possible impact on consultation remains disputed."
     },
     "c05": {
       "answer": "yes",
@@ -53,7 +61,7 @@
       "also_acceptable": [
         "no"
       ],
-      "note": ""
+      "note": "Initial navigation response (9) is polite; private solicitation (11) and rejection (12) require a human decision on client orientation."
     },
     "c06": {
       "answer": 10,
@@ -63,7 +71,7 @@
       "also_acceptable": [
         7
       ],
-      "note": ""
+      "note": "Navigation (9) is clear; whether the unrelated private offer (11) constitutes a management failure is disputed."
     },
     "c07": {
       "answer": "no",

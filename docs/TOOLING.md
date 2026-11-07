@@ -53,6 +53,10 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Inter (Google Fonts) | variable | fallback font for CoFo Sans (Freedom's licensed font), full Cyrillic + Kazakh | A, D | active in prototype |
 
 ## 6. Approaches and development strategies
+Readiness diagnostics (2026-11-07): Node v24.18.0 built-in `node:test` / `assert`, offline `fetch` test doubles, `crypto` SHA-256 input snapshots and existing accuracy harness. Run `node --test eval/readiness/*.test.mjs`; c08 suite defaults to mock or reads `CQA_READINESS_RUN` as a saved Evaluation[] file. No network calls, dependencies, prompt tuning or paid inference. Test doubles verify plumbing only, never model accuracy. See `eval/EVALUATOR_READINESS.md`.
+
+Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <evaluations.json>` reads git objects, verifies dataset/checklist and cache/export consistency, then invokes the existing accuracy harness and c08 regressions. Source used: main snapshot 8feeb26, Haiku eval-v1 run from issue #6. No new model request; metadata records source hash and distinguishes historical provider cost from $0 replay cost. `node eval/readiness/run-offline.mjs` writes only `eval/runs/readiness-*` and checks protected-file hashes. Both commands currently return 1 for known regressions; diagnostic `.log` outputs are gitignored, JSON summaries are retained.
+
 | Approach | Why | Where documented |
 |---|---|---|
 | Cache every model call (memory → `eval/cache/` files → optional Upstash), key = model + prompt version + input; commit the cache | repeated requests instant and free; teammates/CI/Vercel reuse paid answers; protects the ~$9.5 budget | `lib/cache.js`, AGENTS.md §8.1 |
@@ -67,6 +71,7 @@ Log: model id, provider, why, temperature, prompt version, **cost per evaluation
 | Clickable no-build prototype first, then the TS app copies its patterns | fast UX validation; demo exists even if the build breaks | `prototype/` |
 | Gold set + accuracy harness: hand-checked labels per criterion, every evaluator run scored against them (strict / lenient agreement, N/A, gross-error recall, evidence hit rate, total MAE) | measured accuracy instead of claims; catches prompt regressions; mock baseline proves the harness before the LLM exists | `eval/gold/README.md`, `eval/accuracy.ts` |
 | Eval scripts run as plain `.ts` on Node ≥ 23.6 (native type stripping), no build or dependencies | zero setup on every laptop | `node eval/accuracy.ts …` |
+| Independent gold audit, runtime shape/reference validation and separate unrounded arithmetic | Review all 19 DEV gold dialogs without changing application code; Node v24.18.0, PowerShell and Git Bash, no new dependencies or paid calls | `node eval/audit-gold.mjs`; `eval/GOLD_AUDIT_REPORT.md`; `eval/runs/gold-audit-*`. Exit 1: gold errors; exit 2: existing scoring mismatch; exit 0: both pass. GitHub API read via web failed; gh/Python unavailable locally. |
 
 ## 7. Research sources and external docs
 | Source | What we took from it | Saved where |

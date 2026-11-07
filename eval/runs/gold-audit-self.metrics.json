@@ -1,0 +1,108 @@
+{
+  "run": "eval/runs/gold-audit-self.json",
+  "meta": {
+    "purpose": "Harness compatibility only; not evaluator accuracy"
+  },
+  "gold_dialogs": 19,
+  "scored_dialogs": 19,
+  "draft_gold": 19,
+  "missing": [],
+  "overall": {
+    "n": 152,
+    "strict": 100,
+    "lenient": 100,
+    "scale_within_1": 100
+  },
+  "per_criterion": {
+    "c01": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c02": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c03": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c04": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": 100
+    },
+    "c05": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c06": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": 100
+    },
+    "c07": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c08": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    }
+  },
+  "per_language": {
+    "EN": {
+      "n": 40,
+      "strict": 100,
+      "lenient": 100
+    },
+    "KZ": {
+      "n": 40,
+      "strict": 100,
+      "lenient": 100
+    },
+    "RU": {
+      "n": 72,
+      "strict": 100,
+      "lenient": 100
+    }
+  },
+  "na": {
+    "precision": 100,
+    "recall": 100,
+    "gold": 28,
+    "model": 28
+  },
+  "gross_error": {
+    "tp": 7,
+    "fn": 0,
+    "fp": 0,
+    "recall": 100,
+    "precision": 100
+  },
+  "evidence": {
+    "hit_rate": 100,
+    "checked": 112,
+    "invalid_refs": 0,
+    "refs": 321
+  },
+  "total": {
+    "mae": 0,
+    "dialogs": 19,
+    "null_mismatch": 0
+  },
+  "disagreements": []
+}
