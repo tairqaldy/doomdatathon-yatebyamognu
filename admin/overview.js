@@ -22,6 +22,8 @@ export function viewOverview(view) {
     const mockKinds = [...new Set(mockRows.map((r) => r.E.kind))];
     setHead('Обзор', `${st.n} ${plural(st.n, ['диалог', 'диалога', 'диалогов'])} · чек-листы: чаты v${cl.version}, звонки v${cc.version} · ${mockN ? `AI ${st.n_dev - mockN} из ${st.n_dev}` : `оценка AI, ${modelLabel(S.pre?.model || S.api.model)}`}`);
     const agreeN = m ? Math.round((m.overall.n * m.overall.strict) / 100) : 0;
+    // the metrics file may be older than the evaluations on screen: say which prompt it measured
+    const metricsVer = m?.meta?.prompt_version || null;
     const fixFirst = [...st.reasonGroups.filter((g) => g.gross).slice(0, 1), ...st.reasonGroups.filter((g) => !g.gross)].slice(0, 3);
 
     view.innerHTML = `
@@ -30,7 +32,7 @@ export function viewOverview(view) {
         ${kpi({ label: 'Средний балл', value: fix(st.avg, 1), unit: '/100', sub: `медиана ${fix(st.median, 1)}`, href: '#/dialogs?sort=low', meter: { p: st.avg || 0, color: tierVar(tier(st.avg)) } })}
         ${kpi({ label: 'Проверено диалогов', value: st.n, sub: `${st.chats} ${plural(st.chats, ['чат', 'чата', 'чатов'])} · ${st.calls} ${plural(st.calls, ['звонок', 'звонка', 'звонков'])}`, href: '#/dialogs' })}
         ${kpi({ label: 'Грубые ошибки', value: st.gross, sub: `${st.n ? Math.round((st.gross / st.n) * 100) : 0}% диалогов · показать с причинами`, href: '#/dialogs?gross=1', mod: st.gross ? 'kpi--bad' : '' })}
-        ${kpi({ label: 'Согласие с проверяющими', value: m ? Math.round(m.overall.strict) : '—', unit: m ? '%' : '', sub: m ? `${agreeN} из ${m.overall.n} ответов AI совпали с ручной разметкой (${m.gold_dialogs} диалогов)` : 'нет файла метрик' })}
+        ${kpi({ label: 'Согласие с проверяющими', value: m ? Math.round(m.overall.strict) : '—', unit: m ? '%' : '', sub: m ? `${agreeN} из ${m.overall.n} ответов AI совпали с ручной разметкой (${m.gold_dialogs} диалогов)${metricsVer && metricsVer !== S.pre?.prompt_version ? `, замер промпта ${esc(metricsVer)}` : ''}` : 'нет файла метрик' })}
       </section>
 
       <div class="grid grid--2">
