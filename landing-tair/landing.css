@@ -403,3 +403,37 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 }
 .l .numbers__note { max-width: 78ch; line-height: 1.6; }
 .l .checklist__formula { max-width: 72ch; line-height: 1.6; }
+
+/* ── v3: sections for the jury (cycle, trust, accuracy, calls, integration, research, features) ── */
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(32px, 6vw, 96px); align-items: end; }
+.l .sec-head .l-lead { margin-top: 0; }
+.l .sec-head a { color: var(--l-green-ink); text-underline-offset: 3px; }
+.sec--soft { background: var(--l-bg-soft); }
+
+/* cycle: six numbered steps, the connector draws step by step on reveal */
+.cyc-list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 20px; margin-top: var(--sec-gap) !important; }
+.cyc { position: relative; display: flex; flex-direction: column; gap: 8px; padding-top: 56px; }
+.cyc__n { position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--l-forest); color: #fff; font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
+.cyc::after { content: ""; position: absolute; top: 19px; left: 52px; right: -8px; height: 2px; border-radius: 2px; background: var(--l-green); transform-origin: left center; }
+.cyc:last-child::after { display: none; }
+.l .cyc__t { font-size: 19px; letter-spacing: -0.015em; }
+.l .cyc p { font-size: 15px; line-height: 1.5; }
+.cyc__where { margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 500; color: var(--l-green-ink); }
+.motion .cyc__n { transition: background .45s, color .45s, box-shadow .45s; transition-delay: calc(var(--i) * 260ms + 150ms); }
+.motion .cyc-list:not(.is-in) .cyc__n { background: #fff; color: var(--l-ink-3); box-shadow: inset 0 0 0 2px var(--l-line-strong); }
+.motion .cyc::after { transform: scaleX(0); transition: transform .7s var(--l-ease); transition-delay: calc(var(--i) * 260ms + 300ms); }
+.motion .cyc-list.is-in .cyc::after { transform: scaleX(1); }
+@media (max-width: 1180px) {
+  .cyc-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
+  .cyc:nth-child(3n)::after { display: none; }
+}
+@media (max-width: 900px) { .sec-head { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .cyc-list { grid-template-columns: 1fr; gap: 24px; }
+  .cyc { padding: 4px 0 0 56px; }
+  .cyc::after, .cyc:nth-child(3n)::after { display: block; top: 48px; bottom: -20px; left: 19px; right: auto; width: 2px; height: auto; transform-origin: center top; }
+  .cyc:last-child::after { display: none; }
+  .motion .cyc::after { transform: scaleY(0); }
+  .motion .cyc-list.is-in .cyc::after { transform: scaleY(1); }
+}

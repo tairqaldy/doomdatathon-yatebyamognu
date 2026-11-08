@@ -40,8 +40,10 @@
       <img src="/shared/brand/freedom-broker-logo.svg" width="498" height="112" alt="Freedom Broker, в начало страницы">
     </a>
     <nav class="bar__nav" aria-label="Разделы страницы">
-      <a class="bar__link" href="#how">Как работает</a>
-      <a class="bar__link" href="#quality">Проверка качества</a>
+      <a class="bar__link" href="#cycle">Цикл</a>
+      <a class="bar__link" href="#accuracy">Точность</a>
+      <a class="bar__link" href="#calls">Звонки</a>
+      <a class="bar__link" href="#integration">Интеграция</a>
       <a class="bar__link" href="#team">Команда</a>
       <a class="l-btn l-btn--primary l-btn--s" href="/support/">Написать</a>
     </nav>
@@ -218,6 +220,54 @@
           <img class="quality__img" data-loop src="/landing-tair/assets/rest.webp" width="1536" height="1024" loading="lazy" decoding="async"
                alt="Человек лежит, раскинув руки, на цветущем горном склоне, за ним снежные вершины и облака">
         </figure>
+      </div>
+    </section>
+
+    <!-- Cycle: the six steps the jury checks on Sunday (docs/case/telegram-qa.md), each mapped to an /admin/ screen -->
+    <section class="sec cycle" id="cycle" aria-labelledby="cycle-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="cycle-title" class="l-h2" data-reveal>Полный цикл в одном окне.</h2>
+          <p class="l-lead" data-reveal style="--d:100">От настройки чек-листа до решения проверяющего. Все шаги идут в <a href="/admin/">/admin/</a>, код доступа написан на странице входа.</p>
+        </div>
+        <ol class="cyc-list" data-reveal aria-label="Шесть шагов цикла">
+          <li class="cyc" style="--i:0">
+            <span class="cyc__n" aria-hidden="true">1</span>
+            <h3 class="cyc__t">Чек-лист</h3>
+            <p>Добавить, изменить или заменить пункт, поменять вес, тип ответа и правило N/A. «Сохранить vN и переоценить» пересчитывает все диалоги.</p>
+            <span class="cyc__where">Чек-лист</span>
+          </li>
+          <li class="cyc" style="--i:1">
+            <span class="cyc__n" aria-hidden="true">2</span>
+            <h3 class="cyc__t">Диалоги</h3>
+            <p>Набор по <span class="l-mono">group_id</span> через наш сервер, JSON-файл или вставленный текст чата. Язык определяется сам.</p>
+            <span class="cyc__where">Загрузка диалогов</span>
+          </li>
+          <li class="cyc" style="--i:2">
+            <span class="cyc__n" aria-hidden="true">3</span>
+            <h3 class="cyc__t">Оценка</h3>
+            <p>Модель трижды читает диалог и выбирает ответ и цитату по каждому пункту. Новый чат оценивается за 15–40 секунд.</p>
+            <span class="cyc__where">Оценить AI</span>
+          </li>
+          <li class="cyc" style="--i:3">
+            <span class="cyc__n" aria-hidden="true">4</span>
+            <h3 class="cyc__t">Результаты</h3>
+            <p>По каждому пункту ответ, баллы, вес, объяснение и цитата. Клик по снижению прокручивает к реплике, в звонке перематывает запись.</p>
+            <span class="cyc__where">Диалоги, Обзор</span>
+          </li>
+          <li class="cyc" style="--i:4">
+            <span class="cyc__n" aria-hidden="true">5</span>
+            <h3 class="cyc__t">Апелляция</h3>
+            <p>Выбрать пункт, написать комментарий. Проверяющий видит спорную оценку, комментарий и фрагмент диалога.</p>
+            <span class="cyc__where">Оспорить → Апелляции</span>
+          </li>
+          <li class="cyc" style="--i:5">
+            <span class="cyc__n" aria-hidden="true">6</span>
+            <h3 class="cyc__t">Переоценка</h3>
+            <p>Проверяющий подтверждает или меняет ответ и пишет причину. Итог пересчитывается, в карточке остаются исходная оценка, решение и новый итог.</p>
+            <span class="cyc__where">Проверяющий → Принять решение</span>
+          </li>
+        </ol>
       </div>
     </section>
 
