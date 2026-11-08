@@ -73,7 +73,8 @@ export function viewOverview(view) {
     const agreeN = m ? Math.round((m.overall.n * m.overall.strict) / 100) : 0;
     // the metrics file may be older than the evaluations on screen: say which prompt it measured
     const metricsVer = m?.meta?.prompt_version || null;
-    const fixFirst = [...st.reasonGroups.filter((g) => g.gross).slice(0, 1), ...st.reasonGroups.filter((g) => !g.gross)].slice(0, 3);
+    // the costliest non-gross reasons sit under the loss chart (gross errors have their own card)
+    const fixFirst = st.reasonGroups.filter((g) => !g.gross).slice(0, 3);
     const showJury = ls.get(JURY_KEY) !== 'hidden';
     const moreOpen = ls.get(MORE_KEY) === '1';
     const grossPct = st.n ? Math.round((st.gross / st.n) * 100) : 0;
@@ -85,19 +86,22 @@ export function viewOverview(view) {
         ${kpi({ label: 'Средний балл', value: fix(st.avg, 1), unit: '/100', sub: `медиана ${fix(st.median, 1)}`, href: '#/dialogs?sort=low', meter: { p: st.avg || 0, color: tierVar(tier(st.avg)) }, count: st.avg != null ? { to: st.avg, d: 1 } : null })}
         ${kpi({ label: 'Диалогов оценено', value: st.n, sub: `${st.chats} ${plural(st.chats, ['чат', 'чата', 'чатов'])} · ${st.calls} ${plural(st.calls, ['звонок', 'звонка', 'звонков'])}`, href: '#/dialogs', count: { to: st.n, d: 0 } })}
         ${kpi({ label: 'Грубые ошибки', value: st.gross, sub: `${grossPct}% диалогов`, href: '#/dialogs?gross=1', mod: st.gross ? 'kpi--bad' : '', count: { to: st.gross, d: 0 } })}
-        ${kpi({ label: 'Совпадение с экспертами', value: m ? Math.round(m.overall.strict) : '—', unit: m ? '%' : '', sub: m ? `<span title="Ответы AI по критериям против ручной разметки (${m.gold_dialogs} диалогов DEV), замер ${esc(metricsVer || '')}">${agreeN} из ${m.overall.n} ответов · ${esc(metricsVer || '')}</span>` : 'нет файла метрик', count: m ? { to: Math.round(m.overall.strict), d: 0 } : null })}
+        ${kpi({ label: 'Совпадение с ручной разметкой', value: m ? fix(m.overall.strict, 1) : '—', unit: m ? '%' : '', sub: m ? `<span title="${agreeN} из ${m.overall.n} ответов AI по критериям совпали с экспертной разметкой, замер ${esc(metricsVer || '')}">${m.gold_dialogs} ${plural(m.gold_dialogs, ['диалог', 'диалога', 'диалогов'])} · ${esc(metricsVer || '')}</span>` : 'нет файла метрик', count: m ? { to: m.overall.strict, d: 1 } : null })}
       </section>
 
       <div class="grid grid--3-2">
         <section class="card chart-card" aria-labelledby="ch-loss">
           <header class="card__head"><h2 id="ch-loss">Где теряем баллы</h2><span class="muted small">в среднем на диалог</span></header>
           <div class="chart-box" id="ch-loss-box"></div>
+          ${fixFirst.length ? `<div class="loss-why"><span class="kicker">Что исправить первым</span><ol class="loss-why__list">${fixFirst.map((g) => {
+            const it = g.items[0]; const ex = it.rows[0];
+            return `<li><b>${esc(g.c.title)}</b><span class="loss-why__t">${esc(it.text)}${it.count > 1 ? ` <span class="muted">(${it.count} раза)</span>` : ''}</span><a class="link link--mono" href="#/dialog/${encodeURIComponent(ex.id)}">${esc(ex.id)}</a></li>`; }).join('')}</ol></div>` : ''}
         </section>
         ${grossCard(list)}
       </div>
 
       <details class="more" id="ov-more" ${moreOpen ? 'open' : ''}>
-        <summary class="more__sum"><span>Подробнее</span><span class="muted small">распределение оценок · языки и каналы · что исправить первым</span>${icon('down', 'ic more__chev')}</summary>
+        <summary class="more__sum"><span>Подробнее</span><span class="muted small">распределение оценок · языки и каналы</span>${icon('down', 'ic more__chev')}</summary>
         <div class="grid grid--2">
           <section class="card chart-card" aria-labelledby="ch-dist">
             <header class="card__head"><h2 id="ch-dist">Распределение оценок</h2></header>
@@ -109,19 +113,6 @@ export function viewOverview(view) {
             <div class="chart-box" id="ch-seg-box"></div>
           </section>
         </div>
-        <section class="card fix-card" aria-labelledby="fix-first">
-          <header class="card__head"><h2 id="fix-first">Что исправить первым</h2><span class="muted small">самые дорогие причины</span></header>
-          ${fixFirst.length ? `<ol class="fix-list">${fixFirst.map((g, i) => {
-            const it = g.items[0]; const ex = it.rows[0];
-            const filter = g.gross ? '#/dialogs?gross=1' : `#/dialogs?crit=${encodeURIComponent(g.c.id)}`;
-            return `<li class="fix ${g.gross ? 'fix--gross' : ''}">
-              <span class="fix__n num">${i + 1}</span>
-              <div class="fix__body">
-                <div class="fix__head"><b>${esc(g.c.title)}</b><span class="fix__meta">${g.dialogs} ${plural(g.dialogs, ['диалог', 'диалога', 'диалогов'])}${g.gross ? ' · грубая ошибка' : ` · −${fix(g.lost / Math.max(1, st.n), 1)} в среднем`}</span></div>
-                <p class="fix__why">${esc(it.text)}${it.count > 1 ? ` <span class="muted">(${it.count} раза)</span>` : ''}</p>
-                <div class="fix__links"><a class="link" href="${filter}">Все ${g.dialogs} ${icon('arrow')}</a><a class="link link--mono" href="#/dialog/${encodeURIComponent(ex.id)}">Пример: ${esc(ex.id)}</a></div>
-              </div></li>`; }).join('')}</ol>` : '<p class="muted fix-none">Снижений нет.</p>'}
-        </section>
       </details>
       ${showJury ? '' : '<p class="jury-restore"><button class="link" type="button" id="jury-show">Показать сценарий проверки для жюри</button></p>'}`;
 
