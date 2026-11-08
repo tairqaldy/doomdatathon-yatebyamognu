@@ -2,7 +2,7 @@
 
 **Every operator chat and call checked against Freedom Broker's 8-criterion checklist, with the exact line behind each deduction and a human reviewer who has the final word.**
 
-**[Live product](https://freedom-cqa.vercel.app)** · [QA workspace `/admin/`](https://freedom-cqa.vercel.app/admin/) (passcode from the team) · [Customer chat `/support/`](https://freedom-cqa.vercel.app/support/) · [Demo video](landing-tair/assets/demo.mp4) · Results: [`results/dev/results.json`](results/dev/results.json), [`results/prod/results.json`](results/prod/results.json) (control run, Sun 11:00) · [Team](#team)
+**[Live product](https://freedom-cqa.vercel.app)** · [QA workspace `/admin/`](https://freedom-cqa.vercel.app/admin/) (passcode `freedom-agent`) · [Customer chat `/support/`](https://freedom-cqa.vercel.app/support/) · [Demo video](landing-tair/assets/demo.mp4) · Results: [`results/dev/results.json`](results/dev/results.json), [`results/prod/results.json`](results/prod/results.json) (control run, Sun 11:00) · [Team](#team)
 
 Freedom Broker's QA team checks conversations by hand. There are too many dialogs to check each one, and people read the same metric differently ([briefing notes](docs/case/briefing-notes.md)). Freedom CQA evaluates every dialog in Russian, Kazakh and English. A model picks the answer and the evidence line for each criterion, code computes the points, and a reviewer can overturn any answer through an appeal. On the customer side, the AIM assistant says it is AI and hands the client to a live operator with the full context; that operator's work then goes through the same QA.
 
@@ -46,7 +46,7 @@ Every number in this README is recomputed by `node scripts/readme-charts.mjs` fr
 |---|---|---|
 | Landing | [/](https://freedom-cqa.vercel.app/) | The product story and the way into support |
 | Customer chat | [/support/](https://freedom-cqa.vercel.app/support/) | AIM answers, says it is AI, hands off to a live operator with the whole chat, asks for CSAT; the operator's part is then evaluated |
-| QA workspace | [/admin/](https://freedom-cqa.vercel.app/admin/) | Обзор, Диалоги, analysis card, Апелляции, Чек-лист, Загрузка диалогов, Живые чаты, AI-аналитик. The production passcode comes from the team (the login page says «Код доступа выдаёт команда»); a local run without `ADMIN_PASSCODE` uses `freedom` |
+| QA workspace | [/admin/](https://freedom-cqa.vercel.app/admin/) | Обзор, Диалоги, analysis card, Апелляции, Чек-лист, Загрузка диалогов, Живые чаты, AI-аналитик. Production passcode: **`freedom-agent`**. A local run without `ADMIN_PASSCODE` uses `freedom` |
 | Client app demos | [/broker/](https://freedom-cqa.vercel.app/broker/) · [/phone/](https://freedom-cqa.vercel.app/phone/) | A broker web app and a copy of the Freedom iOS app with AIM inside: explains steps, acts only after the client agrees, never presses money buttons. `/phone/` also runs as a native app through Expo Go ([mobile/](mobile/README.md)) |
 | Original workspace | [/prototype/](https://freedom-cqa.vercel.app/prototype/) | The first analyst workspace, kept in sync with `/admin/` |
 | Preview hub | [/preview-hub/](https://freedom-cqa.vercel.app/preview-hub/) | Every surface on phone, tablet and laptop, build and AI status |
@@ -454,6 +454,8 @@ cp .env.example .env    # OPENAI_API_KEY (evaluation, voice), OPENROUTER_API_KEY
                         # optional: DATABASE_URL or Upstash Redis for live chats across devices
 npm run dev             # Node >= 20, no npm dependencies -> http://localhost:3000 (same code as Vercel)
 ```
+
+Then open http://localhost:3000/admin/ (local code `freedom`) for the QA workspace, http://localhost:3000/support/ for the customer chat, and http://localhost:3000/ for the landing.
 
 Without keys the UI runs on the AI results already committed in `data/evaluations/` and a clearly labelled offline evaluator for new dialogs.
 
