@@ -192,3 +192,23 @@ export function setHead(title, sub = '') {
 }
 /** Small segmented control: options [{ v, label }]. */
 export const seg = (id, options, value, label) => `<div class="seg" role="group" aria-label="${esc(label)}" id="${id}">${options.map((o) => `<button type="button" data-v="${esc(o.v)}" aria-pressed="${String(o.v) === String(value)}">${esc(o.label)}</button>`).join('')}</div>`;
+
+/* Evaluation loading: the Freedom mark fills with a wave from the bottom while the percent counts up, then a
+   checkmark. Percent is an estimate from elapsed time (the server does not stream progress): it eases towards 95 %
+   and reaches 100 % only when the real answer arrives. */
+const MARK_A = 'M96.9942 0V26.9824C96.9942 97.2299 48.5809 111.542 48.5809 111.542L48.4978 111.565L48.4153 111.542C48.4153 111.542 43.9448 110.221 37.7221 106.411C23.4632 97.6801 0 75.8861 0 26.9824V0H96.9942Z';
+const MARK_B = 'M96.9945 10.687C96.9945 19.6639 89.7167 26.9414 80.7398 26.9416H37.7106V48.467H75.4271V59.154C75.4271 67.7761 68.7078 74.8346 60.2174 75.3744H37.7087V106.402C23.4485 97.6657 8.6014e-05 75.8705 0 26.9826V0H96.9945V10.687Z';
+export const liquidMark = (id) => `<span class="lq" aria-hidden="true"><svg viewBox="0 0 97 112" width="52" height="60">
+  <defs><mask id="${id}-m" maskUnits="userSpaceOnUse" x="-10" y="-20" width="117" height="140"><g id="${id}-y" transform="translate(0 112)"><path class="lq__wave" fill="#fff" d="M-194 8 C-178 0 -162 16 -145.5 8 S-113 0 -97 8 S-65 16 -48.5 8 S-16 0 0 8 S32 16 48.5 8 S81 0 97 8 S129 16 145.5 8 S178 0 194 8 V160 H-194 Z"/></g></mask></defs>
+  <g class="lq__ghost"><path d="${MARK_A}"/><path d="${MARK_B}"/></g>
+  <g mask="url(#${id}-m)"><path d="${MARK_A}" fill="#164734"/><path d="${MARK_B}" fill="#02B140"/></g>
+</svg><span class="lq__pct num" id="${id}-p">0%</span></span>`;
+export function tickLiquid(id, startedAt) {
+  const ms = Date.now() - startedAt;
+  const pct = Math.min(95, Math.round(95 * (1 - Math.exp(-ms / 14000))));
+  const g = document.getElementById(`${id}-y`); if (g) g.setAttribute('transform', `translate(0 ${(112 - (pct / 100) * 124).toFixed(1)})`);
+  const p = document.getElementById(`${id}-p`); if (p) p.textContent = `${pct}%`;
+  return { ms, pct, stage: pct < 22 ? 'читаю разговор' : pct < 55 ? '3 независимые оценки' : pct < 80 ? 'голосование по пунктам' : 'проверяю цитаты, считаю баллы' };
+}
+export const doneMark = () => `<span class="lq lq--done" aria-hidden="true"><svg viewBox="0 0 97 112" width="52" height="60"><path d="${MARK_A}" fill="#164734"/><path d="${MARK_B}" fill="#02B140"/></svg><span class="lq__check"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M5.5 10.5l3 3 6-6.5"/></svg></span></span>`;
+

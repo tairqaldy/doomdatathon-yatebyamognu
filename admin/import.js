@@ -2,7 +2,7 @@
 // Three ways in: paste the text of a dialog («Оператор: …» lines), a JSON file / JSON text (one record, an array or the
 // organizers' API response), or a whole group by group_id through our /api/dataset proxy (the control set).
 // Each dialog is sent inline to POST /api/evaluate (lib/evaluator.js, 3 samples + vote); points come from scoring.js.
-import { $, esc, fmt, plural, icon, toast, setHead, seg, LANG, dateTime, uid } from './ui.js';
+import { $, esc, fmt, plural, icon, toast, setHead, seg, LANG, dateTime, uid, liquidMark, tickLiquid } from './ui.js';
 import { S, emit, on, aiEvaluate, aiReady, modelLabel, addImported, removeImported, importedConvs, mergeGroupEvaluations,
   hasAI, evaluation, checklistLabel, checklistFor, isCall, persist } from './store.js';
 import { SOURCE_LABEL } from './card.js';
@@ -203,7 +203,7 @@ export function viewImport(view) {
       ${run ? runPanel(run, p) : ''}`;
   };
   const runPanel = (run, p) => run.status === 'pending'
-    ? `<div class="run run--pending imp-run" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div>
+    ? `<div class="run run--pending run--lq imp-run" role="status" aria-live="polite">${liquidMark('imp')}<div>
         <b>AI-агент оценивает ${esc(run.id)} · <span class="num" id="imp-t">0,0</span> с</b>
         <span class="small">1 · диалог разобран: ${p.transcript.length} реплик, оценивается только оператор · 2 · POST /api/evaluate → ${esc(modelLabel(S.api.model))}, 3 независимых прогона и голосование, цитата-доказательство проверяется по тексту · 3 · баллы и итог считает детерминированный движок scoring.js. Обычно 30–60 с.</span></div></div>`
     : `<div class="run run--error imp-run" role="alert">${icon('alert')}<div><b>Не удалось оценить ${esc(run.id)}</b><span class="small">${esc(run.error)} Диалог сохранён в списке ниже, можно повторить.</span></div></div>`;
@@ -268,7 +268,7 @@ export function viewImport(view) {
       </section>
       ${listPane()}`;
     clearInterval(ticker);
-    if (D.run?.status === 'pending') ticker = setInterval(() => { const t = $('#imp-t', view); if (t) t.textContent = ((Date.now() - D.run.startedAt) / 1000).toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }, 100);
+    if (D.run?.status === 'pending') ticker = setInterval(() => { const k = tickLiquid('imp', D.run.startedAt); const t = $('#imp-t', view); if (t) t.textContent = (k.ms / 1000).toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }, 100);
   };
   draw();
   // Typing must not re-render the textarea (the caret would jump): update only the parse summary + buttons.

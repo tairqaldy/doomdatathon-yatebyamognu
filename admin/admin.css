@@ -1092,3 +1092,25 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
   .tour__hole, .tour-card, .tour-card__bar i { transition: none !important; }
   .tour.is-on .tour__hole { animation: none; }
 }
+
+/* evaluation loading: Freedom mark fills with a wave (ui.js liquidMark), then a checkmark (doneMark) */
+.run--lq, .run--done { align-items: center; }
+.lq { position: relative; width: 52px; height: 60px; flex: none; display: block; }
+.lq svg { display: block; overflow: visible; }
+.lq__ghost path { fill: #e4ece7; }
+.lq__wave { animation: lq-wave 1.8s linear infinite; }
+@keyframes lq-wave { from { transform: translateX(0); } to { transform: translateX(97px); } }
+.lq g[id$="-y"] { transition: transform .3s ease-out; }
+.lq__pct { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); font-size: 12px; font-weight: 700; color: #0e151c;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff; font-variant-numeric: tabular-nums; }
+.run--done { animation: lq-in .35s ease-out; }
+.lq--done svg { animation: lq-pulse .5s ease-out; }
+.lq__check { position: absolute; right: -6px; bottom: -2px; width: 24px; height: 24px; border-radius: 50%; background: #02b140; display: grid; place-items: center;
+  box-shadow: 0 0 0 3px #fff; animation: lq-pop .45s cubic-bezier(.2,.9,.3,1.3) .15s both; }
+.lq__check svg path { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 20; stroke-dashoffset: 20; animation: lq-draw .35s ease-out .4s forwards; }
+@keyframes lq-pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes lq-draw { to { stroke-dashoffset: 0; } }
+@keyframes lq-pulse { 0% { transform: scale(.94); } 60% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes lq-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .lq__wave, .run--done, .lq--done svg, .lq__check, .lq__check svg path { animation: none; stroke-dashoffset: 0; } .lq g[id$="-y"] { transition: none; } }
+

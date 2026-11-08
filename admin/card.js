@@ -2,7 +2,7 @@
 // Header → per-speaker timeline with deduction markers + call audio → understanding strip →
 // transcript (left) | score ring, history, sections, deduction reasons, justification of every criterion (right).
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
-import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
+import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime, liquidMark, tickLiquid, doneMark } from './ui.js';
 import { annotateRoles, NO_CLIENT_MESSAGE } from '/lib/roles.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel, confidenceOf, markRecent } from './store.js';
@@ -180,9 +180,9 @@ export function viewCard(view, convId, query) {
             ${reviewer && open.length ? `<button class="btn btn--primary" type="button" data-review="${open[0].id}">${icon('appeals')}Рассмотреть апелляцию</button>` : `<button class="btn btn--primary" type="button" id="appeal-main">${icon('appeals')}Оспорить оценку</button>`}
             <button class="btn" type="button" id="reeval" ${single?.pending ? 'disabled aria-busy="true"' : ''} ${aiReady() ? '' : 'title="AI недоступен на сервере"'}>${icon('refresh')}Оценить заново</button>
           </div>
-          ${single?.pending ? `<div class="run run--pending" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает диалог: ${esc(clLabel)}</b><span class="muted small"><span class="num" id="run-t">0,0</span> с · обычно 30–60 с, звонок до 2,5 мин (3 оценки и голосование). Текущая оценка остаётся на экране.</span></div></div>`
+          ${single?.pending ? `<div class="run run--pending run--lq" role="status" aria-live="polite">${liquidMark('run')}<div><b>Анализ: <span id="run-stage">читаю разговор</span></b><span class="muted small"><span class="num" id="run-t">0,0</span> с · обычно 30–60 с, звонок до 2,5 мин (3 оценки и голосование). Текущая оценка остаётся на экране.</span></div></div>`
             : single?.error ? `<div class="run run--error" role="alert">${icon('alert')}<div><b>Не удалось оценить</b><span class="small">${esc(single.error)} Текущая оценка сохранена.</span></div></div>`
-            : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ' · из кэша, $0'}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
+            : single?.done ? `<div class="run run--ok run--done" role="status">${doneMark()}<div><b>Готово за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${single.done.cost ? 'новая оценка' : 'из кэша'} · ${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ' · $0'}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>
 
         ${R.no_client ? `<div class="banner banner--info" role="status">${icon('dash')}<div><b>Итог не рассчитан</b><p>${esc(E.base?.message || NO_CLIENT_MESSAGE)}.</p></div></div>` : ''}
@@ -259,7 +259,11 @@ export function viewCard(view, convId, query) {
   $('#appeal-main', view)?.addEventListener('click', () => openAppeal(conv, dd[0]?.c.id || crits[0].id));
   $('#reeval', view).addEventListener('click', () => reevaluate(convId));
   clearInterval(ticker);
-  if (single?.pending) ticker = setInterval(() => { const t = $('#run-t'); if (t) t.textContent = ((Date.now() - single.startedAt) / 1000).toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }, 100);
+  if (single?.pending) ticker = setInterval(() => {
+    const k = tickLiquid('run', single.startedAt);
+    const t = $('#run-t'); if (t) t.textContent = (k.ms / 1000).toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    const st = $('#run-stage'); if (st) st.textContent = k.stage;
+  }, 100);
   const m = Number(query?.get('m'));
   if (query?.has('m') && Number.isInteger(m) && conv.transcript[m]) setTimeout(() => jumpTo(conv, [m]), 150);
   // one-click steps from the jury scenario on Обзор: ?act=appeal opens the appeal sheet, ?hint=reeval points at the button.
