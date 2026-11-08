@@ -40,8 +40,10 @@
       <img src="/shared/brand/freedom-broker-logo.svg" width="498" height="112" alt="Freedom Broker, в начало страницы">
     </a>
     <nav class="bar__nav" aria-label="Разделы страницы">
-      <a class="bar__link" href="#how">Как работает</a>
-      <a class="bar__link" href="#quality">Проверка качества</a>
+      <a class="bar__link" href="#cycle">Цикл</a>
+      <a class="bar__link" href="#accuracy">Точность</a>
+      <a class="bar__link" href="#calls">Звонки</a>
+      <a class="bar__link" href="#integration">Интеграция</a>
       <a class="bar__link" href="#team">Команда</a>
       <a class="l-btn l-btn--primary l-btn--s" href="/support/">Написать</a>
     </nav>
@@ -81,6 +83,23 @@
         </div>
       </div>
     </section>
+
+    <!-- Jury index: one screen that tells the jury where each answer lives (the top bar hides its links on phones) -->
+    <nav class="jx" aria-labelledby="jx-title">
+      <div class="wrap">
+        <h2 id="jx-title" class="jx__title" data-reveal>Для жюри и организаторов</h2>
+        <ul class="jx__grid">
+          <li data-reveal style="--d:0"><a class="jx__a" href="#cycle"><b>Полный цикл</b><span>шесть шагов от чек-листа до переоценки</span></a></li>
+          <li data-reveal style="--d:50"><a class="jx__a" href="#trust"><b>Как оценивает</b><span>факты, три прогона, баллы считает код</span></a></li>
+          <li data-reveal style="--d:100"><a class="jx__a" href="#accuracy"><b>Точность</b><span>95,4% на нашей разметке, 7 из 7 грубых ошибок</span></a></li>
+          <li data-reveal style="--d:150"><a class="jx__a" href="#calls"><b>Звонки</b><span>тот же чек-лист и тон голоса по записи</span></a></li>
+          <li data-reveal style="--d:0"><a class="jx__a" href="#integration"><b>Интеграция</b><span>Dynamics 365, API, формат JSON 1.0</span></a></li>
+          <li data-reveal style="--d:50"><a class="jx__a" href="#research"><b>Исследования</b><span>что узнали и что из этого построили</span></a></li>
+          <li data-reveal style="--d:100"><a class="jx__a" href="#features"><b>Что проверить</b><span>шесть обязательных функций и где они</span></a></li>
+          <li data-reveal style="--d:150"><a class="jx__a" href="https://github.com/tairqaldy/doomdatathon-yatebyamognu" target="_blank" rel="noopener"><b>Код и README</b><span>запуск, стоимость, все прогоны</span></a></li>
+        </ul>
+      </div>
+    </nav>
 
     <!-- Assistant: dove centered in the left half, text in the right half -->
     <section class="assist" id="how" aria-labelledby="assist-title">
@@ -205,7 +224,7 @@
     <section class="sec quality" id="quality" aria-labelledby="quality-title">
       <div class="wrap quality__grid">
         <div class="quality__text">
-          <h2 id="quality-title" class="l-h2" data-reveal>Каждый чат и звонок проверяется по чек-листу Freedom.</h2>
+          <h2 id="quality-title" class="l-h2" data-reveal>Каждый чат и звонок проверяется по <span class="nw">чек-листу</span> Freedom.</h2>
           <p class="l-lead" data-reveal style="--d:100">Те же 8 пунктов, по которым оценивают проверяющие Freedom. У каждой оценки есть ссылка на строку чата или на момент в записи звонка.</p>
           <ul class="ticks" data-reveal style="--d:180">
             <li><b>N/A с объяснением.</b> Если пункт к разговору не относится, его вес делится между остальными.</li>
@@ -218,6 +237,54 @@
           <img class="quality__img" data-loop src="/landing-tair/assets/rest.webp" width="1536" height="1024" loading="lazy" decoding="async"
                alt="Человек лежит, раскинув руки, на цветущем горном склоне, за ним снежные вершины и облака">
         </figure>
+      </div>
+    </section>
+
+    <!-- Cycle: the six steps the jury checks on Sunday (docs/case/telegram-qa.md), each mapped to an /admin/ screen -->
+    <section class="sec cycle" id="cycle" aria-labelledby="cycle-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="cycle-title" class="l-h2" data-reveal>Полный цикл в одном окне.</h2>
+          <p class="l-lead" data-reveal style="--d:100">От настройки чек-листа до решения проверяющего. Все шаги идут в <a href="/admin/">/admin/</a>, код доступа написан на странице входа.</p>
+        </div>
+        <ol class="cyc-list" data-reveal aria-label="Шесть шагов цикла">
+          <li class="cyc" style="--i:0">
+            <span class="cyc__n" aria-hidden="true">1</span>
+            <h3 class="cyc__t">Чек-лист</h3>
+            <p>Добавить, изменить или заменить пункт, поменять вес, тип ответа и правило N/A. Новый вес пересчитывает итоги сразу. Изменённый пункт переоценивается на выбранных диалогах: все, загруженные или по ID.</p>
+            <span class="cyc__where">Чек-лист → Что переоценить</span>
+          </li>
+          <li class="cyc" style="--i:1">
+            <span class="cyc__n" aria-hidden="true">2</span>
+            <h3 class="cyc__t">Диалоги</h3>
+            <p>Набор по <span class="l-mono">group_id</span> через наш сервер, JSON-файл или вставленный текст. Так жюри может проверить систему на своём транскрипте.</p>
+            <span class="cyc__where">Загрузка диалогов</span>
+          </li>
+          <li class="cyc" style="--i:2">
+            <span class="cyc__n" aria-hidden="true">3</span>
+            <h3 class="cyc__t">Оценка</h3>
+            <p>Модель трижды читает диалог и выбирает ответ и цитату по каждому пункту. Новый текст всегда идёт к модели заново, чат за 15–40 секунд.</p>
+            <span class="cyc__where">Оценить AI</span>
+          </li>
+          <li class="cyc" style="--i:3">
+            <span class="cyc__n" aria-hidden="true">4</span>
+            <h3 class="cyc__t">Результаты</h3>
+            <p>По каждому пункту ответ, баллы, вес, объяснение и цитата. Клик по снижению прокручивает к реплике, в звонке перематывает запись.</p>
+            <span class="cyc__where">Диалоги, Обзор</span>
+          </li>
+          <li class="cyc" style="--i:4">
+            <span class="cyc__n" aria-hidden="true">5</span>
+            <h3 class="cyc__t">Апелляция</h3>
+            <p>Выбрать пункт, написать комментарий. Проверяющий видит спорную оценку, комментарий и фрагмент диалога.</p>
+            <span class="cyc__where">Оспорить → Апелляции</span>
+          </li>
+          <li class="cyc" style="--i:5">
+            <span class="cyc__n" aria-hidden="true">6</span>
+            <h3 class="cyc__t">Переоценка</h3>
+            <p>Проверяющий подтверждает или меняет ответ и пишет причину. Итог пересчитывается, в карточке остаются исходная оценка, решение и новый итог.</p>
+            <span class="cyc__where">Проверяющий → Принять решение</span>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -276,18 +343,86 @@
       </div>
     </section>
 
+    <!-- Trust: the evaluation pipeline (README "How evaluation works", lib/evaluator.js) and the organizer rulings we follow -->
+    <section class="sec sec--soft trust" id="trust" aria-labelledby="trust-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="trust-title" class="l-h2" data-reveal>Почему оценке можно верить.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Модель не ставит баллы. Она отвечает на вопросы чек-листа и приводит цитату. Код проверяет цитату и считает баллы.</p>
+        </div>
+        <ol class="pipe" aria-label="Как оценивается один диалог">
+          <li class="pipe__node" data-reveal style="--d:0">
+            <span class="pipe__k">Вход</span>
+            <h3 class="pipe__t">Транскрипт</h3>
+            <p>Чат или звонок, RU, KZ или EN. Оценивается только оператор, бот и система служат контекстом.</p>
+          </li>
+          <li class="pipe__node" data-reveal style="--d:120">
+            <span class="pipe__k">Шаг 1</span>
+            <h3 class="pipe__t">Сначала факты</h3>
+            <p>Что спросил клиент, была ли идентификация, чем закончился разговор. Ответ по пункту идёт после фактов.</p>
+          </li>
+          <li class="pipe__node" data-reveal style="--d:240">
+            <span class="pipe__k">Шаг 2</span>
+            <h3 class="pipe__t">Три прогона <span class="pipe__votes" aria-hidden="true"><i></i><i></i><i></i></span></h3>
+            <p>GPT-6 Luna оценивает диалог трижды, независимо. По каждому пункту побеждает большинство.</p>
+          </li>
+          <li class="pipe__node" data-reveal style="--d:360">
+            <span class="pipe__k">Шаг 3</span>
+            <h3 class="pipe__t">Проверка цитат</h3>
+            <p>Реплика должна существовать, цитата должна совпасть с её текстом. Иначе повторный запрос, затем ошибка, но не выдуманный ответ.</p>
+          </li>
+          <li class="pipe__node pipe__node--code" data-reveal style="--d:480">
+            <span class="pipe__k">Шаг 4</span>
+            <h3 class="pipe__t">Баллы считает код</h3>
+            <p>«Да» даёт полный вес, шкала пропорциональна весу, вес N/A делится между остальными. Округление half-up до двух знаков.</p>
+          </li>
+          <li class="pipe__node pipe__node--flag" data-reveal style="--d:600">
+            <span class="pipe__k">Отдельно</span>
+            <h3 class="pipe__t">Флаг грубой ошибки</h3>
+            <p>Оскорбление, услуга в обход компании, раскрытие данных. Баллы не снимает, видна красной меткой.</p>
+          </li>
+        </ol>
+
+        <div class="trust__grid">
+          <div class="trust__rulings" data-reveal>
+            <h3 class="l-h3">Спорные места решаем так, как ответили организаторы.</h3>
+            <ul class="l-points">
+              <li><b>C2:</b> клиент сразу дал всё нужное, значит N/A, а не «да».</li>
+              <li><b>C7</b> читаем буквально: итог или предложение помощи, и прощание. «Хорошего вечера» без итога даёт «нет».</li>
+              <li><b>C1 на звонке</b> без записанного приветствия даёт N/A.</li>
+              <li><b>Данные до идентификации:</b> C3 «нет» и флаг грубой ошибки. То, что клиент вошёл в приложение, идентификацией не считается.</li>
+              <li><b>Замена пункта</b> запускает новую оценку всех диалогов. Ключ кэша содержит весь чек-лист.</li>
+            </ul>
+          </div>
+          <figure class="trust__calc l-card" data-reveal style="--d:120">
+            <figcaption class="trust__cap"><span class="l-mono">p1-ru-001</span> · пример расчёта</figcaption>
+            <ol class="calc">
+              <li><span>C2 и C3: запрос понятен сразу, данные счёта не нужны</span><b>N/A, −35 веса</b></li>
+              <li><span>C7: «Пожалуйста. Хорошего вечера!», нет итога и предложения помощи</span><b>0 из 5</b></li>
+              <li><span>Остальные пункты</span><b>60 из 60</b></li>
+            </ol>
+            <p class="calc__total"><span>60 ÷ 65 × 100</span><b>92,31</b></p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- Case: one real chat from the dataset (p1-ru-009) with the exact quotes and scores -->
     <section class="sec case" aria-labelledby="case-title">
       <div class="wrap">
         <div class="case__head">
-          <h2 id="case-title" class="l-h2" data-reveal>Разбор настоящего чата: 21 из 100.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Клиент не может вывести деньги и просит проверить счёт. Слева последние реплики, справа решения системы. Нажмите на пункт, чтобы увидеть строку, на которую он ссылается.</p>
+          <h2 id="case-title" class="l-h2" data-reveal>Разбор настоящего чата: 46 из 100.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Клиент не может вывести деньги и просит проверить счёт. Слева реплики после подключения оператора, справа решения оценщика <span class="l-mono">eval-v5.3</span>. Нажмите на пункт, чтобы увидеть строку, на которую он ссылается.</p>
         </div>
 
         <article class="case__card" data-reveal aria-label="Оценка чата p1-ru-009">
           <div class="case__log">
             <p class="case__meta"><span class="l-mono">p1-ru-009</span><span>чат, русский</span></p>
             <ol class="lines">
+              <li class="line" id="ln-0151">
+                <time class="line__t">01:51</time>
+                <div><span class="line__who">Оператор</span><p>«Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?»</p></div>
+              </li>
               <li class="line" id="ln-0251">
                 <time class="line__t">02:51</time>
                 <div><span class="line__who">Оператор</span><p>«Я посмотрел: на вашем счёте есть ограничение на вывод.»</p></div>
@@ -295,6 +430,10 @@
               <li class="line" id="ln-0306">
                 <time class="line__t">03:06</time>
                 <div><span class="line__who">Клиент</span><p>«Подождите, я ещё не подтверждал, что это мой счёт.»</p></div>
+              </li>
+              <li class="line" id="ln-0346">
+                <time class="line__t">03:46</time>
+                <div><span class="line__who">Оператор</span><p>«Подтверждение пока не нужно. Напишите, если приложение опять зависнет.»</p></div>
               </li>
               <li class="line" id="ln-0419">
                 <time class="line__t">04:19</time>
@@ -308,24 +447,39 @@
           </div>
 
           <div class="case__verdicts">
-            <button class="verdict" type="button" data-ref="ln-0419 ln-0435" aria-pressed="true">
-              <span class="verdict__top"><span class="verdict__name">Корректная и полная консультация</span><span class="verdict__score">5 из 20</span></span>
-              <span class="verdict__why">Причину ограничения оператор не назвал и не объяснил, что будет дальше.</span>
-              <span class="verdict__ref">Строки 04:19 и 04:35</span>
-            </button>
-            <button class="verdict" type="button" data-ref="ln-0251 ln-0306" aria-pressed="false">
+            <button class="verdict" type="button" data-ref="ln-0251 ln-0306" aria-pressed="true">
               <span class="verdict__top"><span class="verdict__name">Идентификация</span><span class="verdict__score">0 из 20</span></span>
-              <span class="verdict__why">Статус счёта сообщён до подтверждения личности.</span>
+              <span class="verdict__why">Ограничение на счёте названо до подтверждения личности.</span>
               <span class="verdict__ref">Строки 02:51 и 03:06</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0251 ln-0435" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Корректная и полная консультация</span><span class="verdict__score">10 из 20</span></span>
+              <span class="verdict__why">Часть ответа есть, но причина ограничения осталась открытой. Передача на проверку без следующего шага и срока.</span>
+              <span class="verdict__ref">Строки 02:51 и 04:35</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0306 ln-0346" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Эмпатия</span><span class="verdict__score">0 из 15</span></span>
+              <span class="verdict__why">На возражение клиента о неподтверждённой личности оператор не ответил по существу.</span>
+              <span class="verdict__ref">Строки 03:06 и 03:46</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0419" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Управление диалогом</span><span class="verdict__score">6 из 15</span></span>
+              <span class="verdict__why">Клиенту пришлось повторить вопрос после ответа не по сути. Шкала: 4 из 10.</span>
+              <span class="verdict__ref">Строка 04:19</span>
             </button>
             <button class="verdict verdict--flag" type="button" data-ref="ln-0251" aria-pressed="false">
               <span class="verdict__top"><span class="verdict__name">Грубая ошибка</span><span class="verdict__score">флаг</span></span>
               <span class="verdict__why">Данные счёта раскрыты клиенту до идентификации.</span>
               <span class="verdict__ref">Строка 02:51</span>
             </button>
+            <button class="verdict verdict--ok" type="button" data-ref="ln-0151 ln-0435" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Полные баллы: контакт, потребность, завершение</span><span class="verdict__score">30 из 30</span></span>
+              <span class="verdict__why">Поздоровался и представился, уточнил «Какое сообщение вы видите в приложении?», назвал следующий шаг и попрощался.</span>
+              <span class="verdict__ref">Строки 01:51 и 04:35</span>
+            </button>
             <div class="case__total">
-              <span>Итог по 7 пунктам</span>
-              <span class="case__num"><b>21</b> из 100</span>
+              <span>Итог по 7 пунктам, N/A нет</span>
+              <span class="case__num"><b>46</b> из 100</span>
             </div>
             <p class="case__appeal">Проверяющий может оспорить любой пункт. Итог пересчитается, а исходная оценка останется в карточке.</p>
           </div>
@@ -333,17 +487,231 @@
       </div>
     </section>
 
-    <!-- Numbers: one big-number strip, measured on reviewed reference dialogs -->
+    <!-- Accuracy: eval-v5.3 numbers and the version history (eval/runs/2026-11-07T16-05-00Z-v53-report.md, README "How we got here") -->
+    <section class="sec numbers acc" id="accuracy" aria-labelledby="accuracy-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="accuracy-title" class="l-h2" data-reveal>Точность: замеры и их пределы.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Сравниваем ответ системы с разметкой по каждому пункту, как будут сравнивать организаторы. Версия оценщика <span class="l-mono">eval-v5.3</span>.</p>
+        </div>
+        <dl class="stats">
+          <div class="stat" data-reveal style="--d:0"><dt>ответов совпали с нашей ручной разметкой 19 диалогов, 152 ответа</dt><dd>95,4%</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>на 7 отложенных диалогах, под которые промпт не правили</dt><dd>96,4%</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>совпадений с двумя независимыми ИИ-разметчиками на 24 других чатах</dt><dd>97,3%</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
+        </dl>
+
+        <div class="acc__grid">
+          <figure class="hist" data-reveal aria-labelledby="hist-cap">
+            <figcaption id="hist-cap" class="hist__cap">Как росла точность: совпадение с разметкой на тех же 19 диалогах, по порядку попыток 7 ноября</figcaption>
+            <ol class="hist__rows">
+              <li class="hist__row" style="--v:61.8; --i:0"><span class="hist__name">Правила по словам, без ИИ</span><span class="hist__bar"><i></i></span><b>61,8%</b><span class="hist__note">исходная точка</span></li>
+              <li class="hist__row" style="--v:75.7; --i:1"><span class="hist__name">Claude Haiku 5.5 · v1</span><span class="hist__bar"><i></i></span><b>75,7%</b><span class="hist__note">проба модели, не выбрана</span></li>
+              <li class="hist__row" style="--v:86.2; --i:2"><span class="hist__name">GPT-6 Luna · v1</span><span class="hist__bar"><i></i></span><b>86,2%</b><span class="hist__note">модель выбрана</span></li>
+              <li class="hist__row hist__row--no" style="--v:89.5; --i:3"><span class="hist__name">GPT-6 Luna · v2</span><span class="hist__bar"><i></i></span><b>89,5%</b><span class="hist__note">отклонена: передачу специалисту оценивала в 5 из 20</span></li>
+              <li class="hist__row hist__row--no" style="--v:92.8; --i:4"><span class="hist__name">GPT-6 Luna · v3</span><span class="hist__bar"><i></i></span><b>92,8%</b><span class="hist__note">отклонена: ложные грубые ошибки на 2 настоящих звонках</span></li>
+              <li class="hist__row" style="--v:91.4; --i:5"><span class="hist__name">GPT-6 Luna · v4</span><span class="hist__bar"><i></i></span><b>91,4%</b><span class="hist__note">прежняя версия</span></li>
+              <li class="hist__row" style="--v:96.1; --i:6"><span class="hist__name">GPT-6 Luna · v5.1</span><span class="hist__bar"><i></i></span><b>96,1%</b><span class="hist__note">сначала факты, три прогона</span></li>
+              <li class="hist__row hist__row--now" style="--v:95.4; --i:7"><span class="hist__name">GPT-6 Luna · v5.3</span><span class="hist__bar"><i></i></span><b>95,4%</b><span class="hist__note">текущая: выше на отложенных и у разметчиков</span></li>
+            </ol>
+          </figure>
+          <div class="acc__text" data-reveal style="--d:120">
+            <h3 class="l-h3">Правило записали до запусков.</h3>
+            <p class="l-after">Новая версия принимается, только если не падают результаты на отложенных диалогах и у независимых разметчиков, а грубые ошибки остаются 7 из 7 без ложных тревог. Поэтому v5.2 отклонили, хотя у разметчиков она набрала на 2 ответа больше: на отложенных она потеряла 2.</p>
+            <ul class="l-points">
+              <li><b>Наша разметка.</b> 19 диалогов по 8 пунктов. Черновик сделал агент, каждую метку проверил человек.</li>
+              <li><b>Независимые разметчики.</b> Две отдельные сессии Claude, другая семья моделей. Видели только чек-лист и ответы организаторов. Это проверка согласованности, не эксперты.</li>
+              <li><b>Главная проверка впереди.</b> 10 контрольных чатов оценят эксперты Freedom. Их разметки у нас нет.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calls: same checklist adapted to speech + c09 tone of voice from the recording
+         (data/checklists/freedom-call-v1.json, lib/tone.js, data/evaluations/DEV.json p4-ru-001) -->
+    <section class="sec sec--soft calls" id="calls" aria-labelledby="calls-title">
+      <div class="wrap calls__grid">
+        <div class="calls__text">
+          <h2 id="calls-title" class="l-h2" data-reveal>Звонки: тот же <span class="nw">чек-лист</span> и ещё тон голоса.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Звонок оценивается по тем же 8 пунктам и весам, что и чат. Девятый пункт оценивается по самой записи, потому что интонации в тексте нет.</p>
+          <ul class="l-points" data-reveal style="--d:160">
+            <li><b>C1 = N/A</b>, если приветствие оператора не попало в запись. Так ответили организаторы.</li>
+            <li><b>Ошибки распознавания речи</b> не снижают оценку: шум и искажённые слова не вина оператора.</li>
+            <li><b>c09 «Тон и подача речи»</b>, шкала 10 / 7 / 4 / 0, вес 10. Модель Gemini 3.8 Flash слушает mp3 звонка.</li>
+            <li><b>Что она слушает:</b> вежливость и теплоту голоса, раздражение или холодность, перебивания, темп, долгое молчание без «минуту, проверю». Ровный деловой тон получает высший балл.</li>
+            <li><b>В официальный файл c09 не входит.</b> В <span class="l-mono">results.json</span> ровно 8 пунктов чек-листа. Тон виден в карточке звонка, поэтому её итог отличается от итога в файле.</li>
+          </ul>
+          <p class="l-after" data-reveal style="--d:220">Модель выбрали проверкой. Аудиомодель OpenAI gpt-audio-mini ставила всем звонкам одинаковый балл и выдумывала фразы. Gemini дословно пересказал известный отрезок записи.</p>
+        </div>
+
+        <article class="call l-card" data-reveal aria-label="Пример: оценка тона в звонке p4-ru-001">
+          <p class="call__meta"><span class="l-mono">p4-ru-001</span><span>звонок, русский</span></p>
+          <div class="call__player" aria-hidden="true">
+            <span class="call__play"></span>
+            <span class="wave"><i style="--h:30"></i><i style="--h:55"></i><i style="--h:40"></i><i style="--h:70"></i><i style="--h:45"></i><i style="--h:25"></i><i style="--h:60"></i><i style="--h:80"></i><i style="--h:50"></i><i style="--h:35"></i><i style="--h:20"></i><i style="--h:45"></i><i style="--h:65"></i><i style="--h:40"></i><i style="--h:30"></i><i style="--h:55"></i><i style="--h:75"></i><i style="--h:50"></i><i style="--h:30"></i><i style="--h:20"></i><i style="--h:40"></i><i style="--h:60"></i><i style="--h:35"></i><i style="--h:25"></i><i style="--h:50"></i><i style="--h:70"></i><i style="--h:45"></i><i style="--h:30"></i><i style="--h:55"></i><i style="--h:40"></i><i style="--h:25"></i><i style="--h:35"></i><i style="--h:60"></i><i style="--h:45"></i><i style="--h:30"></i><i style="--h:50"></i><i style="--h:40"></i><i style="--h:25"></i><i style="--h:35"></i><i style="--h:20"></i>
+              <span class="wave__mark" style="--at:56%"></span><span class="wave__mark" style="--at:88%"></span><span class="wave__head"></span></span>
+          </div>
+          <div class="call__crit">
+            <span class="call__name">c09 · Тон и подача речи</span>
+            <span class="call__steps" role="img" aria-label="Шкала 10, 7, 4, 0; выбрано 4"><span>10</span><span>7</span><span class="is-on">4</span><span>0</span></span>
+          </div>
+          <p class="call__why"><span class="call__ev-k">Причина снижения</span>Холодный и безучастный тон оператора, вызвавший у клиента дискомфорт. Клиент сам говорит об этом в разговоре.</p>
+          <ul class="call__ev" aria-label="Реплики оператора, где это слышно">
+            <li><span class="call__ev-k">Оператор</span>«Да.»</li>
+            <li><span class="call__ev-k">Оператор</span>«Нет, не делаем.»</li>
+          </ul>
+          <p class="call__foot">В карточке звонка клик по реплике перематывает запись к этому месту. На 5 звонках DEV тон снижен в одном, этом. Около $0,013 за звонок один раз, повтор из кэша бесплатен.</p>
+        </article>
+      </div>
+      <div class="wrap">
+        <h3 class="calls__limits-t l-h3" data-reveal>Пределы оценки тона.</h3>
+        <ul class="calls__limits">
+          <li data-reveal style="--d:0"><b>Процента точности нет.</b> Экспертной разметки по тону нет. Из 5 звонков DEV снижен один: это показывает, что модель различает звонки, но не то, что она согласна с экспертами.</li>
+          <li data-reveal style="--d:60"><b>Один прогон, без голосования.</b> p4-ru-001 в одном запуске получил 7, в другом 4. Казахские и английские звонки не проверяли.</li>
+          <li data-reveal style="--d:120"><b>Это не распознавание эмоций.</b> Балл снижается за слышимое поведение: повышенный голос, перебивание, долгое молчание без пояснения. Каждое снижение ссылается на реплику.</li>
+          <li data-reveal style="--d:180"><b>Решает человек.</b> Оператор может оспорить c09, как любой пункт. Если пункт не нужен, в редакторе ему ставят вес 0 или удаляют без правки кода.</li>
+        </ul>
+        <p class="calls__more" data-reveal>Обоснование и ответы на вопросы: <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/research/call-tone.md" target="_blank" rel="noopener">docs/research/call-tone.md</a></p>
+      </div>
+    </section>
+
+    <!-- Integration: what is true in the code today (README "Architecture and Dynamics 365", api/evaluate.js, lib/cache.js) -->
+    <section class="sec integ" id="integration" aria-labelledby="integ-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="integ-title" class="l-h2" data-reveal>Как это встраивается в системы Freedom.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Бриф просит интерфейс, который потом станет HTML-ресурсом Dynamics 365. Ниже то, что уже сделано, и то, что ещё нет.</p>
+        </div>
+        <ul class="integ__grid">
+          <li class="ig" data-reveal style="--d:0">
+            <h3 class="ig__t">Dynamics 365</h3>
+            <p>Статические HTML, CSS и JS без сборки и фреймворка, ES-модули, маршруты через <span class="l-mono">#</span>. Рабочее место <span class="l-mono">/prototype/</span> живёт в одном корне <span class="l-mono">#cqa-root</span> и грузит файлы по относительным путям.</p>
+            <p class="ig__todo">Ещё не сделано: в <span class="l-mono">/admin/</span> пути абсолютные, внутри организации Dynamics 365 не проверяли.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:60">
+            <h3 class="ig__t">Чек-лист как данные</h3>
+            <p>Чек-лист хранится в JSON. Новый пункт или версия создаются в интерфейсе, код оценщика не знает пункты по номерам. У чатов и звонков свои чек-листы.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:120">
+            <h3 class="ig__t">API организаторов</h3>
+            <p>Наш сервер забирает набор по <span class="l-mono">group_id</span> и отдаёт браузеру, поэтому CORS не мешает. Записи звонков идут через <span class="l-mono">/api/audio</span>: ссылки на mp3 живут около часа.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:180">
+            <h3 class="ig__t">Формат JSON 1.0</h3>
+            <p><span class="l-mono">npm run results</span> выгружает официальный файл. Валидатор проверяет число записей, все 8 пунктов, номера реплик и заново считает итог с half-up.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:0">
+            <h3 class="ig__t">Кэш у каждого запроса</h3>
+            <p>Ключ: модель, версия промпта, транскрипт, чек-лист и отпечаток кода оценщика. Повторный запрос бесплатен, ответ приходит за миллисекунды. Любое изменение даёт новый ответ.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:60">
+            <h3 class="ig__t">Общее состояние</h3>
+            <p>Upstash Redis хранит кэш ИИ и живые чаты между устройствами, Postgres подключается по желанию.</p>
+            <p class="ig__todo">Апелляции и версии чек-листа пока в браузере проверяющего.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:120">
+            <h3 class="ig__t">Данные клиентов</h3>
+            <p>Диалоги в репозитории взяты у организаторов, имена в них уже скрыты. Сырые расшифровки звонков с именами не сохраняем. Навигатор AIM маскирует номера карт и ИИН до модели и кэша.</p>
+          </li>
+          <li class="ig ig--code" data-reveal style="--d:180">
+            <h3 class="ig__t">Диалог из любой CRM</h3>
+            <pre class="ig__pre"><code>POST /api/evaluate
+{ "conversation": {
+    "conversation_id": "crm-1042",
+    "transcript": [{ "speaker": "client",
+                     "text": "…" }, …] },
+  "checklist": { "criteria": […] } }</code></pre>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Research → decisions (docs/research/*.md, README "Research findings") -->
+    <section class="sec sec--soft research" id="research" aria-labelledby="research-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="research-title" class="l-h2" data-reveal>Что узнали и что из этого построили.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Решения ниже опираются на источник или на наш замер. Полные страницы с ссылками лежат в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/docs/research" target="_blank" rel="noopener">docs/research</a>.</p>
+        </div>
+        <ul class="rd" aria-label="Находки и решения">
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Модель как судья</span>
+            <div class="rd__learn"><p>Судья-модель смещена: один порядок ответов дал модели 66 побед из 80 сравнений. Запись доказательств до вердикта снижала смещение.</p><span class="rd__src">Wang et al., ACL 2024</span></div>
+            <p class="rd__did">Сначала факты и строка проверки, потом ответ. Цитаты не из транскрипта отклоняются, баллы считает код.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Разброс прогонов</span>
+            <div class="rd__learn"><p>Одна и та же модель отвечает по-разному от прогона к прогону. Голос большинства из трёх прогонов точнее одного.</p><span class="rd__src">Rating Roulette, 2025 · наш замер: 6,6% ответов менялись между двумя прогонами eval-v4</span></div>
+            <p class="rd__did">Три прогона и голосование. Доля согласия возвращается по каждому пункту, спорные ответы можно отдать человеку первыми.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Точность по пунктам</span>
+            <div class="rd__learn"><p>Согласие модели с людьми сильно зависит от задачи: 11 моделей на 20 наборах данных.</p><span class="rd__src">Bavaresco et al., ACL 2025</span></div>
+            <p class="rd__did">Меряем каждый пункт отдельно. Управление диалогом (C6) было 57,9% в v4, получило свою процедуру и дошло до 78,9%.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Казахский, русский, английский</span>
+            <div class="rd__learn"><p>Казахский остаётся малоресурсным языком. Whisper без дообучения ошибался в 43,58% слов на казахской речи.</p><span class="rd__src">Togmanov et al., ACL 2025 · Li et al., Interspeech 2024</span></div>
+            <p class="rd__did">Одни правила для трёх языков, записанные через поведение, а не через слова. Цитаты на языке оригинала. Казахский считаем отдельно: 97,5% на 40 ответах.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Доверие к боту</span>
+            <div class="rd__learn"><p>64% из 5 728 клиентов предпочли бы поддержку без ИИ. Главный страх: не добраться до человека.</p><span class="rd__src">Gartner, 2024</span></div>
+            <p class="rd__did">AIM называет себя ассистентом. Вопросы о деньгах и счёте сразу идут специалисту, клиент видит, когда ему ответят.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Калибровка QA</span>
+            <div class="rd__learn"><p>Команды качества калибруются: несколько аналитиков оценивают один разговор и разбирают расхождения. ИИ советуют проверять на 20–30 размеченных звонках.</p><span class="rd__src">SQM Group · Aircall</span></div>
+            <p class="rd__did">Своя разметка 19 диалогов, отложенная часть, двойная слепая разметка 24 чатов и правило принятия новой версии.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Цена и задержка</span>
+            <div class="rd__learn"><p>Проверка идёт после разговора, секунды допустимы. Живому голосу нужно около 500 мс.</p><span class="rd__src">Брифинг Freedom · наш замер моделей</span></div>
+            <p class="rd__did">GPT-6 Luna: 86,2% против 75,7% у Claude Haiku 5.5 на том же промпте и дешевле. Кэш на каждом запросе. Голос AIM начинает с первого предложения.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Features: the six must-haves from docs/case/brief.md with where to see each, plus the extras -->
+    <section class="sec feats" id="features" aria-labelledby="feats-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="feats-title" class="l-h2" data-reveal>Что проверить в продукте.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Шесть обязательных функций из брифа и где их найти. Ссылки ведут в рабочие экраны.</p>
+        </div>
+        <ol class="must">
+          <li class="must__item" data-reveal style="--d:0"><span class="must__n">1</span><div><h3 class="must__t">Редактор чек-листа</h3><p>Текст, вес, тип ответа, шкала, правило N/A. Каждое сохранение становится новой версией, переоценку можно запустить на выбранных диалогах.</p><a class="must__go" href="/admin/#/checklist">Чек-лист</a></div></li>
+          <li class="must__item" data-reveal style="--d:60"><span class="must__n">2</span><div><h3 class="must__t">Оценка диалога</h3><p>Русский, казахский, английский. Вставьте свой транскрипт, и его оценят на месте. Оценивается только оператор.</p><a class="must__go" href="/admin/#/import">Загрузка диалогов</a></div></li>
+          <li class="must__item" data-reveal style="--d:120"><span class="must__n">3</span><div><h3 class="must__t">Результат по пунктам</h3><p>Ответ, баллы, вес, объяснение, цитата. Для N/A причина, для пропуска проверенный отрезок. Итог и итоги по секциям.</p><a class="must__go" href="/admin/#/dialogs">Диалоги</a></div></li>
+          <li class="must__item" data-reveal style="--d:0"><span class="must__n">4</span><div><h3 class="must__t">Карточка с переходом</h3><p>Клик по снижению прокручивает к реплике и подсвечивает её. В звонке плеер перематывает к моменту.</p><a class="must__go" href="/admin/#/dialogs">Любой диалог</a></div></li>
+          <li class="must__item" data-reveal style="--d:60"><span class="must__n">5</span><div><h3 class="must__t">Апелляция</h3><p>Пункт, комментарий, сохранение. Проверяющий видит оценку, комментарий и фрагмент диалога.</p><a class="must__go" href="/admin/#/appeals">Апелляции</a></div></li>
+          <li class="must__item" data-reveal style="--d:120"><span class="must__n">6</span><div><h3 class="must__t">Решение проверяющего</h3><p>Подтвердить или изменить с причиной. Итог пересчитывается, видны исходная оценка, решение и итог.</p><a class="must__go" href="/admin/#/appeals">Роль «Проверяющий»</a></div></li>
+        </ol>
+        <h3 class="feats__sub l-h3" data-reveal>Сверх обязательного</h3>
+        <ul class="extra" data-reveal>
+          <li><b>Грубые ошибки списком</b> с причиной и строкой оператора. <a href="/admin/#/overview">Обзор</a></li>
+          <li><b>AIM в поддержке</b>: называет себя ассистентом, передаёт специалисту всю переписку, просит оценку. <a href="/support/">/support/</a></li>
+          <li><b>Живые чаты</b>: оператор подхватывает разговор после AIM, затем его ответы проходят ту же проверку. <a href="/admin/#/live">Живые чаты</a></li>
+          <li><b>AI-аналитик</b> отвечает на вопросы по сводным данным качества. <a href="/admin/#/analyst">AI-аналитик</a></li>
+          <li><b>Голос</b>: микрофон через Whisper, ответ AIM голосом gpt-4o-mini-tts. <a href="/support/">/support/</a>, <a href="/broker/">/broker/</a></li>
+          <li><b>Приложение на телефоне</b>: копия приложения Freedom с AIM внутри, запускается и как нативное через Expo Go. <a href="/phone/">/phone/</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Numbers: cost and speed per evaluation (README "Models, cost, latency", v5.3 report §6) -->
     <section class="sec numbers" aria-labelledby="numbers-title">
       <div class="wrap">
-        <h2 id="numbers-title" class="numbers__title" data-reveal>Проверили на размеченных разговорах до того, как показывать вам.</h2>
+        <h2 id="numbers-title" class="numbers__title" data-reveal>Сколько стоит и сколько ждать.</h2>
         <dl class="stats">
-          <div class="stat" data-reveal style="--d:0"><dt>ответов по пунктам совпали с ручной разметкой 19 разговоров</dt><dd>95%</dd></div>
-          <div class="stat" data-reveal style="--d:80"><dt>совпадений с независимой разметкой ещё 24 чатов</dt><dd>97%</dd></div>
-          <div class="stat" data-reveal style="--d:160"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
-          <div class="stat" data-reveal style="--d:240"><dt>стоимость проверки одного чата, три независимые оценки</dt><dd>$0,006</dd></div>
+          <div class="stat" data-reveal style="--d:0"><dt>за проверку одного чата, три прогона и все вызовы модели</dt><dd>$0,006</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>на чат, три прогона идут параллельно</dt><dd>≈ 30 с</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>и $0,064 на 10 контрольных чатов в полной репетиции</dt><dd>79 с</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>ответ из кэша на уже заданный вопрос</dt><dd>≈ 20 мс</dd></div>
         </dl>
-        <p class="numbers__note" data-reveal>Эталон: 19 разговоров, размеченных командой и проверенных вручную, плюс 24 чата, которые независимо разметили две отдельные ИИ-сессии, видевшие только чек-лист. Версия оценщика <span class="l-mono">eval-v5.3</span>. Главная проверка впереди: 10 новых чатов, которые оценят эксперты Freedom.</p>
+        <p class="numbers__note" data-reveal>Звонок дороже и дольше: около $0,016 и 2 минуты, тон голоса ещё около $0,013. Источник: прогоны в <span class="l-mono">eval/runs/</span>, оценщик <span class="l-mono">eval-v5.3</span>, модель GPT-6 Luna.</p>
       </div>
     </section>
 
