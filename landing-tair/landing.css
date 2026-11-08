@@ -410,6 +410,20 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .l .sec-head a { color: var(--l-green-ink); text-underline-offset: 3px; }
 .sec--soft { background: var(--l-bg-soft); }
 
+/* jury index: eight links right after the demo */
+.jx { padding-bottom: clamp(64px, 8vw, 112px); }
+.l .jx__title { font-size: 14px; font-weight: 500; letter-spacing: 0; color: var(--l-ink-3); }
+.jx__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px !important; }
+.jx__grid > li { display: flex; }
+.jx__a { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: var(--l-r-md); background: var(--l-bg-soft);
+  border: 1px solid transparent; text-decoration: none; transition: border-color .25s, background .25s; }
+.jx__a:hover { background: #fff; border-color: var(--l-line-strong); }
+.jx__a b { font-size: 16px; font-weight: 600; color: var(--l-ink); letter-spacing: -0.01em; }
+.jx__a b::after { content: " →"; color: var(--l-green-ink); }
+.jx__a span { font-size: 14px; line-height: 1.45; color: var(--l-ink-3); }
+@media (max-width: 900px) { .jx__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 380px) { .jx__a { padding: 14px; } .jx__a span { font-size: 13px; } }
+
 /* cycle: six numbered steps, the connector draws step by step on reveal */
 .cyc-list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 20px; margin-top: var(--sec-gap) !important; }
 .cyc { position: relative; display: flex; flex-direction: column; gap: 8px; padding-top: 56px; }
