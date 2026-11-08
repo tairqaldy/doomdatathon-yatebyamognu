@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-08T06:32:43.867Z",
+  "at": "2026-11-08T06:43:46.124Z",
   "group": "DEV",
   "calls": 5,
   "systems": [
     "organizer",
-    "whisper-1",
     "gpt-4o-transcribe",
+    "whisper-1",
     "nvidia/nemotron-3.5-transcribe"
   ],
   "method": "Normalized text (lowercase, ё→е, no punctuation). Organizer text = all bot/client/operator turns joined in order, system events dropped. Pooled WER = (S+D+I)/reference words. Outvoted = word of system X where ≥2 of the 3 other systems agree on the same different word.",
@@ -43,15 +43,15 @@
       "outvoted": 192,
       "rate": 0.06370272063702721
     },
-    "whisper-1": {
-      "words": 2138,
-      "outvoted": 220,
-      "rate": 0.1028999064546305
-    },
     "gpt-4o-transcribe": {
       "words": 3382,
       "outvoted": 120,
       "rate": 0.03548196333530455
+    },
+    "whisper-1": {
+      "words": 2138,
+      "outvoted": 220,
+      "rate": 0.1028999064546305
     },
     "nvidia/nemotron-3.5-transcribe": {
       "words": 3123,
@@ -61,25 +61,25 @@
   },
   "mean_wer_to_others": {
     "organizer": 0.5317273194251446,
-    "whisper-1": 0.5345177533723241,
     "gpt-4o-transcribe": 0.6072198967602203,
-    "nvidia/nemotron-3.5-transcribe": 0.49242488393409234
+    "whisper-1": 0.5345177533723241,
+    "nvidia/nemotron-3.5-transcribe": 0.4924248839340924
   },
   "pooled": {
-    "organizer|whisper-1": {
-      "wer": 0.5613802256138023,
-      "sub_rate": 0.17319177173191772,
-      "del_rate": 0.33941605839416056,
-      "ins_rate": 0.048772395487723955,
-      "cer_mean": 0.46339017860190196,
-      "ref_words": 3014
-    },
     "organizer|gpt-4o-transcribe": {
       "wer": 0.5232249502322495,
       "sub_rate": 0.17020570670205706,
       "del_rate": 0.1154611811546118,
       "ins_rate": 0.23755806237558064,
       "cer_mean": 0.33916178066639324,
+      "ref_words": 3014
+    },
+    "organizer|whisper-1": {
+      "wer": 0.5613802256138023,
+      "sub_rate": 0.17319177173191772,
+      "del_rate": 0.33941605839416056,
+      "ins_rate": 0.048772395487723955,
+      "cer_mean": 0.46339017860190196,
       "ref_words": 3014
     },
     "organizer|nvidia/nemotron-3.5-transcribe": {
@@ -89,30 +89,6 @@
       "ins_rate": 0.11015262110152621,
       "cer_mean": 0.2410691834428232,
       "ref_words": 3014
-    },
-    "whisper-1|organizer": {
-      "wer": 0.7913938260056127,
-      "sub_rate": 0.2441534144059869,
-      "del_rate": 0.06875584658559401,
-      "ins_rate": 0.4784845650140318,
-      "cer_mean": 0.7318940616851936,
-      "ref_words": 2138
-    },
-    "whisper-1|gpt-4o-transcribe": {
-      "wer": 0.862956033676333,
-      "sub_rate": 0.19130028063610852,
-      "del_rate": 0.04490177736202058,
-      "ins_rate": 0.6267539756782039,
-      "cer_mean": 0.7847704853054045,
-      "ref_words": 2138
-    },
-    "whisper-1|nvidia/nemotron-3.5-transcribe": {
-      "wer": 0.725444340505145,
-      "sub_rate": 0.22637979420018708,
-      "del_rate": 0.019176800748362956,
-      "ins_rate": 0.47988774555659497,
-      "cer_mean": 0.7011754507272746,
-      "ref_words": 2138
     },
     "gpt-4o-transcribe|organizer": {
       "wer": 0.46629213483146065,
@@ -138,20 +114,36 @@
       "cer_mean": 0.2413376081756895,
       "ref_words": 3382
     },
+    "whisper-1|organizer": {
+      "wer": 0.7913938260056127,
+      "sub_rate": 0.2441534144059869,
+      "del_rate": 0.06875584658559401,
+      "ins_rate": 0.4784845650140318,
+      "cer_mean": 0.7318940616851936,
+      "ref_words": 2138
+    },
+    "whisper-1|gpt-4o-transcribe": {
+      "wer": 0.862956033676333,
+      "sub_rate": 0.19130028063610852,
+      "del_rate": 0.04490177736202058,
+      "ins_rate": 0.6267539756782039,
+      "cer_mean": 0.7847704853054045,
+      "ref_words": 2138
+    },
+    "whisper-1|nvidia/nemotron-3.5-transcribe": {
+      "wer": 0.725444340505145,
+      "sub_rate": 0.22637979420018708,
+      "del_rate": 0.019176800748362956,
+      "ins_rate": 0.47988774555659497,
+      "cer_mean": 0.7011754507272746,
+      "ref_words": 2138
+    },
     "nvidia/nemotron-3.5-transcribe|organizer": {
       "wer": 0.33749599743836056,
       "sub_rate": 0.15978226064681397,
       "del_rate": 0.10630803714377202,
       "ins_rate": 0.07140569964777457,
       "cer_mean": 0.22911229967415525,
-      "ref_words": 3123
-    },
-    "nvidia/nemotron-3.5-transcribe|whisper-1": {
-      "wer": 0.4966378482228626,
-      "sub_rate": 0.15497918667947486,
-      "del_rate": 0.3285302593659942,
-      "ins_rate": 0.013128402177393531,
-      "cer_mean": 0.4186768826147512,
       "ref_words": 3123
     },
     "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
@@ -161,6 +153,14 @@
       "ins_rate": 0.18251681075888568,
       "cer_mean": 0.28378897747144455,
       "ref_words": 3123
+    },
+    "nvidia/nemotron-3.5-transcribe|whisper-1": {
+      "wer": 0.4966378482228626,
+      "sub_rate": 0.15497918667947486,
+      "del_rate": 0.3285302593659942,
+      "ins_rate": 0.013128402177393531,
+      "cer_mean": 0.4186768826147512,
+      "ref_words": 3123
     }
   },
   "new_cost_usd": 0,
@@ -169,17 +169,17 @@
       "id": "p4-ru-003",
       "language": "RU",
       "engines": {
-        "whisper-1": {
-          "cached": true,
-          "latency_ms": 10736,
-          "duration_s": 393.2200012207031,
-          "cost": 0.039322
-        },
         "gpt-4o-transcribe": {
           "cached": true,
           "latency_ms": 13407,
           "duration_s": null,
           "cost": 0
+        },
+        "whisper-1": {
+          "cached": true,
+          "latency_ms": 10736,
+          "duration_s": 393.2200012207031,
+          "cost": 0.039322
         },
         "nvidia/nemotron-3.5-transcribe": {
           "cached": true,
@@ -190,21 +190,11 @@
       },
       "words": {
         "organizer": 497,
-        "whisper-1": 258,
         "gpt-4o-transcribe": 506,
+        "whisper-1": 258,
         "nvidia/nemotron-3.5-transcribe": 561
       },
       "pairs": {
-        "organizer|whisper-1": {
-          "ref": "organizer",
-          "hyp": "whisper-1",
-          "ref_words": 497,
-          "wer": 0.7323943661971831,
-          "S": 79,
-          "D": 262,
-          "I": 23,
-          "cer": 0.5912871287128713
-        },
         "organizer|gpt-4o-transcribe": {
           "ref": "organizer",
           "hyp": "gpt-4o-transcribe",
@@ -215,6 +205,16 @@
           "I": 60,
           "cer": 0.24
         },
+        "organizer|whisper-1": {
+          "ref": "organizer",
+          "hyp": "whisper-1",
+          "ref_words": 497,
+          "wer": 0.7323943661971831,
+          "S": 79,
+          "D": 262,
+          "I": 23,
+          "cer": 0.5912871287128713
+        },
         "organizer|nvidia/nemotron-3.5-transcribe": {
           "ref": "organizer",
           "hyp": "nvidia/nemotron-3.5-transcribe",
@@ -224,36 +224,6 @@
           "D": 26,
           "I": 90,
           "cer": 0.2962376237623762
-        },
-        "whisper-1|organizer": {
-          "ref": "whisper-1",
-          "hyp": "organizer",
-          "ref_words": 258,
-          "wer": 1.4108527131782946,
-          "S": 79,
-          "D": 23,
-          "I": 262,
-          "cer": 1.0818840579710145
-        },
-        "whisper-1|gpt-4o-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "gpt-4o-transcribe",
-          "ref_words": 258,
-          "wer": 1.1511627906976745,
-          "S": 37,
-          "D": 6,
-          "I": 254,
-          "cer": 0.9630434782608696
-        },
-        "whisper-1|nvidia/nemotron-3.5-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "nvidia/nemotron-3.5-transcribe",
-          "ref_words": 258,
-          "wer": 1.426356589147287,
-          "S": 61,
-          "D": 2,
-          "I": 305,
-          "cer": 1.1876811594202898
         },
         "gpt-4o-transcribe|organizer": {
           "ref": "gpt-4o-transcribe",
@@ -285,6 +255,36 @@
           "I": 64,
           "cer": 0.2090069284064665
         },
+        "whisper-1|organizer": {
+          "ref": "whisper-1",
+          "hyp": "organizer",
+          "ref_words": 258,
+          "wer": 1.4108527131782946,
+          "S": 79,
+          "D": 23,
+          "I": 262,
+          "cer": 1.0818840579710145
+        },
+        "whisper-1|gpt-4o-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "gpt-4o-transcribe",
+          "ref_words": 258,
+          "wer": 1.1511627906976745,
+          "S": 37,
+          "D": 6,
+          "I": 254,
+          "cer": 0.9630434782608696
+        },
+        "whisper-1|nvidia/nemotron-3.5-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "nvidia/nemotron-3.5-transcribe",
+          "ref_words": 258,
+          "wer": 1.426356589147287,
+          "S": 61,
+          "D": 2,
+          "I": 305,
+          "cer": 1.1876811594202898
+        },
         "nvidia/nemotron-3.5-transcribe|organizer": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "organizer",
@@ -295,16 +295,6 @@
           "I": 26,
           "cer": 0.26008344923504867
         },
-        "nvidia/nemotron-3.5-transcribe|whisper-1": {
-          "ref": "nvidia/nemotron-3.5-transcribe",
-          "hyp": "whisper-1",
-          "ref_words": 561,
-          "wer": 0.6559714795008913,
-          "S": 61,
-          "D": 305,
-          "I": 2,
-          "cer": 0.5698887343532685
-        },
         "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "gpt-4o-transcribe",
@@ -314,6 +304,16 @@
           "D": 64,
           "I": 9,
           "cer": 0.1888038942976356
+        },
+        "nvidia/nemotron-3.5-transcribe|whisper-1": {
+          "ref": "nvidia/nemotron-3.5-transcribe",
+          "hyp": "whisper-1",
+          "ref_words": 561,
+          "wer": 0.6559714795008913,
+          "S": 61,
+          "D": 305,
+          "I": 2,
+          "cer": 0.5698887343532685
         }
       },
       "outvoted": {
@@ -322,15 +322,15 @@
           "outvoted": 46,
           "rate": 0.0925553319919517
         },
-        "whisper-1": {
-          "words": 258,
-          "outvoted": 16,
-          "rate": 0.06201550387596899
-        },
         "gpt-4o-transcribe": {
           "words": 506,
           "outvoted": 8,
           "rate": 0.015810276679841896
+        },
+        "whisper-1": {
+          "words": 258,
+          "outvoted": 16,
+          "rate": 0.06201550387596899
         },
         "nvidia/nemotron-3.5-transcribe": {
           "words": 561,
@@ -360,17 +360,17 @@
       "id": "p4-ru-002",
       "language": "RU",
       "engines": {
-        "whisper-1": {
-          "cached": true,
-          "latency_ms": 16480,
-          "duration_s": 620.3800048828125,
-          "cost": 0.062038
-        },
         "gpt-4o-transcribe": {
           "cached": true,
           "latency_ms": 26924,
           "duration_s": null,
           "cost": 0
+        },
+        "whisper-1": {
+          "cached": true,
+          "latency_ms": 16480,
+          "duration_s": 620.3800048828125,
+          "cost": 0.062038
         },
         "nvidia/nemotron-3.5-transcribe": {
           "cached": true,
@@ -381,21 +381,11 @@
       },
       "words": {
         "organizer": 564,
-        "whisper-1": 355,
         "gpt-4o-transcribe": 1075,
+        "whisper-1": 355,
         "nvidia/nemotron-3.5-transcribe": 585
       },
       "pairs": {
-        "organizer|whisper-1": {
-          "ref": "organizer",
-          "hyp": "whisper-1",
-          "ref_words": 564,
-          "wer": 0.5531914893617021,
-          "S": 45,
-          "D": 238,
-          "I": 29,
-          "cer": 0.49385016772269846
-        },
         "organizer|gpt-4o-transcribe": {
           "ref": "organizer",
           "hyp": "gpt-4o-transcribe",
@@ -406,6 +396,16 @@
           "I": 561,
           "cer": 0.8989936638091688
         },
+        "organizer|whisper-1": {
+          "ref": "organizer",
+          "hyp": "whisper-1",
+          "ref_words": 564,
+          "wer": 0.5531914893617021,
+          "S": 45,
+          "D": 238,
+          "I": 29,
+          "cer": 0.49385016772269846
+        },
         "organizer|nvidia/nemotron-3.5-transcribe": {
           "ref": "organizer",
           "hyp": "nvidia/nemotron-3.5-transcribe",
@@ -415,36 +415,6 @@
           "D": 43,
           "I": 64,
           "cer": 0.3030190085724935
-        },
-        "whisper-1|organizer": {
-          "ref": "whisper-1",
-          "hyp": "organizer",
-          "ref_words": 355,
-          "wer": 0.8788732394366198,
-          "S": 45,
-          "D": 29,
-          "I": 238,
-          "cer": 0.7905727923627685
-        },
-        "whisper-1|gpt-4o-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "gpt-4o-transcribe",
-          "ref_words": 355,
-          "wer": 2.149295774647887,
-          "S": 31,
-          "D": 6,
-          "I": 726,
-          "cer": 1.4242243436754176
-        },
-        "whisper-1|nvidia/nemotron-3.5-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "nvidia/nemotron-3.5-transcribe",
-          "ref_words": 355,
-          "wer": 0.7915492957746478,
-          "S": 37,
-          "D": 7,
-          "I": 237,
-          "cer": 0.6718377088305489
         },
         "gpt-4o-transcribe|organizer": {
           "ref": "gpt-4o-transcribe",
@@ -476,6 +446,36 @@
           "I": 38,
           "cer": 0.5465698547821732
         },
+        "whisper-1|organizer": {
+          "ref": "whisper-1",
+          "hyp": "organizer",
+          "ref_words": 355,
+          "wer": 0.8788732394366198,
+          "S": 45,
+          "D": 29,
+          "I": 238,
+          "cer": 0.7905727923627685
+        },
+        "whisper-1|gpt-4o-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "gpt-4o-transcribe",
+          "ref_words": 355,
+          "wer": 2.149295774647887,
+          "S": 31,
+          "D": 6,
+          "I": 726,
+          "cer": 1.4242243436754176
+        },
+        "whisper-1|nvidia/nemotron-3.5-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "nvidia/nemotron-3.5-transcribe",
+          "ref_words": 355,
+          "wer": 0.7915492957746478,
+          "S": 37,
+          "D": 7,
+          "I": 237,
+          "cer": 0.6718377088305489
+        },
         "nvidia/nemotron-3.5-transcribe|organizer": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "organizer",
@@ -486,16 +486,6 @@
           "I": 43,
           "cer": 0.29867744305657606
         },
-        "nvidia/nemotron-3.5-transcribe|whisper-1": {
-          "ref": "nvidia/nemotron-3.5-transcribe",
-          "hyp": "whisper-1",
-          "ref_words": 585,
-          "wer": 0.48034188034188036,
-          "S": 37,
-          "D": 237,
-          "I": 7,
-          "cer": 0.4136664217487142
-        },
         "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "gpt-4o-transcribe",
@@ -505,6 +495,16 @@
           "D": 38,
           "I": 528,
           "cer": 0.801983835415136
+        },
+        "nvidia/nemotron-3.5-transcribe|whisper-1": {
+          "ref": "nvidia/nemotron-3.5-transcribe",
+          "hyp": "whisper-1",
+          "ref_words": 585,
+          "wer": 0.48034188034188036,
+          "S": 37,
+          "D": 237,
+          "I": 7,
+          "cer": 0.4136664217487142
         }
       },
       "outvoted": {
@@ -513,15 +513,15 @@
           "outvoted": 26,
           "rate": 0.04609929078014184
         },
-        "whisper-1": {
-          "words": 355,
-          "outvoted": 13,
-          "rate": 0.036619718309859155
-        },
         "gpt-4o-transcribe": {
           "words": 1075,
           "outvoted": 52,
           "rate": 0.04837209302325581
+        },
+        "whisper-1": {
+          "words": 355,
+          "outvoted": 13,
+          "rate": 0.036619718309859155
         },
         "nvidia/nemotron-3.5-transcribe": {
           "words": 585,
@@ -551,17 +551,17 @@
       "id": "p4-ru-001",
       "language": "RU",
       "engines": {
-        "gpt-4o-transcribe": {
-          "cached": true,
-          "latency_ms": 13624,
-          "duration_s": null,
-          "cost": 0
-        },
         "whisper-1": {
           "cached": true,
           "latency_ms": 10480,
           "duration_s": 312.260009765625,
           "cost": 0.031226
+        },
+        "gpt-4o-transcribe": {
+          "cached": true,
+          "latency_ms": 13624,
+          "duration_s": null,
+          "cost": 0
         },
         "nvidia/nemotron-3.5-transcribe": {
           "cached": true,
@@ -572,21 +572,11 @@
       },
       "words": {
         "organizer": 569,
-        "gpt-4o-transcribe": 532,
         "whisper-1": 280,
+        "gpt-4o-transcribe": 532,
         "nvidia/nemotron-3.5-transcribe": 557
       },
       "pairs": {
-        "organizer|gpt-4o-transcribe": {
-          "ref": "organizer",
-          "hyp": "gpt-4o-transcribe",
-          "ref_words": 569,
-          "wer": 0.2038664323374341,
-          "S": 57,
-          "D": 48,
-          "I": 11,
-          "cer": 0.1034965034965035
-        },
         "organizer|whisper-1": {
           "ref": "organizer",
           "hyp": "whisper-1",
@@ -597,6 +587,16 @@
           "I": 1,
           "cer": 0.7027972027972028
         },
+        "organizer|gpt-4o-transcribe": {
+          "ref": "organizer",
+          "hyp": "gpt-4o-transcribe",
+          "ref_words": 569,
+          "wer": 0.2038664323374341,
+          "S": 57,
+          "D": 48,
+          "I": 11,
+          "cer": 0.1034965034965035
+        },
         "organizer|nvidia/nemotron-3.5-transcribe": {
           "ref": "organizer",
           "hyp": "nvidia/nemotron-3.5-transcribe",
@@ -606,36 +606,6 @@
           "D": 28,
           "I": 16,
           "cer": 0.0958041958041958
-        },
-        "gpt-4o-transcribe|organizer": {
-          "ref": "gpt-4o-transcribe",
-          "hyp": "organizer",
-          "ref_words": 532,
-          "wer": 0.21804511278195488,
-          "S": 57,
-          "D": 11,
-          "I": 48,
-          "cer": 0.10759723736822974
-        },
-        "gpt-4o-transcribe|whisper-1": {
-          "ref": "gpt-4o-transcribe",
-          "hyp": "whisper-1",
-          "ref_words": 532,
-          "wer": 0.8759398496240601,
-          "S": 212,
-          "D": 253,
-          "I": 1,
-          "cer": 0.7004725554343875
-        },
-        "gpt-4o-transcribe|nvidia/nemotron-3.5-transcribe": {
-          "ref": "gpt-4o-transcribe",
-          "hyp": "nvidia/nemotron-3.5-transcribe",
-          "ref_words": 532,
-          "wer": 0.17105263157894737,
-          "S": 38,
-          "D": 14,
-          "I": 39,
-          "cer": 0.11304980007270084
         },
         "whisper-1|organizer": {
           "ref": "whisper-1",
@@ -667,6 +637,36 @@
           "I": 277,
           "cer": 1.1857055589492975
         },
+        "gpt-4o-transcribe|organizer": {
+          "ref": "gpt-4o-transcribe",
+          "hyp": "organizer",
+          "ref_words": 532,
+          "wer": 0.21804511278195488,
+          "S": 57,
+          "D": 11,
+          "I": 48,
+          "cer": 0.10759723736822974
+        },
+        "gpt-4o-transcribe|whisper-1": {
+          "ref": "gpt-4o-transcribe",
+          "hyp": "whisper-1",
+          "ref_words": 532,
+          "wer": 0.8759398496240601,
+          "S": 212,
+          "D": 253,
+          "I": 1,
+          "cer": 0.7004725554343875
+        },
+        "gpt-4o-transcribe|nvidia/nemotron-3.5-transcribe": {
+          "ref": "gpt-4o-transcribe",
+          "hyp": "nvidia/nemotron-3.5-transcribe",
+          "ref_words": 532,
+          "wer": 0.17105263157894737,
+          "S": 38,
+          "D": 14,
+          "I": 39,
+          "cer": 0.11304980007270084
+        },
         "nvidia/nemotron-3.5-transcribe|organizer": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "organizer",
@@ -677,16 +677,6 @@
           "I": 28,
           "cer": 0.09757834757834757
         },
-        "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
-          "ref": "nvidia/nemotron-3.5-transcribe",
-          "hyp": "gpt-4o-transcribe",
-          "ref_words": 557,
-          "wer": 0.16337522441651706,
-          "S": 38,
-          "D": 39,
-          "I": 14,
-          "cer": 0.11075498575498575
-        },
         "nvidia/nemotron-3.5-transcribe|whisper-1": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "whisper-1",
@@ -696,6 +686,16 @@
           "D": 277,
           "I": 0,
           "cer": 0.6912393162393162
+        },
+        "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
+          "ref": "nvidia/nemotron-3.5-transcribe",
+          "hyp": "gpt-4o-transcribe",
+          "ref_words": 557,
+          "wer": 0.16337522441651706,
+          "S": 38,
+          "D": 39,
+          "I": 14,
+          "cer": 0.11075498575498575
         }
       },
       "outvoted": {
@@ -704,15 +704,15 @@
           "outvoted": 25,
           "rate": 0.043936731107205626
         },
-        "gpt-4o-transcribe": {
-          "words": 532,
-          "outvoted": 17,
-          "rate": 0.03195488721804511
-        },
         "whisper-1": {
           "words": 280,
           "outvoted": 121,
           "rate": 0.43214285714285716
+        },
+        "gpt-4o-transcribe": {
+          "words": 532,
+          "outvoted": 17,
+          "rate": 0.03195488721804511
         },
         "nvidia/nemotron-3.5-transcribe": {
           "words": 557,
@@ -742,17 +742,17 @@
       "id": "p4-ru-005",
       "language": "RU",
       "engines": {
-        "whisper-1": {
-          "cached": true,
-          "latency_ms": 18858,
-          "duration_s": 345.3399963378906,
-          "cost": 0.034534
-        },
         "gpt-4o-transcribe": {
           "cached": true,
           "latency_ms": 12282,
           "duration_s": null,
           "cost": 0
+        },
+        "whisper-1": {
+          "cached": true,
+          "latency_ms": 18858,
+          "duration_s": 345.3399963378906,
+          "cost": 0.034534
         },
         "nvidia/nemotron-3.5-transcribe": {
           "cached": true,
@@ -763,21 +763,11 @@
       },
       "words": {
         "organizer": 691,
-        "whisper-1": 598,
         "gpt-4o-transcribe": 612,
+        "whisper-1": 598,
         "nvidia/nemotron-3.5-transcribe": 702
       },
       "pairs": {
-        "organizer|whisper-1": {
-          "ref": "organizer",
-          "hyp": "whisper-1",
-          "ref_words": 691,
-          "wer": 0.29088277858176553,
-          "S": 70,
-          "D": 112,
-          "I": 19,
-          "cer": 0.20838052095130238
-        },
         "organizer|gpt-4o-transcribe": {
           "ref": "organizer",
           "hyp": "gpt-4o-transcribe",
@@ -788,6 +778,16 @@
           "I": 15,
           "cer": 0.16987542468856173
         },
+        "organizer|whisper-1": {
+          "ref": "organizer",
+          "hyp": "whisper-1",
+          "ref_words": 691,
+          "wer": 0.29088277858176553,
+          "S": 70,
+          "D": 112,
+          "I": 19,
+          "cer": 0.20838052095130238
+        },
         "organizer|nvidia/nemotron-3.5-transcribe": {
           "ref": "organizer",
           "hyp": "nvidia/nemotron-3.5-transcribe",
@@ -797,36 +797,6 @@
           "D": 52,
           "I": 63,
           "cer": 0.1803510758776897
-        },
-        "whisper-1|organizer": {
-          "ref": "whisper-1",
-          "hyp": "organizer",
-          "ref_words": 598,
-          "wer": 0.33612040133779264,
-          "S": 70,
-          "D": 19,
-          "I": 112,
-          "cer": 0.22758194186765615
-        },
-        "whisper-1|gpt-4o-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "gpt-4o-transcribe",
-          "ref_words": 598,
-          "wer": 0.1705685618729097,
-          "S": 42,
-          "D": 23,
-          "I": 37,
-          "cer": 0.11935683364254793
-        },
-        "whisper-1|nvidia/nemotron-3.5-transcribe": {
-          "ref": "whisper-1",
-          "hyp": "nvidia/nemotron-3.5-transcribe",
-          "ref_words": 598,
-          "wer": 0.28762541806020064,
-          "S": 56,
-          "D": 6,
-          "I": 110,
-          "cer": 0.18552875695732837
         },
         "gpt-4o-transcribe|organizer": {
           "ref": "gpt-4o-transcribe",
@@ -858,6 +828,36 @@
           "I": 93,
           "cer": 0.12586779354059766
         },
+        "whisper-1|organizer": {
+          "ref": "whisper-1",
+          "hyp": "organizer",
+          "ref_words": 598,
+          "wer": 0.33612040133779264,
+          "S": 70,
+          "D": 19,
+          "I": 112,
+          "cer": 0.22758194186765615
+        },
+        "whisper-1|gpt-4o-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "gpt-4o-transcribe",
+          "ref_words": 598,
+          "wer": 0.1705685618729097,
+          "S": 42,
+          "D": 23,
+          "I": 37,
+          "cer": 0.11935683364254793
+        },
+        "whisper-1|nvidia/nemotron-3.5-transcribe": {
+          "ref": "whisper-1",
+          "hyp": "nvidia/nemotron-3.5-transcribe",
+          "ref_words": 598,
+          "wer": 0.28762541806020064,
+          "S": 56,
+          "D": 6,
+          "I": 110,
+          "cer": 0.18552875695732837
+        },
         "nvidia/nemotron-3.5-transcribe|organizer": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "organizer",
@@ -868,16 +868,6 @@
           "I": 52,
           "cer": 0.17778397990510744
         },
-        "nvidia/nemotron-3.5-transcribe|whisper-1": {
-          "ref": "nvidia/nemotron-3.5-transcribe",
-          "hyp": "whisper-1",
-          "ref_words": 702,
-          "wer": 0.245014245014245,
-          "S": 56,
-          "D": 110,
-          "I": 6,
-          "cer": 0.1674574379012001
-        },
         "nvidia/nemotron-3.5-transcribe|gpt-4o-transcribe": {
           "ref": "nvidia/nemotron-3.5-transcribe",
           "hyp": "gpt-4o-transcribe",
@@ -887,6 +877,16 @@
           "D": 93,
           "I": 3,
           "cer": 0.11638291934133407
+        },
+        "nvidia/nemotron-3.5-transcribe|whisper-1": {
+          "ref": "nvidia/nemotron-3.5-transcribe",
+          "hyp": "whisper-1",
+          "ref_words": 702,
+          "wer": 0.245014245014245,
+          "S": 56,
+          "D": 110,
+          "I": 6,
+          "cer": 0.1674574379012001
         }
       },
       "outvoted": {
@@ -895,15 +895,15 @@
           "outvoted": 50,
           "rate": 0.0723589001447178
         },
-        "whisper-1": {
-          "words": 598,
-          "outvoted": 28,
-          "rate": 0.046822742474916385
-        },
         "gpt-4o-transcribe": {
           "words": 612,
           "outvoted": 17,
           "rate": 0.027777777777777776
+        },
+        "whisper-1": {
+          "words": 598,
+          "outvoted": 28,
+          "rate": 0.046822742474916385
         },
         "nvidia/nemotron-3.5-transcribe": {
           "words": 702,

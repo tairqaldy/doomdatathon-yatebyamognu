@@ -107,12 +107,22 @@ for (const c of calls) {
   // whisper-1 loops and truncates on these recordings, so the strict test leaves it out: a word of X counts
   // only when BOTH remaining systems agree with each other on the same different word.
   const outvoted_strict = outvotedIn(STRICT);
-  // Local-only list of organizer words both strong engines overrule, with context (gitignored folder).
+  // Local-only proof sheet (gitignored folder): every organizer message with words both strong engines overrule,
+  // with its index and audio time so anyone can listen. Audio time = admin's offsetSec(): message timestamp minus
+  // the first one; a call timestamp marks where the phrase ENDS, so the phrase plays from the previous timestamp.
   if (W[STRICT[1]] && W[STRICT[2]]) {
-    const map = (o) => { const m = new Array(W.organizer.length).fill(null); for (const [ri, hi] of pairs[`organizer|${o}`]._align) if (ri !== null && hi !== null) m[ri] = W[o][hi]; return m; };
-    const a = map(STRICT[1]), b = map(STRICT[2]), lines = [];
-    for (let i = 0; i < W.organizer.length; i++) if (a[i] && a[i] === b[i] && a[i] !== W.organizer[i]) lines.push(`${W.organizer[i]} → ${a[i]}   | ${W.organizer.slice(Math.max(0, i - 4), i + 5).join(' ')}`);
-    await writeFile(`data/transcripts/${c.conversation_id}.organizer-outvoted.txt`, lines.join('\n'));
+    const msgOf = []; const t0 = Date.parse(c.transcript[0].timestamp), sec = (i) => Math.max(0, (Date.parse(c.transcript[i].timestamp) - t0) / 1000);
+    c.transcript.forEach((m, i) => { if (m.speaker !== 'system') for (const _ of words(m.text)) msgOf.push(i); });
+    const map = (o) => { const m = new Array(W.organizer.length).fill(null); for (const [ri, hi] of pairs[`organizer|${o}`]._align) if (ri !== null && hi !== null) m[ri] = hi; return m; };
+    const a = map(STRICT[1]), b = map(STRICT[2]), byMsg = new Map();
+    for (let i = 0; i < W.organizer.length; i++) {
+      const wa = a[i] !== null ? W[STRICT[1]][a[i]] : null, wb = b[i] !== null ? W[STRICT[2]][b[i]] : null;
+      if (wa && wa === wb && wa !== W.organizer[i]) { const k = msgOf[i]; if (!byMsg.has(k)) byMsg.set(k, []); byMsg.get(k).push(`${W.organizer[i]} → ${wa}`); }
+    }
+    const mmss = (s) => { s = Math.floor(s); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; };
+    const span = (o, mi) => { const hs = []; W.organizer.forEach((_, i) => { if (msgOf[i] === mi) { const h = (o === STRICT[1] ? a : b)[i]; if (h !== null) hs.push(h); } }); return hs.length ? W[o].slice(Math.min(...hs), Math.max(...hs) + 1).join(' ') : ''; };
+    const out = [...byMsg].map(([mi, ws]) => `## ${c.conversation_id} · сообщение ${mi} · ${c.transcript[mi].speaker} · аудио ${mmss(mi > 0 ? sec(mi - 1) : 0)}–${mmss(sec(mi))} · ${ws.length} слов\nОрганизаторы: ${c.transcript[mi].text}\n${STRICT[1]}: ${span(STRICT[1], mi)}\n${STRICT[2]}: ${span(STRICT[2], mi)}\nРасхождения: ${ws.join(' · ')}\n`);
+    await writeFile(`data/transcripts/${c.conversation_id}.organizer-outvoted.md`, out.join('\n'));
   }
   for (const p of Object.values(pairs)) delete p._align;
   perCall.push({ id: c.conversation_id, language: c.language, engines: meta, words: Object.fromEntries(sys.map((s) => [s, W[s].length])), pairs, outvoted, outvoted_strict });
