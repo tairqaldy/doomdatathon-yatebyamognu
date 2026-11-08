@@ -1,7 +1,7 @@
 // Диалоги: every evaluated dialog with search and simple filters. "Грубые ошибки" switches to a list that shows,
 // for every dialog with a gross-error flag, the AI explanation and the evidence line.
 import { $, esc, fmt, fix, plural, icon, LANG, CHAN, TIER_LABEL, tierVar, setHead, seg } from './ui.js';
-import { rows, hrefFor, reasonOf, grossOf, checklistOf, isCall, offsetSec, mmss } from './store.js';
+import { rows, hrefFor, reasonOf, grossOf, checklistOf, isCall, offsetSec, mmss, sortRows } from './store.js';
 import * as live from '/shared/live-store.js';
 
 const KEY = 'cqa-admin-dialog-filters-v2';
@@ -10,7 +10,18 @@ const loadF = () => { try { return { ...EMPTY, ...JSON.parse(sessionStorage.getI
 // The gross-error list is a mode reached by link (#/dialogs?gross=1), not a sticky filter: it lives in the URL only,
 // so opening «Диалоги» from the menu shows every dialog again.
 const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify({ ...f, gross: '' })); } catch {} };
-const SORTS = { order: 'По порядку', low: 'Сначала низкие', high: 'Сначала высокие' };
+const SORTS = { order: 'По порядку', 'order-desc': 'В обратном порядке', low: 'Балл ↑ (сначала низкие)', high: 'Балл ↓ (сначала высокие)', lang: 'По языку', channel: 'По каналу' };
+/** Sort button for a column header: asc/desc sort keys (desc optional); returns the button and its aria-sort state.
+ *  A second click flips the direction, or goes back to the original order when the column has one direction. */
+const sortBtn = (label, asc, desc, cur) => {
+  const dir = cur === asc ? 'ascending' : desc && cur === desc ? 'descending' : 'none';
+  const next = dir === 'ascending' ? (desc || 'order') : dir === 'descending' ? asc : asc === 'low' ? 'high' : asc;
+  return { dir, html: `<button type="button" class="th-sort ${dir !== 'none' ? 'is-on' : ''}" data-sort="${next}">${esc(label)}<span class="th-sort__ic" aria-hidden="true">${dir === 'ascending' ? '↑' : dir === 'descending' ? '↓' : '↕'}</span></button>` };
+};
+const thSort = (btns, cls = '') => {
+  const dir = btns.find((b) => b.dir !== 'none')?.dir || 'none';
+  return `<th scope="col" class="${cls}" aria-sort="${dir}">${btns.map((b) => b.html).join('<span class="th-sort__sep" aria-hidden="true">·</span>')}</th>`;
+};
 
 const chanCell = (r) => `<span class="chan">${icon(r.channel === 'call' ? 'phone' : 'chat')}${CHAN[r.channel]}</span>`;
 // exactly 2 decimals so the right-aligned column lines up (92,31 · 70,00 · 57,50), as totals are rounded in results.json
@@ -41,10 +52,7 @@ export function viewDialogs(view, _arg, query) {
       && (rf == null || (r.total != null && r.total >= rf && (rt >= 100 ? r.total <= 100 : r.total < rt)))
       && (!q || r.id.toLowerCase().includes(q) || (r.E.summary?.reason || '').toLowerCase().includes(q)
         || r.dd.some((d) => reasonOf(r.E, d.c).toLowerCase().includes(q)) || r.conv.transcript.some((m) => String(m.text).toLowerCase().includes(q))));
-    const tv = (r) => (r.total == null ? -1 : r.total);
-    if (f.sort === 'low') list.sort((a, b) => tv(a) - tv(b));
-    if (f.sort === 'high') list.sort((a, b) => tv(b) - tv(a));
-    return list;
+    return sortRows(list, SORTS[f.sort] ? f.sort : 'order');
   };
 
   const syncUrl = () => {
@@ -82,7 +90,7 @@ export function viewDialogs(view, _arg, query) {
 
   const table = (list) => `<div class="table-wrap"><table class="table">
     <caption class="sr-only">Оценённые диалоги</caption>
-    <thead><tr><th scope="col">Диалог</th><th scope="col">Канал</th><th scope="col">Главная причина снижения</th><th scope="col">Статус</th><th scope="col" class="num-col">Итог</th></tr></thead>
+    <thead><tr>${thSort([sortBtn('Диалог', 'order', 'order-desc', f.sort), sortBtn('Язык', 'lang', null, f.sort)])}${thSort([sortBtn('Канал', 'channel', null, f.sort)])}<th scope="col">Главная причина снижения</th><th scope="col">Статус</th>${thSort([sortBtn('Итог', 'low', 'high', f.sort)], 'num-col')}</tr></thead>
     <tbody>${list.map((r) => {
       const d = r.main; const open = r.E.appeals.some((a) => a.status === 'open'); const decided = r.E.appeals.some((a) => a.status !== 'open');
       return `<tr data-href="${hrefFor(r)}">
@@ -132,6 +140,11 @@ export function viewDialogs(view, _arg, query) {
     f[b.dataset.clear] = ''; syncUrl(); draw();
   });
   $('#d-body', view).addEventListener('click', (e) => {
+    const sb = e.target.closest('[data-sort]');
+    if (sb) {
+      f.sort = sb.dataset.sort; const sel = $('#f-sort', view); if (sel) sel.value = f.sort;
+      syncUrl(); draw(); view.querySelector(".th-sort.is-on")?.focus(); return;
+    }
     if (e.target.closest('a, button')) return;
     const tr = e.target.closest('tr[data-href]'); if (tr) location.hash = tr.dataset.href;
   });

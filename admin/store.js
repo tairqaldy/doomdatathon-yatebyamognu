@@ -334,6 +334,21 @@ export function rows() {
   for (const s of live.all()) if (s.evaluation?.answers) out.push(rowFrom(s.id, 'live', liveEvaluation(s)));
   return out;
 }
+/** Sort rows: order · order-desc · low · high (score) · lang (RU, KZ, EN) · channel (chats, then calls).
+ *  Ties keep the incoming order, so the sort is stable and predictable. */
+const LANG_ORDER = { RU: 0, KZ: 1, EN: 2 };
+export function sortRows(list, key = 'order') {
+  const idx = new Map(list.map((r, i) => [r, i]));
+  const tv = (r) => (r.total == null ? -1 : r.total);
+  const by = {
+    'order-desc': (a, b) => idx.get(b) - idx.get(a),
+    low: (a, b) => tv(a) - tv(b),
+    high: (a, b) => tv(b) - tv(a),
+    lang: (a, b) => (LANG_ORDER[a.language] ?? 9) - (LANG_ORDER[b.language] ?? 9),
+    channel: (a, b) => (a.channel === b.channel ? 0 : a.channel === 'chat' ? -1 : 1),
+  }[key] || (() => 0);
+  return [...list].sort((a, b) => by(a, b) || idx.get(a) - idx.get(b));
+}
 export const hrefFor = (r) => (r.source === 'live' ? `#/live/${encodeURIComponent(r.id)}` : `#/dialog/${encodeURIComponent(r.id)}`);
 /** The gross-error flag that fired in this dialog: { c, answer } (explanation + evidence come from the AI answer). */
 export function grossOf(E) {
