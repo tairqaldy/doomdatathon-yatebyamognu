@@ -161,7 +161,12 @@ export async function mergeGroupEvaluations(group) {
   } catch { return 0; }
 }
 /** Whether this dialog already has an AI result for the checklist it is scored with. */
-export const hasAI = (convId) => { const c = S.byId[convId]; return !!(c && S.ai[aiKey(convId, checklistFor(c))]); };
+/** Dialog cards opened in this tab, newest first: the default scope of a re-evaluation after a checklist change. */
+const RECENT_KEY = 'cqa-admin-recent';
+export const recentDialogs = () => { try { const a = JSON.parse(sessionStorage.getItem(RECENT_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch { return []; } };
+export const markRecent = (id) => { try { sessionStorage.setItem(RECENT_KEY, JSON.stringify([id, ...recentDialogs().filter((x) => x !== id)].slice(0, 8))); } catch {} };
+// a partial entry (answers carried from the previous version, new criteria not asked yet) does not count as evaluated
+export const hasAI = (convId) => { const c = S.byId[convId]; const e = c && S.ai[aiKey(convId, checklistFor(c))]; return !!(e && !e.partial); };
 /** Dialogs of one kind that have no AI result for the active checklist yet (shown «Без AI»). */
 export const missingAI = (kind) => S.convs.filter((c) => kindOf(c) === kind && !hasAI(c.conversation_id)).map((c) => c.conversation_id);
 
@@ -283,6 +288,26 @@ export function carryAnswers(kind, fromCl, toCl) {
     const src = S.ai[`${c.conversation_id}|${a}`];
     // the copy is a saved answer of its own (not a DEV.json mirror), so it must persist
     if (src && !S.ai[`${c.conversation_id}|${b}`]) { const { from_pre, ...rest } = src; S.ai[`${c.conversation_id}|${b}`] = { ...rest, carried_from: fromCl.version }; n++; }
+  }
+  persist(); emit('change');
+  return n;
+}
+/** The new version asks some new questions (a criterion added, replaced or reworded). Every dialog that is not
+ *  re-evaluated keeps the AI answers to the unchanged questions; new or changed criteria stay unanswered («не оценён»,
+ *  dropped from the total by scoring.js) until the AI evaluates that dialog. Never falls back to the keyword mock. */
+export function carryUnchanged(kind, fromCl, toCl) {
+  const a = clHash(fromCl), b = clHash(toCl);
+  const prev = new Map(fromCl.criteria.map((c) => [c.id, QUESTION(c)]));
+  const keep = toCl.criteria.filter((c) => prev.get(c.id) === QUESTION(c)).map((c) => c.id);
+  let n = 0;
+  for (const c of S.convs) {
+    if (kindOf(c) !== kind) continue;
+    const src = S.ai[`${c.conversation_id}|${a}`]; const key = `${c.conversation_id}|${b}`;
+    if (!src?.answers || S.ai[key]) continue;
+    const { from_pre, ...rest } = src;
+    const answers = Object.fromEntries(keep.filter((id) => rest.answers[id]).map((id) => [id, rest.answers[id]]));
+    S.ai[key] = { ...rest, answers, carried_from: fromCl.version, partial: true, missing: toCl.criteria.map((x) => x.id).filter((id) => !answers[id]) };
+    n++;
   }
   persist(); emit('change');
   return n;

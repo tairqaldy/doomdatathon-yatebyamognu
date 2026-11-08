@@ -89,7 +89,7 @@ export function viewDialogs(view, _arg, query) {
         <td class="td-id"><a class="mono" href="${hrefFor(r)}">${esc(r.id)}</a><span class="lang">${esc(r.language)}</span><span class="td-sub">${esc(r.E.summary?.reason || '')}</span></td>
         <td class="td-chan">${chanCell(r)}</td>
         <td class="td-reason">${d ? `<b>${esc(d.c.title)}</b>${d.gross ? '' : ` <span class="loss num">−${fmt(d.lost, 2)}</span>`}<span class="td-sub">${esc(reasonOf(r.E, d.c))}</span>` : '<span class="muted">Без снижений</span>'}</td>
-        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : ''}</td>
+        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : r.E.base.partial ? '<span class="l-chip" title="Новые критерии чек-листа AI ещё не оценил, остальные ответы перенесены">Не все критерии</span>' : ''}</td>
         <td class="num-col">${scorePill(r)}</td></tr>`;
     }).join('')}</tbody></table></div>`;
 

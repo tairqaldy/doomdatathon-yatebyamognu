@@ -2,14 +2,14 @@
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
 import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced, signed } from './ui.js';
-import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers, isImported, missingAI } from './store.js';
+import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers, carryUnchanged, isImported, missingAI, recentDialogs } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
 let draft = null;
 let newId = null;
 let replaced = new Map();   // newId → { oldId, oldTitle }
 let mode = null;            // 'ai' | 'mock'
-let scope = 'all';          // which dialogs an AI re-evaluation covers: 'all' | 'imported' | 'ids'
+let scope = 'ids';          // which dialogs an AI re-evaluation covers: 'ids' (default: the dialogs just opened) | 'imported' | 'all'
 let scopeIds = '';          // comma-separated dialog ids for scope 'ids'
 let lastRun = null;         // outcome of the last re-evaluation in this session
 let offBusy = null;
@@ -18,6 +18,7 @@ function switchKind(k) {
   if (!KINDS[k] || k === kind) return;
   parked[kind] = { draft, newId, replaced, lastRun };
   kind = k; ({ draft = null, newId = null, replaced = new Map(), lastRun = null } = parked[k]);
+  scopeIds = ''; // ids belong to one kind; re-filled with this kind's recent dialogs
 }
 
 const TYPES = { binary: 'Да / Нет', scale: 'Шкала', flag: 'Флаг (без баллов)' };
@@ -67,6 +68,8 @@ const devAvg = (k) => compute(rows().filter((r) => r.source === 'DEV' && r.E.kin
 /* ---------- which dialogs an AI re-evaluation covers ---------- */
 const kindIds = (k) => S.convs.filter((c) => kindOf(c) === k).map((c) => c.conversation_id);
 const importedIds = (k) => S.convs.filter((c) => kindOf(c) === k && isImported(c)).map((c) => c.conversation_id);
+/** Recently opened dialogs of this kind (card visits), else the first three of the kind. */
+const defaultIds = (k) => { const have = new Set(kindIds(k)); const r = recentDialogs().filter((id) => have.has(id)).slice(0, 3); return r.length ? r : kindIds(k).slice(0, 3); };
 const parseIds = (s) => [...new Set(String(s).split(/[\s,;]+/).map((x) => x.trim()).filter(Boolean))];
 /** 3 votes per dialog, 5 dialogs at a time (store.reevaluateAll): ≈ 45 s per chat round, ≈ 150 s per call round. */
 function estimate(n, k) {
@@ -98,7 +101,9 @@ const scopeEst = (k) => { const n = scopeCount(k); return n ? `${n} ${plural(n, 
 function scopeBlock(k) {
   const imp = importedIds(k).length;
   if (scope === 'imported' && !imp) scope = 'all';
-  const opts = [{ v: 'all', label: `Все · ${kindIds(k).length}` }, ...(imp ? [{ v: 'imported', label: `Загруженные · ${imp}` }] : []), { v: 'ids', label: 'По ID' }];
+  // default: a few dialogs the user just opened (the jury names the dialogs to re-apply to); «Все» is a deliberate choice
+  if (!scopeIds.trim()) scopeIds = defaultIds(k).join(', ');
+  const opts = [{ v: 'ids', label: 'Выбранные' }, ...(imp ? [{ v: 'imported', label: `Загруженные · ${imp}` }] : []), { v: 'all', label: `Все · ${kindIds(k).length}` }];
   return `<span class="field__label">Что переоценить</span>${seg('scope', opts, scope, 'Какие диалоги переоценить')}
     <input class="input input--s mono cl-scope__ids" id="scope-ids" value="${esc(scopeIds)}" placeholder="p1-ru-009, p1-kz-015" aria-label="ID диалогов через запятую" ${scope === 'ids' ? '' : 'hidden'}>
     <span class="muted small" id="scope-est">${scopeEst(k)}</span>`;
@@ -282,6 +287,8 @@ export function viewChecklist(view, _arg, query) {
       scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
       return;
     }
+    // dialogs outside the chosen scope keep the AI answers to unchanged questions (new criteria: «не оценён»)
+    carryUnchanged(k, fromCl, checklistOf(k));
     emit('change');
     // the progress card and its result sit under the save bar: bring them into view instead of leaving the user mid-list
     scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
@@ -322,7 +329,7 @@ function runBlock(b) {
         : `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} переоценено за ${fmt(r.ms / 1000, 1)} с`}</b></div>
       ${r.mode === 'carry' ? `<p class="muted small">Изменились только веса, порядок или секции: вопросы к AI те же, поэтому ответы и доказательства из v${r.fromV} сохранены (${r.carried} ${plural(r.carried, ['диалог', 'диалога', 'диалогов'])}), а баллы пересчитал движок оценки. Без нового вызова AI.</p>` : ''}
       <p class="run-card__res">${r.partial ? 'Средний балл этих диалогов' : 'Средний балл'}: <b class="num">${fix(r.before, 1)}</b> ${r.fromV === r.version ? 'без AI' : `по v${r.fromV}`} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : r.mode === 'carry' ? ' · $0' : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
-      ${r.mode === 'ai' && r.rest ? `<p class="muted small">Ещё ${r.rest} ${plural(r.rest, ['диалог показан', 'диалога показаны', 'диалогов показаны'])} по v${r.version} с пометкой «Без AI»: для них нет ответа AI на новые вопросы чек-листа. Их можно оценить AI сейчас или позже.</p>` : ''}
+      ${r.mode === 'ai' && r.rest ? `<p class="muted small">Ещё ${r.rest} ${plural(r.rest, ['диалог', 'диалога', 'диалогов'])}: ответы на неизменённые критерии перенесены из v${r.fromV}, новые или изменённые критерии AI ещё не оценил (в списке пометка «Не все критерии», в карточке «не оценён»). Их можно оценить AI сейчас или позже.</p>` : ''}
       <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a>${r.mode === 'ai' && r.rest ? `<button class="btn btn--s" type="button" data-rest="${r.kind}">Оценить остальные AI · ${r.rest} · ${estimate(r.rest, r.kind)}</button>` : ''}</div>
     </section>`;
   }

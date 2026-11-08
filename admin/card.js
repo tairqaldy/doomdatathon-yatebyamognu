@@ -4,7 +4,7 @@
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
 import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
-  aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel } from './store.js';
+  aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel, markRecent } from './store.js';
 
 let audioEl = null;
 export const SOURCE_LABEL = (src) => (src === 'paste' ? 'вставлен текстом' : src === 'file' ? 'из JSON' : src.startsWith('group:') ? `группа ${src.slice(6)}` : src);
@@ -53,6 +53,7 @@ export function viewCard(view, convId, query) {
     view.innerHTML = `<div class="empty"><h2>Диалог не найден</h2><p>Проверьте ссылку или выберите диалог из списка.</p><a class="btn btn--primary" href="#/dialogs">К списку диалогов</a></div>`;
     return;
   }
+  markRecent(convId);
   const E = evaluation(convId);
   const { cl, answers, finalScore, aiScore, finalAnswers } = E;
   const crits = sortedCrits(cl);
@@ -198,7 +199,7 @@ export function viewCard(view, convId, query) {
                 ${answerBadge(c, a)}
                 <span class="crit__pts num">${c.type === 'flag' ? '<span class="muted">флаг</span>' : row?.points == null ? '<span class="muted">не учит.</span>' : `${fmt(row.points, 2)}<small> / ${fmt(row.effective_weight, 2)}</small>`}</span>
               </header>
-              <p class="crit__why clamp">${esc(r.explanation || '—')}</p>
+              <p class="crit__why clamp">${esc(r.explanation || (a == null ? 'AI ещё не оценил этот критерий по текущей версии чек-листа: в итог не входит. Нажмите «Оценить заново».' : '—'))}</p>
               ${lost && r.deduction_reason ? `<p class="crit__lost"><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}
               ${a === 'na' ? `<p class="crit__na"><b>Условие N/A из чек-листа:</b> ${esc(c.na_condition || 'не задано')}${na?.quote && na.quote !== c.na_condition ? `<br><b>Основание:</b> «${esc(na.quote)}»` : ''}</p>` : ''}
               ${a != null && row?.error ? `<p class="crit__lost"><b>Ответ не по правилам чек-листа:</b> ${esc(row.error)}. В итог не входит, нажмите «Оценить заново».</p>` : ''}

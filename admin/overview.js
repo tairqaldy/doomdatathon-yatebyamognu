@@ -1,7 +1,7 @@
 // Обзор: the jury's six-step scenario (dismissible) → four key numbers → «Где теряем баллы» + «Грубые ошибки» →
 // everything else (distribution, languages/channels, what to fix first) one click away under «Подробнее».
 import { $, esc, fix, plural, icon, LANG, CHAN, tierVar, setHead, mountChart, hbarsSVG, histogramSVG, toast, countUp } from './ui.js';
-import { S, rows, compute, checklistOf, tier, modelLabel, aiReady, reevaluateAll, grossOf, hrefFor, reasonOf } from './store.js';
+import { S, rows, compute, checklistOf, tier, modelLabel, aiReady, reevaluateAll, grossOf, hrefFor, reasonOf, missingAI } from './store.js';
 import * as live from '/shared/live-store.js';
 
 const JURY_KEY = 'cqa-admin-jury-v1';       // 'hidden' once the jury panel is dismissed
@@ -66,7 +66,8 @@ export function viewOverview(view) {
     const st = compute(list);
     const cl = checklistOf('chat'); const cc = checklistOf('call');
     const m = S.metrics;
-    const mockRows = list.filter((r) => r.source === 'DEV' && r.E.src !== 'ai'); const mockN = mockRows.length;
+    // after a checklist change: dialogs with no AI answer, or with new criteria the AI has not answered yet
+    const mockRows = list.filter((r) => r.source === 'DEV' && (r.E.src !== 'ai' || r.E.base.partial)); const mockN = mockRows.length;
     const mockKinds = [...new Set(mockRows.map((r) => r.E.kind))];
     setHead('Обзор', `${st.n} ${plural(st.n, ['диалог', 'диалога', 'диалогов'])} · чаты v${cl.version}, звонки v${cc.version} · ${modelLabel(S.pre?.model || S.api.model)}`);
     const agreeN = m ? Math.round((m.overall.n * m.overall.strict) / 100) : 0;
@@ -78,7 +79,7 @@ export function viewOverview(view) {
     const grossPct = st.n ? Math.round((st.gross / st.n) * 100) : 0;
 
     view.innerHTML = `
-      ${mockN && aiReady() ? `<div class="banner banner--info">${icon('alert')}<div><b>${mockN} ${plural(mockN, ['диалог оценён', 'диалога оценены', 'диалогов оценены'])} без AI после изменения чек-листа.</b> Цифры ниже предварительные.</div><button class="btn btn--s btn--primary" type="button" id="ov-ai">Оценить AI</button></div>` : ''}
+      ${mockN && aiReady() ? `<div class="banner banner--info">${icon('alert')}<div><b>${mockN} ${plural(mockN, ['диалог', 'диалога', 'диалогов'])} AI ещё не оценил по новым критериям чек-листа.</b> Остальные ответы перенесены, цифры ниже предварительные.</div><button class="btn btn--s btn--primary" type="button" id="ov-ai">Оценить AI · ${mockN}</button></div>` : ''}
       ${showJury ? juryPanel() : ''}
       <section class="kpis" aria-label="Ключевые показатели">
         ${kpi({ label: 'Средний балл', value: fix(st.avg, 1), unit: '/100', sub: `медиана ${fix(st.median, 1)}`, href: '#/dialogs?sort=low', meter: { p: st.avg || 0, color: tierVar(tier(st.avg)) }, count: st.avg != null ? { to: st.avg, d: 1 } : null })}
@@ -141,7 +142,7 @@ export function viewOverview(view) {
     $('#jury-show', view)?.addEventListener('click', () => { ls.set(JURY_KEY, null); draw(); $('#jury-h', view)?.scrollIntoView({ block: 'nearest' }); });
     $('#ov-ai', view)?.addEventListener('click', async () => {
       let done = 0, total = 0, failed = 0;
-      for (const k of mockKinds) { const res = await reevaluateAll('ai', `AI-оценка: ${k === 'call' ? `звонки v${cc.version}` : `чаты v${cl.version}`}`, k); if (res) { done += res.done; total += res.total; failed += res.failed; } }
+      for (const k of mockKinds) { const ids = missingAI(k); if (!ids.length) continue; const res = await reevaluateAll('ai', `AI-оценка: ${k === 'call' ? `звонки v${cc.version}` : `чаты v${cl.version}`}`, k, ids); if (res) { done += res.done; total += res.total; failed += res.failed; } }
       if (total) toast(`AI оценил ${done - failed} из ${total} диалогов${failed ? `, ошибок ${failed}` : ''}`, failed ? 'warn' : 'ok');
     });
   };
