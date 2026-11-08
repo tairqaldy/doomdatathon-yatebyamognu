@@ -3,6 +3,7 @@
 // transcript (left) | score ring, history, sections, deduction reasons, justification of every criterion (right).
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
 import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
+import { annotateRoles, NO_CLIENT_MESSAGE } from '/lib/roles.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel, confidenceOf, markRecent } from './store.js';
 
@@ -58,7 +59,9 @@ export function viewCard(view, convId, query) {
   const { cl, answers, finalScore, aiScore, finalAnswers } = E;
   const crits = sortedCrits(cl);
   const dd = deductions(E);
-  const total = finalScore.total, prev = S.lastTotals[convId];
+  // lib/roles.js: operator identities, operator → colleague remarks (context, not graded), dialogs without a client
+  const R = annotateRoles(conv).roles;
+  const total = R.no_client ? null : finalScore.total, prev = S.lastTotals[convId];
   const idx = S.convs.findIndex((c) => c.conversation_id === convId);
   const prevId = S.convs[idx - 1]?.conversation_id, nextId = S.convs[idx + 1]?.conversation_id;
   const call = isCall(conv);
@@ -100,7 +103,7 @@ export function viewCard(view, convId, query) {
       <div class="dlg-head__main">
         <a class="back-link" href="#/dialogs">${icon('back')}Все диалоги</a>
         <h2 class="dlg-title"><span class="mono">${esc(conv.conversation_id)}</span>${E.finalScore.gross_error ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open.length ? `<span class="l-chip l-chip--warn">Апелляция: ${open.length}</span>` : ''}</h2>
-        <div class="meta-line"><span>${call ? 'Звонок' : 'Чат'}</span><span>${esc(LANG[conv.language] || conv.language)}</span><span class="mono">${mmss(dur)}</span><span>${conv.transcript.length} ${plural(conv.transcript.length, ['реплика', 'реплики', 'реплик'])}</span>${conv._source ? `<span class="l-chip l-chip--info" title="Диалог добавлен в «Загрузке» ${esc(dateTime(conv._added_at))}">Загружен: ${esc(SOURCE_LABEL(conv._source))}</span>` : ''}${date ? `<span>${esc(date)}</span>` : ''}<a class="meta-link" href="#/checklist?kind=${E.kind}" title="Открыть этот чек-лист в редакторе">${icon('checklist')}${esc(clLabel)}</a></div>
+        <div class="meta-line"><span>${call ? 'Звонок' : 'Чат'}</span><span>${esc(LANG[conv.language] || conv.language)}</span><span class="mono">${mmss(dur)}</span><span>${conv.transcript.length} ${plural(conv.transcript.length, ['реплика', 'реплики', 'реплик'])}</span>${R.operators.length > 1 ? `<span class="l-chip" title="В разговоре несколько операторов; реплики коллеге — контекст, не оцениваются">Операторы: ${esc(R.operators.join(' → '))}</span>` : ''}${conv._source ? `<span class="l-chip l-chip--info" title="Диалог добавлен в «Загрузке» ${esc(dateTime(conv._added_at))}">Загружен: ${esc(SOURCE_LABEL(conv._source))}</span>` : ''}${date ? `<span>${esc(date)}</span>` : ''}<a class="meta-link" href="#/checklist?kind=${E.kind}" title="Открыть этот чек-лист в редакторе">${icon('checklist')}${esc(clLabel)}</a></div>
       </div>
       <div class="dlg-head__nav">
         <a class="icon-btn icon-btn--line ${prevId ? '' : 'is-disabled'}" ${prevId ? `href="#/dialog/${encodeURIComponent(prevId)}"` : 'aria-disabled="true"'} aria-label="Предыдущий диалог">${icon('back')}</a>
@@ -143,10 +146,10 @@ export function viewCard(view, convId, query) {
       <section class="card tx-card" aria-labelledby="tx-h">
         <header class="card__head card__head--line"><h2 id="tx-h">Расшифровка</h2><span class="muted small">Бот и система — контекст, не оцениваются</span></header>
         <div class="tx" id="transcript" tabindex="0" aria-label="Реплики разговора">${conv.transcript.map((m, i) => `
-          <div class="tx-row tx-row--${esc(m.speaker)}" id="m-${i}">
+          <div class="tx-row tx-row--${esc(m.speaker)}${R.internal.includes(i) ? ' tx-row--internal' : ''}" id="m-${i}">
             <span class="tx-time mono">${esc(timeOfMsg(conv, i))}</span>
-            <span class="tx-spk"><i class="spk spk--${esc(m.speaker)}"></i>${SPK[m.speaker] || esc(m.speaker)}</span>
-            <span class="tx-text">${esc(m.text)}</span>
+            <span class="tx-spk"><i class="spk spk--${esc(m.speaker)}"></i>${SPK[m.speaker] || esc(m.speaker)}${R.names[i] && R.operators.length > 1 ? ` <span class="tx-name">${esc(R.names[i])}</span>` : ''}</span>
+            <span class="tx-text">${R.internal.includes(i) ? '<span class="l-chip tx-int" title="Оператор обращается к коллеге, а не к клиенту: контекст, не оценивается">внутренняя реплика</span> ' : ''}${esc(m.text)}</span>
             <span class="tx-idx mono">#${i}</span>
           </div>`).join('')}</div>
       </section>
@@ -182,6 +185,7 @@ export function viewCard(view, convId, query) {
             : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ' · из кэша, $0'}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>
 
+        ${R.no_client ? `<div class="banner banner--info" role="status">${icon('dash')}<div><b>Итог не рассчитан</b><p>${esc(E.base?.message || NO_CLIENT_MESSAGE)}.</p></div></div>` : ''}
         <!-- gross-error flag: carries no points, shown as its own red block under the score -->
         ${finalScore.gross_error ? (() => { const g = crits.find((c) => c.type === 'flag' && finalAnswers[c.id] === 'yes'); const i = g ? evidenceIdx(E, g) : null; return `<div class="banner banner--bad">${icon('alert')}<div><b>${esc(g && !/груб/i.test(g.title) ? `Грубая ошибка: ${g.title}` : 'Грубая ошибка')}</b><p>${esc(reasonOf(E, g))}</p>${i != null ? evChip(conv, i, answers[g.id]?.evidence?.find((e) => e.turn_index === i)?.quote) : ''}</div></div>`; })() : ''}
 

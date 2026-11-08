@@ -405,6 +405,10 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .tx-row--bot .tx-text, .tx-row--system .tx-text { color: var(--ink-3); }
 .tx-row--system { font-size: 12.5px; padding-top: 4px; padding-bottom: 4px; }
 .tx-row--system .tx-text { font-style: italic; }
+.tx-row--internal { background: none; }
+.tx-row--internal .tx-text { color: var(--ink-3); font-style: italic; }
+.tx-int { font-size: 11px; font-style: normal; margin-right: 4px; }
+.tx-name { color: var(--ink-3); font-weight: 400; }
 .tx-time { font-size: 12px; color: var(--ink-3); }
 .tx-spk { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
 .tx-row--operator .tx-spk { color: var(--good-ink); }
