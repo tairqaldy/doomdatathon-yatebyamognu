@@ -460,3 +460,8 @@ Control run Sun 11:00: `npm run results -- --group <CONTROL_ID> --push` from an 
 ### 2026-11-08 00:40 +05:00 · lane-a · tair/claude · #18 · landing polish
 Done: footer leaves redrawn (maple/oak/birch/ginkgo, gradients, veins, corner heaps); leaves fall only on a fast upward flick; smooth mouse-wheel scrolling (`landing-tair/smooth.js`, trackpads untouched) + smooth anchors; one section rhythm (`--sec-y`, `--sec-gap`); text-heavy sections rewritten into short leads + bold points; numbers section now shows eval-v5.3 (95% / 97% / 7 из 7 / $0,006).
 How to verify: production `/`, scroll fast upward once (leaves), scroll to the footer (heaps), wheel-scroll on a mouse.
+
+### 2026-11-08 09:45 +05:00 · team · tair/claude · #29 merged · organizer news
+Done: Amina's PR #29 merged (five-case review, review-case tooling, candidate test updates; only `eval/` and `docs/`). Organizer news saved in `docs/case/telegram-qa.md` and AGENTS §1.1: submission form, 8–10 min defense showing the whole cycle, top ~10 evaluate transcripts live (→ #30 matters).
+For Amina: on her branch all `eval/fairness` tests pass; on main 3 fail because they read the current DEV evaluations, which are eval-v5.3 since last night (`candidate` #2 "uncertain voice deduction…" object !== number; `review-cases` #1 "upstream c08=no now cites checked operator range"; `validation` #23 "ambiguous identity context…" reads `turn_index` of undefined). Pin them to the v5.1 run file or update the expectations. App, `scripts/check.sh` and readiness 39/39 are unaffected.
+For Nazar (#30): pull main first; last night `api/evaluate.js` got `maxDuration: 300` + a 240 s vote deadline and admin waits 280 s (`admin/store.js` `aiEvaluate`).

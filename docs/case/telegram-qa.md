@@ -40,3 +40,8 @@ Transcribing is optional (#2354). Audio exists so the reviewer can listen; audio
 
 ## Still unanswered
 `null` for `contact` on calls without a greeting (#3060); C7 with a goodbye only (not answered on substance); whether the "[Имя скрыто]" mask counts as introducing oneself.
+
+## Sunday 2026-11-08 morning (forwarded by Nazar at 09:30–09:34)
+- **Submission form:** https://forms.gle/Nz34xz4yK4XurwAt7 (all solutions are submitted there).
+- **Defense: 8–10 minutes including questions.** Show the **whole cycle**: checklist setup → getting the dialogs → evaluation → results → appeal → manual re-evaluation.
+- **Teams around the top 10** will be asked to **run a couple of transcripts in front of the jury**, to check that our own system does the evaluating (not replayed results). We need a way to paste or load a transcript and evaluate it live (issue #30).
