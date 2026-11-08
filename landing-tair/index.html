@@ -488,6 +488,44 @@
       </div>
     </section>
 
+    <!-- Calls: same checklist adapted to speech + c09 tone of voice from the recording
+         (data/checklists/freedom-call-v1.json, lib/tone.js, data/evaluations/DEV.json p4-ru-001) -->
+    <section class="sec sec--soft calls" id="calls" aria-labelledby="calls-title">
+      <div class="wrap calls__grid">
+        <div class="calls__text">
+          <h2 id="calls-title" class="l-h2" data-reveal>Звонки: тот же чек-лист и ещё тон голоса.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Звонок оценивается по тем же 8 пунктам и весам, что и чат. Девятый пункт слушает саму запись, потому что интонации в тексте нет.</p>
+          <ul class="l-points" data-reveal style="--d:160">
+            <li><b>C1 = N/A</b>, если приветствие оператора не попало в запись. Так ответили организаторы.</li>
+            <li><b>Ошибки распознавания речи</b> не снижают оценку: шум и искажённые слова не вина оператора.</li>
+            <li><b>c09 «Тон и подача речи»</b>, шкала 10 / 7 / 4 / 0, вес 10. Модель Gemini 3.8 Flash слушает mp3 звонка.</li>
+            <li><b>Что она слушает:</b> вежливость и теплоту голоса, раздражение или холодность, перебивания, темп, долгое молчание без «минуту, проверю». Ровный деловой тон получает высший балл.</li>
+            <li><b>В официальный файл c09 не входит.</b> В <span class="l-mono">results.json</span> ровно 8 пунктов чек-листа, тон виден в карточке звонка.</li>
+          </ul>
+          <p class="l-after" data-reveal style="--d:220">Модель выбрали проверкой: попросили пересказать известный отрезок звонка. Gemini процитировал его дословно, gpt-audio-mini выдумал текст.</p>
+        </div>
+
+        <article class="call l-card" data-reveal aria-label="Пример: оценка тона в звонке p4-ru-001">
+          <p class="call__meta"><span class="l-mono">p4-ru-001</span><span>звонок, русский</span></p>
+          <div class="call__player" aria-hidden="true">
+            <span class="call__play"></span>
+            <span class="wave"><i style="--h:30"></i><i style="--h:55"></i><i style="--h:40"></i><i style="--h:70"></i><i style="--h:45"></i><i style="--h:25"></i><i style="--h:60"></i><i style="--h:80"></i><i style="--h:50"></i><i style="--h:35"></i><i style="--h:20"></i><i style="--h:45"></i><i style="--h:65"></i><i style="--h:40"></i><i style="--h:30"></i><i style="--h:55"></i><i style="--h:75"></i><i style="--h:50"></i><i style="--h:30"></i><i style="--h:20"></i><i style="--h:40"></i><i style="--h:60"></i><i style="--h:35"></i><i style="--h:25"></i><i style="--h:50"></i><i style="--h:70"></i><i style="--h:45"></i><i style="--h:30"></i><i style="--h:55"></i><i style="--h:40"></i><i style="--h:25"></i><i style="--h:35"></i><i style="--h:60"></i><i style="--h:45"></i><i style="--h:30"></i><i style="--h:50"></i><i style="--h:40"></i><i style="--h:25"></i><i style="--h:35"></i><i style="--h:20"></i>
+              <span class="wave__mark" style="--at:56%"></span><span class="wave__mark" style="--at:88%"></span><span class="wave__head"></span></span>
+          </div>
+          <div class="call__crit">
+            <span class="call__name">c09 · Тон и подача речи</span>
+            <span class="call__steps" role="img" aria-label="Шкала 10, 7, 4, 0; выбрано 4"><span>10</span><span>7</span><span class="is-on">4</span><span>0</span></span>
+          </div>
+          <p class="call__why"><span class="call__ev-k">Причина снижения</span>Холодный и безучастный тон оператора, вызвавший у клиента дискомфорт. Клиент сам говорит об этом в разговоре.</p>
+          <ul class="call__ev" aria-label="Реплики оператора, где это слышно">
+            <li><span class="call__ev-k">Оператор</span>«Да.»</li>
+            <li><span class="call__ev-k">Оператор</span>«Нет, не делаем.»</li>
+          </ul>
+          <p class="call__foot">Клик по реплике перематывает запись к этому месту. На 5 звонках DEV тон снижен в одном, этом. Около $0,013 за звонок.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- Final call to action over the blue-hour field; the lamp glows on a slow loop -->
     <section class="cta" data-par-scope aria-labelledby="cta-title">
       <div class="cta__frame">

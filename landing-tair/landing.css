@@ -497,3 +497,30 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 @media (max-width: 480px) {
   .hist__row { grid-template-columns: minmax(0, 1fr) 56px; grid-template-areas: "name val" "bar bar" "note note"; gap: 4px 12px; }
 }
+
+/* calls: text + a call card with a waveform, the c09 scale and its evidence */
+.calls__grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
+.l .calls__text .l-points { margin-top: 24px; }
+.call { padding: clamp(20px, 2.6vw, 30px); border-radius: var(--l-r-lg); display: grid; gap: 16px; }
+.l .call__meta { display: flex; gap: 12px; align-items: baseline; font-size: 13px; color: var(--l-ink-3); }
+.call__player { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 14px; background: var(--l-bg-soft); }
+.call__play { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--l-forest); position: relative; }
+.call__play::after { content: ""; position: absolute; left: 13px; top: 10px; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.wave { position: relative; flex: 1; height: 44px; display: flex; align-items: center; gap: 3px; }
+.wave i { flex: 1; min-width: 2px; height: calc(var(--h) * 1%); border-radius: 2px; background: var(--l-line-strong); }
+.wave__mark { position: absolute; left: var(--at); top: -4px; bottom: -4px; width: 3px; margin-left: -1px; border-radius: 2px; background: var(--l-amber); }
+.wave__head { position: absolute; left: 56%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--l-forest); box-shadow: 0 0 0 4px rgba(22,71,52,.15); }
+.motion .call .wave__head { left: 0; transition: left 1.6s var(--l-ease) .5s; }
+.motion .call.is-in .wave__head { left: 56%; }
+.call__crit { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.call__name { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+.call__steps { display: inline-flex; gap: 4px; }
+.call__steps span { min-width: 36px; height: 30px; padding: 0 8px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--l-line); font-size: 14px; font-weight: 600; color: var(--l-ink-3); font-variant-numeric: tabular-nums; }
+.call__steps .is-on { background: var(--l-amber-bg); border-color: var(--l-amber); color: var(--l-amber); }
+.l .call__why { font-size: 15.5px; line-height: 1.55; color: var(--l-ink); }
+.call__why .call__ev-k { display: block; margin-bottom: 4px; }
+.call__ev { display: grid; gap: 6px; }
+.call__ev li { display: flex; gap: 12px; align-items: baseline; padding: 10px 12px; border-radius: 12px; background: var(--l-amber-bg); box-shadow: inset 3px 0 0 var(--l-amber); font-size: 15px; color: var(--l-ink); }
+.call__ev-k { flex: none; font-size: 12.5px; color: var(--l-ink-3); font-family: var(--l-mono); }
+.l .call__foot { font-size: 13.5px; color: var(--l-ink-3); line-height: 1.5; }
+@media (max-width: 900px) { .calls__grid { grid-template-columns: 1fr; } }
