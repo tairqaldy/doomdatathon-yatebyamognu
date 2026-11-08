@@ -223,6 +223,11 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .fix__why { font-size: 14px; }
 .fix__links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
 .fix-none { padding: 12px 20px 18px; }
+/* Обзор selection: every block below is computed for it */
+.ov-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 0 0 14px; }
+.ov-filters__reset { font-size: 13.5px; margin-left: 4px; }
+.card__tools { padding: 10px 20px 0; }
+.card__tools .seg button { height: 26px; padding: 0 10px; font-size: 12.5px; }
 /* Диалоги: sortable column headers (aria-sort on the th, the button flips the direction) */
 .th-sort { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; border-radius: 4px; }
 .th-sort:hover, .th-sort.is-on { color: var(--ink); }
@@ -1041,3 +1046,9 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
   .ai-bar__foot { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) { .ai-typing i, .ai-a, .ai-q__bubble { animation: none !important; } }
+@media (max-width: 700px) {
+  .ov-filters { gap: 6px; }
+  .ov-filters .seg { flex: 1 1 100%; }
+  .ov-filters .seg button { flex: 1; padding: 0 6px; }
+  .card__tools { padding: 8px 16px 0; }
+}
