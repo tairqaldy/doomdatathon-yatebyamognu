@@ -1,20 +1,22 @@
 // Human observations are sidecars, never replacement transcripts or score overrides.
 import { fingerprint } from './validation.mjs';
-export const HUMAN_AUDIO_REVIEW_VERSION = 'human-audio-validation-v1';
+export const HUMAN_AUDIO_REVIEW_VERSION = 'human-audio-validation-v2';
 
-export function assessHumanAudioReview(conversation, checklist, review) {
+export function assessHumanAudioReview(conversation, checklist, review, { observationsOnly = false } = {}) {
   const invalid = reason => ({ status: 'needs_review', observation_status: 'unbound', findings: [
     { reason, criterion_id: 'c01', dimension: 'transcription', severity: 'needs_review' }],
     score_override: null, na_override: false });
   if (!review || !Array.isArray(conversation?.transcript) || !checklist
     || review.conversation_id !== conversation?.conversation_id
     || review.transcript_sha256 !== fingerprint(conversation?.transcript)
-    || review.checklist_sha256 !== fingerprint(checklist)) return invalid('stale_or_unbound_human_audio_review');
+    || (!observationsOnly && review.checklist_sha256 !== fingerprint(checklist))) return invalid('stale_or_unbound_human_audio_review');
   if (review.source !== 'user_reported_manual_audio_listening' || review.observation_status !== 'recorded'
     || !review.reviewer?.session_user || !Array.isArray(review.issues) || !review.issues.length
     || review.wording?.verbatim_confirmed !== false || review.final_c01_verdict !== null) return invalid('incomplete_human_audio_review');
   const issues = new Set(review.issues);
   const findings = [];
+  if (review.checklist_sha256 !== fingerprint(checklist)) findings.push({ reason: 'human_audio_checklist_decision_pending',
+    criterion_id: 'c01', dimension: 'verdict', severity: 'needs_review' });
   if (issues.has('recording_start_missing')) findings.push({ reason: 'human_confirmed_recording_start_missing',
     criterion_id: 'c01', dimension: 'transcription', severity: 'needs_review' });
   if (issues.has('possible_asr_company_name_mismatch') || issues.has('fast_or_unclear_speech')) findings.push({

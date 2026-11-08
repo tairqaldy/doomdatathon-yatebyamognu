@@ -3,7 +3,7 @@
   "cleanUrls": false,
   "functions": {
     "api/*.js": {
-      "includeFiles": "{data/**,eval/cache/**}"
+      "includeFiles": "{data/**,eval/cache/**,eval/fairness/**,eval/runs/transcript-compat-guard.json}"
     }
   },
   "headers": [

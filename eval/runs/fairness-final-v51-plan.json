@@ -1,0 +1,200 @@
+{
+  "status": "prepared_only_not_executed",
+  "paid_calls": 0,
+  "purpose": "Paired development comparison, not an independent test.",
+  "baseline_prompt_version": "eval-v5.1",
+  "saved_prompt_version": "eval-v5.3",
+  "candidate_version": "transcript-fairness-addendum-v1",
+  "shared_model": "openai:gpt-6-luna",
+  "shared_checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+  "shared_schema_sha256": "057e72ed707a015d9579a5b17dcdcdb841d502ab3aa59051421b61cb879adbe1",
+  "shared_validation_version": "transcript-validation-v4",
+  "proposed_architecture": {
+    "samples_per_arm_dialog": 3,
+    "shared_postprocessing": "normalize + normalizeFacts + deriveBuiltins + vote via combineSamples",
+    "require_all_samples_completed": true,
+    "max_completion_tokens_per_sample": 9000,
+    "temperature_from_current_client_default": 0,
+    "note": "Freeze and record effective request settings, including any provider fallback that removes temperature."
+  },
+  "generation_settings": null,
+  "budget_cap_usd": 0.5,
+  "baseline_saved_generation_settings_verified": false,
+  "prerequisites": [
+    "Explicit paid API authorization and budget cap.",
+    "Freeze identical provider/model/temperature/token limits/seed when supported for both arms.",
+    "Re-use baseline generations only when their full generation settings and input provenance match.",
+    "Do not compare published-only metrics without reporting total coverage and review rate."
+  ],
+  "max_attempts_per_arm_dialog": 2,
+  "max_primary_generations": 114,
+  "max_generations_including_repairs": 228,
+  "generation_cache_key_fields": [
+    "model",
+    "full_messages",
+    "schema",
+    "all_generation_settings",
+    "sampling_replica_id"
+  ],
+  "transport_retry_budget": "Must be declared separately; the counts below cover generation attempts and bounded repair, not arbitrary provider HTTP retries.",
+  "validation_sidecar_key_fields": [
+    "generation_output_sha256",
+    "validation_version",
+    "probe_sha256",
+    "checklist_sha256"
+  ],
+  "note": "Changing validation alone must not invalidate paid generation cache.",
+  "dialogs": [
+    {
+      "id": "p1-en-006",
+      "language": "EN",
+      "transcript_sha256": "ce6267e97848c8bda6b9cef96dbbff9cab46cd735d55d503d66996ba2b22602b",
+      "baseline_messages_sha256": "211b1b8381064fc9e83bfbdde7ac2ccc8cc6e3914c7bbc1f6798f182efc64fde",
+      "candidate_messages_sha256": "89588d039724c00374f0b7b4f75ec7350c2e30a0988366ac339d2b2c675f4a48"
+    },
+    {
+      "id": "p1-en-009",
+      "language": "EN",
+      "transcript_sha256": "203acba998eb61694a2950a92fc2714c71be9d0b236570f57ec0a93372dca32e",
+      "baseline_messages_sha256": "b26009a1beb6e1cae6676efad190195cca510ea0d1b32f0391cd134424dc4978",
+      "candidate_messages_sha256": "e51787202df6f73ee2091a03ac555c56933c2dbeb616629b482ae4d91850b2c4"
+    },
+    {
+      "id": "p1-en-013",
+      "language": "EN",
+      "transcript_sha256": "519db27828dab86e7f3e360b73d4cfbbb72a7d0bbd154b8263aa182a6277c71d",
+      "baseline_messages_sha256": "079e70de894b53be89ff3cca2a7c8598993f0ebd6e743d6cfe91607b2db80fc9",
+      "candidate_messages_sha256": "9052c05d37ce33b155260a2ac756bb21cbad50f3bc49523f53fcfd0c3393fb15"
+    },
+    {
+      "id": "p1-en-014",
+      "language": "EN",
+      "transcript_sha256": "7ede32e04b4ed5f8ad4c4d51cd24f61af066297da8ae61d942fa908e8b571180",
+      "baseline_messages_sha256": "11cbdc7f949fc1e567313e6392395939c10a464ca39add97f2124eba45469c1e",
+      "candidate_messages_sha256": "fa7a3861d4f8c3f608d32b6fad6fe2b7a8cdac67c59be21b1fa8f08cd4d3d1d8"
+    },
+    {
+      "id": "p1-en-015",
+      "language": "EN",
+      "transcript_sha256": "7948da3991714b8ec9c391edcc947d51c1890dca58c6562c566fd01b15d0f5a1",
+      "baseline_messages_sha256": "a8bdf308cc23f22af79665db0d5b04876b535b60083dd7463dd698427398cf63",
+      "candidate_messages_sha256": "2be3c5f79e4a417cdfdae8e5b5ce6924bbf3bac2108b0a0205188491c7dc3542"
+    },
+    {
+      "id": "p1-kz-003",
+      "language": "KZ",
+      "transcript_sha256": "98edab5f83e7e1a9735c7fa175ce83103ffc62a01d254570083babf6e3283ae7",
+      "baseline_messages_sha256": "b72227a01b96ae7a729fce0d7d2b7f9f4368cf859c907f97f20fbef301615d78",
+      "candidate_messages_sha256": "74106b84ca2f392b9bd7ded70c3243f3f7c395f213dd2dfdbf8232aa3afaacb3"
+    },
+    {
+      "id": "p1-kz-008",
+      "language": "KZ",
+      "transcript_sha256": "d775e5fab731f28d099cc4b180bd01ba19a6a16480bdc793b7af84ad7d95c674",
+      "baseline_messages_sha256": "599360295086bae77115d1664bcea7089e68f18156935b560c1e5ed7a9ac1dab",
+      "candidate_messages_sha256": "9835cd498b8bd4abf0f86d4d42883c08cd70886fdf809a64eddca3244da824ca"
+    },
+    {
+      "id": "p1-kz-011",
+      "language": "KZ",
+      "transcript_sha256": "a5b94e043b85444569805833a1ec4e02414b106e2203ddb343bce1f6144dc80d",
+      "baseline_messages_sha256": "4412a35628111eea0cfb5dd478f0b377edf0a3829353bb88b5de8297bdaee69d",
+      "candidate_messages_sha256": "652096ac088583cc7071ab55ed2214c2ed3c8f017adc26f969e7111d7c426004"
+    },
+    {
+      "id": "p1-kz-013",
+      "language": "KZ",
+      "transcript_sha256": "d2627bab9e8f3ae1f1b14ab2afe38f492b608f9d6e6be4c14c6371c101a66f68",
+      "baseline_messages_sha256": "6d88dc6f843a21b7f29082eced52a4e847416eb96b525b40424de1abdf22a120",
+      "candidate_messages_sha256": "3610336d53afe847510917ec71fa477344c73cac66065951fd4c365b4043a6ef"
+    },
+    {
+      "id": "p1-kz-015",
+      "language": "KZ",
+      "transcript_sha256": "eeb6e870b946da3e159328a90e2676f610a669890df28ee3482126f3854a2d68",
+      "baseline_messages_sha256": "2fb98ba6ddf66cedd1fa8514a74d3df81dff41e9d077c6a2422080b33632dba9",
+      "candidate_messages_sha256": "786ebb1930d3882d2e72e786629b02b21bebe652ee1d87a70c49b59428b1f64e"
+    },
+    {
+      "id": "p1-ru-003",
+      "language": "RU",
+      "transcript_sha256": "1cc5e3f62ef8b38aeb11379c075e6be0bb624679e768e5a35e4f433eecb4ee02",
+      "baseline_messages_sha256": "26649e9898fccae5ff9bc5ee116dd575597d9e16c7c24247c6e3dfec8151699a",
+      "candidate_messages_sha256": "6b2a0c3c389f37a2e381766a528e26a5247699ea9e5384cf5ae04a2469b05b96"
+    },
+    {
+      "id": "p1-ru-006",
+      "language": "RU",
+      "transcript_sha256": "8244e708d4833f7299888a5c2dcb3bb6f8c8301ac9eed57b4187bf8f6af361db",
+      "baseline_messages_sha256": "b856688c855fb7c3634fbcc6e33204a434b7211b384b6d9041f76a01ed544957",
+      "candidate_messages_sha256": "e99a53da232d39890f528cd4aab5ad7437ba9c296e7883609dbc4db3ba4aaac9"
+    },
+    {
+      "id": "p1-ru-009",
+      "language": "RU",
+      "transcript_sha256": "f2956bff1597b01c79a44eb67bf6c4da0fd03bfeec83f77940e1a9cba94382ea",
+      "baseline_messages_sha256": "8ecc7da6e6cef2fd7d0dce7de0682cdb19cb9f2c748de0811ecb30fd2bd4042b",
+      "candidate_messages_sha256": "0fda279498b78b16b8409c10b558c2ba7a66c000932e9916f3a2b21192294277"
+    },
+    {
+      "id": "p1-ru-012",
+      "language": "RU",
+      "transcript_sha256": "b0d25d6bcd1c1f583f9806b250e513d535e41d106a2f54d4e7d1176ec052f5ae",
+      "baseline_messages_sha256": "a6711bcda46e06c58c237697434eb6e00ff506785e2493c71e80baa645bfe084",
+      "candidate_messages_sha256": "b8c5b445664b520bcb960333f8f70dc030df7e038f1a604d41a519c6580d91a8"
+    },
+    {
+      "id": "p1-ru-018",
+      "language": "RU",
+      "transcript_sha256": "5f49af71e7766feadab50f1a97f66bc22b0c566a0701ad24a0cc44bcf0133817",
+      "baseline_messages_sha256": "1f7f26df32ca96f697f82b0560c3eb38a90f5c8e523348e3901486c3a3772d93",
+      "candidate_messages_sha256": "1be18c9e019a1695b99c859df7668c01b3dc0982ed3e6dfeaa0df3af3b9c48b1"
+    },
+    {
+      "id": "p1-ru-022",
+      "language": "RU",
+      "transcript_sha256": "3700a373f2fa64fa71e1f6e0aadd4bc90d09fca3996b694f1c14439d64ea788a",
+      "baseline_messages_sha256": "2f4844b29328df9137f56954726541e2872293d45be144010a9e7cb56d3b05a8",
+      "candidate_messages_sha256": "23eea8183448bc588c8302afd970b5080a5bc4c807be15aa830f825a903d8dc6"
+    },
+    {
+      "id": "p1-ru-025",
+      "language": "RU",
+      "transcript_sha256": "56a059641e96f387e2e8f81b09f7d8e1df880a110b35b355abca0f0ebc5f361e",
+      "baseline_messages_sha256": "b38d7e13b196867ab2bab289a4cd982ec71e7ff1981b814b3bc432f082251810",
+      "candidate_messages_sha256": "10299ed2ee35268d9f43cfdc7e4629b1a5a6c009290b452f25bda81e6a3fee6e"
+    },
+    {
+      "id": "p1-ru-029",
+      "language": "RU",
+      "transcript_sha256": "287d68632958fc13324169df89ce2cfdeb828597ad55f5ba57af8cf44c4e601b",
+      "baseline_messages_sha256": "f1bdfef145f65fdf1206dfc3ee639ee953d6ab7d34d99ec62c5cae96a6c78625",
+      "candidate_messages_sha256": "e39be6744802989bcbf6c58edb186dac68b583b1954e3e3ce49a61584b5bc46e"
+    },
+    {
+      "id": "p4-ru-001",
+      "language": "RU",
+      "transcript_sha256": "2413fd98f2def52748d0d1cea7a066dc760a559e5edeb12583d90a953dc00ae6",
+      "baseline_messages_sha256": "1011eb5e14673d442cbea9bb23a7e96e35d34a89796e062ba63d6ab3926bea8b",
+      "candidate_messages_sha256": "9f1a0848d115dec57a416e34df37e692bae54baa6c07b4af1acdcadf9d32f342"
+    }
+  ],
+  "metrics": [
+    "all-input strict and lenient accuracy",
+    "false penalty/pass with a predeclared denominator",
+    "NA precision/recall and mismatches",
+    "c08 precision/recall",
+    "score MAE",
+    "review rate",
+    "publishable rate",
+    "evidence validity and separate human evidence sufficiency"
+  ],
+  "independent_test": {
+    "available": false,
+    "status": "new unseen human-reviewed RU/KZ/EN set required after prompt freeze"
+  },
+  "audio_review": {
+    "status": "not_performed",
+    "queue": "eval/runs/transcript-compat-audio-queue.json"
+  }
+}

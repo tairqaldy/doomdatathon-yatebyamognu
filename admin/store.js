@@ -65,7 +65,7 @@ function mergePre() {
   const stale = (e, pv) => !e || e.from_pre || !e.prompt_version || e.prompt_version !== pv;
   for (const [id, r] of Object.entries(pre.results)) {
     const pv = r.prompt_version || pre.prompt_version || null;
-    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, agreement: r.agreement, samples: r.samples, prompt_version: pv, from_pre: true });
+    const v = () => ({ ...r, model: r.model || pre.model, prompt_version: pv, from_pre: true });
     if (stale(S.ai[`${id}|${k}`], pv)) S.ai[`${id}|${k}`] = v();
     if (kc && isCall(S.byId[id]) && stale(S.ai[`${id}|${kc}`], pv)) S.ai[`${id}|${kc}`] = v();
   }
@@ -86,7 +86,7 @@ export function refresh() {
 async function apiHealth() {
   try {
     const r = await fetch('/api/health', { cache: 'no-store' }); if (!r.ok) throw 0; const j = await r.json();
-    S.api = { ok: true, ai: !!(j.openrouter || j.openai), model: j.models?.eval || null, passcodeSet: !!j.admin_passcode_set };
+    S.api = { ok: true, ai: !!(j.openrouter || j.openai), model: j.models?.eval || null, passcodeSet: !!j.admin_passcode_set, fairness: j.transcript_fairness === true };
   } catch { S.api = { ok: false, ai: false, model: null }; }
 }
 async function loadMetrics() {
@@ -153,7 +153,7 @@ export async function mergeGroupEvaluations(group) {
     const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
     for (const [id, x] of Object.entries(pre.results || {})) {
       if (!S.byId[id]?._source || !x?.answers) continue;
-      const v = { answers: x.answers, summary: x.summary, model: x.model || pre.model, usage: x.usage, agreement: x.agreement, samples: x.samples, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
+      const v = { ...x, model: x.model || pre.model, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
       if (!S.ai[`${id}|${k}`]) { S.ai[`${id}|${k}`] = v; n++; }
       if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v;
     }
@@ -247,7 +247,7 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
+  S.ai[aiKey(convId, cl)] = { ...j, answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
     roles: j.roles || null, no_client: Boolean(j.no_client), message: j.message || null, evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;

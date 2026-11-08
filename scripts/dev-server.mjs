@@ -3,6 +3,7 @@
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { loadEnv } from './env.mjs';
 loadEnv();
 const PORT = Number(process.env.PORT || 3000);
@@ -14,7 +15,7 @@ http.createServer(async (req, res) => {
     if (url.pathname === '/') url.pathname = '/landing-tair/index.html'; // mirrors the vercel.json rewrite
     if (url.pathname.startsWith('/api/')) {
       const name = url.pathname.slice(5).replace(/[^a-z0-9-]/gi, '');
-      const mod = await import(path.resolve('api', `${name}.js`) + `?t=${Date.now()}`);
+      const mod = await import(pathToFileURL(path.resolve('api', `${name}.js`)).href + `?t=${Date.now()}`);
       if (req.method === 'POST' || req.method === 'PUT') {
         const ch = []; for await (const c of req) ch.push(c);
         // same answer as Vercel for a broken body, not a stack trace

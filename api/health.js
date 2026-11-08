@@ -9,6 +9,7 @@ import { voiceConfig } from '../lib/llm.js';
 export default function handler(req, res) {
   send(res, 200, {
     ok: true,
+    transcript_fairness: process.env.CQA_TRANSCRIPT_FAIRNESS === '1',
     openrouter: Boolean(process.env.OPENROUTER_API_KEY),
     openai: Boolean(process.env.OPENAI_API_KEY), // direct OpenAI for eval models named openai:<id> (lib/llm.js)
     organizer_api: Boolean(process.env.CQA_API_URL),
