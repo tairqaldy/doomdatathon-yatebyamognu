@@ -928,3 +928,10 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
 .imp-list .card__head { flex-wrap: wrap; }
 .imp-table { max-height: none; border: 0; box-shadow: none; border-radius: 0 0 var(--r) var(--r); }
 @media (max-width: 960px) { .imp-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 700px) {
+  .imp-card .card__head .seg { display: flex; width: 100%; }
+  .imp-card .card__head .seg button { flex: 1; padding: 0 6px; font-size: 12.5px; }
+  .imp-body { padding: 14px 16px 16px; }
+  .imp-body .btn-row .input { max-width: none !important; }
+  .imp-list .card__head .btn-row { width: 100%; }
+}

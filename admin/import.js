@@ -14,10 +14,13 @@ const ROLES = [
   [/^(бот|bot|aim|ассистент|assistant|чат-бот|chatbot)$/i, 'bot'],
   [/^(система|system|жүйе|sys|событие|event)$/i, 'system'],
 ];
-const roleOf = (w) => ROLES.find(([re]) => re.test(w.trim()))?.[1] || null;
+// «Оператор», «Оператор Арман», «Клиент Айгерим Н.»: the role is the first word, a name may follow (up to 3 words)
+const roleOf = (w) => { const words = w.trim().replace(/[,.]+$/, '').split(/\s+/); if (words.length > 3) return null; return ROLES.find(([re]) => re.test(w.trim()))?.[1] || ROLES.find(([re]) => re.test(words[0]))?.[1] || null; };
 const TS = '(\\d{1,2}:\\d{2}(?::\\d{2})?)';
-// [00:12] Оператор: …  ·  00:12 - Оператор: …  ·  Оператор [00:12]: …  ·  Оператор (00:12): …
-const LINE = new RegExp(`^(?:[\\[(]?${TS}[\\])]?\\s*[-–—|]?\\s*)?([^:：\\[\\]()]{2,24}?)\\s*(?:[\\[(]${TS}[\\])])?\\s*[:：]\\s?(.*)$`);
+const TS_RE = /^\d{1,2}:\d{2}(?::\d{2})?$/;
+// [00:12] Оператор: …  ·  00:12 - Оператор: …  ·  Оператор [00:12]: …  ·  Оператор (00:12): …  ·  Клиент (Айгерим): …
+// group 3 is whatever stands in brackets after the role: a time, or a name
+const LINE = new RegExp(`^(?:[\\[(]?${TS}[\\])]?\\s*[-–—|]?\\s*)?([^:：\\[\\]()]{2,40}?)\\s*(?:[\\[(]([^\\[\\]()]{1,40})[\\])])?\\s*[:：]\\s?(.*)$`);
 const toMMSS = (ts) => {
   const p = ts.split(':').map(Number);
   const sec = p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1];
@@ -27,6 +30,7 @@ const STEP = 10; // seconds between turns when the text has no times
 
 /** Plain text → transcript. Lines that don't start with a role continue the previous turn. */
 export function parseText(text) {
+  if (/^\s*[[{]/.test(String(text || ''))) { const j = parseJson(text); if (!j.records.length) return { transcript: [], errors: [`Похоже на JSON, но он не разбирается: ${String(j.errors[0] || '').replace(/^Это не JSON: /, '')}. Проверьте текст или откройте вкладку «JSON-файл».`], timed: false }; }
   const turns = []; const errors = []; let timed = 0;
   const lines = String(text || '').replace(/\r/g, '').split('\n');
   lines.forEach((raw, n) => {
@@ -35,14 +39,16 @@ export function parseText(text) {
     const m = line.match(LINE);
     const speaker = m ? roleOf(m[2]) : null;
     if (speaker) {
-      const ts = m[1] || m[3];
+      const ts = m[1] || (m[3] && TS_RE.test(m[3].trim()) ? m[3].trim() : null);
       turns.push({ speaker, text: (m[4] || '').trim(), ts: ts ? toMMSS(ts) : null });
       if (ts) timed++;
     } else if (turns.length) turns.at(-1).text += (turns.at(-1).text ? '\n' : '') + line.trim();
     else errors.push(`Строка ${n + 1}: не указано, кто говорит. Начните с «Оператор:», «Клиент:», «Бот:» или «Система:».`);
   });
+  // times are kept only when the text has them; a paste without times gets no invented 00:10, 00:20 …
   let t = 0;
   const transcript = turns.filter((x) => x.text).map((x, i) => {
+    if (!timed) return { timestamp: '', speaker: x.speaker, text: x.text };
     t = x.ts ? Math.max(x.ts.sec, i ? t : 0) : i ? t + STEP : 0;
     return { timestamp: toMMSS(`${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`).s, speaker: x.speaker, text: x.text };
   });
@@ -169,7 +175,7 @@ export function viewImport(view) {
           <div class="field"><span class="field__label">Язык</span>${seg('imp-lang', [{ v: 'auto', label: `Авто${D.text ? ` (${detectLang(D.text)})` : ''}` }, ...Object.keys(LANG).map((k) => ({ v: k, label: k }))], D.lang, 'Язык')}</div>
           <div class="field"><span class="field__label">Канал</span>${seg('imp-chan', [{ v: 'chat', label: 'Чат' }, { v: 'call', label: 'Звонок (текст)' }], D.channel, 'Канал')}</div>
           <div class="imp-parsed" aria-live="polite">
-            ${p.transcript.length ? `<b>${p.transcript.length} ${plural(p.transcript.length, ['реплика', 'реплики', 'реплик'])}</b>: ${Object.entries(n).filter(([, v]) => v).map(([k, v]) => `${SPK_RU[k]} ${v}`).join(', ')} · ${esc(LANG[lang])}${p.timed ? '' : ` · <span class="muted">время не указано, реплики через ${STEP} с</span>`}` : '<span class="muted">Вставьте текст, здесь появится разбор</span>'}
+            ${p.transcript.length ? `<b>${p.transcript.length} ${plural(p.transcript.length, ['реплика', 'реплики', 'реплик'])}</b>: ${Object.entries(n).filter(([, v]) => v).map(([k, v]) => `${SPK_RU[k]} ${v}`).join(', ')} · ${esc(LANG[lang])}${p.timed ? '' : ' · <span class="muted">без времени</span>'}` : '<span class="muted">Вставьте текст, здесь появится разбор</span>'}
             ${p.errors.length ? `<ul class="imp-errors">${p.errors.slice(0, 4).map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
           </div>
           <div class="muted small">Чек-лист: <b>${esc(checklistLabel(checklistFor(conv)))}</b></div>
@@ -196,7 +202,7 @@ export function viewImport(view) {
         </div>
         <div class="imp-side">
           <div class="imp-parsed" aria-live="polite">
-            ${p.records.length ? `<b>${p.records.length} ${plural(p.records.length, ['диалог', 'диалога', 'диалогов'])}</b>${p.group ? ` · группа <span class="mono">${esc(p.group)}</span>` : ''}<ul class="imp-recs">${p.records.slice(0, 12).map((r) => `<li><span class="mono">${esc(r.conversation_id)}</span> · ${esc(r.language)} · ${r.transcript.length} реплик${/voice|call/i.test(r.channel) ? ' · звонок' : ''}</li>`).join('')}${p.records.length > 12 ? `<li class="muted">… ещё ${p.records.length - 12}</li>` : ''}</ul>` : '<span class="muted">Выберите файл или вставьте JSON</span>'}
+            ${p.records.length ? `<b>${p.records.length} ${plural(p.records.length, ['диалог', 'диалога', 'диалогов'])}</b>${p.group ? ` · группа <span class="mono">${esc(p.group)}</span>` : ''}<ul class="imp-recs">${p.records.slice(0, 12).map((r) => `<li><span class="mono">${esc(r.conversation_id)}</span> · ${esc(r.language)} · ${r.transcript.length} ${plural(r.transcript.length, ['реплика', 'реплики', 'реплик'])}${/voice|call/i.test(r.channel) ? ' · звонок' : ''}</li>`).join('')}${p.records.length > 12 ? `<li class="muted">… ещё ${p.records.length - 12}</li>` : ''}</ul>` : '<span class="muted">Выберите файл или вставьте JSON</span>'}
             ${p.errors.length ? `<ul class="imp-errors">${p.errors.slice(0, 6).map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
           </div>
           <button type="button" class="btn btn--primary" id="imp-json-go" ${p.records.length && !S.busy ? '' : 'disabled'}>${icon('target')}Добавить и оценить AI${p.records.length > 1 ? ` (${p.records.length})` : ''}</button>
@@ -218,7 +224,9 @@ export function viewImport(view) {
 
   const listPane = () => {
     if (!list.length) return '';
-    const pendingAI = list.filter((c) => !hasAI(c.conversation_id)).map((c) => c.conversation_id);
+    // a dialog already being evaluated (single run or batch) is not offered again: no duplicate paid request
+    const inFlight = (id) => !!S.single[id]?.pending || (D.run?.status === 'pending' && D.run.id === id) || (!!S.busy && !!D.batch?.ids.includes(id));
+    const pendingAI = list.filter((c) => !hasAI(c.conversation_id) && !inFlight(c.conversation_id)).map((c) => c.conversation_id);
     return `<section class="card imp-list"><div class="card__head card__head--line"><h2>Загруженные диалоги · ${list.length}</h2>
       <div class="btn-row">${pendingAI.length ? `<button type="button" class="btn btn--s btn--primary" data-eval-all ${S.busy || !ai ? 'disabled' : ''}>${icon('target')}Оценить AI без оценки (${pendingAI.length})</button>` : ''}<button type="button" class="btn btn--s btn--ghost" data-remove-all>${icon('trash')}Убрать все</button></div></div>
       <div class="table-wrap imp-table"><table class="table"><thead><tr><th>Диалог</th><th>Источник</th><th>Реплик</th><th>Оценка</th><th class="num-col">Итог</th><th></th></tr></thead><tbody>
@@ -251,6 +259,10 @@ export function viewImport(view) {
   let deb = null;
   view.addEventListener('input', (e) => {
     const t = e.target;
+    // JSON pasted into «Вставить текст» goes to the JSON tab, where it is parsed as records
+    if (t.id === 'imp-text' && /^\s*[[{]/.test(t.value) && parseJson(t.value).records.length) {
+      D.json = t.value; D.jsonName = ''; D.text = ''; D.tab = 'json'; clearTimeout(deb); draw(); toast('Это JSON: открыта вкладка «JSON-файл»'); return;
+    }
     if (t.id === 'imp-text') D.text = t.value; else if (t.id === 'imp-id') { D.id = t.value; return; } else if (t.id === 'imp-json') D.json = t.value; else if (t.id === 'imp-group') { D.group = t.value; return; } else return;
     clearTimeout(deb); deb = setTimeout(() => redrawKeepFocus(t.id), 250);
   });
@@ -318,7 +330,7 @@ export function viewImport(view) {
       } catch (err) { D.groupMsg = `<span class="field__err">Не удалось загрузить группу: ${esc(err.message)}</span>`; }
       emit('change'); return;
     }
-    if (b.hasAttribute('data-eval-all')) { evaluateMany(importedConvs().filter((c) => !hasAI(c.conversation_id)).map((c) => c.conversation_id), 'AI оценивает загруженные диалоги'); return; }
+    if (b.hasAttribute('data-eval-all')) { if (S.busy) return; evaluateMany(importedConvs().filter((c) => !hasAI(c.conversation_id) && !S.single[c.conversation_id]?.pending).map((c) => c.conversation_id), 'AI оценивает загруженные диалоги'); return; }
     if (b.dataset.remove) { removeImported([b.dataset.remove]); return; }
     if (b.hasAttribute('data-remove-all')) { if (confirm(`Убрать ${list.length} загруженных диалогов из списка? Их оценки в этом браузере останутся в кэше.`)) removeImported(list.map((c) => c.conversation_id)); }
   });

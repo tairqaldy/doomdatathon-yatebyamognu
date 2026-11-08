@@ -173,6 +173,7 @@ export const missingAI = (kind) => S.convs.filter((c) => kindOf(c) === kind && !
 /* ---------- time helpers (chat = MM:SS, call = ISO 8601) ---------- */
 export function offsetSec(conv, i) {
   const ts = conv.transcript[i]?.timestamp || '';
+  if (!ts) return i * 10; // pasted text without times: evenly spaced on the timeline only (no time shown or sent)
   if (/^\d{1,2}:\d{2}$/.test(ts)) { const [m, s] = ts.split(':').map(Number); return m * 60 + s; }
   const t0 = Date.parse(conv.transcript[0]?.timestamp), t = Date.parse(ts);
   return Number.isFinite(t - t0) ? Math.max(0, (t - t0) / 1000) : 0;
