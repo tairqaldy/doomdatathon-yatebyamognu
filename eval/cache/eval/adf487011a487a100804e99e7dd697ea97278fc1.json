@@ -1,0 +1,166 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор сразу перешёл к инструкции без приветствия и имени.",
+   "deduction_reason": "Нет приветствия и представления в первом ответе.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не выявил недостающую деталь до ответа.",
+   "deduction_reason": "Ответ дан без уточнения, где клиент находится (сайт/приложение).",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, так как оператор не сообщал данные конкретного счёта и не выполнял защищённое действие.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Go to tradernet.global and sign in there."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор в итоге дал конкретную инструкцию, и клиент подтвердил, что смог войти.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор отреагировал на проблему клиента и не был груб.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Settings where? I'm on the company website and there's no login."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Первая инструкция была непонятной, поэтому клиенту пришлось уточнить.",
+   "deduction_reason": "Клиенту пришлось переспросить из-за непонятной первой инструкции.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Open settings then go back and log in again."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Settings where? I'm on the company website and there's no login."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В финале только «Bye» без итога или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Bye."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Oh, that site is just for information. Go to tradernet.global and sign in there."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "operator_actions": "Оператор сначала дал непонятную инструкцию, затем указал сайт tradernet.global для входа.",
+  "outcome": "Клиент подтвердил, что смог войти; чат завершён без итога.",
+  "reason": "Клиент не мог войти в аккаунт."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "request": "Can't get into the account.",
+    "status": "resolved",
+    "turn": 0
+   },
+   {
+    "request": "Settings where? I'm on the company website and there's no login.",
+    "status": "resolved",
+    "turn": 10
+   }
+  ],
+  "client_reasks": [
+   {
+    "cause": "operator_unclear",
+    "turn": 10
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "answered_without_needed_detail",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 53135,
+ "usage": {
+  "prompt_tokens": 5271,
+  "completion_tokens": 7320,
+  "cost": 0.010093
+ }
+}

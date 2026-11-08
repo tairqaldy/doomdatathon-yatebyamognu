@@ -593,5 +593,32 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .l .extra a { color: var(--l-green-ink); text-underline-offset: 3px; white-space: nowrap; }
 @media (max-width: 1080px) { .must { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .must, .extra { grid-template-columns: 1fr; } }
+/* ── v4: less text. Secondary detail lives in <details class="more">, accuracy sits inside #trust ── */
+.more { margin-top: 20px; max-width: 760px; }
+.more > summary { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-size: 15px; font-weight: 500; color: var(--l-green-ink); }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .25s var(--l-ease); }
+.more[open] > summary::before { transform: rotate(45deg); }
+.more > summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+.l .more .l-points { margin-top: 14px; }
+.l .more .l-points li { font-size: 15px; }
+.l .more__link { margin-top: 12px; font-size: 14px; }
+.l .more__link a { color: var(--l-green-ink); text-underline-offset: 3px; }
+.acc { margin-top: clamp(56px, 7vw, 96px); padding-top: clamp(40px, 5vw, 56px); border-top: 1px solid var(--l-line); }
+.l .acc__title { max-width: 32ch; }
+.acc .stats { margin-top: 24px; }
+.acc .acc__grid { margin-top: clamp(32px, 4vw, 48px); }
+.acc__side { display: grid; gap: 14px; align-content: start; }
+.l .acc__line { font-size: 16px; line-height: 1.6; color: var(--l-ink-2); max-width: 46ch; }
+.l .acc__line b { color: var(--l-ink); font-weight: 600; }
+.acc__side .more { margin-top: 0; }
+.xtra { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: clamp(28px, 4vw, 40px); }
+.xtra__k { margin-right: 6px; font-size: 14px; font-weight: 500; color: var(--l-ink-3); }
+.l .xtra__a { display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border-radius: 999px; background: var(--l-bg-mint); color: var(--l-green-ink);
+  font-size: 14px; font-weight: 500; text-decoration: none; transition: background .2s; }
+.l .xtra__a:hover { background: #dcf0e2; }
+.l .calls__text .more { margin-top: 18px; }
+.trust .pipe__node { background: var(--l-bg-soft); border-color: transparent; }
 .bar__admin { margin-right: 8px; }
-@media (max-width: 440px) { .bar__admin { display: none; } }
+.l .bar__admin { white-space: nowrap; }
+@media (max-width: 440px) { .l .bar__admin { display: none; } }

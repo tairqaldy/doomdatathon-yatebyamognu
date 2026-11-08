@@ -78,14 +78,20 @@ export function viewOverview(view) {
     const showJury = ls.get(JURY_KEY) !== 'hidden';
     const moreOpen = ls.get(MORE_KEY) === '1';
     const grossPct = st.n ? Math.round((st.gross / st.n) * 100) : 0;
+    const top = st.loss.find((l) => l.avg_lost >= 0.05);
+    const conv3 = (n) => plural(n, ['разговор', 'разговора', 'разговоров']);
+    const headline = st.n ? `${st.n} ${conv3(st.n)}, средний балл ${fix(st.avg, 1)}.${top ? ` Больше всего баллов теряется по критерию «${esc(top.c.title)}».` : ''} ${st.gross
+      ? `${st.gross} ${plural(st.gross, ['разговор', 'разговора', 'разговоров'])} с грубыми ошибками: <a class="headline__go" href="#/dialogs?gross=1">начните с ${st.gross === 1 ? 'него' : 'них'} ${icon('arrow')}</a>`
+      : `Грубых ошибок нет: <a class="headline__go" href="#/dialogs?sort=low">начните с самых низких оценок ${icon('arrow')}</a>`}` : 'Оценённых разговоров пока нет: <a class="headline__go" href="#/import">загрузите диалог</a>';
 
     view.innerHTML = `
       ${mockN && aiReady() ? `<div class="banner banner--info">${icon('alert')}<div><b>${mockN} ${plural(mockN, ['диалог', 'диалога', 'диалогов'])} AI ещё не оценил по новым критериям чек-листа.</b> Остальные ответы перенесены, цифры ниже предварительные.</div><button class="btn btn--s btn--primary" type="button" id="ov-ai">Оценить AI · ${mockN}</button></div>` : ''}
+      <p class="headline">${headline}</p>
       ${showJury ? juryPanel() : ''}
       <section class="kpis" aria-label="Ключевые показатели">
         ${kpi({ label: 'Средний балл', value: fix(st.avg, 1), unit: '/100', sub: `медиана ${fix(st.median, 1)}`, href: '#/dialogs?sort=low', meter: { p: st.avg || 0, color: tierVar(tier(st.avg)) }, count: st.avg != null ? { to: st.avg, d: 1 } : null })}
         ${kpi({ label: 'Диалогов оценено', value: st.n, sub: `${st.chats} ${plural(st.chats, ['чат', 'чата', 'чатов'])} · ${st.calls} ${plural(st.calls, ['звонок', 'звонка', 'звонков'])}`, href: '#/dialogs', count: { to: st.n, d: 0 } })}
-        ${kpi({ label: 'Грубые ошибки', value: st.gross, sub: `${grossPct}% диалогов`, href: '#/dialogs?gross=1', mod: st.gross ? 'kpi--bad' : '', count: { to: st.gross, d: 0 } })}
+        ${kpi({ label: 'Грубые ошибки', value: st.gross, sub: `${grossPct}% диалогов`, href: '#/dialogs?gross=1', mod: st.gross ? 'kpi--flag' : '', count: { to: st.gross, d: 0 } })}
         ${kpi({ label: 'Совпадение с ручной разметкой', value: m ? fix(m.overall.strict, 1) : '—', unit: m ? '%' : '', sub: m ? `<span title="${agreeN} из ${m.overall.n} ответов AI по критериям совпали с экспертной разметкой, замер ${esc(metricsVer || '')}">${m.gold_dialogs} ${plural(m.gold_dialogs, ['диалог', 'диалога', 'диалогов'])} · ${esc(metricsVer || '')}</span>` : 'нет файла метрик', count: m ? { to: m.overall.strict, d: 1 } : null })}
       </section>
 
@@ -93,7 +99,7 @@ export function viewOverview(view) {
         <section class="card chart-card" aria-labelledby="ch-loss">
           <header class="card__head"><h2 id="ch-loss">Где теряем баллы</h2><span class="muted small">в среднем на диалог</span></header>
           <div class="chart-box" id="ch-loss-box"></div>
-          ${fixFirst.length ? `<div class="loss-why"><span class="kicker">Что исправить первым</span><ol class="loss-why__list">${fixFirst.map((g) => {
+          ${fixFirst.length ? `<div class="loss-why"><span class="kicker">Частые причины</span><ol class="loss-why__list">${fixFirst.map((g) => {
             const it = g.items[0]; const ex = it.rows[0];
             return `<li><b>${esc(g.c.title)}</b><span class="loss-why__t">${esc(it.text)}${it.count > 1 ? ` <span class="muted">(${it.count} раза)</span>` : ''}</span><a class="link link--mono" href="#/dialog/${encodeURIComponent(ex.id)}">${esc(ex.id)}</a></li>`; }).join('')}</ol></div>` : ''}
         </section>
@@ -104,9 +110,9 @@ export function viewOverview(view) {
         <summary class="more__sum"><span>Подробнее</span><span class="muted small">распределение оценок · языки и каналы</span>${icon('down', 'ic more__chev')}</summary>
         <div class="grid grid--2">
           <section class="card chart-card" aria-labelledby="ch-dist">
-            <header class="card__head"><h2 id="ch-dist">Распределение оценок</h2></header>
+            <header class="card__head"><h2 id="ch-dist">Распределение оценок</h2><span class="muted small">разговоров в диапазоне</span></header>
             <div class="chart-box" id="ch-dist-box"></div>
-            <div class="legend"><span><i style="background:var(--bad)"></i>ниже 60</span><span><i style="background:var(--mid)"></i>60–84</span><span><i style="background:var(--good)"></i>85 и выше</span></div>
+            <div class="legend"><span><i style="background:var(--bad)"></i>ниже 60: разобрать</span><span><i style="background:var(--calm)"></i>60 и выше</span></div>
           </section>
           <section class="card chart-card" aria-labelledby="ch-seg">
             <header class="card__head"><h2 id="ch-seg">Языки и каналы</h2><span class="muted small">средний балл</span></header>
@@ -117,13 +123,13 @@ export function viewOverview(view) {
       ${showJury ? '' : '<p class="jury-restore"><button class="link" type="button" id="jury-show">Показать сценарий проверки для жюри</button></p>'}`;
 
     mountChart($('#ch-loss-box', view), (w) => hbarsSVG(w, st.loss.map((l) => ({
-      label: l.c.title, sub: `${l.dialogs} ${plural(l.dialogs, ['диалог', 'диалога', 'диалогов'])}`, value: l.avg_lost, valueText: l.avg_lost < 0.05 ? '0' : `−${fix(l.avg_lost, 1)}`, color: 'var(--bad)', href: `#/dialogs?crit=${encodeURIComponent(l.c.id)}`,
-    })), { title: 'Средняя потеря баллов на диалог по критериям', desc: st.loss.map((l) => `${l.c.title}: −${fix(l.avg_lost, 1)}`).join('; ') }));
+      label: l.c.title, sub: `${l.dialogs} ${plural(l.dialogs, ['диалог', 'диалога', 'диалогов'])}`, value: l.avg_lost, valueText: l.avg_lost < 0.05 ? '0' : `−${fix(l.avg_lost, 1)}`, color: l === top ? 'var(--mid)' : 'var(--calm)', href: `#/dialogs?crit=${encodeURIComponent(l.c.id)}`,
+    })), { title: 'Средняя потеря баллов на диалог по критериям', valueClass: 'ch-val--muted', desc: st.loss.map((l) => `${l.c.title}: −${fix(l.avg_lost, 1)}`).join('; ') }));
     mountChart($('#ch-dist-box', view), (w) => histogramSVG(w, st.bins, {
-      title: 'Распределение итоговых баллов', desc: st.bins.map((b) => `${b.from}–${b.to}: ${b.n}`).join('; '), hrefFor: (b) => `#/dialogs?range=${b.from}-${b.to}`,
+      title: 'Распределение итоговых баллов', calm: true, desc: st.bins.map((b) => `${b.from}–${b.to}: ${b.n}`).join('; '), hrefFor: (b) => `#/dialogs?range=${b.from}-${b.to}`,
     }));
-    const segRows = [{ group: 'Язык' }, ...['RU', 'KZ', 'EN'].filter((k) => st.byLang[k]).map((k) => ({ label: LANG[k], sub: `${st.byLang[k].n} диал.`, value: st.byLang[k].avg, valueText: fix(st.byLang[k].avg, 1), color: tierVar(tier(st.byLang[k].avg)), href: `#/dialogs?lang=${k}` })),
-      { group: 'Канал' }, ...['chat', 'call'].filter((k) => st.byChannel[k]).map((k) => ({ label: CHAN[k], sub: `${st.byChannel[k].n} диал.`, value: st.byChannel[k].avg, valueText: fix(st.byChannel[k].avg, 1), color: tierVar(tier(st.byChannel[k].avg)), href: `#/dialogs?channel=${k}` }))];
+    const segRows = [{ group: 'Язык' }, ...['RU', 'KZ', 'EN'].filter((k) => st.byLang[k]).map((k) => ({ label: LANG[k], sub: `${st.byLang[k].n} диал.`, value: st.byLang[k].avg, valueText: fix(st.byLang[k].avg, 1), color: st.byLang[k].avg < 60 ? 'var(--bad)' : 'var(--calm-2)', href: `#/dialogs?lang=${k}` })),
+      { group: 'Канал' }, ...['chat', 'call'].filter((k) => st.byChannel[k]).map((k) => ({ label: CHAN[k], sub: `${st.byChannel[k].n} диал.`, value: st.byChannel[k].avg, valueText: fix(st.byChannel[k].avg, 1), color: st.byChannel[k].avg < 60 ? 'var(--bad)' : 'var(--calm-2)', href: `#/dialogs?channel=${k}` }))];
     mountChart($('#ch-seg-box', view), (w) => hbarsSVG(w, segRows, { title: 'Средний балл по языку и каналу', desc: segRows.filter((r) => !r.group).map((r) => `${r.label}: ${r.valueText}`).join('; '), max: 100 }));
 
     if (!counted) { counted = true; view.querySelectorAll('[data-count]').forEach((el) => countUp(el, Number(el.dataset.count), Number(el.dataset.d))); }

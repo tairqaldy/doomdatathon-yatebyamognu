@@ -1,0 +1,175 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал диалог с приветствия и представился.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Недостающая деталь о поведении приложения была уточнена до перехода к проверке счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Защищённое действие и раскрытие данных по счёту произошли без подтверждённой идентификации.",
+   "deduction_reason": "Проверка личности не подтверждена до раскрытия данных о счёте.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Подождите, я ещё не подтверждал, что это мой счёт."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Клиенту дана только общая отсрочка без ответа по существу и без конкретного следующего шага.",
+   "deduction_reason": "Существенный вопрос остался открытым, следующий шаг не конкретизирован.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Я спрашиваю, почему вывод ограничен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Передам вопрос на проверку. До свидания."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал на опасение клиента и не дал ответа на повторный вопрос.",
+   "deduction_reason": "Недовольство клиента не учтено, вопрос проигнорирован.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Подождите, я ещё не подтверждал, что это мой счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Подтверждение пока не нужно. Напишите, если приложение опять зависнет."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за пропущенного вопроса клиенту пришлось переспрашивать.",
+   "deduction_reason": "Вопрос клиента остался без ответа и потребовал повторения.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Я спрашиваю, почему вывод ограничен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Передам вопрос на проверку. До свидания."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Завершение не содержит ответа на последний вопрос, итога или предложения дальнейшей помощи.",
+   "deduction_reason": "Последний вопрос клиента проигнорирован.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Я спрашиваю, почему вывод ограничен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Передам вопрос на проверку. До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор сообщил об ограничении на конкретном счёте без подтверждённой идентификации.",
+   "deduction_reason": "Раскрытие данных о счёте до проверки личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Я посмотрел: на вашем счёте есть ограничение на вывод."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент просил проверить, почему вывод средств не работает.",
+  "operator_actions": "Оператор уточнил симптом, затем сообщил об ограничении на счёте без подтверждения личности и передал вопрос на проверку.",
+  "outcome": "Главный вопрос не решён, клиент остался без ответа и без конкретного следующего шага."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 11,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 14,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить, почему вывод средств не работает и что с счётом",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 14,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12,
+   14
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19063,
+ "usage": {
+  "prompt_tokens": 5372,
+  "completion_tokens": 1785,
+  "cost": 0.005537
+ }
+}

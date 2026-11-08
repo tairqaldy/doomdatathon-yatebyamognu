@@ -1,0 +1,160 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор сразу поздоровался и представился на языке клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация не требовалась, так как клиенту давались общие инструкции по приложению.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все существенные вопросы закрыты, клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Нашёл, теперь понятно."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сохранял вежливый тон и отреагировал на конкретный вопрос клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог ведётся ясно, клиенту не пришлось переспрашивать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, скачайте реквизиты в нужной валюте и передайте их в банке для перевода."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Завершение не соответствует требованию: есть только вежливое прощание без итога или предложения помощи.",
+   "deduction_reason": "В заключительной реплике нет итога, следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Отлично. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Артём. Вам нужны реквизиты для пополнения, верно? В приложении откройте «Меню → Пополнить → Перевод по реквизитам»."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал, как пополнить брокерский счёт переводом через отделение банка и можно ли выбрать евро.",
+  "operator_actions": "Оператор представился, указал путь в приложении и подтвердил возможность скачать реквизиты в нужной валюте.",
+  "outcome": "Клиент подтвердил, что нашёл нужный вариант и ему стало понятно."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как пополнить брокерский счёт переводом через отделение банка?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Нужны в евро, там это выбрать можно?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 22840,
+ "usage": {
+  "prompt_tokens": 5341,
+  "completion_tokens": 2378,
+  "cost": 0.007013
+ }
+}

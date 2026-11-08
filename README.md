@@ -299,6 +299,21 @@ What to take from it:
 - **Percent agreement flatters one-class criteria**: C3 and C8 have a single answer in the blind set (κ n/a), so 100% there proves little. With 18 chats, a criterion at 100% is only known to be above ~82%.
 - **Held-out** means "no prompt change in response to these 7 dialogs", not "never seen": the split was frozen before the first eval-v5 call ([split.md](docs/playbook/split.md)), but the v4 and v5 rules were written after reading all 19. DEV also tells most stories three times (RU / KZ / EN), and every held-out family has a twin in the tuning set. The control chats will be new stories, and we have no labels for them.
 
+### Open-weight comparison
+
+The same eval-v5.3 prompt, 3 samples and vote, on the same labeled chats, with an open-weight model a bank can host on its own GPU. Production stays on `gpt-6-luna`; this shows the pipeline is not tied to one vendor. Any OpenAI-compatible server plugs in as `--model local:<id>` (`CQA_LOCAL_BASE_URL`, `CQA_LOCAL_API_KEY` in `lib/llm.js`). Numbers are on the 39 chats both models finished, so they differ slightly from the table above.
+
+| Same 39 chats (18 gold + 21 blind; 3 of 42 failed for Qwen) | `gpt-6-luna` (production) | `qwen3.8-27b` (open weights, via OpenRouter) |
+|---|---|---|
+| Gold strict · κ | **97.1%** · 0.96 | 94.1% · 0.92 |
+| Blind consensus strict · κ | **97.1%** · 0.96 | 95.9% · 0.95 |
+| C6 κ, gold / blind | 0.66 / 0.57 | 0.59 / 0.36 |
+| Gross errors | 7/7, 0 false | 7/7, 0 false (same 7 chats) |
+| Invalid JSON after a retry | 0 | 3 of 42 chats |
+| Cost per chat · latency p50 | $0.0068 · ≈ 30 s | $0.034 · 61 s |
+
+The open model loses 1–3 points, mostly on the judgement scales (C4, C6), and finds the same gross errors. We also tried `alemllm`, a Kazakhstan-hosted model on llm.alem.ai, through the same route: it returned the facts and checks but left out the answers block, because that server does not enforce the JSON schema (0 of 33 chats usable). Fixing that needs a response adapter in the evaluator, so it waits until after the control run. Run file: [`eval/runs/*qwen38-27b*`](eval/runs/), numbers: [`agreement-qwen38-27b.json`](eval/runs/agreement-qwen38-27b.json).
+
 ### How we got here
 
 ![Strict agreement per evaluator version, from a keyword mock to eval-v5.3](docs/media/charts/accuracy-history.svg)
@@ -337,7 +352,7 @@ Full pages and sources: [research index](docs/research/README.md). Where we coul
 | AIM support bot, navigation agent | `openai:gpt-6-luna` | ≈ $0.001 per turn (estimate) | ≈ 2 s chat; 4–8 s navigation |
 | AIM microphone | OpenAI `whisper-1`; fallback Nemotron 3.5 Transcribe | $0.006 per audio minute | p50 1.2 s / p95 2.5 s |
 | AIM voice | OpenAI `gpt-4o-mini-tts` | ≈ $0.015 per spoken minute (estimate) | first sentence 1.1–1.5 s |
-| Open models | `local:<model>` routes to any OpenAI-compatible server (`CQA_LOCAL_BASE_URL`), for an on-premise deployment | not measured here | |
+| Open-weight check | `qwen3.8-27b` via OpenRouter, same prompt; any OpenAI-compatible server through `local:<model>` | $0.034 per chat | p50 61 s |
 
 Sources: [eval-v5.1 run](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) (65 DEV fresh, 0 errors, $0.457), [eval-v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json) (22 fresh), [tone run](eval/runs/2026-11-07T15-29-59-107Z-DEV-tone.json), `eval/runs/voice-bench-*.json`, [TOOLING.md](docs/TOOLING.md). eval-v5.x costs about 6× eval-v4 and takes about 2× as long; we pay that for the accuracy above. The live API test matched: 33.7 s, $0.0064.
 
@@ -387,7 +402,7 @@ npm run results -- --file ~/Downloads/control.json --group <CONTROL_ID> --push  
 | **Official results format** | Exporter to "Формат JSON 1.0" plus an independent validator | [`eval/export-results.mjs`](eval/export-results.mjs), [`eval/validate-results.mjs`](eval/validate-results.mjs) |
 | **Any CRM or contact-center platform** | `POST /api/evaluate` with `{ conversation, checklist }` returns answers, evidence and explanations; the caller scores them with `scoring.js`. Shapes: [CONTRACTS.md](docs/CONTRACTS.md) | [Your own transcript](#evaluate-your-own-transcript) |
 | **Cost at scale** | Every model call cached by model, prompt, transcript, checklist and logic fingerprint: memory → committed files → Upstash Redis on production | [`lib/cache.js`](lib/cache.js), `/api/health` |
-| **On-premise model** | `local:<model>` sends the same prompts to any OpenAI-compatible server | [`lib/llm.js`](lib/llm.js) |
+| **On-premise model** | `local:<model>` sends the same prompts to any OpenAI-compatible server; Qwen 3.8 27B (open weights) scored 94.1% on the gold chats vs 97.1% ([comparison](#open-weight-comparison)) | [`lib/llm.js`](lib/llm.js) |
 | **Privacy** | Keys only in `.env` / Vercel env; `scripts/check.sh` blocks commits with secrets. The repo holds only the organizers' DEV set: no recordings (streamed from the organizers' host through `/api/audio`), no live-chat data (Redis or Postgres), no spoken AIM replies. The AIM navigation agent and its voice input mask card numbers and 12-digit IIN before anything reaches a model or the cache | [`lib/nav-agent.js`](lib/nav-agent.js) `maskPII()` |
 
 **Still to do for Dynamics 365:** `/admin/` uses root-absolute paths (`/shared/…`, `/api/…`); embedding needs them relative and one API base URL. We have not tested inside a Dynamics 365 org. For the handoff, Copilot Studio already passes the full conversation to a Dynamics 365 agent ([Microsoft Learn](https://learn.microsoft.com/microsoft-copilot-studio/advanced-hand-off)).

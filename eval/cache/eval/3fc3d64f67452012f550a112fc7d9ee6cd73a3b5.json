@@ -1,0 +1,153 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с «Сәлеметсіз бе» и представился именем Мұрат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Дополнительных уточняющих данных для ответа не требовалось, клиент сразу указал суть проблемы.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Идентификация не подтверждена, но оператор сразу сообщил, что видит ограничение на снятие средств.",
+   "deduction_reason": "Раскрытие сведений о конкретном счёте до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Клиенту дана только общая информация о передаче на проверку, но не объяснено, что будет дальше и когда придёт ответ.",
+   "deduction_reason": "Существенный вопрос остался открытым, корректный следующий шаг не дан.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "На опасение клиента о необходимости идентификации оператор ответил формально и без учёта сути.",
+   "deduction_reason": "Не отреагировал на конкретное беспокойство клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Мен әлі жеке басымды растаған жоқпын ғой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қазір растаудың қажеті жоқ."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось задать вопрос повторно/по существу, но оператор не ответил и не дал понятного продолжения.",
+   "deduction_reason": "Вопрос клиента остался без ответа, диалог не продолжился.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Ал себебі қандай?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не назвал, что будет дальше.",
+   "deduction_reason": "Нет итога или следующего шага после последнего вопроса клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор сообщил конкретное ограничение по счёту клиента до идентификации.",
+   "deduction_reason": "Раскрытие конфиденциальных данных счёта.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, почему в его счёте закрыто снятие средств.",
+  "operator_actions": "Оператор сообщил о наличии ограничения до идентификации, затем сказал, что отправит вопрос на проверку, и попрощался.",
+  "outcome": "Причина ограничения не раскрыта, клиент остался без ответа и конкретного следующего шага."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 9,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 12,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Почему в его счёте закрыто/недоступно снятие денег и какова причина ограничения.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 19746,
+ "usage": {
+  "prompt_tokens": 5500,
+  "completion_tokens": 2423,
+  "cost": 0.006553
+ }
+}

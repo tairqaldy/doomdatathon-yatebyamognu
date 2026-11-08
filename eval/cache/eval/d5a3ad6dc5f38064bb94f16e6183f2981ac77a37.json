@@ -1,0 +1,183 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор поздоровался, но не представился в первом ответе.",
+   "deduction_reason": "Нет представления в первой реплике.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      9
+     ]
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не учёл уже известные детали и переспросил.",
+   "deduction_reason": "Спросил уже известное.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      9
+     ]
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Для доступа к счёту откройте tradernet.global или мобильное приложение Freedom Broker."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретный ответ и подтвердил, что зашёл.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      11,
+      11
+     ]
+    },
+    {
+     "kind": "range",
+     "range": [
+      12,
+      12
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал на раздражение клиента из-за повторного вопроса.",
+   "deduction_reason": "Не признал повторный вопрос и не извинился.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      10
+     ]
+    },
+    {
+     "kind": "range",
+     "range": [
+      11,
+      11
+     ]
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить информацию из-за вопроса оператора.",
+   "deduction_reason": "Клиенту пришлось переспрашивать/повторять.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      9
+     ]
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      10
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Завершение содержит только прощание без итога или предложения помощи.",
+   "deduction_reason": "Нет итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      13,
+      13
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал вход в личный кабинет на сайте Freedom Finance Global.",
+  "operator_actions": "Оператор переспросил о месте, затем указал tradernet.global или мобильное приложение.",
+  "outcome": "Клиент подтвердил, что зашёл, но оператор не представился, не извинился за повторный вопрос и не подвёл итог."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где личный кабинет? На сайте компании в меню не вижу входа.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_asked_known_info"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "asked_known_info",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 61123,
+ "usage": {
+  "prompt_tokens": 5313,
+  "completion_tokens": 6652,
+  "cost": 0.01591
+ }
+}

@@ -1,0 +1,175 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Вижу D-счёт и торговый. С какого покупать акции?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, так как обсуждался общий порядок использования счетов.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенные вопросы клиента решены, клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Понятно, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сохранял вежливый тон, жалоб или неудобств со стороны клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы были понятными и связными, переспросов из-за оператора не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "То есть в приказе надо смотреть на торговый счёт?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "В финале нет итога, следующего шага или предложения помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в репликах оператора не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "operator_actions": "Оператор объяснила, что D-счёт не используется напрямую, а для покупки акций ориентироваться на торговый счёт.",
+  "outcome": "Клиент поблагодарил и подтвердил понимание.",
+  "reason": "Клиент спрашивал, с какого счёта покупать акции."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "request": "Вижу D-счёт и торговый. С какого покупать акции?",
+    "status": "resolved",
+    "turn": 0
+   },
+   {
+    "request": "А если деньги сейчас видны на D-счёте?",
+    "status": "resolved",
+    "turn": 4
+   }
+  ],
+  "client_reasks": [
+   {
+    "cause": "confirmation",
+    "turn": 10
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 34587,
+ "usage": {
+  "prompt_tokens": 5318,
+  "completion_tokens": 7394,
+  "cost": 0.017163
+ }
+}
