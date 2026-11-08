@@ -86,14 +86,14 @@
   .cover h1 { font-size: 54pt; letter-spacing: -0.035em; line-height: 1; margin-bottom: 5mm; }
   .cover .sub { font-size: 15pt; color: var(--ink); font-weight: 500; margin-bottom: 6mm; letter-spacing: -0.01em; }
   .cover .pitch { font-size: 11.5pt; line-height: 1.5; max-width: 150mm; color: var(--ink-2); }
-  .cover-shot { margin: 12mm 16mm 0; border-radius: 3mm; overflow: hidden; border: .3mm solid var(--line-2); box-shadow: 0 2mm 8mm rgba(14,21,28,.10); }
+  .cover-shot { height: 96mm; margin: 12mm 16mm 0; border-radius: 3mm; overflow: hidden; border: .3mm solid var(--line-2); }
   .cover-shot img { display: block; width: 100%; }
-  .cover-bottom { margin-top: auto; background: var(--forest); color: #dfe9e3; padding: 9mm 16mm 10mm; display: grid; grid-template-columns: 1.25fr 1fr; gap: 8mm; }
+  .cover-bottom { margin-top: auto; background: var(--forest); color: #dfe9e3; padding: 9mm 16mm 10mm; display: grid; grid-template-columns: 1fr 1.15fr; gap: 8mm; }
   .cover-bottom h4 { color: #fff; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2.4mm; opacity: .75; }
   .cover-bottom .team { font-size: 10.5pt; color: #fff; line-height: 1.55; }
   .cover-bottom .team b { font-weight: 600; }
   .cover-bottom a { color: #9be3b4; }
-  .cover-bottom .links { font-size: 9pt; line-height: 1.75; }
+  .cover-bottom .links { font-size: 9pt; line-height: 1.75; white-space: nowrap; }
 
   /* stat tiles */
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.4mm; margin: 2mm 0 6mm; }
@@ -127,7 +127,7 @@
   .branch .box { padding: 2.6mm 3mm; font-size: 7.8pt; line-height: 1.35; }
   .branch .box b { color: var(--ink); }
 
-  .formula { font-family: var(--mono); font-size: 9pt; color: var(--ink); background: #fff; border: .3mm solid var(--line); border-radius: 2mm; padding: 2.2mm 3mm; display: inline-block; margin: 1mm 0 2mm; }
+  .formula { white-space: nowrap; font-family: var(--mono); font-size: 7.8pt; color: var(--ink); background: #fff; border: .3mm solid var(--line); border-radius: 2mm; padding: 2.2mm 3mm; display: inline-block; margin: 1mm 0 2mm; }
   .cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 6mm; }
   .k-list { display: grid; grid-template-columns: 30mm 1fr; row-gap: 1.6mm; column-gap: 3mm; font-size: 8.4pt; margin: 0; }
   .k-list dt { color: var(--ink-3); }
@@ -224,21 +224,21 @@
   <p class="lead">Все шаги работают в <a href="https://freedom-cqa.vercel.app/admin/">/admin/</a> на продакшене. Начните с экрана «Обзор»: панель «Для жюри · Сценарий проверки» ведёт на каждый шаг.</p>
 
   <div class="cycle">
-    <div class="cyc"><div class="i">1</div><b>Чек-лист</b><span>критерии, веса, N/A</span></div>
-    <div class="cyc"><div class="i">2</div><b>Диалоги</b><span>набор, текст, JSON, живой чат</span></div>
+    <div class="cyc"><div class="i">1</div><b>Чек-лист</b><span>веса, N/A</span></div>
+    <div class="cyc"><div class="i">2</div><b>Диалоги</b><span>набор, текст</span></div>
     <div class="cyc"><div class="i">3</div><b>Оценка</b><span>≈ 30 с на чат</span></div>
-    <div class="cyc"><div class="i">4</div><b>Результаты</b><span>баллы, доказательства</span></div>
-    <div class="cyc"><div class="i">5</div><b>Апелляция</b><span>критерий + комментарий</span></div>
-    <div class="cyc"><div class="i">6</div><b>Ручная переоценка</b><span>решение проверяющего</span></div>
+    <div class="cyc"><div class="i">4</div><b>Результаты</b><span>доказательства</span></div>
+    <div class="cyc"><div class="i">5</div><b>Апелляция</b><span>комментарий</span></div>
+    <div class="cyc"><div class="i">6</div><b>Переоценка</b><span>вручную</span></div>
   </div>
   <div class="loop">6 → 4: <b>новый итог</b> · 1 → 3: <b>изменённый критерий оценивается заново</b></div>
 
   <table>
     <tr><th style="width:28mm">Шаг</th><th style="width:47mm">Где в продукте</th><th>Что сделать и что увидеть</th></tr>
-    <tr><td>1 · Настройка чек-листа</td><td>Чек-лист <code>/admin/#/checklist</code></td><td>Поменять вес в строке критерия, «Изменить» для текста, типа ответа, шкалы, правила N/A; добавить, заменить, удалить. Вес пересчитывает все итоги сразу. Изменённый критерий: «Сохранить vN и переоценить» (два чата ≈ 35 с).</td></tr>
+    <tr><td>1 · Настройка чек-листа</td><td>Чек-лист <code>/admin/#/checklist</code></td><td>Вес в строке критерия, «Изменить» для текста, типа ответа, шкалы и N/A; добавить, заменить, удалить. Вес пересчитывает итоги сразу, изменённый критерий: «Сохранить vN и переоценить» (два чата ≈ 35 с).</td></tr>
     <tr><td>2 · Получение диалогов</td><td>Загрузка диалогов <code>/admin/#/import</code>; Живые чаты</td><td>«Набор по group_id» берёт набор организаторов через наш <code>/api/dataset</code>, «Вставить текст» и «JSON-файл» принимают свой транскрипт. Чат из <code>/support/</code> после передачи оператору попадает в «Живые чаты».</td></tr>
     <tr><td>3 · Оценка</td><td>Карточка → «Оценить заново»; у загруженного диалога «Оценить AI-агентом»</td><td>Например, <code>p1-ru-009</code>. Строка запуска показывает модель, время, стоимость и пометку о новом запросе к модели.</td></tr>
-    <tr><td>4 · Результаты</td><td>Диалоги → любая строка; Обзор; Диалоги → «Грубые ошибки»</td><td>Итог, «Как посчитан итог» (доля каждого критерия по весу, N/A заштрихован), итоги по разделам, «Причина снижения оценки», красный блок грубой ошибки, голоса «3 из 3» или «2 из 3 · проверьте». Клик по снижению прокручивает транскрипт к реплике и подсвечивает её.</td></tr>
+    <tr><td>4 · Результаты</td><td>Диалоги → любая строка; Обзор; Диалоги → «Грубые ошибки»</td><td>Итог, «Как посчитан итог», разделы, «Причина снижения оценки», блок грубой ошибки, голоса «3 из 3» или «2 из 3 · проверьте». Клик по снижению прокручивает транскрипт к реплике и подсвечивает её.</td></tr>
     <tr><td>5 · Апелляция</td><td>Карточка → «Оспорить» у критерия</td><td>Выбрать критерий, написать комментарий, сохранить. В «Апелляциях» проверяющий видит спорный ответ, комментарий и фрагмент диалога.</td></tr>
     <tr><td>6 · Ручная переоценка</td><td>Роль «Проверяющий» → «Принять решение»</td><td>Подтвердить или изменить ответ с причиной. Итог пересчитывается без вызова модели. Карточка показывает исходный балл, решение и итог.</td></tr>
   </table>
@@ -267,8 +267,8 @@
     <div>
       <h3>Через API</h3>
       <p><code>POST /api/evaluate</code> принимает <code>{ conversation, checklist }</code>. Чек-лист чатов лежит на продакшене, клонировать ничего не нужно.</p>
-<pre><span class="c"># dialog.json: conversation_id, channel, language,
-# transcript: [{timestamp, speaker, text}]</span>
+<pre><span class="c"># dialog.json: conversation_id, channel,
+# language, transcript[{timestamp, speaker, text}]</span>
 curl -s https://freedom-cqa.vercel.app/data/checklists/freedom-chat-v1.json -o checklist.json
 jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
   '{conversation: $conv[0], checklist: $cl[0]}' \
@@ -297,20 +297,20 @@ jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
 <section class="page">
   <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>03 · Как работает оценка</span></div>
   <h2><span class="n">03</span>Как работает оценка</h2>
-  <p class="lead">Модель отвечает на вопросы чек-листа и показывает, где это видно в диалоге. Арифметику делает код. Оценивается только оператор; реплики бота и системные события служат контекстом.</p>
+  <p class="lead">Модель отвечает на вопросы чек-листа и показывает реплику-доказательство, арифметику делает код. Оценивается только оператор; бот и система служат контекстом.</p>
 
   <div class="flow">
-    <div class="node in"><div class="k">вход</div><b>Транскрипт</b><span>чат или звонок, RU / KZ / EN, чек-лист JSON</span></div>
+    <div class="node in"><div class="k">вход</div><b>Транскрипт</b><span>RU / KZ / EN + чек-лист JSON</span></div>
     <div class="arr">→</div>
-    <div class="node"><div class="k">1 · модель</div><b>Сначала факты</b><span>запросы и исход, реплика идентификации, раскрытие данных, как закончился чат</span></div>
+    <div class="node"><div class="k">1 · модель</div><b>Факты</b><span>запросы, идентификация, раскрытие, завершение</span></div>
     <div class="arr">→</div>
-    <div class="node"><div class="k">2 · модель</div><b>3 прогона</b><span>GPT-6 Luna, независимо; по каждому критерию проверка и ответ</span></div>
+    <div class="node"><div class="k">2 · модель</div><b>3 прогона</b><span>GPT-6 Luna, проверка и ответ по критерию</span></div>
     <div class="arr">→</div>
-    <div class="node"><div class="k">3 · код</div><b>Проверка цитат</b><span>реплика существует, цитата совпадает; иначе 1 повторный запрос</span></div>
+    <div class="node"><div class="k">3 · код</div><b>Цитаты</b><span>реплика есть, цитата совпадает</span></div>
     <div class="arr">→</div>
-    <div class="node"><div class="k">4 · код</div><b>Голосование</b><span>большинство по критерию, при ничьей медианная ступень</span></div>
+    <div class="node"><div class="k">4 · код</div><b>Голос</b><span>большинство, при ничьей медиана</span></div>
     <div class="arr">→</div>
-    <div class="node code"><div class="k">5 · код</div><b>Баллы</b><span><code>scoring.js</code>: веса, N/A, округление</span></div>
+    <div class="node code"><div class="k">5 · код</div><b>Баллы</b><span><code>scoring.js</code>: веса, N/A</span></div>
   </div>
   <div class="branch">
     <div class="box red"><span class="tag red">C8</span> <b>Грубая ошибка</b> идёт отдельным красным флагом. Баллов не даёт и итог не обнуляет.</div>
@@ -320,11 +320,11 @@ jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
 
   <table>
     <tr><th style="width:32mm">Шаг</th><th>Что делает</th><th style="width:58mm">Зачем</th></tr>
-    <tr><td>Сначала факты</td><td>Схема ответа заставляет модель заполнить факты диалога до любого вердикта, затем строку <code>checks</code> и ответ по каждому критерию.</td><td>Проверяемые подвопросы до оценки делают LLM-судью надёжнее (<a href="https://arxiv.org/abs/2403.18771">CheckEval</a>, <a href="https://arxiv.org/abs/2303.16634">G-Eval</a>).</td></tr>
-    <tr><td>Процедуры критериев</td><td>Для каждого критерия записана процедура решения по смыслу, с подсказками на RU / KZ / EN (<a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/playbook/scoring-playbook.md">scoring playbook</a>).</td><td>Изменённый или новый критерий оценивается по своему тексту: замена критерия не требует правок кода.</td></tr>
-    <tr><td>Проверка цитат</td><td>Номер реплики должен существовать, цитата совпадать, у каждого ответа со снижением есть ссылка. Не исправилось за 1 повтор → ошибка, а не половина результата.</td><td>Организаторы: не выдумывать факты (#2981).</td></tr>
-    <tr><td>Правила в коде</td><td>Только для неизменённых официальных критериев: C7 по фактам о завершении; раскрытие данных до идентификации → C3 «нет» и C8 «да». При правке критерия правила отключаются.</td><td>Механические правила надёжнее в коде (<a href="https://mlflow.org/articles/llm-judge-calibration/">MLflow</a>).</td></tr>
-    <tr><td>3 прогона и голос</td><td>Доля голосов возвращается и видна в карточке: «3 из 3» или «2 из 3 · проверьте».</td><td>Большинство из 3 прогонов точнее одного (<a href="https://arxiv.org/pdf/2510.27106">Rating Roulette</a>). eval-v4 менял 6,6% ответов между прогонами, v5.x по оценке около 2%.</td></tr>
+    <tr><td>Сначала факты</td><td>Схема заставляет модель заполнить факты диалога до вердикта, затем <code>checks</code> и ответ.</td><td>Подвопросы до оценки повышают надёжность (<a href="https://arxiv.org/abs/2403.18771">CheckEval</a>, <a href="https://arxiv.org/abs/2303.16634">G-Eval</a>)</td></tr>
+    <tr><td>Процедуры</td><td>Процедура решения по смыслу для каждого критерия, подсказки RU / KZ / EN (<a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/playbook/scoring-playbook.md">playbook</a>).</td><td>Новый критерий оценивается по своему тексту, без правок кода</td></tr>
+    <tr><td>Проверка цитат</td><td>Реплика существует, цитата совпадает; 1 повторный запрос, затем ошибка, а не половина результата.</td><td>Не выдумывать факты (#2981)</td></tr>
+    <tr><td>Правила в коде</td><td>Для неизменённых официальных критериев: C7 по фактам завершения; раскрытие до идентификации → C3 «нет», C8 «да».</td><td>Механика надёжнее в коде (<a href="https://mlflow.org/articles/llm-judge-calibration/">MLflow</a>)</td></tr>
+    <tr><td>3 прогона и голос</td><td>Доля голосов видна в карточке: «3 из 3» или «2 из 3 · проверьте». eval-v4 менял 6,6% ответов между прогонами, v5.x около 2%.</td><td>Большинство из 3 точнее одного (<a href="https://arxiv.org/pdf/2510.27106">Rating Roulette</a>)</td></tr>
   </table>
 
   <div class="cols" style="margin-top:5mm">
@@ -413,7 +413,7 @@ jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
   </table>
   <p class="tiny" style="margin-top:2mm">Strict: тот же ответ, что в эталоне. Lenient: эталон или указанная в нём допустимая альтернатива. κ: каппа Коэна, согласие с поправкой на случайность. Разница 97,2% и 95,4% даёт один звонок эталона, p4-ru-001 (C4, C5, C6).</p>
 
-  <div class="cols" style="margin-top:4mm; align-items:start">
+  <div class="cols" style="margin-top:4mm; align-items:start; grid-template-columns: 1.6fr 1fr">
     <figure><div class="chart"><img src="../media/charts/accuracy-overall.svg" alt="Общее совпадение: held-out, весь эталон, слепой консенсус"></div><figcaption>Совпадение strict: eval-v4 и eval-v5.3 на трёх проверках.</figcaption></figure>
     <div class="box mint small">
       <h4>Как читать</h4>
@@ -468,7 +468,7 @@ jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
   <h2><span class="n">05</span>Звонки и тон голоса</h2>
   <p class="lead">Звонки оцениваются по той же логике, адаптированной к речи (решение организаторов). 5 DEV-звонков — реальные записи с транскриптами организаторов.</p>
 
-  <figure><div class="shot"><img src="../media/call-audio.jpg" alt="Карточка звонка с таймлайном и плеером"></div><figcaption>Карточка звонка: таймлайн по говорящим и плеер. Клик по доказательству переводит запись на этот момент.</figcaption></figure>
+  <figure><div class="shot"><img style="height:86mm;object-fit:cover;object-position:top" src="../media/call-audio.jpg" alt="Карточка звонка с таймлайном и плеером"></div><figcaption>Карточка звонка: таймлайн по говорящим и плеер. Клик по доказательству переводит запись на этот момент.</figcaption></figure>
 
   <div class="grid2" style="margin-top:5mm">
     <div>
