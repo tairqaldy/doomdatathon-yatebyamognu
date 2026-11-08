@@ -638,8 +638,20 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 
 /* ---------- analyst ---------- */
 .analyst { display: flex; flex-direction: column; gap: 14px; max-width: 920px; }
-.analyst__intro { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
-.analyst__intro p { font-size: 14.5px; }
+.analyst__intro { padding: 28px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.analyst__lead { display: flex; flex-direction: column; gap: 6px; max-width: 56ch; }
+.analyst__lead h2 { font-size: 18px !important; }
+.analyst__lead p { font-size: 14px; }
+.analyst__intro .chips { justify-content: center; }
+.qa__head { display: flex; align-items: flex-start; gap: 10px; }
+.qa__ic { display: grid; place-items: center; width: 28px; height: 28px; flex: none; border-radius: 8px; background: var(--bg); color: var(--ink-3); }
+.qa__ic .ic { width: 15px; height: 15px; }
+.qa__head .qa__q { padding-top: 3px; }
+.qa__wait { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); }
+.qa--error .banner { margin: 0; }
+.action__fx { margin-top: 4px !important; font-size: 12.5px !important; color: var(--good-ink) !important; }
+.qa__risks summary { font-size: 13px; color: var(--ink-3); cursor: pointer; }
+.qa__risks .risks { margin-top: 6px; font-size: 13.5px; color: var(--ink-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip-btn { padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 99px; background: #fff; font-size: 13.5px; color: var(--ink-2); cursor: pointer; text-align: left; transition: background .2s, border-color .2s; }
 .chip-btn:hover { background: var(--good-bg); border-color: #cfe9d6; color: var(--forest); }
