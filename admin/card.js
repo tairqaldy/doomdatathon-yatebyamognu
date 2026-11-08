@@ -84,6 +84,10 @@ export function viewCard(view, convId, query) {
     : 'Нажмите «Оценить заново», чтобы оценил AI';
   const nChanged = decided.filter((a) => a.status === 'changed').length, nConfirmed = decided.filter((a) => a.status === 'confirmed').length;
   const secs = finalScore.sections.filter((x) => x.max > 0);
+  // each criterion is explained once: point deductions in «Причина снижения», the fired gross flag in its red banner,
+  // everything else (full points, N/A, not evaluated) in «Остальные критерии»
+  const ddPts = dd.filter((d) => !d.gross);
+  const restCrits = crits.filter((c) => !ddPts.some((d) => d.c.id === c.id) && !(c.type === 'flag' && finalAnswers[c.id] === 'yes'));
   const clLabel = checklistLabel(cl);
   setHead('Анализ диалога', `${conv.conversation_id} · ${clLabel}`);
 
@@ -100,14 +104,15 @@ export function viewCard(view, convId, query) {
       </div>
     </header>
 
-    <section class="card timeline-card" aria-label="Хронология разговора">
+    <section class="card timeline-card ${call ? '' : 'timeline-card--chat'}" aria-label="Хронология разговора">
       <div class="timeline" id="timeline">
         ${['client', 'operator', 'bot'].map((sp) => `<div class="track"><span class="track__label">${SPK[sp]}</span><div class="track__lane" data-lane="${sp}">${
           conv.transcript.map((m, i) => (m.speaker !== sp ? '' : (() => {
             const x = (offsetSec(conv, i) / dur) * 100; const nx = i + 1 < conv.transcript.length ? (offsetSec(conv, i + 1) / dur) * 100 : 100;
             const w = Math.max(0.8, Math.min(nx - x, Math.max(1.2, m.text.length / 9) * (60 / dur) * 1.5, 14));
             const bars = Math.max(2, Math.round(w * 1.4)); const h0 = parseInt(strHash(m.text).slice(0, 4), 36);
-            return `<button type="button" class="seg-bar seg-bar--${sp}" style="left:${x}%;width:${w}%" data-jump="${i}" aria-label="Реплика ${i}: ${esc(m.text.slice(0, 60))}" title="#${i} ${esc(m.text.slice(0, 80))}">${Array.from({ length: bars }, (_, k) => `<i style="height:${30 + ((h0 >> (k % 12)) % 7) * 10 + (k % 3) * 5}%"></i>`).join('')}</button>`;
+            // a chat has no audio: plain blocks, no drawn waveform
+            return `<button type="button" class="seg-bar seg-bar--${sp} ${call ? '' : 'seg-bar--flat'}" style="left:${x}%;width:${w}%" data-jump="${i}" aria-label="Реплика ${i}: ${esc(m.text.slice(0, 60))}" title="#${i} ${esc(m.text.slice(0, 80))}">${call ? Array.from({ length: bars }, (_, k) => `<i style="height:${30 + ((h0 >> (k % 12)) % 7) * 10 + (k % 3) * 5}%"></i>`).join('') : ''}</button>`;
           })())).join('')}</div></div>`).join('')}
         <div class="track track--events"><span class="track__label">Снижения</span><div class="track__lane">
           ${conv.transcript.map((m, i) => (m.speaker === 'system' ? `<button type="button" class="evt" style="left:${(offsetSec(conv, i) / dur) * 100}%" data-jump="${i}" aria-label="Событие: ${esc(m.text.slice(0, 60))}" title="${esc(m.text)}"></button>` : '')).join('')}
@@ -143,8 +148,6 @@ export function viewCard(view, convId, query) {
       </section>
 
       <div class="side">
-        ${finalScore.gross_error ? (() => { const g = crits.find((c) => c.type === 'flag' && finalAnswers[c.id] === 'yes'); const i = g ? evidenceIdx(E, g) : null; return `<div class="banner banner--bad">${icon('alert')}<div><b>${esc(g && !/груб/i.test(g.title) ? `Грубая ошибка: ${g.title}` : 'Грубая ошибка')}</b><p>${esc(reasonOf(E, g))}</p>${i != null ? evChip(conv, i, answers[g.id]?.evidence?.find((e) => e.turn_index === i)?.quote) : ''}</div></div>`; })() : ''}
-
         <section class="card score-card" aria-labelledby="score-h">
           <header class="card__head"><h2 id="score-h">Итоговая оценка</h2><span class="l-chip ${E.src === 'ai' ? 'l-chip--ok' : ''}">${E.src === 'ai' ? 'AI' : 'Без AI'}</span></header>
           <div class="score-head">
@@ -174,11 +177,14 @@ export function viewCard(view, convId, query) {
             : single?.done ? `<div class="run run--ok" role="status">${icon('check')}<div><b>Оценено сейчас за ${fmt(single.done.ms / 1000, 1)} с</b><span class="muted small">${esc(modelLabel(single.done.model))}${single.done.cost ? ` · $${single.done.cost.toFixed(4)}` : ' · из кэша, $0'}${single.done.delta != null ? (Math.abs(single.done.delta) < 0.005 ? ' · итог не изменился' : ` · итог ${signed(single.done.delta)}`) : ''}</span></div></div>` : ''}
         </section>
 
+        <!-- gross-error flag: carries no points, shown as its own red block under the score -->
+        ${finalScore.gross_error ? (() => { const g = crits.find((c) => c.type === 'flag' && finalAnswers[c.id] === 'yes'); const i = g ? evidenceIdx(E, g) : null; return `<div class="banner banner--bad">${icon('alert')}<div><b>${esc(g && !/груб/i.test(g.title) ? `Грубая ошибка: ${g.title}` : 'Грубая ошибка')}</b><p>${esc(reasonOf(E, g))}</p>${i != null ? evChip(conv, i, answers[g.id]?.evidence?.find((e) => e.turn_index === i)?.quote) : ''}</div></div>`; })() : ''}
+
         <section class="card reasons-card" aria-labelledby="ded-h">
-          <header class="card__head"><h2 id="ded-h">Причина снижения оценки</h2><span class="muted small">${dd.length ? `${dd.length} ${plural(dd.length, ['пункт', 'пункта', 'пунктов'])}` : ''}</span></header>
-          ${dd.length ? `<div class="ded-list">${dd.map((d) => { const i = evidenceIdx(E, d.c); const ap = lastAppeal(d.c.id); const q = answers[d.c.id]?.evidence?.find((e) => e.turn_index === i || e.range?.[0] === i)?.quote; return `
+          <header class="card__head"><h2 id="ded-h">Причина снижения оценки</h2><span class="muted small">${ddPts.length ? `${ddPts.length} ${plural(ddPts.length, ['пункт', 'пункта', 'пунктов'])}` : ''}</span></header>
+          ${ddPts.length ? `<div class="ded-list">${ddPts.map((d) => { const row = finalScore.criteria.find((x) => x.criterion_id === d.c.id); const i = evidenceIdx(E, d.c); const ap = lastAppeal(d.c.id); const q = answers[d.c.id]?.evidence?.find((e) => e.turn_index === i || e.range?.[0] === i)?.quote; return `
             <article class="ded ${d.gross ? 'ded--gross' : ''}">
-              <header class="ded__head"><b>${esc(d.c.title)}</b><span class="ded__lost num">${d.gross ? 'грубая ошибка' : `−${fmt(d.lost, 2)}`}</span></header>
+              <header class="ded__head"><button type="button" class="crit__title" data-open="${d.c.id}"><span class="crit__n mono">${String(d.c.order).padStart(2, '0')}</span>${esc(d.c.title)}</button>${answerBadge(d.c, finalAnswers[d.c.id])}<span class="ded__lost num" title="баллы / вес после перераспределения N/A">−${fmt(d.lost, 2)}<small> · ${fmt(row?.points, 2)} / ${fmt(row?.effective_weight, 2)}</small></span></header>
               <p class="ded__why clamp">${esc(reasonOf(E, d.c))}</p>
               ${i != null ? evChip(conv, i, q) : ''}
               <div class="ded__foot">${ap?.status === 'open' ? `<span class="l-chip l-chip--warn">Апелляция на рассмотрении</span>${reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${ap.id}">Принять решение</button>` : ''}` : ap?.status === 'changed' ? '<span class="l-chip l-chip--info">Оценка изменена</span>' : ap?.status === 'confirmed' ? '<span class="l-chip">Подтверждено проверяющим</span>' : `<button class="btn btn--s btn--appeal" type="button" data-appeal="${d.c.id}">${icon('appeals')}Оспорить</button>`}</div>
@@ -187,8 +193,8 @@ export function viewCard(view, convId, query) {
         </section>
 
         <section class="card crit-card" aria-labelledby="crit-h">
-          <header class="card__head"><h2 id="crit-h">Обоснование по каждому критерию</h2><span class="muted small">баллы / вес</span></header>
-          <div class="crit-list">${crits.map((c) => {
+          <header class="card__head"><h2 id="crit-h">${ddPts.length || gross ? 'Остальные критерии' : 'Обоснование по каждому критерию'}</h2><span class="muted small">баллы / вес</span></header>
+          <div class="crit-list">${restCrits.map((c) => {
             const row = finalScore.criteria.find((x) => x.criterion_id === c.id); const a = finalAnswers[c.id]; const r = answers[c.id] || {};
             const ap = lastAppeal(c.id); const ev = (r.evidence || []).find((e) => e.kind === 'message' || e.kind === 'range'); const na = (r.evidence || []).find((e) => e.kind === 'na_condition');
             const i = ev ? (ev.kind === 'message' ? ev.turn_index : ev.range[0]) : null;

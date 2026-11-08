@@ -221,6 +221,13 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .fix__why { font-size: 14px; }
 .fix__links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
 .fix-none { padding: 12px 20px 18px; }
+.loss-why { margin: 4px 20px 18px; padding-top: 12px; border-top: 1px solid var(--line); }
+.loss-why__list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; counter-reset: lw; }
+.loss-why__list li { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 2px 8px; align-items: baseline; font-size: 13.5px; counter-increment: lw; }
+.loss-why__list li::before { content: counter(lw); grid-row: span 2; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--bg); font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.loss-why__list b { font-weight: 600; }
+.loss-why__t { grid-column: 2; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.loss-why__list .link { grid-column: 3; grid-row: 1; }
 
 /* jury scenario: six one-click steps of the cycle the jury checks */
 .jury { margin-bottom: 16px; padding: 14px 16px 16px; border-color: #cfe9d6; background: linear-gradient(180deg, #fbfdfb, #fff); animation: rise .3s var(--l-ease-out); }
@@ -463,6 +470,18 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .more-btn { align-self: flex-start; margin-top: -4px; padding: 0; border: 0; background: none; color: var(--good-ink); font-size: 12.5px; font-weight: 500; cursor: pointer; }
 .more-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
 .understand__item .more-btn { margin-top: 2px; }
+
+/* chats: flat speaker blocks, no player (no audio); calls keep the waveform and the player */
+.seg-bar--flat { top: 7px; bottom: 7px; border-radius: 4px; opacity: .85; }
+.seg-bar--flat.seg-bar--client { background: var(--client); } .seg-bar--flat.seg-bar--operator { background: var(--operator); } .seg-bar--flat.seg-bar--bot { background: var(--bot); }
+.timeline-card--chat { padding-bottom: 12px; }
+.timeline-card--chat .player { display: none; }
+.timeline-card--chat .track__lane { height: 24px; }
+.timeline-card--chat .seg-bar--flat { top: 6px; bottom: 6px; }
+.ded__head { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; }
+.ded__lost small { font-weight: 400; color: var(--ink-3); }
+.understand .clamp { -webkit-line-clamp: 2; }
+.understand__item { padding: 10px 14px; }
 
 .btn--appeal { border-color: #ecd5a8; background: var(--mid-bg); color: var(--mid-ink); }
 .btn--appeal:hover { background: #fbe9c6; border-color: #e0bd78; color: #6e470b; }
@@ -721,7 +740,7 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
   /* dialog card: one column; score and reasons first, then transcript, then the full justification */
   .analysis { display: flex; flex-direction: column; align-items: stretch; }
   .side { display: contents; }
-  .side > .banner { order: 0; } .score-card { order: 1; } .reasons-card { order: 2; } .tx-card { order: 3; position: relative; top: 0; } .crit-card { order: 4; }
+  .score-card { order: 1; } .side > .banner { order: 2; } .reasons-card { order: 3; } .tx-card { order: 4; position: relative; top: 0; } .crit-card { order: 5; }
   .tx { max-height: 480px; }
 }
 @media (max-width: 1180px) {
