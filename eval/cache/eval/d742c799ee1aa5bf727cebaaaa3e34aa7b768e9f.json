@@ -1,0 +1,181 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор установил контакт в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не выявил потребность в ответе о комиссии, хотя клиент прямо спрашивал о ней.",
+   "deduction_reason": "Главный запрос о комиссии остался без ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Откройте «Кабинет», название тарифа под ФИО."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, так как оператор не раскрывал данные счёта и не выполнял защищённое действие.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Откройте «Кабинет», название тарифа под ФИО."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса закрыта, но существенный вопрос о комиссии остался открытым.",
+   "deduction_reason": "Комиссия не объяснена.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Откройте «Кабинет», название тарифа под ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Да, «Инвестор». А комиссию где искать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, жалоб или беспокойства клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за пропущенного вопроса клиенту пришлось переспросить, а вопрос остался без ответа.",
+   "deduction_reason": "Вопрос о комиссии не был закрыт.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Да, «Инвестор». А комиссию где искать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не ответил на последний вопрос клиента.",
+   "deduction_reason": "Последний вопрос клиента проигнорирован.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Да, «Инвестор». А комиссию где искать?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Название тарифа смотрите там же. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Добрый день! Я Лера из поддержки. Вы через приложение или веб-версию смотрите?"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал про комиссию на тарифе Инвестор и где посмотреть свой тариф.",
+  "operator_actions": "Оператор указал, где виден тариф, но не ответил о комиссии.",
+  "outcome": "Вопрос о комиссии остался открытым."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 13,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": 14,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Какая комиссия на тарифе инвестор? Интересует покупка акций.",
+    "status": "open"
+   },
+   {
+    "turn": 4,
+    "request": "И где вообще глянуть свой тариф?",
+    "status": "resolved"
+   },
+   {
+    "turn": 13,
+    "request": "А комиссию где искать?",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 13,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 10,
+  "need_missed_kind": "ignored_stated_details",
+  "need_missed_turn": 12
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 66143,
+ "usage": {
+  "prompt_tokens": 5341,
+  "completion_tokens": 7512,
+  "cost": 0.018887
+ }
+}

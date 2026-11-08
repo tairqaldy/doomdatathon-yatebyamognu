@@ -1,0 +1,128 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": []
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент чётко запросил реквизиты, оператор не должен был уточнять лишнее.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Деректемелер қайда?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Это общая навигация в приложении, без раскрытия данных счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "«Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенный запрос решён, клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": []
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор отреагировал на проблему и конкретную валюту.",
+   "deduction_reason": "",
+   "evidence": []
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог ясный и связный, клиент продолжил без повторений.",
+   "deduction_reason": "",
+   "evidence": []
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Финальная реплика содержит только прощание без итога или предложения помощи.",
+   "deduction_reason": "В финале нет итога/следующего шага или предложения дальнейшей помощи.",
+   "evidence": []
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": []
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал реквизиты для банковского пополнения брокерского счёта в тенге.",
+  "operator_actions": "Оператор дал путь в меню и инструкцию по выбору валюты.",
+  "outcome": "Клиент подтвердил, что нашёл нужное."
+ },
+ "problems": [
+  "c01: N/A evidence for a non-N/A answer",
+  "c01: no transcript evidence",
+  "c04: N/A evidence for a non-N/A answer",
+  "c04: no transcript evidence",
+  "c05: N/A evidence for a non-N/A answer",
+  "c05: no transcript evidence",
+  "c06: N/A evidence for a non-N/A answer",
+  "c06: no transcript evidence",
+  "c07: N/A evidence for a non-N/A answer",
+  "c07: no transcript evidence",
+  "c08: N/A evidence for a non-N/A answer"
+ ],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где реквизиты для банковского перевода на брокерский счёт",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Нужны реквизиты в тенге",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "new_topic"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   4
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 11077,
+ "usage": {
+  "prompt_tokens": 5531,
+  "completion_tokens": 6625,
+  "cost": 0.020662
+ }
+}

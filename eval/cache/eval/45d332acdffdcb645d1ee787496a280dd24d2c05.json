@@ -1,0 +1,143 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с «Сәлеметсіз бе» и представился именем Мұрат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для понимания запроса хватало с самого начала, поэтому уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Личность не подтверждена, а оператор сообщил, что видит ограничение на выводе средств по счёту клиента.",
+   "deduction_reason": "Раскрытие сведений о конкретном счёте до идентификации.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Дана лишь общая подсказка о передаче на проверку без объяснения причины и без конкретного следующего шага для клиента.",
+   "deduction_reason": "Существенный вопрос о причине остался без ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор не был груб и отреагировал на опасение клиента, хотя и без полноценного объяснения.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қазір растаудың қажеті жоқ."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Один заметный сбой: вопрос клиента остался без содержательного ответа, но ход диалога понятен.",
+   "deduction_reason": "Последний вопрос клиента не был полностью закрыт.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь или конкретный следующий шаг.",
+   "deduction_reason": "Нет итога или следующего шага в завершающей реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор сообщил о конкретном ограничении на счёте клиента до идентификации.",
+   "deduction_reason": "Раскрытие конфиденциальных данных счёта до проверки личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, почему в его счёте закрыт вывод средств.",
+  "operator_actions": "Оператор сообщил о наличии ограничения до идентификации, затем сказал, что отправит вопрос на проверку, и попрощался.",
+  "outcome": "Причина не объяснена, клиент остался без конкретного следующего шага."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 9,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 12,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Почему в его счете закрыто/ограничено снятие денег и какова причина.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 18271,
+ "usage": {
+  "prompt_tokens": 5500,
+  "completion_tokens": 2280,
+  "cost": 0.006349
+ }
+}

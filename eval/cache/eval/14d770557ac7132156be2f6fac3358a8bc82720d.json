@@ -1,0 +1,149 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор сразу поздоровался и представился на языке клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Дополнительных уточнений не требовалось, данных для ответа хватало.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация не требовалась для ответа на общий вопрос.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенные вопросы закрыты, клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Ок, это всё что хотел узнать."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Тон нейтрально-вежливый, возражений не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ оператора понятен и не требует уточнений.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Чат оборвался до возможности корректного завершения.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Чат оборвался до возможности его завершить"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал о языке формы 1042-S и наличии русской версии.",
+  "operator_actions": "Оператор подтвердил, что форма предоставляется на английском языке.",
+  "outcome": "Клиент подтвердил, что всё узнал, затем соединение прервалось."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "На каком языке дают форму 1042-S и есть ли она у брокера",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Есть ли форма 1042-S на русском",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "connection_lost",
+  "cut_before_operator_could_close": true,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 9469,
+ "usage": {
+  "prompt_tokens": 5260,
+  "completion_tokens": 5090,
+  "cost": 0.015935
+ }
+}
