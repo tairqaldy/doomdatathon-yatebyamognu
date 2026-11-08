@@ -419,7 +419,9 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .cyc:last-child::after { display: none; }
 .l .cyc__t { font-size: 19px; letter-spacing: -0.015em; }
 .l .cyc p { font-size: 15px; line-height: 1.5; }
-.cyc__where { margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 500; color: var(--l-green-ink); }
+.cyc__where { margin-top: auto; align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: var(--l-bg-mint); font-size: 12.5px; font-weight: 500; line-height: 1.35; color: var(--l-green-ink); }
+.nw { white-space: nowrap; }
+.l .calls .l-h2 { max-width: 20ch; }
 .motion .cyc__n { transition: background .45s, color .45s, box-shadow .45s; transition-delay: calc(var(--i) * 260ms + 150ms); }
 .motion .cyc-list:not(.is-in) .cyc__n { background: #fff; color: var(--l-ink-3); box-shadow: inset 0 0 0 2px var(--l-line-strong); }
 .motion .cyc::after { transform: scaleX(0); transition: transform .7s var(--l-ease); transition-delay: calc(var(--i) * 260ms + 300ms); }
