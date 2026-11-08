@@ -531,7 +531,7 @@ async function sceneCard() {
   await sleep(2300);
   await still('dialog-card', { poster: true });
   await sleep(500);
-  const na = await mark('.crit-card .crit', 'Выявление потребности');
+  const na = await mark('.ded, .crit-card .crit', 'Выявление потребности');
   await scroll({ sel: na, block: 'center' });
   await say(C.na, 0);
   await hover(`${na} .crit__na`, { dx: 0.3 });
@@ -566,11 +566,11 @@ async function sceneAppeal() {
   await sleep(400);
   await still('appeal-decision');
   await click('#rv-save', { pause: 300 });
-  await waitFor('.history');
+  await waitFor('.decisions');
   await sleep(700);
   await scroll({ sel: '.score-card', block: 'start' });
   await say(C.after, 0);
-  await hover('.history .history__step--final', { dx: 0.5 });
+  await hover('.path .path__s--final', { dx: 0.5 });
   await sleep(2500);
 }
 
@@ -675,7 +675,7 @@ async function sceneReevaluate() {
   await say(failed ? 'AI не ответил, оценка без AI осталась на экране' : C.done(Math.round(r.ms / 1000)), 0);
   await hover('.run--ok, .run--error', { dx: 0.4 });
   await sleep(2700);
-  const crit = await mark('.crit-card .crit', 'Назвал срок ответа');
+  const crit = await mark('.ded, .crit-card .crit', 'Назвал срок ответа');
   await scroll({ sel: crit, block: 'center' });
   await say(C.newCrit, 0);
   await hover(`${crit} .evidence, ${crit} .crit__why`, { dx: 0.3 });
@@ -800,7 +800,7 @@ async function shortEval() {
   await badge(r.cut ? `≈ ${Math.round(r.ms / 1000)} с ожидания AI вырезано` : '');
   await hover('.run--ok', { dx: 0.4 }); await hold(1300);
   await badge('');
-  const crit = await mark('.crit-card .crit', 'Назвал срок ответа');
+  const crit = await mark('.ded, .crit-card .crit', 'Назвал срок ответа');
   await scroll({ sel: crit, block: 'center' });
   const ans = await js((s) => document.querySelector(`${s} .ans`)?.textContent.trim() || '', crit);
   await cap(CS.newCrit(ans));
@@ -819,7 +819,7 @@ async function shortResults() {
   await js(() => { const k = 'cqa-prototype-v2'; const s = JSON.parse(localStorage.getItem(k)); s.activeVersion = 1; localStorage.setItem(k, JSON.stringify(s)); window.__demo?.caption(''); return true; });
   await cdp.send('Page.reload');
   await ready('/admin/');
-  await waitFor(() => /v1/.test(document.querySelector('.dlg-head .meta-link')?.textContent || '') && !!document.querySelector('.banner--bad'), { what: 'card under checklist v1' });
+  await waitFor(() => /чатов v1/.test(document.body.innerText) && !!document.querySelector('.banner--bad'), { what: 'card under checklist v1' });
   await scroll({ sel: '.analysis', block: 'start' });
   await sleep(900); // score ring animation
   const t = await text('#total');
@@ -859,7 +859,7 @@ async function shortAppeal() {
   await waitFor('#ring-wrap');
   await sleep(150);
   const before = await text('#total');
-  const titles = await js(() => [...document.querySelectorAll('.reasons-card .ded [data-appeal]')].map((b) => b.closest('.ded').querySelector('.ded__head b').textContent));
+  const titles = await js(() => [...document.querySelectorAll('.reasons-card .ded [data-appeal]')].map((b) => b.closest('.ded').querySelector('.ded__head .crit__title').textContent));
   const plan = APPEALS.find((p) => titles.some((t) => t.includes(p.title)));
   if (!plan) throw new Error(`no criterion to appeal among ${titles.join(', ')}`);
   if (plan !== APPEALS[0]) notes.push(`C2 «${APPEALS[0].title}» has full points here, so the appeal disputes «${plan.title}» (${plan.to})`);
@@ -888,15 +888,15 @@ async function shortAppeal() {
   await hover('#rv-preview', { dx: 0.3 }); await hold(600);
   zoom(1);
   await click('#rv-save', { pause: 100 });
-  await waitFor('.history');
+  await waitFor('.decisions');
   sfx('done');
   await scroll({ sel: '.score-card', block: 'start' });
-  const after = await text('.history .history__step--final b');
+  const after = await text('.path .path__s--final b');
   await cap(CS.after(before, after));
   await hover('#ring-wrap', { dx: 0.9 });
   zoom(1.6);
   await hold(900);
-  await hover('.history', { dx: 0.5 }); await hold(1200);
+  await hover('.path', { dx: 0.5 }); await hold(1200);
   zoom(1);
 }
 
