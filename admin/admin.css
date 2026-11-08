@@ -223,6 +223,13 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .fix__why { font-size: 14px; }
 .fix__links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
 .fix-none { padding: 12px 20px 18px; }
+/* Диалоги: sortable column headers (aria-sort on the th, the button flips the direction) */
+.th-sort { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; border-radius: 4px; }
+.th-sort:hover, .th-sort.is-on { color: var(--ink); }
+.th-sort:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+.th-sort__ic { font-size: 11px; opacity: .55; }
+.th-sort.is-on .th-sort__ic { opacity: 1; }
+.th-sort__sep { margin: 0 6px; color: var(--ink-3); opacity: .6; }
 /* one-sentence message of the page, generated from the data */
 .headline { margin: 0 0 16px !important; max-width: 88ch; font-size: 17px; line-height: 1.5; color: var(--ink) !important; letter-spacing: -.005em; }
 .headline__go { display: inline-flex; align-items: center; gap: 4px; color: var(--forest); font-weight: 600; text-decoration: underline; text-decoration-color: rgba(22, 71, 52, .3); text-underline-offset: 3px; }
