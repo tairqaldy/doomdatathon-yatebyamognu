@@ -38,7 +38,7 @@ let plan = gap > 0.5 / fps
 fputs("video \(String(format: "%.2f", vDur)) s \(Int(size.width))×\(Int(size.height)) @ \(Int(fps)) fps · voice \(String(format: "%.2f", aDur)) s, \(channels) ch\n\(plan)\n", stderr)
 
 let audioBitrate = channels == 2 ? 128_000 : 96_000
-let tmpURL = outURL.deletingLastPathComponent().appendingPathComponent(".mux-\(ProcessInfo.processInfo.processIdentifier).mp4")
+let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent("cqa-mux-\(ProcessInfo.processInfo.processIdentifier).mp4")
 
 final class Box<T>: @unchecked Sendable { var v: T; init(_ v: T) { self.v = v } }
 
