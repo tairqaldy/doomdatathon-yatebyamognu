@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freedom CQA · защита</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --bg: #ffffff; --soft: #f6f7f4; --mint: #ecf7ef; --sky: #eef4fb;
+  --line: #e6e8e4; --line2: #d4d8d2;
+  --ink: #0e151c; --ink2: #3c4650; --ink3: #6b7680;
+  --green: #02b140; --green-ink: #0a7a33; --forest: #164734;
+  --red: #c93a3a; --red-bg: #fdecec; --amber: #b7791f; --amber-bg: #fdf3e1;
+  --sans: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --shadow: 0 2px 6px rgba(14,21,28,.05), 0 24px 60px rgba(14,21,28,.10);
+  --ease: cubic-bezier(.2, 0, 0, 1);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #e9ece8; overflow: hidden; }
+body { font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* stage: a fixed 1920x1080 canvas scaled to the window */
+.deck { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.slide { position: absolute; inset: 0; background: var(--bg); overflow: hidden; padding: 120px 120px 110px;
+  opacity: 0; visibility: hidden; transform: translateY(14px);
+  transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s linear .45s; }
+.slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s; }
+
+/* chrome on every slide */
+.top { position: absolute; left: 120px; right: 120px; top: 52px; display: flex; align-items: center; justify-content: space-between; }
+.top img { height: 34px; display: block; }
+.kicker { font-size: 22px; font-weight: 500; color: var(--green-ink); letter-spacing: .01em; }
+.foot { position: absolute; left: 120px; right: 120px; bottom: 44px; display: flex; justify-content: space-between; font-size: 18px; color: var(--ink3); }
+.foot .n { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 132px; font-weight: 600; letter-spacing: -0.035em; line-height: 1; }
+h2 { font-size: 72px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.06; max-width: 1500px; text-wrap: balance; }
+h3 { font-size: 34px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.15; }
+.lead { font-size: 32px; line-height: 1.4; color: var(--ink2); max-width: 1100px; text-wrap: pretty; }
+.body { font-size: 26px; line-height: 1.42; color: var(--ink2); text-wrap: pretty; }
+.small { font-size: 20px; line-height: 1.4; color: var(--ink3); }
+.mono { font-family: var(--mono); font-size: .9em; }
+.green { color: var(--green-ink); }
+.big { font-size: 140px; font-weight: 600; letter-spacing: -0.045em; line-height: .95; font-variant-numeric: tabular-nums; }
+.shot { border-radius: 22px; border: 1px solid var(--line2); box-shadow: var(--shadow); background: #fff no-repeat; overflow: hidden; }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top; }
+
+/* 1 · title */
+.s-title { padding: 0; }
+.s-title .left { position: absolute; left: 120px; top: 0; bottom: 0; width: 960px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+.s-title .photo { position: absolute; right: 0; top: 0; bottom: 0; width: 760px; background: url(../landing-tair/assets/hero-meadow.webp) center / cover; }
+.s-title .float { position: absolute; right: 300px; bottom: 140px; width: 560px; height: 300px; background-image: url(../docs/media/dialog-card.jpg); background-size: 1440px 900px; background-position: -876px -486px; }
+.s-title h1 span { color: var(--green); }
+.s-title .sub { font-size: 50px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.12; max-width: 880px; }
+.team { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; max-width: 900px; }
+.team b { display: block; font-size: 24px; font-weight: 600; }
+.team span { font-size: 19px; color: var(--ink3); }
+.teamname { font-size: 22px; color: var(--ink3); margin-top: 28px; }
+.teamname b { color: var(--ink); font-weight: 600; }
+
+/* 2 · problem */
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 90px; }
+.stat { border-top: 3px solid var(--ink); padding-top: 36px; display: flex; flex-direction: column; gap: 22px; }
+.stat.g { border-color: var(--green); }
+.stat .body { font-size: 28px; color: var(--ink); }
+.punch { position: absolute; left: 120px; right: 120px; bottom: 120px; font-size: 34px; font-weight: 500; line-height: 1.35; color: var(--forest); background: var(--mint); border-radius: 22px; padding: 30px 40px; }
+
+/* 3 · cycle */
+.cycle { display: grid; grid-template-columns: repeat(6, 1fr); gap: 22px; margin-top: 70px; }
+.step { display: flex; flex-direction: column; gap: 16px; position: relative; }
+.step .thumb { height: 300px; border-radius: 18px; border: 1px solid var(--line2); box-shadow: 0 1px 2px rgba(14,21,28,.04), 0 10px 30px rgba(14,21,28,.08); background-repeat: no-repeat; background-color: #fff; }
+.step .num { font-family: var(--mono); font-size: 20px; color: var(--green-ink); }
+.step h3 { font-size: 30px; }
+.step .body { font-size: 22px; }
+.step:not(:last-child)::after { content: ""; position: absolute; right: -16px; top: 140px; width: 10px; height: 10px; border-top: 3px solid var(--green); border-right: 3px solid var(--green); transform: rotate(45deg); }
+.loop { margin-top: 44px; display: flex; gap: 18px; align-items: center; font-size: 26px; color: var(--ink2); }
+.pill { display: inline-flex; align-items: center; height: 52px; padding: 0 24px; border-radius: 999px; background: var(--mint); color: var(--forest); font-weight: 500; font-size: 24px; white-space: nowrap; }
+
+/* 4 · how it scores */
+.how { display: grid; grid-template-columns: 900px 1fr; gap: 70px; margin-top: 44px; }
+.pipe { display: flex; flex-direction: column; gap: 0; }
+.pipe .row { display: grid; grid-template-columns: 64px 1fr; gap: 26px; padding: 14px 0; border-top: 1px solid var(--line); }
+.pipe .row:first-child { border-top: 0; padding-top: 0; }
+.pipe .k { width: 56px; height: 56px; border-radius: 50%; background: var(--forest); color: #fff; display: grid; place-items: center; font: 600 24px var(--sans); }
+.pipe .row.flag .k { background: var(--red); }
+.pipe h3 { font-size: 28px; margin-bottom: 4px; }
+.pipe .body { font-size: 21px; }
+.how .shot { height: 470px; background-image: url(../docs/media/dialog-card.jpg); background-size: 1915px auto; background-position: -1162px -655px; }
+.example { margin-top: 26px; background: var(--soft); border-radius: 18px; padding: 24px 30px; font-size: 24px; line-height: 1.45; color: var(--ink2); }
+.example b { color: var(--ink); }
+
+/* 5 · accuracy */
+.nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 80px; }
+.nums .stat .big { font-size: 112px; }
+.nums .stat .body { font-size: 24px; color: var(--ink2); }
+.kappa { margin-top: 56px; font-size: 26px; color: var(--ink2); }
+.kappa b { color: var(--ink); font-weight: 600; }
+.note { position: absolute; left: 120px; right: 120px; bottom: 120px; display: flex; gap: 26px; align-items: center; background: var(--amber-bg); border-radius: 22px; padding: 28px 36px; font-size: 26px; line-height: 1.4; color: #5d4110; }
+.note b { color: #3e2b08; }
+.note .tag { flex: none; font-weight: 600; font-size: 22px; color: var(--amber); text-transform: none; }
+
+/* 6 · live */
+.live { display: grid; grid-template-columns: 820px 1fr; gap: 70px; margin-top: 56px; }
+.path { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 24px; }
+.path .arr { color: var(--ink3); }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+.trio .stat { padding-top: 22px; gap: 10px; }
+.trio .big { font-size: 76px; letter-spacing: -0.035em; }
+.trio .body { font-size: 21px; }
+.files { margin-top: 44px; display: flex; flex-direction: column; gap: 16px; }
+.file { display: grid; grid-template-columns: 30px 1fr; gap: 14px; font-size: 22px; line-height: 1.4; color: var(--ink2); }
+.file::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--green); margin-top: 10px; }
+.file b { color: var(--ink); font-weight: 600; }
+.live .shot { height: 494px; margin-top: 10px; }
+
+/* 7 · calls + AIM */
+.halves { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; }
+.half { display: flex; flex-direction: column; gap: 22px; }
+.half .shot { height: 420px; }
+.half h3 { font-size: 38px; }
+.half .body { font-size: 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.chip { height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line2); display: inline-flex; align-items: center; font-size: 20px; color: var(--ink2); background: #fff; white-space: nowrap; }
+.chip b { color: var(--ink); font-weight: 600; margin-right: 8px; }
+
+/* 8 · integration */
+.grid6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 70px; }
+.tile { background: var(--soft); border-radius: 24px; padding: 38px 40px; display: flex; flex-direction: column; gap: 14px; min-height: 290px; }
+.tile.hero { background: var(--forest); }
+.tile.hero h3, .tile.hero .body, .tile.hero .mono { color: #fff; }
+.tile.hero .body { opacity: .86; }
+.tile .ic { width: 44px; height: 6px; border-radius: 3px; background: var(--green); margin-bottom: 8px; }
+.tile .body { font-size: 23px; }
+
+/* 9 · close */
+.s-end { padding: 0; }
+.s-end .bgp { position: absolute; inset: 0; background: url(../landing-tair/assets/clouds.webp) center / cover; }
+.s-end .veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.93) 55%, rgba(255,255,255,.55) 100%); }
+.s-end .in { position: absolute; left: 120px; right: 120px; top: 170px; }
+.s-end h2 { font-size: 84px; max-width: 1400px; }
+.links { margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 60px; max-width: 1500px; }
+.link .lab { font-size: 20px; color: var(--ink3); margin-bottom: 6px; }
+.link .val { font-size: 36px; font-weight: 600; letter-spacing: -0.015em; }
+.link .val.mono { font-family: var(--mono); font-size: 32px; font-weight: 500; }
+.thanks { margin-top: 70px; font-size: 26px; color: var(--ink2); }
+
+/* controls hint (screen only) */
+.hint { position: fixed; right: 18px; bottom: 14px; font: 13px var(--sans); color: #7b858d; opacity: .7; }
+
+/* print: one slide per page */
+@page { size: 1920px 1080px; margin: 0; }
+@media print {
+  html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+  .deck { position: static; transform: none !important; width: 1920px; height: auto; }
+  .slide { position: relative; width: 1920px; height: 1080px; opacity: 1; visibility: visible; transform: none; transition: none; page-break-after: always; break-after: page; }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .hint { display: none; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide s-title" data-title="Титул">
+  <div class="photo"></div>
+  <div class="shot float" aria-label="Итоговая оценка диалога в карточке анализа"></div>
+  <div class="left">
+    <img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker" style="height:46px;width:auto;align-self:flex-start;margin-bottom:40px">
+    <div class="kicker">NU Datathon 2026 · кейс Freedom Broker</div>
+    <h1>Freedom <span>CQA</span></h1>
+    <p class="sub">Проверка качества каждого разговора оператора</p>
+    <p class="body" style="max-width:820px">Чаты и звонки на русском, казахском и английском. По каждому критерию: ответ, реплика-доказательство и балл, который считает код.</p>
+    <div class="teamname">Команда <b>YaTebyaMognu</b></div>
+    <div class="team" style="margin-top:4px">
+      <div><b>Tair Kaldybayev</b><span>продукт, админка, исследование</span></div>
+      <div><b>Nazar Akanov</b><span>оценщик, разметка, метрики</span></div>
+      <div><b>Dameli Kalikhanova</b><span>UX рабочего места QA</span></div>
+      <div><b>Amina Aktayeva</b><span>хранилище, аудит расшифровок</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="Проблема">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Проблема</span></div>
+  <h2>Ручной контроль видит малую часть разговоров</h2>
+  <div class="cols3">
+    <div class="stat">
+      <div class="big">2–5%</div>
+      <p class="body">разговоров проверяют вручную в типичном контакт-центре</p>
+      <p class="small">Оценки вендоров QA: Aircall, Enthu.AI</p>
+    </div>
+    <div class="stat">
+      <div class="big">A ≠ B</div>
+      <p class="body">Два проверяющих по-разному читают один и тот же критерий</p>
+      <p class="small">Брифинг Freedom Broker на старте кейса</p>
+    </div>
+    <div class="stat g">
+      <div class="big">64%</div>
+      <p class="body">клиентов предпочли бы поддержку без AI. Главный страх: не добраться до человека</p>
+      <p class="small">Gartner, опрос 5 728 клиентов, 2024</p>
+    </div>
+  </div>
+  <div class="punch">Нужна регулярная проверка всего потока: с объяснением каждого балла и с последним словом за человеком.</div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">02 / 09</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-title="Решение">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Решение</span></div>
+  <h2>Весь цикл контроля качества в одной админке</h2>
+  <div class="cycle">
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/checklist-editor.jpg);background-size:780px auto;background-position:-140px -40px"></div>
+      <span class="num">01</span><h3>Чек-лист</h3>
+      <p class="body">Критерии, веса, шкалы и N/A: данные, а не код</p>
+    </div>
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/import-dialog.jpg);background-size:780px auto;background-position:-140px -40px"></div>
+      <span class="num">02</span><h3>Диалоги</h3>
+      <p class="body">Набор по group_id, вставка текста, живой чат</p>
+    </div>
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/dialog-card.jpg);background-size:900px auto;background-position:-160px -60px"></div>
+      <span class="num">03</span><h3>Оценка</h3>
+      <p class="body">Ответ и реплика-доказательство по каждому критерию</p>
+    </div>
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/gross-errors.jpg);background-size:780px auto;background-position:-140px -40px"></div>
+      <span class="num">04</span><h3>Результаты</h3>
+      <p class="body">Итог, причины снижения, грубые ошибки</p>
+    </div>
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/appeal-decision.jpg);background-size:900px auto;background-position:-560px -60px"></div>
+      <span class="num">05</span><h3>Апелляция</h3>
+      <p class="body">Критерий, комментарий, фрагмент диалога</p>
+    </div>
+    <div class="step">
+      <div class="thumb" style="background-image:url(../docs/media/appeal-decision.jpg);background-size:900px auto;background-position:-560px -300px"></div>
+      <span class="num">06</span><h3>Переоценка</h3>
+      <p class="body">Проверяющий меняет ответ, итог пересчитан сразу</p>
+    </div>
+  </div>
+  <div class="loop"><span class="pill">Изменили вес</span><span>→</span><span>итоги пересчитаны сразу</span><span style="width:40px"></span><span class="pill">Изменили критерий</span><span>→</span><span>«Сохранить и переоценить» выбранные диалоги</span></div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">03 / 09</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="Как оценивает">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Как оценивает</span></div>
+  <h2>Модель выбирает ответ и реплику. Баллы считает код.</h2>
+  <div class="how">
+    <div class="pipe">
+      <div class="row"><div class="k">1</div><div><h3>Сначала факты</h3><p class="body">Запрос, проверка личности, раскрытие данных, как закончился чат. Потом вердикт.</p></div></div>
+      <div class="row"><div class="k">2</div><div><h3>3 прогона и голосование</h3><p class="body">Большинство по каждому критерию. Карточка пишет «3 из 3» или «2 из 3 · проверьте».</p></div></div>
+      <div class="row"><div class="k">3</div><div><h3>Цитата проверена</h3><p class="body">Реплика существует, цитата совпадает. Нет доказательства: повторный запрос, а не выдуманный ответ.</p></div></div>
+      <div class="row"><div class="k">4</div><div><h3>Баллы считает код</h3><p class="body">Вес, шкала, перераспределение N/A, округление half-up до 2 знаков. Одна функция для UI, API и выгрузки.</p></div></div>
+      <div class="row flag"><div class="k">!</div><div><h3>Грубая ошибка отдельно</h3><p class="body">Красный флаг с репликой. Баллы не снимает, диалог попадает в список на разбор.</p></div></div>
+    </div>
+    <div>
+      <div class="shot" aria-label="Блок «Как посчитан итог» в карточке"></div>
+      <div class="example">Живой запрос к API: C3 = N/A, вес 20 выпадает; C7 = «нет», минус 5.<br><b>75 из 80 применимых → 93,75</b></div>
+    </div>
+  </div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">04 / 09</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-title="Точность">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Точность · eval-v5.3</span></div>
+  <h2>Совпадение с разметкой по каждому ответу</h2>
+  <div class="nums">
+    <div class="stat"><div class="big">95,4%</div><p class="body">все 19 диалогов с эталонной разметкой, 152 ответа, строго</p></div>
+    <div class="stat"><div class="big">96,4%</div><p class="body">отложенная часть: 7 диалогов, промпт под них не меняли</p></div>
+    <div class="stat g"><div class="big">97,3%</div><p class="body">независимая разметка: 2 слепых разметчика, 24 других чата, 185 ответов</p></div>
+    <div class="stat g"><div class="big">7 / 7</div><p class="body">грубых ошибок найдено, 0 ложных срабатываний</p></div>
+  </div>
+  <p class="kappa">κ Коэна <b>0,96</b> на 18 эталонных чатах (97,2%, 95% ДИ 93,1–98,9) · <b>0,97</b> по слепой разметке. Сами разметчики совпадают друг с другом на 96,4%.</p>
+  <div class="note"><span class="tag">Честно</span><span>Эталон размечали мы, а не эксперты Freedom. Настоящий тест: <b>10 контрольных чатов</b>. Все 10 оценены, 0 ошибок, файл <span class="mono">results/prod/results.json</span>.</span></div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">05 / 09</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="Живая проверка">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Живая проверка</span></div>
+  <h2>Дайте нам диалог: оценим при вас</h2>
+  <div class="live">
+    <div>
+      <div class="path"><span class="pill">/admin/#/import</span><span class="arr">→</span><span class="pill">«Вставить текст»</span><span class="arr">→</span><span class="pill">«Оценить AI-агентом»</span></div>
+      <p class="body" style="margin-top:22px">Новый текст всегда уходит в модель, результат из кэша не подставляется. То же самое через <span class="mono">POST /api/evaluate</span>.</p>
+      <div class="trio">
+        <div class="stat"><div class="big">≈ 30 с</div><p class="body">на чат, 3 прогона</p></div>
+        <div class="stat"><div class="big">$0,006</div><p class="body">на чат, все вызовы модели</p></div>
+        <div class="stat g"><div class="big">≈ $70</div><p class="body">за 10 000 диалогов</p></div>
+      </div>
+      <div class="files">
+        <div class="file"><span><b>results/prod/results.json</b>: 10 контрольных чатов, формат JSON 1.0, проверен валидатором. $0,061 за весь набор.</span></div>
+        <div class="file"><span><b>results/dev/results.json</b>: все 65 DEV-диалогов, 60 чатов и 5 звонков.</span></div>
+        <div class="file"><span><b>Набор SWAP</b> (RU, KZ, EN) уже оценён: ответ из кэша приходит сразу, «Оценить заново» запускает свежий прогон.</span></div>
+      </div>
+    </div>
+    <div class="shot"><img src="../docs/media/import-dialog.jpg" alt="Загрузка диалогов: вставленный текст перед оценкой" style="object-position:left top"></div>
+  </div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">06 / 09</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-title="Звонки и AIM">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Звонки и клиентская сторона</span></div>
+  <h2>Слышим звонок. Передаём клиента человеку.</h2>
+  <div class="halves">
+    <div class="half">
+      <div class="shot" style="background-image:url(../docs/media/call-audio.jpg);background-size:1250px auto;background-position:-230px -170px"></div>
+      <h3>Звонки и тон голоса</h3>
+      <p class="body">Та же логика, адаптированная к речи. Клик по доказательству переносит плеер на нужную секунду. Критерий c09 «Тон и подача»: Gemini 3.8 Flash слушает запись и ставит 10, 7, 4 или 0.</p>
+      <div class="chips"><span class="chip"><b>5</b>реальных звонков DEV</span><span class="chip"><b>≈ $0,016</b>за звонок</span></div>
+    </div>
+    <div class="half">
+      <div class="shot" style="background-image:url(../docs/media/support-handoff.jpg);background-size:1500px auto;background-position:-343px -312px"></div>
+      <h3>AIM и честная передача</h3>
+      <p class="body">AIM сразу говорит, что он AI. Не может помочь или клиент просит человека: передаёт оператору всю переписку, повторять не нужно. Разговор оператора потом проходит ту же проверку.</p>
+      <div class="chips"><span class="chip"><b>RU · KZ · EN</b></span><span class="chip">раскрытие бота: закон РК с 18.01.2026</span></div>
+    </div>
+  </div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">07 / 09</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Интеграция">
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Интеграция с Freedom</span></div>
+  <h2>Встраивается в контур Freedom</h2>
+  <div class="grid6">
+    <div class="tile hero"><div class="ic"></div><h3>Dynamics 365</h3><p class="body">Спроектировано как HTML web resource: статические HTML, CSS и JS без сборки, монтируется в один элемент <span class="mono">#cqa-root</span>.</p></div>
+    <div class="tile"><div class="ic"></div><h3>Чек-лист как данные</h3><p class="body">Критерии, веса, шкалы и правила N/A хранятся в JSON. Руководитель QA меняет их в интерфейсе.</p></div>
+    <div class="tile"><div class="ic"></div><h3>API для любой CRM</h3><p class="body"><span class="mono">POST /api/evaluate</span>: на вход диалог и чек-лист, на выход ответы, объяснения и доказательства.</p></div>
+    <div class="tile"><div class="ic"></div><h3>Формат JSON 1.0</h3><p class="body">Выгрузка результатов и независимый валидатор: все 8 критериев, номера реплик, пересчёт итога.</p></div>
+    <div class="tile"><div class="ic"></div><h3>Кэш и Redis</h3><p class="body">Ключ кэша: модель, промпт, диалог, чек-лист. Повторный запрос бесплатен, общий кэш в Upstash Redis.</p></div>
+    <div class="tile"><div class="ic"></div><h3>Своя модель</h3><p class="body">Любой OpenAI-совместимый сервер через <span class="mono">local:&lt;model&gt;</span>. Qwen 3.8 27B с открытыми весами: 94,1% на тех же метках.</p></div>
+  </div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">08 / 09</span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide s-end" data-title="Итог">
+  <div class="bgp"></div><div class="veil"></div>
+  <div class="top"><img src="../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span class="kicker">Итог</span></div>
+  <div class="in">
+    <h2>Каждый разговор проверен. Каждый балл объяснён. Последнее слово за человеком.</h2>
+    <div class="links">
+      <div class="link"><div class="lab">Продукт</div><div class="val">freedom-cqa.vercel.app</div></div>
+      <div class="link"><div class="lab">Админка /admin/ · код доступа</div><div class="val mono">freedom-agent</div></div>
+      <div class="link" style="grid-column:1 / -1"><div class="lab">Репозиторий</div><div class="val">github.com/tairqaldy/doomdatathon-yatebyamognu</div></div>
+    </div>
+    <p class="thanks">Спасибо Freedom Broker за кейс, данные и быстрые ответы, и клубу NU DataSci за датасон.</p>
+  </div>
+  <div class="foot"><span>Freedom CQA · YaTebyaMognu</span><span class="n">09 / 09</span></div>
+</section>
+
+</div>
+<div class="hint">← → пробел · F полный экран</div>
+<script>
+(function () {
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+  var i = 0;
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    deck.style.transform = 'scale(' + s + ') translate(-50%, -50%)';
+    deck.style.transformOrigin = '0 0';
+    deck.style.left = '50%'; deck.style.top = '50%';
+    deck.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
+    deck.style.transformOrigin = 'center center';
+  }
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (el, k) { el.classList.toggle('on', k === i); });
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown' || k === 'Enter') { e.preventDefault(); show(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); show(i - 1); }
+    else if (k === 'Home') show(0);
+    else if (k === 'End') show(slides.length - 1);
+    else if (k === 'f' || k === 'F' || k === 'а' || k === 'А') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      else document.exitFullscreen && document.exitFullscreen();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('a')) return;
+    if (e.clientX < window.innerWidth / 3) show(i - 1); else show(i + 1);
+  });
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', function () { var n = parseInt(location.hash.slice(1), 10); if (n) show(n - 1); });
+  fit();
+  var start = parseInt(location.hash.slice(1), 10);
+  show(start ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>
