@@ -1,0 +1,170 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и представился в первой реплике.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Недостающая для выбора реквизитов валюта была уточнена до ответа по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Euros."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался получения общих реквизитов перевода и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил, где в приложении скачать реквизиты."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил нужные реквизиты и подтвердил это.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Got them. Thanks for checking."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор корректно помог клиенту, поводов для реакции на недовольство не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Заметных сбоев в ясности или управлении диалогом не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Got them. Thanks for checking."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "После последней реплики клиента оператор подтвердил результат и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "You're welcome. You have the EUR transfer details now. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, где скачать реквизиты для пополнения счёта в евро.",
+  "operator_actions": "Оператор уточнил валюту и объяснил, как открыть и скачать EUR-реквизиты в приложении.",
+  "outcome": "Клиент подтвердил, что получил реквизиты; оператор подытожил и попрощался."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент собирается пополнить брокерский счёт в отделении банка и спрашивает, где скачать реквизиты для перевода.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 18062,
+ "usage": {
+  "prompt_tokens": 5816,
+  "completion_tokens": 1789,
+  "cost": 0.001476
+ }
+}

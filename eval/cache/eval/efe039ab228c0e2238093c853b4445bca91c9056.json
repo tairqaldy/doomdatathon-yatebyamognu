@@ -1,0 +1,190 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал своё имя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Жанат. Қосымшадан «Котировки» бөлімі ашыңыз. Іздеу жолағына облигацияның тикерін жазыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не учёл, что клиент спрашивал именно о подаче заявки, а не о просмотре облигации.",
+   "deduction_reason": "Вопрос об отправке заявки остался без ответа, несмотря на то что клиент прямо его сформулировал.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Таптым. Енді өтінімді жіберу үшін не істеймін?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тикері сәйкес келетін облигацияны іздеу нәтижесінен көре аласыз."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общего использования приложения и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о навигации и подаче заявки в приложении; защищённого действия по счёту не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса решена: оператор подсказал, где искать облигацию. Существенный вопрос о подаче заявки остался открытым.",
+   "deduction_reason": "Не дан ответ по существу на вопрос, как отправить заявку на покупку.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Таптым. Енді өтінімді жіберу үшін не істеймін?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тикері сәйкес келетін облигацияны іздеу нәтижесінен көре аласыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Сұрағыңыз болса, қайта жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не признал, что пропустил вопрос клиента, и не помог разобраться с ним.",
+   "deduction_reason": "На возражение клиента о проигнорированном вопросе оператор не отреагировал по существу.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Оны көріп тұрмын. Өтінім туралы сұрадым."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Сұрағыңыз болса, қайта жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось повторить вопрос из-за того, что оператор ответил про просмотр облигации вместо подачи заявки.",
+   "deduction_reason": "Клиенту пришлось переспрашивать из-за пропущенного вопроса.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Тикері сәйкес келетін облигацияны іздеу нәтижесінен көре аласыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Оны көріп тұрмын. Өтінім туралы сұрадым."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не ответил на последний вопрос и не подвёл итог обращения.",
+   "deduction_reason": "Последний вопрос клиента проигнорирован, поэтому корректного завершения нет.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Оны көріп тұрмын. Өтінім туралы сұрадым."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Сұрағыңыз болса, қайта жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений, перечисленных в критерии, в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти облигацию по тикеру и узнать, как отправить заявку на покупку.",
+  "operator_actions": "Оператор объяснил, где искать облигацию, но на вопрос о подаче заявки не ответил.",
+  "outcome": "Клиент нашёл облигацию, однако способ отправки заявки не узнал."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 12,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 13,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, как найти облигацию по тикеру в приложении.",
+    "status": "resolved"
+   },
+   {
+    "turn": 0,
+    "request": "Узнать, как отправить заявку на покупку облигации.",
+    "status": "deflected"
+   },
+   {
+    "turn": 10,
+    "request": "Повторный вопрос о том, как отправить заявку на покупку.",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "ignored_stated_details",
+  "need_missed_turn": 11
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 34339,
+ "usage": {
+  "prompt_tokens": 5929,
+  "completion_tokens": 3560,
+  "cost": 0.002373
+ }
+}
