@@ -480,3 +480,9 @@ Why: Freedom Q&A #3398: defense is max 8–10 min with questions; the jury asks 
 Demo: Чек-лист → edit/replace a criterion → AI · «По ID» → the dialogs the jury names → Сохранить (2 chats ≈ 35 s, ≈ $0.007 per chat).
 Contracts touched: none.
 How to verify: /admin → Чек-лист → change a criterion text → «По ID» `p1-ru-009, p1-kz-015` → only those get AI answers, the rest show «Без AI».
+
+### 2026-11-08 10:05 +05:00 · lane-d · tair/claude · (no issue: `gh` not logged in on this worktree) · 52 s voiced demo
+Plan + done: the landing demo is now a 52 s cut with tair's voiceover, following the jury's cycle (checklist → dialogs → evaluation → results → overview → appeal + reviewer decision → end card). `node scripts/demo/record.mjs --cut short --timings <8 block lengths> --events ev.json`, then `node scripts/demo/sfx.mjs` (soft click / chime / low alert synthesized in code, mixed under the voice) and `swift scripts/demo/mux.swift` (H.264 + AAC ≤ 12 MB). The short cut zooms like Screen Studio (crop in `encode.swift`, follows the cursor) and draws the captions in the encoder; `scripts/demo/pauses.swift voice.wav` gives block lengths for a new voice. One-command flow at the top of `record.mjs`.
+Watch out: the voice says «21 из 100» and «24,7», but the committed v1 evaluation of p1-ru-009 (DEV.json and the shared cache) is **46**, and its C2 «Выявление потребности» is «Да», so the appeal in the video changes «Эмпатия» Нет → Да (46 → 61; double penalty with C3). Captions show the real numbers. Re-record those two phrases (and re-run sfx + mux) to make voice and screen agree.
+Contracts touched: none. Landing: only the demo section caption + `landing-tair/assets/demo.mp4` / `demo-poster.jpg`.
+How to verify: open `/#demo` and play; or `afinfo landing-tair/assets/demo.mp4` (AAC 52.35 s).
