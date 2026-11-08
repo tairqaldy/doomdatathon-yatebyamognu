@@ -1,6 +1,8 @@
 # Freedom CQA
 
-**Every operator chat and call checked against Freedom Broker's 8-criterion checklist, with the exact line behind each deduction and a human reviewer who has the final word.**
+**No conversation goes unchecked. No score goes unproven.**
+
+Every operator chat and call is checked against Freedom Broker's 8-criterion checklist, with the exact line behind each deduction and a human reviewer who has the final word.
 
 **[Live product](https://freedom-cqa.vercel.app)** · [QA workspace `/admin/`](https://freedom-cqa.vercel.app/admin/) (passcode `freedom-agent`) · [Customer chat `/support/`](https://freedom-cqa.vercel.app/support/) · [Demo video, 49 s, narrated](landing-tair/assets/demo.mp4) · [Jury guide (PDF, 12 pages)](docs/guide/freedom-cqa-guide.pdf) · [Slides (PDF)](pitch/freedom-cqa-slides.pdf) · Results: [`results/dev/results.json`](results/dev/results.json), [`results/prod/results.json`](results/prod/results.json) (10 control chats) · [Team](#team)
 
@@ -452,8 +454,8 @@ Team **YaTebyaMognu**, NU Datathon 2026, Freedom Broker case.
 
 | Person | Lane |
 |---|---|
-| Tair Kaldybayev | Product, research, landing, support chat, admin console, pitch |
-| Dameli Kalikhanova | QA workspace UX (`/prototype/`) |
+| Tair Kaldybayev | Product with Dameli: landing, support chat, admin console, research, integration, pitch, team coordination |
+| Dameli Kalikhanova | Product with Tair and UX lead: QA workspace (`/prototype/`), admin console, landing and support chat, Russian README, demo voice-over, pitch |
 | Nazar Akanov | Evaluator, gold set, agreement metrics, tone of voice, transcript import, AIM navigation agent, results export |
 | Amina Aktayeva | Postgres and KV storage, transcript fairness and validation audits |
 
