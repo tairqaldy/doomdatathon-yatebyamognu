@@ -128,6 +128,8 @@ The top teams will evaluate transcripts live ([telegram-qa.md](docs/case/telegra
 
 **In the product:** /admin → **Загрузка диалогов**. «Вставить текст» takes one turn per line starting with the role (`Оператор:`, `Клиент:`, `Бот:`, `Система:` or `Operator:`, `Client:` …), an optional time like `[00:45]`; the language is detected and can be changed; RU, KZ and EN examples are built in. «JSON-файл» takes a record, an array or the organizers' API response. «Оценить AI-агентом» shows a timer, then opens the card with the run line *model · time · cost · new request to the model*. Imported dialogs are tagged «Загружен» and take appeals and decisions like any other.
 
+**Several operators.** A line label keeps the operator's name (`Оператор Арман:`, `Оператор 2:`, `Старший оператор:`; in JSON `speaker: "operator:Арман"` or `agent_name`). Before the model, [`lib/roles.js`](lib/roles.js) marks a turn one operator addresses to a colleague (next to another operator with no client in between: «Айгерим, можешь посмотреть…», «коллега, …», `Оператор → Оператор:`) as context, like a system line, so it is not graded; the card shows «Операторы: Арман → Айгерим» and a «внутренняя реплика» label. A conversation with no client turn is not sent to the model: the card says the checklist does not apply and the total is «не рассчитан». Single-operator dialogs reach the evaluator unchanged, so cached answers stay valid.
+
 **Through the API:** `POST https://freedom-cqa.vercel.app/api/evaluate` takes `{ conversation, checklist }`, the dialog in the dataset's shape plus the checklist JSON. Production serves the chat checklist at `/data/checklists/freedom-chat-v1.json`, so nothing needs to be cloned. Needs `curl` and `jq`.
 
 ```bash
