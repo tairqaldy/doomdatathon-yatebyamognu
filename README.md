@@ -276,6 +276,8 @@ The organizers pick the top 50 mainly by **per-criterion agreement with expert l
 
 The difference between 97.2% and 95.4% is the one gold call: p4-ru-001 disagrees with gold on C4, C5 and C6. We agree with each blind labeler 95.3% of the time, about as often as they agree with each other (96.4%): on this data the evaluator reads like a second careful reader, not better.
 
+![Overall strict agreement on held-out gold, all gold and the blind labelers' consensus](docs/media/charts/accuracy-overall.svg)
+
 ![Strict agreement per criterion, eval-v4 vs eval-v5.3](docs/media/charts/accuracy-per-criterion.svg)
 
 The chart counts all 19 gold dialogs. Per criterion on chats only, with kappa (chance-corrected) and the share of dialogs where all 3 samples voted the same ([`eval/agreement.py`](eval/agreement.py), no model calls):
