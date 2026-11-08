@@ -1,0 +1,161 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал себя и поддержку Freedom Broker.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил валюту, необходимую для выбора соответствующих реквизитов.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Euros."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации к банковским реквизитам, защищённое действие или раскрытие данных по счёту не выполнялись.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор дал общие инструкции по приложению."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретные инструкции и подтвердил, что нашёл реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Got them. Thanks for checking."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, а повода реагировать на недовольство клиента не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "You're welcome. You have the EUR transfer details now. Goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор сначала указал путь в приложении, затем уточнил выбор валюты; клиенту удалось скачать реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор подтвердил, что клиент получил EUR-реквизиты, и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "You're welcome. You have the EUR transfer details now. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "В репликах оператора таких нарушений не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел скачать банковские реквизиты для пополнения счёта через отделение.",
+  "operator_actions": "Оператор уточнил валюту и дал инструкции для получения EUR-реквизитов в приложении.",
+  "outcome": "Клиент подтвердил, что получил реквизиты."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Asked where to download bank transfer details to fund the brokerage account.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20925,
+ "usage": {
+  "prompt_tokens": 5816,
+  "completion_tokens": 2218,
+  "cost": 0.001691
+ }
+}

@@ -1,0 +1,167 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Дарья, поддержка Freedom Broker. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Потребность была ясна с первого сообщения, уточняющий вопрос не требовался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где скачать брокерский отчёт."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по приложению и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал общий путь к отчёту в приложении."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Запрос решён: оператор дал конкретные шаги, клиент подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Дарья, поддержка Freedom Broker. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Выберите нужный период и скачайте отчёт. Этот документы будет за выбранные даты."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Скачал, всё получилось."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, поводов для реакции на недовольство клиента не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Дарья, поддержка Freedom Broker. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Рада, что получилось. До свидания!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Заметных сбоев в ясности или порядке диалога не было; ожидания, требовавшего предупреждения, не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Дарья, поддержка Freedom Broker. Откройте «Меню → Отчёты и документы → Отчёт брокера»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Выберите нужный период и скачайте отчёт. Этот документы будет за выбранные даты."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Скачал, всё получилось."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание есть, однако в заключительной реплике нет итога или предложения дальнейшей помощи.",
+   "deduction_reason": "Нет итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Рада, что получилось. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнял, где скачать брокерский отчёт за прошлый месяц.",
+  "operator_actions": "Оператор указал раздел приложения и предложил выбрать период и скачать отчёт.",
+  "outcome": "Клиент скачал отчёт и подтвердил, что всё получилось."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где в приложении скачать брокерский отчёт за прошлый месяц и что выбрать дальше.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21859,
+ "usage": {
+  "prompt_tokens": 5819,
+  "completion_tokens": 2399,
+  "cost": 0.001781
+ }
+}

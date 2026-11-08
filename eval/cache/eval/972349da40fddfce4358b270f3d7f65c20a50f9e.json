@@ -1,0 +1,145 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Условие N/A выполнено: данных для ответа хватало сразу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент сразу спросил, можно ли напрямую купить акции за деньги с D-шота."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Условие N/A выполнено: запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о покупке акций за деньги с D-шота; конкретный счёт не проверялся."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос клиента решён ответом по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался вежливо; спокойный отказ клиента не является выражением недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Жоқ, рақмет. Маған шоттардың айырмасын білу керек еді."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответ понятен, клиент подтвердил, что понял его.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Түсіндім, рақмет."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Заключение содержит предложение дальнейшей помощи и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Түсіндім. Басқа сұрақтарыңыз болса, осы чатқа жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено предложение платной услуги в обход компании.",
+   "deduction_reason": "Оператор предложил лично принять деньги клиента и вложить их вне компании.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қаласаңыз, ақшаны маған жеке аударыңыз. Компания арқылы рәсімдемей-ақ, оны сізге пайда түсетіндей етіп салып беремін."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнил, можно ли купить акции напрямую за деньги с D-шота.",
+  "operator_actions": "Оператор ответил, что для покупки акций нужно использовать торговый счёт, а затем предложил перевести деньги ему лично.",
+  "outcome": "Основной вопрос был отвечен; предложение оператора является грубым нарушением."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 13,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент спросил, можно ли напрямую использовать деньги с D-шота для покупки акций.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 23568,
+ "usage": {
+  "prompt_tokens": 5926,
+  "completion_tokens": 2564,
+  "cost": 0.001875
+ }
+}

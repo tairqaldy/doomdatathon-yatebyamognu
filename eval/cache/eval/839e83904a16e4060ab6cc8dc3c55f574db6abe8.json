@@ -1,0 +1,160 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен в первом ответе оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Лена, поддержка Freedom Broker. В веб-версии откройте «Кабинет»: текущий тариф указан под вашим ФИО."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос сформулирован ясно с самого начала; недостающих данных для ответа не требовалось."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о расположении тарифа в веб-кабинете и отчёте."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основной вопрос о веб-кабинете решён, но второстепенная часть запроса о разделе в отчёте осталась без ответа.",
+   "deduction_reason": "Не указано название раздела с тарифом в отчёте брокера.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Лена, поддержка Freedom Broker. В веб-версии откройте «Кабинет»: текущий тариф указан под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Нашла, спасибо. В отчёте я посмотрю позже."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, повода для реакции на недовольство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Лена, поддержка Freedom Broker. В веб-версии откройте «Кабинет»: текущий тариф указан под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Пожалуйста. Если понадобятся ещё подсказки, напишите нам. До свидания!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Есть один заметный сбой: не отвечена часть исходного вопроса, но клиент понял ответ по веб-кабинету и смог продолжить.",
+   "deduction_reason": "Оставлена без ответа часть запроса о разделе отчёта.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Где с компьютера посмотреть текущий тариф? И если он указан в отчёте брокера, подскажите ещё название раздела."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Лена, поддержка Freedom Broker. В веб-версии откройте «Кабинет»: текущий тариф указан под вашим ФИО."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Завершение содержит и предложение помощи, и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Пожалуйста. Если понадобятся ещё подсказки, напишите нам. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте! Меня зовут Лена, поддержка Freedom Broker. В веб-версии откройте «Кабинет»: текущий тариф указан под вашим ФИО."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Пожалуйста. Если понадобятся ещё подсказки, напишите нам. До свидания!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, где посмотреть текущий тариф на компьютере и как называется соответствующий раздел в отчёте брокера.",
+  "operator_actions": "Оператор указал путь в веб-кабинете и предложил обратиться за дополнительными подсказками.",
+  "outcome": "Клиент нашёл тариф в веб-кабинете; название раздела в отчёте осталось без ответа."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 11,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где на компьютере посмотреть текущий тариф, и как называется раздел с тарифом в отчёте брокера.",
+    "status": "partly"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21718,
+ "usage": {
+  "prompt_tokens": 5792,
+  "completion_tokens": 2337,
+  "cost": 0.001748
+ }
+}

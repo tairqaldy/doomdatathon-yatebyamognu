@@ -499,3 +499,9 @@ In progress: comparison runs on 42 labeled chats: `qwen/qwen3.8-27b` (OpenRouter
 Next: control at 11:00 from main as planned. Numbers for the two open models go to README after the runs.
 Contracts touched: none.
 How to verify: /admin → Диалоги → p1-ru-014 → C05 «2 из 3 · проверьте»; `python3 -I eval/agreement.py`.
+
+### 2026-11-08 10:52 +05:00 · lane-d · lane-c/claude · #34 · d/34-jury-qa
+Done: `pitch/jury-qa.md`: 132 likely jury questions with short RU answers, a "show on screen" line and a second layer for follow-ups. Heaviest on evaluation (model choice, prompt pipeline, 3 votes, evidence guard, accuracy vs gold / blind / ceiling, kappa, N/A, C7 bet, gross errors, KZ, calls and tone, cost, cache, "not a replay"), then checklist replacement (ready replacements to type), appeals, control run, Dynamics 365, data and privacy, product, team, trick questions and a "don't say" list. Every number is from committed files (sources in section 0); Qwen 3.8 27B numbers come from branch `c/33-metrics-confidence-qwen`.
+Next: after the control run fill section 14 (time, cost, gross errors, mean score); rehearse the top-15 once.
+Contracts touched: none. Docs only.
+How to verify: read `pitch/jury-qa.md`.

@@ -1,0 +1,163 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первой реплике.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nora. Which site are you on right now?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Название сайта было необходимо для ответа; оператор запросил эту недостающую деталь до конкретной инструкции.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nora. Which site are you on right now?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Sorry, let me be specific. The company site is informational. Open tradernet.global to sign in on the web, or use the Freedom Broker app."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о поиске кнопки входа на сайте; данные счёта и защищённые действия не затрагивались."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретный адрес и подтвердил, что смог войти.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Sorry, let me be specific. The company site is informational. Open tradernet.global to sign in on the web, or use the Freedom Broker app."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "That worked. Thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив и исправил неясную формулировку.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Sorry, let me be specific. The company site is informational. Open tradernet.global to sign in on the web, or use the Freedom Broker app."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось переспросить из-за расплывчатого указания «the other one».",
+   "deduction_reason": "Снижено за неясную инструкцию, вызвавшую повторный вопрос клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Go to the other one, not the one you're on. You can use it there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Which other one? What address should I open?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "deduction_reason": "Не выполнено требование о заключительном итоге/следующем шаге или предложении помощи вместе с прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Glad you got in. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в диалоге не обнаружено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти кнопку входа и спросил, не отключён ли сайт.",
+  "operator_actions": "Оператор уточнил, какой сайт открыт, и указал Tradernet для входа или приложение Freedom Broker.",
+  "outcome": "Клиент подтвердил, что инструкция помогла."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Could not find the sign-in button and asked whether the site was down; the operator explained that the company site is informational and gave the Tradernet web address and app option. The client confirmed it worked.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20740,
+ "usage": {
+  "prompt_tokens": 5811,
+  "completion_tokens": 2116,
+  "cost": 0.001639
+ }
+}
