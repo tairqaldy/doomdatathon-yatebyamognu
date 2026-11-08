@@ -1,0 +1,152 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Контакт установлен приветствием и представлением в первой реплике оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос клиента был сформулирован в [0]; недостающих данных для ответа не требовалось."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о назначении D-шот пен сауда шоты; данных о конкретном счёте не сообщалось."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал прямой ответ и указал, какой счёт использовать для покупки акций.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Клиент возразил против предложения, но оператор не признал проблему и не отреагировал на суть возражения.",
+   "deduction_reason": "Не отреагировал на возражение клиента после предложения перевести деньги лично оператору.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Жоқ, рақмет. Маған шоттардың айырмасын білу керек еді."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Түсіндім. Басқа сұрақтарыңыз болса, осы чатқа жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог по запросу понятный; неподходящее личное предложение оценивается отдельно как грубая ошибка.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Жанармын. D-шоттағы қаражатпен акцияны тікелей сатып ала алмайсыз. Акция сатып алғанда сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "В финале есть предложение дальнейшей помощи и прощание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Түсіндім. Басқа сұрақтарыңыз болса, осы чатқа жазыңыз. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено предложение услуги в обход компании.",
+   "deduction_reason": "Предложил клиенту перевести деньги лично оператору для инвестирования в обход компании.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қаласаңыз, ақшаны маған жеке аударыңыз. Компания арқылы рәсімдемей-ақ, оны сізге пайда түсетіндей етіп салып беремін."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, можно ли купить акции напрямую со средств D-шота и чем отличаются счета.",
+  "operator_actions": "Оператор объяснил, что для покупки акций нужно использовать сауда шоты, но затем предложил перевести деньги ему лично в обход компании.",
+  "outcome": "Вопрос о счетах получил ответ; в диалоге выявлено недопустимое личное предложение оператора."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 13,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Можно ли напрямую использовать деньги с D-счёта для покупки акций; клиенту нужно понять разницу между счетами.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "reaction_to_misconduct"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21011,
+ "usage": {
+  "prompt_tokens": 5926,
+  "completion_tokens": 2245,
+  "cost": 0.001715
+ }
+}

@@ -1,0 +1,151 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор алғашқы репликасында амандасып, есімін айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе! Менің атым Меруерт. Қай валютамен аударғыңыз келеді?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор деректемелерді көрсету алдында қажетті валютаны нақтылады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе! Менің атым Меруерт. Қай валютамен аударғыңыз келеді?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Сұрау деректемелерді қосымшадан табу туралы жалпы навигациялық көмек болды, идентификация қажет болмады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Сұрау идентификацияны талап етпеді: оператор тек қосымшадағы жолды көрсетті."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Нақты нұсқаулық беріліп, клиент деректемелерді тапқанын айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Қосымшада «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз. Еуроны таңдап, деректемелерді жүктеп алыңыз. Банкке сол деректемелерді беріңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Енді таптым. Рақмет!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сыпайы болды, клиенттің наразылығы болған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Нұсқаулық анық болды, алайда жауапқа дейінгі айқын күту туралы оператор ескертпеді.",
+   "deduction_reason": "Клиент валютаны айтқаннан кейін жауап екі минуттан астам кешікті, күту туралы ескерту болмады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Еуромен."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Қосымшада «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз. Еуроны таңдап, деректемелерді жүктеп алыңыз. Банкке сол деректемелерді беріңіз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу бар, алайда қорытынды не қосымша көмек ұсыну жоқ.",
+   "deduction_reason": "Соңғы репликада тек сыпайы қоштасу айтылды.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Диалогта өрескел қате белгілері жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Қосымшада «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз. Еуроны таңдап, деректемелерді жүктеп алыңыз. Банкке сол деректемелерді беріңіз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент брокерлік шотқа ақша аудару деректемелерін қосымшадан таба алмады.",
+  "operator_actions": "Оператор валютаны нақтылап, қосымшадағы мәзір жолын көрсетті.",
+  "outcome": "Клиент деректемелерді тапқанын растады."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сұрайды: брокерлік шотқа ақша аудару үшін деректемелерді қайдан алуға болады; қосымшадан таба алмай, оператордан көмек сұрайды.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 23953,
+ "usage": {
+  "prompt_tokens": 5925,
+  "completion_tokens": 2637,
+  "cost": 0.001911
+ }
+}

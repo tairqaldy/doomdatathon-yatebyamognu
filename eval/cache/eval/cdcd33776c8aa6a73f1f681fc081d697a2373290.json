@@ -1,0 +1,133 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Установление контакта выполнено в первом ответе оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Айгүл. Айта беріңіз, қалай көмектесе аламын?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил потребность, прежде чем давать ответ по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Айгүл. Айта беріңіз, қалай көмектесе аламын?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "В чате не возникло запроса, для которого требовалась бы идентификация.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: клиент не успел сформулировать его."
+    }
+   ]
+  },
+  "c04": {
+   "answer": "na",
+   "explanation": "Чат закончился до формулирования запроса клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент операторға сұрағын жазбай тұрып, чаттан шықты."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив; клиент не выражал недовольства или беспокойства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Айгүл. Айта беріңіз, қалай көмектесе аламын?"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Сбой управления диалогом не выявлен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Айгүл. Айта беріңіз, қалай көмектесе аламын?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Чат оборвался до того, как оператор мог его завершить.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент чаттан шықты."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в реплике оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Айгүл. Айта беріңіз, қалай көмектесе аламын?"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент попросил соединить его с оператором, но не успел сформулировать вопрос.",
+  "operator_actions": "Оператор поздоровался, представился и спросил, чем помочь.",
+  "outcome": "Клиент вышел из чата до сообщения запроса."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "client_left_or_hung_up",
+  "cut_before_operator_could_close": true,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 12104,
+ "usage": {
+  "prompt_tokens": 5774,
+  "completion_tokens": 1450,
+  "cost": 0.001302
+ }
+}

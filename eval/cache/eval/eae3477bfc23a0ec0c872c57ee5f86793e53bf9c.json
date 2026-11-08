@@ -1,0 +1,184 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Оператор начал с неясного сообщения, не поздоровался и не представился.",
+   "deduction_reason": "В первой реплике отсутствуют приветствие и представление.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сейчас. Там оно у вас по счёту стоит, поэтому через тот раздел опять."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент сразу попросил проверить причину неудачного вывода и ситуацию по счёту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос понятен с самого начала; дополнительных сведений о сути запроса не требовалось."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "До проверки личности оператор раскрыл сведения о действующем ограничении на счёте клиента.",
+   "deduction_reason": "Сведения о конкретном счёте раскрыты до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "На вашем счёте действует ограничение на вывод. Детали смотрите в приложении."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я ещё не подтверждал личность. Где в приложении смотреть?"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Основной запрос и уточнение о том, где посмотреть информацию, получили ответ. Нарушение порядка идентификации оценивается отдельно.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "На вашем счёте действует ограничение на вывод. Детали смотрите в приложении."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "В разделе вывода."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор не отреагировал на беспокойство клиента о раскрытии сведений до подтверждения личности.",
+   "deduction_reason": "Не отреагировал на опасение клиента по поводу неподтверждённой личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я ещё не подтверждал личность. Где в приложении смотреть?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "В разделе вывода."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Неясная формулировка заставила клиента переспрашивать, а место просмотра сначала было обозначено недостаточно конкретно.",
+   "deduction_reason": "Клиенту пришлось переспрашивать из-за неясных и неполных ответов.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сейчас. Там оно у вас по счёту стоит, поэтому через тот раздел опять."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Что стоит? И через какой раздел?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я ещё не подтверждал личность. Где в приложении смотреть?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор ответил на вопрос о разделе, после чего закрыл чат без прощания и завершительной фразы.",
+   "deduction_reason": "Чат закрыт без прощания и итоговой фразы или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      13,
+      14
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено раскрытие информации о действующем ограничении на счёте до подтверждения личности.",
+   "deduction_reason": "Раскрыта информация о счёте до подтверждения личности.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "На вашем счёте действует ограничение на вывод. Детали смотрите в приложении."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент попросил проверить, почему не получается вывести деньги.",
+  "operator_actions": "Оператор сообщил об ограничении на вывод и указал, где искать детали.",
+  "outcome": "Запрос получил ответ, но сведения о счёте были раскрыты до подтверждения личности."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 11,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Проверить, почему не получается вывести деньги и что происходит со счётом.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, какое ограничение действует и где его смотреть.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_unclear"
+   },
+   {
+    "turn": 12,
+    "cause": "reaction_to_misconduct"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12
+  ],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 32591,
+ "usage": {
+  "prompt_tokens": 5805,
+  "completion_tokens": 3562,
+  "cost": 0.002361
+ }
+}

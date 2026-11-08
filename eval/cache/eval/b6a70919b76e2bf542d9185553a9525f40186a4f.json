@@ -1,0 +1,205 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался на английском и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Jordan. In the app, open Menu, then Reports and Documents, then Broker Report. Select last year's dates and download the report."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа по исходному запросу хватало с самого начала, недостающих сведений оператору уточнять не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос был сформулирован с самого начала: отчёт за прошлый год и расположение тарифного плана."
+    },
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "I’m in the mobile app. I need last year’s broker report and want to see where the pricing plan is printed in it."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался поиска и просмотра отчёта и тарифного плана; подтверждение личности для этих действий не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор давал общие инструкции по навигации и выбору документа."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Jordan. In the app, open Menu, then Reports and Documents, then Broker Report. Select last year's dates and download the report."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все существенные вопросы получили конкретные ответы, а клиент подтвердил, что нашёл нужный отчёт.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Jordan. In the app, open Menu, then Reports and Documents, then Broker Report. Select last year's dates and download the report."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Look in Account Information on the first page. That's where the pricing plan is listed."
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Use the one for the dates you selected for last year. You can go back to Broker Report and generate it again if you're unsure which file you opened."
+    },
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Found it now. I was opening the wrong download."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, а клиентские затруднения разбирал по существу.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 16,
+     "quote": "Check the document title. If it says Broker Report, you're in the right document. The plan is in Account Information on page one."
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Use the one for the dates you selected for last year. You can go back to Broker Report and generate it again if you're unsure which file you opened."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор последовательно давал понятные инструкции, а клиент смог продолжить и завершить действия.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Jordan. In the app, open Menu, then Reports and Documents, then Broker Report. Select last year's dates and download the report."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Yes. In the web version, open the account area, labelled «Кабинет» in the Russian interface. The current plan is under your name."
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Use the one for the dates you selected for last year. You can go back to Broker Report and generate it again if you're unsure which file you opened."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "В финальном сообщении оператор кратко обозначил результат и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 20,
+     "quote": "You're welcome. You have the report and know where to check the current plan. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Jordan. In the app, open Menu, then Reports and Documents, then Broker Report. Select last year's dates and download the report."
+    },
+    {
+     "kind": "message",
+     "turn_index": 20,
+     "quote": "You're welcome. You have the report and know where to check the current plan. Goodbye!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал брокерский отчёт за прошлый год и хотел найти в нём тарифный план.",
+  "operator_actions": "Оператор объяснил, как скачать отчёт, где искать тариф и как проверить нужный год файла.",
+  "outcome": "Клиент нашёл правильный отчёт и получил ответ о просмотре текущего тарифного плана."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 20,
+  "summary_or_next_step_turn": 20,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Найти и скачать брокерский отчёт за прошлый год и узнать, где в нём указан тарифный план.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, где именно на первой странице отчёта указан тарифный план.",
+    "status": "resolved"
+   },
+   {
+    "turn": 12,
+    "request": "Узнать, можно ли посмотреть текущий тарифный план без скачивания отчёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 15,
+    "request": "Убедиться, что открыт нужный документ.",
+    "status": "resolved"
+   },
+   {
+    "turn": 17,
+    "request": "Разобраться, какой из двух скачанных файлов относится к прошлому году.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 32582,
+ "usage": {
+  "prompt_tokens": 6059,
+  "completion_tokens": 3805,
+  "cost": 0.002508
+ }
+}
