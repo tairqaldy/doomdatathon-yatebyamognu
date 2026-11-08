@@ -1,11 +1,16 @@
 // Апелляции: queue of disputed scores (same records as /prototype). Reviewer opens one, confirms or changes the score.
-import { $, esc, fmt, plural, icon, setHead, seg, dateTime } from './ui.js';
+import { $, esc, fmt, plural, icon, setHead, seg, dateTime, toast } from './ui.js';
 import { S, evaluation, checklistFor, versionsOf, clHash, answerText, appealStats, setRole, rows, checklistLabel } from './store.js';
 import { openReview } from './card.js';
 
 let filter = 'open';
 
-export function viewAppeals(view) {
+export function viewAppeals(view, _arg, query) {
+  // step 6 of the jury scenario links here as #/appeals?role=reviewer: switch role once, then drop the query
+  if (query?.get('role') === 'reviewer') {
+    history.replaceState(null, '', '#/appeals');
+    if (S.role !== 'reviewer') { setRole('reviewer'); toast('Роль: проверяющий. Можно принимать решения по апелляциям'); return; }
+  }
   const st = appealStats();
   setHead('Апелляции', `${st.open} ${plural(st.open, ['открыта', 'открыты', 'открыто'])} · ${st.changed + st.confirmed} ${plural(st.changed + st.confirmed, ['решена', 'решены', 'решено'])}`);
   const allVersions = [...versionsOf('chat'), ...versionsOf('call')];

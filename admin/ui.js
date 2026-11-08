@@ -17,6 +17,15 @@ export const clock = (ms) => { const t = Math.max(0, Math.floor(ms / 1000)); con
 export const timeOf = (iso) => { try { return new Date(iso).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
 export const dateTime = (iso) => { try { return new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
 export const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Count a number up to `to` (d decimals, Russian format) once; instant when the user asks for reduced motion. */
+export function countUp(el, to, d = 0, ms = 600) {
+  if (!el || !Number.isFinite(to)) return;
+  const end = () => { if (el.isConnected) el.textContent = fix(to, d); };
+  if (reduced()) { end(); return; }
+  const t0 = performance.now();
+  const step = (now) => { if (!el.isConnected) return; const k = Math.min(1, (now - t0) / ms); el.textContent = fix(to * (1 - (1 - k) ** 3), d); if (k < 1) requestAnimationFrame(step); else end(); };
+  requestAnimationFrame(step);
+}
 export const uid = () => Math.random().toString(36).slice(2, 9);
 
 const P = {
