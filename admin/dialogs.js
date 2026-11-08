@@ -64,7 +64,7 @@ export function viewDialogs(view, _arg, query) {
       <button type="button" class="chip-toggle chip-toggle--bad" id="f-gross" aria-pressed="${!!f.gross}">${icon('alert')}Грубые ошибки <b class="num">${grossCount}</b></button>
       <label class="select select--sort"><span class="sr-only">Порядок</span><select id="f-sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}" ${f.sort === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
     </form>
-    <div class="filter-line"><span class="count" id="d-count" aria-live="polite"></span><span id="d-active"></span></div>
+    <div class="filter-line"><span class="count" id="d-count" aria-live="polite"></span><span id="d-active"></span><a class="btn btn--s filter-line__add" href="#/import">${icon('upload')}Загрузить диалог</a></div>
     <div id="d-body"></div>`;
 
   const draw = () => {
@@ -89,7 +89,7 @@ export function viewDialogs(view, _arg, query) {
         <td class="td-id"><a class="mono" href="${hrefFor(r)}">${esc(r.id)}</a><span class="lang">${esc(r.language)}</span><span class="td-sub">${esc(r.E.summary?.reason || '')}</span></td>
         <td class="td-chan">${chanCell(r)}</td>
         <td class="td-reason">${d ? `<b>${esc(d.c.title)}</b>${d.gross ? '' : ` <span class="loss num">−${fmt(d.lost, 2)}</span>`}<span class="td-sub">${esc(reasonOf(r.E, d.c))}</span>` : '<span class="muted">Без снижений</span>'}</td>
-        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : ''}</td>
+        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : ''}</td>
         <td class="num-col">${scorePill(r)}</td></tr>`;
     }).join('')}</tbody></table></div>`;
 

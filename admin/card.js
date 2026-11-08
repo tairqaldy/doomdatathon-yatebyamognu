@@ -7,6 +7,7 @@ import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel } from './store.js';
 
 let audioEl = null;
+export const SOURCE_LABEL = (src) => (src === 'paste' ? 'вставлен текстом' : src === 'file' ? 'из JSON' : src.startsWith('group:') ? `группа ${src.slice(6)}` : src);
 let ticker = null;
 
 function answerBadge(c, a) {
@@ -37,7 +38,8 @@ export function viewCard(view, convId, query) {
   const prevId = S.convs[idx - 1]?.conversation_id, nextId = S.convs[idx + 1]?.conversation_id;
   const call = isCall(conv);
   const dur = duration(conv);
-  const date = call ? new Date(conv.transcript[0].timestamp).toLocaleString('ru-RU', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : null;
+  const t0 = call ? new Date(conv.transcript[0].timestamp) : null;
+  const date = t0 && Number.isFinite(t0.getTime()) ? t0.toLocaleString('ru-RU', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : null;
   const single = S.single[convId];
   const decided = E.appeals.filter((a) => a.status !== 'open');
   const open = E.appeals.filter((a) => a.status === 'open');
@@ -48,7 +50,7 @@ export function viewCard(view, convId, query) {
   const verdict = gross ? 'Грубая ошибка' : total == null ? 'Итог не рассчитан' : total >= 85 ? 'Хорошая работа' : total >= 60 ? 'Есть замечания' : 'Требует внимания';
   const verdictColor = gross ? 'var(--bad-ink)' : tierVar(tier(total));
   const runInfo = E.src === 'ai'
-    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}${E.base.carried_from ? ` · ответы из v${E.base.carried_from}, баллы по весам v${cl.version}` : ''}`
+    ? `Оценка AI · ${esc(modelLabel(E.model))}${E.evaluatedAt ? ` · ${esc(dateTime(E.evaluatedAt))}` : ''}${E.base.wall_ms ? ` · ${fmt(E.base.wall_ms / 1000, 1)} с` : ''}${E.base.evaluated_at && E.base.usage?.cost ? ` · $${Number(E.base.usage.cost).toFixed(4)}` : ''}${E.base.carried_from ? ` · ответы из v${E.base.carried_from}, баллы по весам v${cl.version}` : ''}${E.base.evaluated_at && E.base.cached === false ? ' · новый запрос к модели' : E.base.cached ? ' · ответ из кэша (тот же текст уже оценивался)' : ''}${E.base.from_file ? ` · из ${esc(E.base.from_file)}` : ''}`
     : 'Предварительная оценка без AI. Нажмите «Оценить заново», чтобы оценил AI';
   const clLabel = checklistLabel(cl);
   setHead('Анализ диалога', `${conv.conversation_id} · ${clLabel}`);
@@ -58,7 +60,7 @@ export function viewCard(view, convId, query) {
       <div class="dlg-head__main">
         <a class="back-link" href="#/dialogs">${icon('back')}Все диалоги</a>
         <h2 class="dlg-title"><span class="mono">${esc(conv.conversation_id)}</span>${E.finalScore.gross_error ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open.length ? `<span class="l-chip l-chip--warn">Апелляция: ${open.length}</span>` : ''}</h2>
-        <div class="meta-line"><span>${call ? 'Звонок' : 'Чат'}</span><span>${esc(LANG[conv.language] || conv.language)}</span><span class="mono">${mmss(dur)}</span><span>${conv.transcript.length} ${plural(conv.transcript.length, ['реплика', 'реплики', 'реплик'])}</span>${date ? `<span>${esc(date)}</span>` : ''}<a class="meta-link" href="#/checklist?kind=${E.kind}" title="Открыть этот чек-лист в редакторе">${icon('checklist')}${esc(clLabel)}</a></div>
+        <div class="meta-line"><span>${call ? 'Звонок' : 'Чат'}</span><span>${esc(LANG[conv.language] || conv.language)}</span><span class="mono">${mmss(dur)}</span><span>${conv.transcript.length} ${plural(conv.transcript.length, ['реплика', 'реплики', 'реплик'])}</span>${conv._source ? `<span class="l-chip l-chip--info" title="Диалог добавлен в «Загрузке» ${esc(dateTime(conv._added_at))}">Загружен: ${esc(SOURCE_LABEL(conv._source))}</span>` : ''}${date ? `<span>${esc(date)}</span>` : ''}<a class="meta-link" href="#/checklist?kind=${E.kind}" title="Открыть этот чек-лист в редакторе">${icon('checklist')}${esc(clLabel)}</a></div>
       </div>
       <div class="dlg-head__nav">
         <a class="icon-btn icon-btn--line ${prevId ? '' : 'is-disabled'}" ${prevId ? `href="#/dialog/${encodeURIComponent(prevId)}"` : 'aria-disabled="true"'} aria-label="Предыдущий диалог">${icon('back')}</a>
