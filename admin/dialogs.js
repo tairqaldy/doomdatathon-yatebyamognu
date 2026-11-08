@@ -102,7 +102,7 @@ export function viewDialogs(view, _arg, query) {
         <span class="gross__crit">${esc(g?.c.title || 'Грубая ошибка')}</span>
         <span class="gross__score">${scorePill(r)}</span>
       </header>
-      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p>${a.deduction_reason && a.explanation && a.explanation !== a.deduction_reason ? `<p class="muted">${esc(a.explanation)}</p>` : ''}</div>
+      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p></div>
       ${ev ? `<a class="evidence" href="${href}"><span class="evidence__meta mono">#${ev.i} · ${esc(ev.time)} · ${esc({ operator: 'Оператор', client: 'Клиент', bot: 'Бот', system: 'Система' }[ev.speaker] || ev.speaker)}</span><q>${esc(ev.text)}</q></a>` : '<p class="muted small">Реплика не указана.</p>'}
       <div class="gross__foot"><a class="btn btn--s" href="${href}">Открыть анализ ${icon('arrow')}</a></div>
     </li>`; }).join('')}</ol>`;

@@ -23,6 +23,8 @@ function switchKind(k) {
 }
 
 const TYPES = { binary: 'Да / Нет', scale: 'Шкала', flag: 'Флаг (без баллов)' };
+// v1 is the organizers' checklist from the repo file; its updated_at is only the first page load, so name it instead
+const verDate = (c) => (c.version === 1 ? 'базовая, чек-лист организаторов' : dateTime(c.updated_at) || c.updated_at);
 
 function diffOf(cl, d) {
   const out = [];
@@ -120,7 +122,7 @@ export function viewChecklist(view, _arg, query) {
   if (!aiReady()) mode = 'mock';
   const nextV = Math.max(...versionsOf(kind).map((c) => c.version)) + 1;
   const busy = S.busy;
-  setHead('Чек-лист', `${KINDS[kind].name}: активна v${cl.version} · ${cl.criteria.length} ${plural(cl.criteria.length, ['критерий', 'критерия', 'критериев'])} · ${dateTime(cl.updated_at) || cl.updated_at}`);
+  setHead('Чек-лист', `${KINDS[kind].name}: активна v${cl.version} · ${cl.criteria.length} ${plural(cl.criteria.length, ['критерий', 'критерия', 'критериев'])} · ${verDate(cl)}`);
 
   const focusKey = document.activeElement?.closest?.('[data-id]') && document.activeElement.dataset.k ? [document.activeElement.closest('[data-id]').dataset.id, document.activeElement.dataset.k] : null;
   const list = draft.criteria.sort((a, b) => a.order - b.order);
@@ -133,7 +135,7 @@ export function viewChecklist(view, _arg, query) {
       <section class="card cl-bar" aria-label="Версия и сохранение">
         <div class="cl-bar__row">
           <label class="field field--inline"><span class="field__label">Версия</span>
-            <select class="input input--s" id="ver" ${busy ? 'disabled' : ''}>${[...versionsOf(kind)].reverse().map((c) => `<option value="${c.version}" ${c.version === cl.version ? 'selected' : ''}>v${c.version} · ${esc(dateTime(c.updated_at) || c.updated_at)}${c.version === cl.version ? ' · активна' : ''}</option>`).join('')}</select></label>
+            <select class="input input--s" id="ver" ${busy ? 'disabled' : ''}>${[...versionsOf(kind)].reverse().map((c) => `<option value="${c.version}" ${c.version === cl.version ? 'selected' : ''}>v${c.version} · ${esc(verDate(c))}${c.version === cl.version ? ' · активна' : ''}</option>`).join('')}</select></label>
           <button class="btn btn--s" type="button" id="add" ${busy ? 'disabled' : ''}>${icon('plus')}Добавить критерий</button>
           <span class="cl-bar__spacer"></span>
           <button class="btn btn--s btn--ghost" type="button" id="reset" hidden>Отменить изменения</button>
