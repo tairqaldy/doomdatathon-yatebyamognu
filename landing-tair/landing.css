@@ -620,4 +620,5 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .l .calls__text .more { margin-top: 18px; }
 .trust .pipe__node { background: var(--l-bg-soft); border-color: transparent; }
 .bar__admin { margin-right: 8px; }
-@media (max-width: 440px) { .bar__admin { display: none; } }
+.l .bar__admin { white-space: nowrap; }
+@media (max-width: 440px) { .l .bar__admin { display: none; } }
