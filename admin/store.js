@@ -248,7 +248,7 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
   S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
-    evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
+    roles: j.roles || null, no_client: Boolean(j.no_client), message: j.message || null, evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;
 }

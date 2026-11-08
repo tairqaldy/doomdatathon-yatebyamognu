@@ -15,7 +15,16 @@ const ROLES = [
   [/^(система|system|жүйе|sys|событие|event)$/i, 'system'],
 ];
 // «Оператор», «Оператор Арман», «Клиент Айгерим Н.»: the role is the first word, a name may follow (up to 3 words)
-const roleOf = (w) => { const words = w.trim().replace(/[,.]+$/, '').split(/\s+/); if (words.length > 3) return null; return ROLES.find(([re]) => re.test(w.trim()))?.[1] || ROLES.find(([re]) => re.test(words[0]))?.[1] || null; };
+const roleOf = (w) => { const words = w.trim().replace(/[,.]+$/, '').split(/\s+/); if (words.length > 3) return null; return ROLES.find(([re]) => re.test(w.trim()))?.[1] || ROLES.find(([re]) => re.test(words[0]))?.[1] || (words.some((x) => ROLES[0][0].test(x)) ? 'operator' : null); };
+// operator identity, so «Оператор Арман» and «Оператор Айгерим» stay two people (lib/roles.js): «Оператор Арман» → Арман,
+// «Оператор 2» / «Старший оператор» → the whole label, «Оператор (Арман)» → Арман; a plain «Оператор» has no name
+const opName = (label, bracket) => {
+  if (bracket && !TS_RE.test(bracket.trim())) return bracket.trim();
+  const words = label.trim().replace(/[,.]+$/, '').split(/\s+/); const i = words.findIndex((x) => ROLES[0][0].test(x));
+  if (words.length < 2) return '';
+  const rest = words.slice(i + 1).join(' ');
+  return i === 0 && rest && !/^\d+$/.test(rest) ? rest : words.join(' ');
+};
 const TS = '(\\d{1,2}:\\d{2}(?::\\d{2})?)';
 const TS_RE = /^\d{1,2}:\d{2}(?::\d{2})?$/;
 // [00:12] Оператор: …  ·  00:12 - Оператор: …  ·  Оператор [00:12]: …  ·  Оператор (00:12): …  ·  Клиент (Айгерим): …
@@ -40,7 +49,7 @@ export function parseText(text) {
     const speaker = m ? roleOf(m[2]) : null;
     if (speaker) {
       const ts = m[1] || (m[3] && TS_RE.test(m[3].trim()) ? m[3].trim() : null);
-      turns.push({ speaker, text: (m[4] || '').trim(), ts: ts ? toMMSS(ts) : null });
+      turns.push({ speaker, text: (m[4] || '').trim(), ts: ts ? toMMSS(ts) : null, name: speaker === 'operator' ? opName(m[2], m[3]) : '' });
       if (ts) timed++;
     } else if (turns.length) turns.at(-1).text += (turns.at(-1).text ? '\n' : '') + line.trim();
     else errors.push(`Строка ${n + 1}: не указано, кто говорит. Начните с «Оператор:», «Клиент:», «Бот:» или «Система:».`);
@@ -48,9 +57,10 @@ export function parseText(text) {
   // times are kept only when the text has them; a paste without times gets no invented 00:10, 00:20 …
   let t = 0;
   const transcript = turns.filter((x) => x.text).map((x, i) => {
-    if (!timed) return { timestamp: '', speaker: x.speaker, text: x.text };
+    const nm = x.name ? { name: x.name } : {};
+    if (!timed) return { timestamp: '', speaker: x.speaker, text: x.text, ...nm };
     t = x.ts ? Math.max(x.ts.sec, i ? t : 0) : i ? t + STEP : 0;
-    return { timestamp: toMMSS(`${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`).s, speaker: x.speaker, text: x.text };
+    return { timestamp: toMMSS(`${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`).s, speaker: x.speaker, text: x.text, ...nm };
   });
   if (turns.length && !transcript.some((x) => x.speaker === 'operator')) errors.push('Нет ни одной реплики оператора: оценивать нечего.');
   return { transcript, errors, timed: timed > 0 };
@@ -70,7 +80,14 @@ export function parseJson(text, fallbackPrefix = 'json') {
   list.forEach((r, i) => {
     const id = String(r?.conversation_id || `${fallbackPrefix}-${i + 1}`).replace(/[^A-Za-z0-9_.-]/g, '_');
     if (!Array.isArray(r?.transcript) || !r.transcript.length) { errors.push(`${id}: нет transcript`); return; }
-    const transcript = r.transcript.map((m) => ({ timestamp: String(m?.timestamp ?? ''), speaker: String(m?.speaker || '').toLowerCase(), text: String(m?.text ?? '') }));
+    // «operator:Арман» / agent_name keep the operator identity; «operator→operator» marks an internal line (lib/roles.js)
+    const transcript = r.transcript.map((m) => {
+      let speaker = String(m?.speaker || '').trim().toLowerCase(); let name = String(m?.name || m?.agent_name || m?.operator_name || '').trim(); let internal = m?.internal === true;
+      if (/^(operator|оператор)\s*(→|->|=>|>)\s*(operator|оператор)/.test(speaker)) { speaker = 'operator'; internal = true; }
+      const nm = String(m?.speaker || '').trim().match(/^(?:operator|оператор)\s*[:/#(]\s*([^)]{1,40}?)\s*\)?$/i);
+      if (nm) { speaker = 'operator'; name = name || nm[1]; }
+      return { timestamp: String(m?.timestamp ?? ''), speaker, text: String(m?.text ?? ''), ...(name && speaker === 'operator' ? { name } : {}), ...(internal ? { internal } : {}) };
+    });
     const bad = transcript.findIndex((m) => !['client', 'operator', 'bot', 'system'].includes(m.speaker));
     if (bad >= 0) { errors.push(`${id}: реплика ${bad}: speaker «${transcript[bad].speaker}» (нужно client, operator, bot или system)`); return; }
     if (!transcript.some((m) => m.speaker === 'operator')) { errors.push(`${id}: нет реплик оператора`); return; }
