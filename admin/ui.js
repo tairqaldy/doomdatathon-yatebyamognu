@@ -54,6 +54,7 @@ const P = {
   ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/>',
   panel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
   quote: '<path d="M7 7h4v4c0 3-2 5-4 6M15 7h4v4c0 3-2 5-4 6"/>',
+  copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
 };
 const FILLED = {
   play: '<path d="M8 5v14l11-7z"/>',
