@@ -197,7 +197,7 @@ export function viewCard(view, convId, query) {
               <p class="ded__why clamp">${esc(reasonOf(E, d.c))}</p>
               ${i != null ? evChip(conv, i, q) : ''}
               <div class="ded__foot">${ap?.status === 'open' ? `<span class="l-chip l-chip--warn">Апелляция на рассмотрении</span>${reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${ap.id}">Принять решение</button>` : ''}` : ap?.status === 'changed' ? '<span class="l-chip l-chip--info">Оценка изменена</span>' : ap?.status === 'confirmed' ? '<span class="l-chip">Подтверждено проверяющим</span>' : `<button class="btn btn--s btn--appeal" type="button" data-appeal="${d.c.id}">${icon('appeals')}Оспорить</button>`}</div>
-            </article>`; }).join('')}</div>` : total == null ? `<div class="banner banner--info">${icon('dash')}<div>Итог не рассчитан: ни один критерий с весом не применим к этому диалогу. Причины N/A — ниже, в обосновании по критериям.</div></div>`
+            </article>`; }).join('')}</div>` : R.no_client ? '<p class="muted small">Оценка не применяется: в разговоре нет клиента.</p>' : total == null ? `<div class="banner banner--info">${icon('dash')}<div>Итог не рассчитан: ни один критерий с весом не применим к этому диалогу. Причины N/A — ниже, в обосновании по критериям.</div></div>`
             : `<div class="banner banner--ok">${icon('check')}<div>Баллы не снижены ни по одному применимому критерию.</div></div>`}
         </section>
 
