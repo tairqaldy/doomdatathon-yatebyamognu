@@ -24,7 +24,7 @@ function switchKind(k) {
 
 const TYPES = { binary: 'Да / Нет', scale: 'Шкала', flag: 'Флаг (без баллов)' };
 // v1 is the organizers' checklist from the repo file; its updated_at is only the first page load, so name it instead
-const verDate = (c) => (c.version === 1 ? 'базовая, чек-лист организаторов' : dateTime(c.updated_at) || c.updated_at);
+const verDate = (c) => (c.version === 1 ? 'базовая (организаторы)' : dateTime(c.updated_at) || c.updated_at);
 
 function diffOf(cl, d) {
   const out = [];

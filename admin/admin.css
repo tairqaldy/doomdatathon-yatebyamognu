@@ -961,3 +961,5 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
 }
 .calc-note { margin: 6px 20px 0 !important; color: var(--ink-3) !important; }
 @media (max-width: 700px) { .calc-note { margin-left: 16px !important; margin-right: 16px !important; } }
+.cl-bar .field--inline { min-width: 0; max-width: 100%; }
+.cl-bar .field--inline select { min-width: 0; text-overflow: ellipsis; }
