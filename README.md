@@ -334,6 +334,23 @@ npm run results -- --group <CONTROL_ID> --push
 
 [`eval/control-run.mjs`](eval/control-run.mjs) fetches the set from the organizers' API (or our `/api/dataset` proxy), evaluates every chat (cached, 8 in parallel), retries failures once, writes `results/prod/results.json` in the appendix's "Формат JSON 1.0", validates it and commits and pushes. The validator checks exactly 10 records, all 8 criteria per record, 1-based turn numbers over the full transcript, `final_score` recomputed independently with half-up rounding, and failed dialogs as `status: "error"` with a reason, never a made-up score. Expected: about 3 minutes and $0.07. Then spot-check gross errors and N/A answers in `/admin/`.
 
+If the set comes as a file instead of a `group_id`, pass the file (the organizers' API response, `{ records }`, an array of records or one record):
+
+```bash
+npm run results -- --file ~/Downloads/control.json --group <CONTROL_ID> --push
+```
+
+To look at the set in the admin: **/admin → Загрузка диалогов → Набор по group_id**. Once the control run is pushed, its answers load from `data/evaluations/<CONTROL_ID>.json` at once; without it, «Оценить AI» evaluates the set in the browser session.
+
+### New transcript, evaluated live
+
+**/admin → Загрузка диалогов** takes any new dialog and runs the same evaluator as the DEV set, on the spot:
+- **Вставить текст**: one turn per line, starting with the role (`Оператор:`, `Клиент:`, `Бот:`, `Система:` or `Operator:`, `Client:` …), an optional time like `[00:45]`. The language is detected (RU / KZ / EN) and can be changed. Built-in RU, KZ and EN examples.
+- **JSON-файл**: one record, an array or the API response, picked or dropped as a file or pasted.
+- **Набор по group_id**: a whole set through our `/api/dataset` proxy.
+
+The dialog goes inline to `POST /api/evaluate` (checked server-side: roles, sizes, at least one operator turn). The screen shows the request running with a timer (a chat takes about 15–40 s), then opens the card: per-criterion answers with evidence jumps, total, gross-error flag, and the run line *model · time · cost · new request to the model*. A new text is never in the cache, so nothing can be replayed. Imported dialogs are tagged «Загружен» in «Диалоги» and support appeals and decisions like any other.
+
 After stop code: no commits. Data processing and checklist edits through the UI are still allowed.
 
 ## Architecture and Dynamics 365 readiness
