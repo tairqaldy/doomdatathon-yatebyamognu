@@ -481,6 +481,12 @@ Demo: Чек-лист → edit/replace a criterion → AI · «По ID» → the
 Contracts touched: none.
 How to verify: /admin → Чек-лист → change a criterion text → «По ID» `p1-ru-009, p1-kz-015` → only those get AI answers, the rest show «Без AI».
 
+### 2026-11-08 10:05 +05:00 · lane-d · tair/claude · (no issue: `gh` not logged in on this worktree) · 49 s voiced demo
+Plan + done: the landing demo is now a 49 s cut with tair's voiceover, following the jury's cycle (checklist → dialogs → evaluation → results → overview → appeal + reviewer decision → end card). `node scripts/demo/record.mjs --cut short --timings <8 block lengths> --events ev.json`, then `node scripts/demo/sfx.mjs` (soft click / chime / low alert synthesized in code, mixed under the voice) and `swift scripts/demo/mux.swift` (H.264 + AAC ≤ 12 MB). The short cut zooms like Screen Studio (crop in `encode.swift`, follows the cursor) and draws the captions in the encoder; `scripts/demo/pauses.swift voice.wav` gives block lengths for a new voice. One-command flow at the top of `record.mjs`.
+Voice: the final take (49.2 s) says no numbers; captions show the real ones (v1: 46 из 100; appeal «Эмпатия» Нет → Да, 46 → 61, because the committed C2 is «Да»). Video 10:20 re-render: 49 s, appeal-comment zoom after the drawer settles, no cursor on the end card.
+Contracts touched: none. Landing: only the demo section caption + `landing-tair/assets/demo.mp4` / `demo-poster.jpg`.
+How to verify: open `/#demo` and play; or `afinfo landing-tair/assets/demo.mp4` (AAC 49.2 s).
+
 ### 2026-11-08 10:15 +05:00 · lane-d · Nazar/claude · #32 · d/32-call-tone-rationale
 Done: `docs/research/call-tone.md`: why c09 «Тон и подача речи» is scored (brief: «для дикции и интонации нужен звук», organizer answers #2343/#2838), what it measures (audible behaviour only, flat tone = 10), safeguards (out of results.json, evidence + audio jump, appeal, weight 0 in UI), limits (no expert labels, 5 RU calls, p4-ru-001 7↔4 between runs, card total ≠ official total on calls), EU AI Act emotion-recognition angle, RU answers for the jury. Linked from `docs/research/README.md`; short Q&A block in `pitch/demo-script.md`.
 Next (optional, after control): team listens to 5 DEV calls and labels c09 by hand; check p4-ru-002 long silences (31/66/55 s, scored 10).
