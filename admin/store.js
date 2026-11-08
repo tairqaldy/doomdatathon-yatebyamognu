@@ -45,7 +45,9 @@ export const modelLabel = (m) => { const s = String(m || '').replace(/^openai:/,
 
 /* ---------- persistence ---------- */
 export function persist() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: S.ai })); }
+  // answers copied from data/evaluations/DEV.json are not saved: the committed file stays the source of truth
+  const ai = Object.fromEntries(Object.entries(S.ai).filter(([, v]) => !v?.from_pre));
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai })); }
   catch (e) { console.warn('CQA: не удалось сохранить состояние', e); }
   try { localStorage.setItem(CALL_KEY, JSON.stringify({ checklists: S.call.checklists, activeVersion: S.call.activeVersion })); } catch {}
 }
@@ -57,10 +59,15 @@ const restoreCall = () => { try { return JSON.parse(localStorage.getItem(CALL_KE
 function mergePre() {
   const pre = S.pre; if (!pre?.results || !S.checklists.length) return;
   const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
+  // A saved answer under a base checklist survives only if it is a real run with the same evaluator prompt as the
+  // committed file (a fresh «Оценить заново»). Anything older (no prompt_version, an earlier prompt, or a copy of an
+  // older DEV.json) is replaced, so a browser that ran eval-v4 yesterday shows the eval-v5.3 answers today.
+  const stale = (e, pv) => !e || e.from_pre || !e.prompt_version || e.prompt_version !== pv;
   for (const [id, r] of Object.entries(pre.results)) {
-    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, agreement: r.agreement, samples: r.samples });
-    if (!S.ai[`${id}|${k}`]) S.ai[`${id}|${k}`] = v();
-    if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v();
+    const pv = r.prompt_version || pre.prompt_version || null;
+    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, agreement: r.agreement, samples: r.samples, prompt_version: pv, from_pre: true });
+    if (stale(S.ai[`${id}|${k}`], pv)) S.ai[`${id}|${k}`] = v();
+    if (kc && isCall(S.byId[id]) && stale(S.ai[`${id}|${kc}`], pv)) S.ai[`${id}|${kc}`] = v();
   }
 }
 /** Re-read the shared state (another tab, e.g. /prototype, may have written it). */
@@ -154,13 +161,19 @@ export async function mergeGroupEvaluations(group) {
   } catch { return 0; }
 }
 /** Whether this dialog already has an AI result for the checklist it is scored with. */
-export const hasAI = (convId) => { const c = S.byId[convId]; return !!(c && S.ai[aiKey(convId, checklistFor(c))]); };
+/** Dialog cards opened in this tab, newest first: the default scope of a re-evaluation after a checklist change. */
+const RECENT_KEY = 'cqa-admin-recent';
+export const recentDialogs = () => { try { const a = JSON.parse(sessionStorage.getItem(RECENT_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch { return []; } };
+export const markRecent = (id) => { try { sessionStorage.setItem(RECENT_KEY, JSON.stringify([id, ...recentDialogs().filter((x) => x !== id)].slice(0, 8))); } catch {} };
+// a partial entry (answers carried from the previous version, new criteria not asked yet) does not count as evaluated
+export const hasAI = (convId) => { const c = S.byId[convId]; const e = c && S.ai[aiKey(convId, checklistFor(c))]; return !!(e && !e.partial); };
 /** Dialogs of one kind that have no AI result for the active checklist yet (shown «Без AI»). */
 export const missingAI = (kind) => S.convs.filter((c) => kindOf(c) === kind && !hasAI(c.conversation_id)).map((c) => c.conversation_id);
 
 /* ---------- time helpers (chat = MM:SS, call = ISO 8601) ---------- */
 export function offsetSec(conv, i) {
   const ts = conv.transcript[i]?.timestamp || '';
+  if (!ts) return i * 10; // pasted text without times: evenly spaced on the timeline only (no time shown or sent)
   if (/^\d{1,2}:\d{2}$/.test(ts)) { const [m, s] = ts.split(':').map(Number); return m * 60 + s; }
   const t0 = Date.parse(conv.transcript[0]?.timestamp), t = Date.parse(ts);
   return Number.isFinite(t - t0) ? Math.max(0, (t - t0) / 1000) : 0;
@@ -219,7 +232,7 @@ export function evidenceIdx(E, c) {
   const e = E.answers[c.id]?.evidence?.find((x) => x.kind === 'message' || x.kind === 'range');
   return e ? (e.kind === 'message' ? e.turn_index : e.range[0]) : null;
 }
-export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Да (нарушение)' : 'Да') : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
+export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' && c.type === 'flag' ? 'Нет нарушения' : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
 
 /* ---------- AI calls ---------- */
 export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.byId[convId]), save = true } = {}) {
@@ -234,7 +247,7 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
     evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;
@@ -281,7 +294,28 @@ export function carryAnswers(kind, fromCl, toCl) {
   for (const c of S.convs) {
     if (kindOf(c) !== kind) continue;
     const src = S.ai[`${c.conversation_id}|${a}`];
-    if (src && !S.ai[`${c.conversation_id}|${b}`]) { S.ai[`${c.conversation_id}|${b}`] = { ...src, carried_from: fromCl.version }; n++; }
+    // the copy is a saved answer of its own (not a DEV.json mirror), so it must persist
+    if (src && !S.ai[`${c.conversation_id}|${b}`]) { const { from_pre, ...rest } = src; S.ai[`${c.conversation_id}|${b}`] = { ...rest, carried_from: fromCl.version }; n++; }
+  }
+  persist(); emit('change');
+  return n;
+}
+/** The new version asks some new questions (a criterion added, replaced or reworded). Every dialog that is not
+ *  re-evaluated keeps the AI answers to the unchanged questions; new or changed criteria stay unanswered («не оценён»,
+ *  dropped from the total by scoring.js) until the AI evaluates that dialog. Never falls back to the keyword mock. */
+export function carryUnchanged(kind, fromCl, toCl) {
+  const a = clHash(fromCl), b = clHash(toCl);
+  const prev = new Map(fromCl.criteria.map((c) => [c.id, QUESTION(c)]));
+  const keep = toCl.criteria.filter((c) => prev.get(c.id) === QUESTION(c)).map((c) => c.id);
+  let n = 0;
+  for (const c of S.convs) {
+    if (kindOf(c) !== kind) continue;
+    const src = S.ai[`${c.conversation_id}|${a}`]; const key = `${c.conversation_id}|${b}`;
+    if (!src?.answers || S.ai[key]) continue;
+    const { from_pre, ...rest } = src;
+    const answers = Object.fromEntries(keep.filter((id) => rest.answers[id]).map((id) => [id, rest.answers[id]]));
+    S.ai[key] = { ...rest, answers, carried_from: fromCl.version, partial: true, missing: toCl.criteria.map((x) => x.id).filter((id) => !answers[id]) };
+    n++;
   }
   persist(); emit('change');
   return n;

@@ -89,7 +89,7 @@ export function viewDialogs(view, _arg, query) {
         <td class="td-id"><a class="mono" href="${hrefFor(r)}">${esc(r.id)}</a><span class="lang">${esc(r.language)}</span><span class="td-sub">${esc(r.E.summary?.reason || '')}</span></td>
         <td class="td-chan">${chanCell(r)}</td>
         <td class="td-reason">${d ? `<b>${esc(d.c.title)}</b>${d.gross ? '' : ` <span class="loss num">−${fmt(d.lost, 2)}</span>`}<span class="td-sub">${esc(reasonOf(r.E, d.c))}</span>` : '<span class="muted">Без снижений</span>'}</td>
-        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : ''}</td>
+        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : r.E.base.partial ? '<span class="l-chip" title="Новые критерии чек-листа AI ещё не оценил, остальные ответы перенесены">Не все критерии</span>' : ''}</td>
         <td class="num-col">${scorePill(r)}</td></tr>`;
     }).join('')}</tbody></table></div>`;
 
@@ -102,7 +102,7 @@ export function viewDialogs(view, _arg, query) {
         <span class="gross__crit">${esc(g?.c.title || 'Грубая ошибка')}</span>
         <span class="gross__score">${scorePill(r)}</span>
       </header>
-      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p>${a.deduction_reason && a.explanation && a.explanation !== a.deduction_reason ? `<p class="muted">${esc(a.explanation)}</p>` : ''}</div>
+      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p></div>
       ${ev ? `<a class="evidence" href="${href}"><span class="evidence__meta mono">#${ev.i} · ${esc(ev.time)} · ${esc({ operator: 'Оператор', client: 'Клиент', bot: 'Бот', system: 'Система' }[ev.speaker] || ev.speaker)}</span><q>${esc(ev.text)}</q></a>` : '<p class="muted small">Реплика не указана.</p>'}
       <div class="gross__foot"><a class="btn btn--s" href="${href}">Открыть анализ ${icon('arrow')}</a></div>
     </li>`; }).join('')}</ol>`;
