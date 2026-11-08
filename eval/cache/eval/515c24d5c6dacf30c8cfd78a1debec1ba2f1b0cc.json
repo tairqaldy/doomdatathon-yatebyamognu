@@ -1,0 +1,167 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Ирина. Сейчас проверю путь."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос клиента был сформулирован сразу: «Не нахожу, где обновить персональные данные в приложении» [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос был навигационным и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общая инструкция по приложению: «Меню → Поручения → Персональные данные → Изменение сведений» [11]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оба вопроса клиента получили конкретный ответ, и клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Поняла, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался вежливо и учёл беспокойство клиента о выборе пункта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Для анкетных данных выберите именно «Изменение сведений» в разделе «Персональные данные»."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы понятные и последовательные; ожидание было объяснено обещанием проверить путь.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Ирина. Сейчас проверю путь."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Спасибо за ожидание. В приложении это «Меню → Поручения → Персональные данные → Изменение сведений»."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание было, однако в заключительной реплике нет ни итога или следующего шага, ни предложения помощи.",
+   "deduction_reason": "Нет итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Пожалуйста. До свидания!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент искал в приложении, где обновить персональные данные, и опасался выбрать поручение для банковских реквизитов.",
+  "operator_actions": "Оператор указал путь к поручению «Изменение сведений» и подтвердил, что оно предназначено для анкетных данных.",
+  "outcome": "Клиент понял инструкцию и поблагодарил."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где в приложении обновить персональные данные; клиент опасается выбрать неправильное поручение.",
+    "status": "resolved"
+   },
+   {
+    "turn": 12,
+    "request": "Уточнить, что «Изменение сведений» — не пункт для банковских реквизитов.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21923,
+ "usage": {
+  "prompt_tokens": 5858,
+  "completion_tokens": 2595,
+  "cost": 0.001883
+ }
+}

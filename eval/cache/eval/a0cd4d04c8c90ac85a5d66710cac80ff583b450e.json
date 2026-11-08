@@ -1,0 +1,150 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Уточнять недостающее не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сообщил, что есть тикер, и оператор дал инструкцию по нему."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Личность не проверялась, но конфиденциальные данные не раскрывались.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: общий вопрос по навигации и оформлению заявки."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал конкретные инструкции, клиент подтвердил, что нашёл и понял.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Сол қағазды таңдап, сатып алу өтінімінің параметрлерін толтырыңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Тональность вежливая, возражений не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и последовательные.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Сол қағазды таңдап, сатып алу өтінімінің параметрлерін толтырыңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Завершение только вежливым прощанием.",
+   "deduction_reason": "В финале нет итога/следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не знал, какую бумагу выбрать и как оформить покупку.",
+  "operator_actions": "Оператор дал инструкции по поиску по тикеру и заполнению заявки.",
+  "outcome": "Клиент подтвердил, что нашёл бумагу и понял дальнейшие шаги."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 19,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не знал, какую бумагу выбрать, если по названию компании несколько вариантов.",
+    "status": "resolved"
+   },
+   {
+    "turn": 11,
+    "request": "Клиент спросил, что делать дальше для покупки.",
+    "status": "resolved"
+   },
+   {
+    "turn": 14,
+    "request": "Клиент сообщил о двух похожих бумагах с разными тикерами и фактически уточнил, какую выбрать.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 63537,
+ "usage": {
+  "prompt_tokens": 5804,
+  "completion_tokens": 8365,
+  "cost": 0.021047
+ }
+}

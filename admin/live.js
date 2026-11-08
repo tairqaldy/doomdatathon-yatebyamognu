@@ -22,12 +22,14 @@ const opName = () => { try { return sessionStorage.getItem(NAME_KEY) || 'Айг�
 const setOpName = (v) => { try { sessionStorage.setItem(NAME_KEY, v); } catch {} };
 const chip = (s) => { const st = STATUS[s.status] || STATUS.bot; return `<span class="st ${st.cls}">${s.status === 'waiting_operator' ? '<span class="pulse" aria-hidden="true"></span>' : ''}${st.label}</span>`; };
 const since = (s) => (s.status === 'waiting_operator' && s.handoff?.at ? `<span class="timer mono" data-since="${esc(s.handoff.at)}" aria-label="Время ожидания">${clock(Date.now() - new Date(s.handoff.at))}</span>` : '');
-const ansLabel = (c, a) => (a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' ? (c.type === 'flag' ? 'Нет нарушений' : 'Нет') : a === 'na' ? 'N/A' : a == null ? '—' : `${a} из ${maxStep(c)}`);
+const ansLabel = (c, a) => (a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' ? (c.type === 'flag' ? 'Нет нарушения' : 'Нет') : a === 'na' ? 'N/A' : a == null ? '—' : `${a} из ${maxStep(c)}`);
 const ansCls = (c, a, row) => (a === 'na' || a == null ? 'ans--na' : c.type === 'flag' ? (a === 'yes' ? 'ans--gross' : 'ans--ok') : row?.points != null && row.points >= row.effective_weight - 0.001 ? 'ans--ok' : row?.points > 0 ? 'ans--mid' : 'ans--bad');
+
+const liveSub = (st) => (st.count ? `${st.count} ${plural(st.count, ['сессия', 'сессии', 'сессий'])}${st.waiting ? ` · ждут оператора: ${st.waiting}` : ' · никто не ждёт'}` : 'Сессий пока нет');
 
 export function viewLive(view, id) {
   const ls = liveStats();
-  setHead('Живые чаты', `${ls.count} ${plural(ls.count, ['сессия', 'сессии', 'сессий'])} · ждут оператора: ${ls.waiting}`);
+  setHead('Живые чаты', liveSub(ls));
   view.innerHTML = `<div class="live ${id ? 'live--detail' : ''}">
     <aside class="live__list card" aria-label="Сессии">
       <header class="live__list-head"><h2>Сессии <span class="muted num" id="l-count"></span></h2>
@@ -46,12 +48,13 @@ export function viewLive(view, id) {
         <span class="session__top">${chip(s)}${since(s)}<span class="session__time mono">${timeOf(s.started_at)}</span></span>
         <span class="session__text">${esc(last ? last.text : 'Пока без сообщений')}</span>
         <span class="session__meta">${esc(s.language || 'RU')} · <span class="mono">${esc(s.id.replace('live-', ''))}</span>${s.operator_name ? ` · ${esc(s.operator_name)}` : ''}${s.evaluation ? ' · оценён' : ''}${s.csat ? ` · CSAT ${esc(s.csat)}` : ''}</span>
-      </a></li>`; }).join('') : '<li class="sessions__empty"><p>Активных сессий нет.</p><p class="muted small">Откройте чат клиента в соседнем окне или создайте демо-сессию. Сессии появятся здесь сами.</p></li>';
+      </a></li>`; }).join('') : '<li class="sessions__empty"><p>Пока пусто.</p><p class="muted small">Сессии появятся здесь сами, как только клиент напишет в чат.</p></li>';
   };
 
   const drawDetail = () => {
     const box = $('#l-detail', view);
     const s = id ? live.get(id) : null;
+    if (!id && !live.all().length) { box.innerHTML = `<div class="empty card"><span class="empty__ic">${icon('live')}</span><h2>Живых чатов пока нет</h2><p>Клиент пишет в чат поддержки, бот отвечает и, если нужен специалист, передаёт разговор сюда. После закрытия чат можно оценить по чек-листу.</p><div class="btn-row"><a class="btn btn--primary" href="/support/" target="_blank" rel="noopener">Открыть чат клиента ${icon('ext')}</a><button class="btn" type="button" id="l-demo2">Создать демо-сессию</button></div></div>`; return; }
     if (!id) { box.innerHTML = `<div class="empty card"><span class="empty__ic">${icon('live')}</span><h2>Выберите сессию</h2><p>Сессии, где бот передал разговор оператору, стоят в списке первыми.</p></div>`; return; }
     if (!s) { box.innerHTML = '<div class="empty card"><h2>Сессия не найдена</h2><p>Возможно, она удалена в другом окне.</p><a class="btn" href="#/live">К списку</a></div>'; return; }
     const active = document.activeElement;
@@ -95,7 +98,7 @@ export function viewLive(view, id) {
   };
 
   const evalBlock = (s) => {
-    if (evaluating.has(s.id)) return `<div class="run run--pending" role="status"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает чат: чек-лист чатов v${checklist().version}</b><span class="muted small">Обычно 5–15 секунд</span></div></div>`;
+    if (evaluating.has(s.id)) return `<div class="run run--pending" role="status"><span class="spinner" aria-hidden="true"></span><div><b>AI оценивает чат: чек-лист чатов v${checklist().version}</b><span class="muted small">Обычно 20–40 секунд, оценка проходит несколько прогонов</span></div></div>`;
     if (!s.evaluation?.answers) return `<div class="eval-empty"><div><b>Оценка качества</b><p class="muted small">Чат ещё не оценён. AI проверит его по активному чек-листу.</p>${evalErrors.get(s.id) ? `<p class="field__err" role="alert">${esc(evalErrors.get(s.id))}</p>` : ''}</div><button class="btn btn--primary btn--s" type="button" id="l-eval">Оценить</button></div>`;
     const E = liveEvaluation(s); const total = E.finalScore.total; const t = tier(total);
     return `
@@ -139,7 +142,7 @@ export function viewLive(view, id) {
   });
   view.addEventListener('click', async (e) => {
     const s = id && live.get(id);
-    if (e.target.closest('#l-demo')) {
+    if (e.target.closest('#l-demo, #l-demo2')) {
       const n = live.create({ language: 'RU' });
       live.addMessage(n.id, 'client', 'Здравствуйте, не могу вывести деньги на карту, пишет «операция отклонена».');
       live.addMessage(n.id, 'bot', 'Здравствуйте! Я AIM, AI-ассистент Freedom Broker. Для вывода нужно проверить данные счёта, это может сделать только специалист. Передаю ваш вопрос оператору, обычно это занимает до 3 минут.');
@@ -151,6 +154,7 @@ export function viewLive(view, id) {
     const j = e.target.closest('[data-jump]');
     if (j) { const el = $(`#msg-${j.dataset.jump}`, view); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.classList.remove('is-hl'); void el.offsetWidth; el.classList.add('is-hl'); } return; }
     if (e.target.closest('#l-eval')) {
+      if (evaluating.has(s.id)) return; // one paid evaluation per chat at a time
       evaluating.add(s.id); evalErrors.delete(s.id); drawDetail();
       try {
         const r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation: live.toConversation(s), checklist: checklist(), force: !!s.evaluation }) });
@@ -165,7 +169,7 @@ export function viewLive(view, id) {
   view.addEventListener('keydown', (e) => { if (e.target.id === 'l-reply' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); e.target.form.requestSubmit(); } });
 
   let t = null;
-  const off = live.subscribe(() => { clearTimeout(t); t = setTimeout(() => { if (view.isConnected) { const st = liveStats(); setHead('Живые чаты', `${st.count} ${plural(st.count, ['сессия', 'сессии', 'сессий'])} · ждут оператора: ${st.waiting}`); draw(); } }, 40); });
+  const off = live.subscribe(() => { clearTimeout(t); t = setTimeout(() => { if (view.isConnected) { const st = liveStats(); setHead('Живые чаты', liveSub(st)); draw(); } }, 40); });
   const tick = setInterval(() => $$('[data-since]', view).forEach((el) => { el.textContent = clock(Date.now() - new Date(el.dataset.since)); }), 1000);
   return () => { off(); clearInterval(tick); clearTimeout(t); };
 }

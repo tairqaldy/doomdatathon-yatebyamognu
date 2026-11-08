@@ -3,16 +3,22 @@ import { readFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { hashKey, logicFingerprint, LOGIC } from '../../lib/cache.js';
-import { combineSamples } from '../../lib/evaluator.js';
 import { fingerprint } from './validation.mjs';
+
+// This investigation describes v5.1; moving main/HEAD must not change its inputs.
+export const CITATION_SOURCE_REVISION = '965f782';
+const historicalSource = path => execFileSync('git', ['show', `${CITATION_SOURCE_REVISION}:${path}`], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+const stub = `data:text/javascript;base64,${Buffer.from("export const MODELS = {}; export function chatJSON(){throw Error('Offline historical audit');} export function cached(){throw Error('Offline historical audit');}").toString('base64')}`;
+const replaySource = historicalSource('lib/evaluator.js').replace("'./llm.js'", `'${stub}'`).replace("'./cache.js'", `'${stub}'`);
+const { combineSamples } = await import(`data:text/javascript;base64,${Buffer.from(replaySource).toString('base64')}`);
 
 export const textHash = value => createHash('sha256').update(value).digest('hex');
 export const canonicalLogicFingerprint = source => createHash('sha1').update(String(source).replace(/\r\n/g, '\n')).digest('hex').slice(0, 12);
 
 export function loadCitationInputs() {
   if (JSON.stringify(LOGIC.eval) !== JSON.stringify(['./evaluator.js'])) throw new Error('Review namespace provenance: logic inputs changed');
-  const read = file => JSON.parse(readFileSync(file, 'utf8'));
-  const source = execFileSync('git', ['show', 'HEAD:lib/evaluator.js']);
+  const read = file => JSON.parse(historicalSource(file));
+  const source = historicalSource('lib/evaluator.js');
   const canonical = canonicalLogicFingerprint(source.toString('utf8'));
   const current = logicFingerprint('eval');
   const dataset = read('data/datasets/DEV.json').data.records;
@@ -26,7 +32,7 @@ export function loadCitationInputs() {
     currentHits += Number(existsSync(samplePath(c, i, current)));
   }
   return { dataset, checklist, stored, samplePath,
-    cache_provenance: { canonical_git_lf_fingerprint: canonical, current_worktree_fingerprint: current,
+    cache_provenance: { source_revision: CITATION_SOURCE_REVISION, canonical_git_lf_fingerprint: canonical, current_worktree_fingerprint: current,
       expected_v51_samples: dataset.length * 3, canonical_file_hits: canonicalHits, current_worktree_file_hits: currentHits } };
 }
 

@@ -1,24 +1,30 @@
 // Чек-лист: edit / add / replace / reorder criteria, change weights → save as a new version → re-evaluate all dialogs.
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
-import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix } from './ui.js';
-import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute } from './store.js';
+import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced, signed } from './ui.js';
+import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers, carryUnchanged, isImported, missingAI, recentDialogs } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
 let draft = null;
 let newId = null;
 let replaced = new Map();   // newId → { oldId, oldTitle }
 let mode = null;            // 'ai' | 'mock'
+let scope = 'ids';          // which dialogs an AI re-evaluation covers: 'ids' (default: the dialogs just opened) | 'imported' | 'all'
+let scopeIds = '';          // comma-separated dialog ids for scope 'ids'
 let lastRun = null;         // outcome of the last re-evaluation in this session
+const openRows = new Set();  // criteria rows expanded for editing (the list is a compact table otherwise)
 let offBusy = null;
 const parked = { chat: {}, call: {} }; // per-kind editor state while the other checklist is open
 function switchKind(k) {
   if (!KINDS[k] || k === kind) return;
   parked[kind] = { draft, newId, replaced, lastRun };
   kind = k; ({ draft = null, newId = null, replaced = new Map(), lastRun = null } = parked[k]);
+  scopeIds = ''; // ids belong to one kind; re-filled with this kind's recent dialogs
 }
 
 const TYPES = { binary: 'Да / Нет', scale: 'Шкала', flag: 'Флаг (без баллов)' };
+// v1 is the organizers' checklist from the repo file; its updated_at is only the first page load, so name it instead
+const verDate = (c) => (c.version === 1 ? 'базовая (организаторы)' : dateTime(c.updated_at) || c.updated_at);
 
 function diffOf(cl, d) {
   const out = [];
@@ -28,6 +34,7 @@ function diffOf(cl, d) {
     const o = old.get(c.id);
     if (!o) { const r = replaced.get(c.id); out.push(r ? `заменён «${r.oldTitle}» на «${c.title}»` : `добавлен «${c.title}»`); continue; }
     if (o.title !== c.title) out.push(`переименован «${o.title}» в «${c.title}»`);
+    if ((o.input || 'text') !== (c.input || 'text')) out.push(`«${c.title}» теперь оценивается ${c.input === 'audio' ? 'по записи звонка' : 'по расшифровке'}`);
     if (Number(o.weight) !== Number(c.weight)) out.push(`вес «${c.title}»: ${o.weight} → ${c.weight}`);
     if ((o.description || '') !== (c.description || '')) out.push(`формулировка «${c.title}»`);
     if (o.type !== c.type) out.push(`тип ответа «${c.title}»: ${TYPES[o.type]} → ${TYPES[c.type]}`);
@@ -40,8 +47,70 @@ function diffOf(cl, d) {
   if (ord(cl.criteria) !== ord(d.criteria)) out.push('порядок критериев');
   return out;
 }
-const weightSum = (d) => d.criteria.filter((c) => c.type !== 'flag').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const weightSum = (d) => d.criteria.filter((c) => c.type !== 'flag' && c.input !== 'audio').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const audioWeight = (d) => d.criteria.filter((c) => c.type !== 'flag' && c.input === 'audio').reduce((s, c) => s + (Number(c.weight) || 0), 0);
+const DESC_PH = { binary: 'Да — оператор …', scale: 'Высший балл — оператор …', flag: 'Нарушение — оператор …' };
+/** First thing that blocks saving: { c, k, msg } (c/k point at the field to focus) or null. */
+function problemOf(d) {
+  for (const c of [...d.criteria].sort((a, b) => a.order - b.order)) {
+    const name = String(c.title).trim() ? `«${String(c.title).trim()}»` : `Критерий ${String(c.order).padStart(2, '0')}`;
+    if (!String(c.title).trim()) return { c, k: 'title', msg: `${name}: укажите название` };
+    if (!String(c.description || '').trim()) return { c, k: 'description', msg: `${name}: опишите, что оценивается. По этому тексту AI ставит ответ` };
+    if (c.type !== 'flag' && !(Number(c.weight) >= 0)) return { c, k: 'weight', msg: `${name}: вес должен быть числом от 0` };
+    if (c.type === 'scale') {
+      const v = (c.scale || []).map((s) => s.value);
+      if (v.length < 2 || !(Math.max(...v) > 0)) return { c, k: 'scale', msg: `${name}: нужна шкала минимум из двух ступеней, высшая больше 0` };
+    }
+    if (c.na_allowed && !String(c.na_condition || '').trim()) return { c, k: 'na_condition', msg: `${name}: опишите, когда ставить N/A` };
+  }
+  if (!d.criteria.some((c) => c.type !== 'flag' && Number(c.weight) > 0)) return { msg: 'Нужен хотя бы один критерий с весом больше 0' };
+  return null;
+}
 const devAvg = (k) => compute(rows().filter((r) => r.source === 'DEV' && r.E.kind === k)).avg;
+
+/* ---------- which dialogs an AI re-evaluation covers ---------- */
+const kindIds = (k) => S.convs.filter((c) => kindOf(c) === k).map((c) => c.conversation_id);
+const importedIds = (k) => S.convs.filter((c) => kindOf(c) === k && isImported(c)).map((c) => c.conversation_id);
+/** Recently opened dialogs of this kind (card visits), else the first three of the kind. */
+const defaultIds = (k) => { const have = new Set(kindIds(k)); const r = recentDialogs().filter((id) => have.has(id)).slice(0, 3); return r.length ? r : kindIds(k).slice(0, 3); };
+const parseIds = (s) => [...new Set(String(s).split(/[\s,;]+/).map((x) => x.trim()).filter(Boolean))];
+/** 3 votes per dialog, 5 dialogs at a time (store.reevaluateAll): ≈ 45 s per chat round, ≈ 150 s per call round. */
+function estimate(n, k) {
+  if (!n) return '';
+  const sec = Math.ceil(n / 5) * (k === 'call' ? 150 : 45);
+  return sec < 90 ? `≈ ${Math.max(30, Math.round(sec / 10) * 10)} с` : `≈ ${Math.round(sec / 60)} мин`;
+}
+/** { ids, error } for the chosen scope; ids = null means every dialog of the kind. */
+function scopeTarget(k) {
+  if (scope === 'imported') { const ids = importedIds(k); return ids.length ? { ids } : { error: 'Нет загруженных диалогов: загрузите их в разделе «Загрузка диалогов» или выберите другой охват' }; }
+  if (scope === 'ids') {
+    const want = parseIds(scopeIds); const have = new Set(kindIds(k));
+    if (!want.length) return { error: 'Укажите ID диалогов через запятую, например p1-ru-009, p1-kz-015' };
+    const bad = want.filter((id) => !have.has(id));
+    if (bad.length) return { error: `Не найдены среди ${k === 'call' ? 'звонков' : 'чатов'}: ${bad.slice(0, 4).join(', ')}${bad.length > 4 ? '…' : ''}` };
+    return { ids: want };
+  }
+  return { ids: null };
+}
+const avgOf = (k, ids) => { const set = new Set(ids); return compute(rows().filter((r) => r.E.kind === k && set.has(r.id))).avg; };
+/** Store the outcome of an AI run for the result card: partial runs report the average of the dialogs they covered. */
+function finishRun(k, res, { fromV, before, ids }) {
+  const run = { ...res, fromV, before, after: ids ? avgOf(k, ids) : devAvg(k), partial: !!ids, rest: missingAI(k).length };
+  if (kind === k) lastRun = run; else parked[k].lastRun = run;
+  emit('change');
+}
+const scopeCount = (k) => (scope === 'all' ? kindIds(k).length : scope === 'imported' ? importedIds(k).length : parseIds(scopeIds).length);
+const scopeEst = (k) => { const n = scopeCount(k); return n ? `${n} ${plural(n, ['диалог', 'диалога', 'диалогов'])} · ${estimate(n, k)}` : ''; };
+function scopeBlock(k) {
+  const imp = importedIds(k).length;
+  if (scope === 'imported' && !imp) scope = 'all';
+  // default: a few dialogs the user just opened (the jury names the dialogs to re-apply to); «Все» is a deliberate choice
+  if (!scopeIds.trim()) scopeIds = defaultIds(k).join(', ');
+  const opts = [{ v: 'ids', label: 'Выбранные' }, ...(imp ? [{ v: 'imported', label: `Загруженные · ${imp}` }] : []), { v: 'all', label: `Все · ${kindIds(k).length}` }];
+  return `<span class="field__label">Что переоценить</span>${seg('scope', opts, scope, 'Какие диалоги переоценить')}
+    <input class="input input--s mono cl-scope__ids" id="scope-ids" value="${esc(scopeIds)}" placeholder="p1-ru-009, p1-kz-015" aria-label="ID диалогов через запятую" ${scope === 'ids' ? '' : 'hidden'}>
+    <span class="muted small" id="scope-est">${scopeEst(k)}</span>`;
+}
 
 export function viewChecklist(view, _arg, query) {
   refresh();
@@ -53,7 +122,7 @@ export function viewChecklist(view, _arg, query) {
   if (!aiReady()) mode = 'mock';
   const nextV = Math.max(...versionsOf(kind).map((c) => c.version)) + 1;
   const busy = S.busy;
-  setHead('Чек-лист', `${KINDS[kind].name}: активна v${cl.version} · ${cl.criteria.length} ${plural(cl.criteria.length, ['критерий', 'критерия', 'критериев'])} · ${dateTime(cl.updated_at) || cl.updated_at}`);
+  setHead('Чек-лист', `${KINDS[kind].name}: активна v${cl.version} · ${cl.criteria.length} ${plural(cl.criteria.length, ['критерий', 'критерия', 'критериев'])} · ${verDate(cl)}`);
 
   const focusKey = document.activeElement?.closest?.('[data-id]') && document.activeElement.dataset.k ? [document.activeElement.closest('[data-id]').dataset.id, document.activeElement.dataset.k] : null;
   const list = draft.criteria.sort((a, b) => a.order - b.order);
@@ -66,15 +135,16 @@ export function viewChecklist(view, _arg, query) {
       <section class="card cl-bar" aria-label="Версия и сохранение">
         <div class="cl-bar__row">
           <label class="field field--inline"><span class="field__label">Версия</span>
-            <select class="input input--s" id="ver" ${busy ? 'disabled' : ''}>${[...versionsOf(kind)].reverse().map((c) => `<option value="${c.version}" ${c.version === cl.version ? 'selected' : ''}>v${c.version} · ${esc(dateTime(c.updated_at) || c.updated_at)}${c.version === cl.version ? ' · активна' : ''}</option>`).join('')}</select></label>
+            <select class="input input--s" id="ver" ${busy ? 'disabled' : ''}>${[...versionsOf(kind)].reverse().map((c) => `<option value="${c.version}" ${c.version === cl.version ? 'selected' : ''}>v${c.version} · ${esc(verDate(c))}${c.version === cl.version ? ' · активна' : ''}</option>`).join('')}</select></label>
           <button class="btn btn--s" type="button" id="add" ${busy ? 'disabled' : ''}>${icon('plus')}Добавить критерий</button>
           <span class="cl-bar__spacer"></span>
           <button class="btn btn--s btn--ghost" type="button" id="reset" hidden>Отменить изменения</button>
         </div>
-        <div class="cl-bar__row cl-bar__row--save">
+        <div class="cl-bar__row cl-bar__row--save" id="cl-save-row" hidden>
           <div class="cl-bar__mode"><span class="field__label">Переоценка после сохранения</span>
             ${aiReady() ? seg('mode', [{ v: 'ai', label: 'AI · /api/evaluate' }, { v: 'mock', label: 'Без AI · быстро' }], mode, 'Способ переоценки') : '<span class="muted small">AI недоступен на сервере, переоценка без AI</span>'}
           </div>
+          ${aiReady() ? `<div class="cl-bar__mode cl-scope" id="cl-scope" ${mode === 'ai' ? '' : 'hidden'}>${scopeBlock(kind)}</div>` : ''}
           <button class="btn btn--primary" type="button" id="save" disabled>Сохранить v${nextV} и переоценить</button>
         </div>
         <div id="cl-summary"></div>
@@ -82,42 +152,49 @@ export function viewChecklist(view, _arg, query) {
 
       <div id="cl-run">${runBlock(busy)}</div>
 
-      <div class="crit-edit-list" id="rows">${list.map((c, i) => `
-        <article class="crit-edit ${c.id === newId ? 'is-new' : ''} ${c.type === 'flag' ? 'is-flag' : ''}" data-id="${c.id}">
-          <div class="crit-edit__top">
+      <div class="crit-edit-list" id="rows" role="list">${list.map((c, i) => { const open = openRows.has(c.id) || c.id === newId; return `
+        <article class="crit-edit ${open ? 'is-open' : ''} ${c.id === newId ? 'is-new' : ''} ${c.type === 'flag' ? 'is-flag' : ''}" data-id="${c.id}" role="listitem">
+          <div class="crit-row">
             <span class="crit-edit__n mono" aria-hidden="true">${String(c.order).padStart(2, '0')}</span>
-            <label class="field crit-edit__title"><span class="field__label">Название</span><input class="input" data-k="title" value="${esc(c.title)}" placeholder="Например: Предложил дополнительную помощь"></label>
-            <label class="field crit-edit__w"><span class="field__label">Вес</span><input class="input num" type="number" inputmode="numeric" min="0" max="100" step="1" data-k="weight" value="${c.weight}" ${c.type === 'flag' ? 'disabled' : ''}></label>
-            <label class="field crit-edit__type"><span class="field__label">Тип ответа</span><select class="input" data-k="type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${c.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
-            <label class="check crit-edit__na"><input type="checkbox" data-k="na_allowed" ${c.na_allowed ? 'checked' : ''} ${c.type === 'flag' ? 'disabled' : ''}><span>N/A разрешён</span></label>
+            <button type="button" class="crit-row__title" data-toggle aria-expanded="${open}"><b>${esc(c.title || 'Без названия')}</b><span class="crit-row__meta">${TYPES[c.type]}${c.type === 'scale' ? ` ${(c.scale || []).map((x) => x.value).join('/')}` : ''}${c.na_allowed ? ' · N/A разрешён' : ''}${c.input === 'audio' ? ' · по записи' : ''}</span></button>
+            ${c.type === 'flag' ? '<span class="crit-row__w muted small">без баллов</span>' : `<label class="crit-row__w"><span class="sr-only">Вес «${esc(c.title)}»</span><input class="input input--s num" type="number" inputmode="numeric" min="0" max="100" step="1" data-k="weight" value="${c.weight}"></label>`}
             <div class="crit-edit__actions">
               <button class="icon-btn" type="button" data-up ${i === 0 ? 'disabled' : ''} aria-label="Поднять «${esc(c.title)}»">${icon('up')}</button>
               <button class="icon-btn" type="button" data-down ${i === list.length - 1 ? 'disabled' : ''} aria-label="Опустить «${esc(c.title)}»">${icon('down')}</button>
               <button class="icon-btn" type="button" data-replace aria-label="Заменить «${esc(c.title)}» новым критерием" title="Заменить новым критерием">${icon('swap')}</button>
               <button class="icon-btn icon-btn--danger" type="button" data-del aria-label="Удалить «${esc(c.title)}»" title="Удалить">${icon('trash')}</button>
+              <button class="btn btn--s ${open ? 'btn--ghost' : ''}" type="button" data-toggle aria-expanded="${open}">${open ? 'Свернуть' : 'Изменить'}</button>
             </div>
           </div>
-          <div class="crit-edit__more">
-            <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description">${esc(c.description || '')}</textarea></label>
-            ${c.na_allowed ? `<label class="field"><span class="field__label">Когда ставить N/A</span><input class="input" data-k="na_condition" value="${esc(c.na_condition || '')}" placeholder="Например: клиент сам дал все данные"></label>` : ''}
-            ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((s) => s.value).join(', ')}"></label>` : ''}
-            ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((s) => `<option value="${s.id}" ${s.id === c.section_id ? 'selected' : ''}>${esc(s.title)}</option>`).join('')}</select></label>` : ''}
+          ${open ? `<div class="crit-edit__top">
+            <label class="field crit-edit__title"><span class="field__label">Название</span><input class="input" data-k="title" value="${esc(c.title)}" placeholder="Например: Предложил дополнительную помощь"></label>
+            <label class="field crit-edit__type"><span class="field__label">Тип ответа</span><select class="input" data-k="type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${c.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+            <label class="check crit-edit__na"><input type="checkbox" data-k="na_allowed" ${c.na_allowed ? 'checked' : ''} ${c.type === 'flag' ? 'disabled' : ''}><span>N/A разрешён</span></label>
           </div>
-        </article>`).join('')}</div>
+          <div class="crit-edit__more">
+            <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description" placeholder="${DESC_PH[c.type] || ''}">${esc(c.description || '')}</textarea></label>
+            ${c.na_allowed ? `<label class="field"><span class="field__label">Когда ставить N/A</span><input class="input" data-k="na_condition" value="${esc(c.na_condition || '')}" placeholder="Например: клиент сам дал все данные"></label>` : ''}
+            ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((x) => x.value).join(', ')}"></label>` : ''}
+            ${kind === 'call' ? `<label class="field"><span class="field__label">Как оценивать</span><select class="input" data-k="input"><option value="text" ${c.input !== 'audio' ? 'selected' : ''}>По расшифровке</option><option value="audio" ${c.input === 'audio' ? 'selected' : ''}>По записи звонка (тон, темп, паузы)</option></select></label>` : ''}
+            ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((x) => `<option value="${x.id}" ${x.id === c.section_id ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select></label>` : ''}
+          </div>` : ''}
+        </article>`; }).join('')}</div>
     </div>`;
 
   const summary = () => {
     const { __base, ...cmp } = draft;
     const dirty = JSON.stringify(cmp) !== JSON.stringify(cl);
     const ws = weightSum(draft); const changes = diffOf(cl, draft);
+    const openHere = S.appeals.filter((a) => a.status === 'open' && a.checklist_hash === clHash(cl)).length;
     $('#save', view).disabled = !dirty || !!S.busy;
     $('#reset', view).hidden = !dirty;
+    $('#cl-save-row', view).hidden = !dirty && !S.busy;
     $('#cl-summary', view).innerHTML = `
       <div class="cl-sum">
-        <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100</span>
+        <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100${audioWeight(draft) ? ` + ${fmt(audioWeight(draft), 2)} по записи звонка` : ''}</span>
         <span class="muted small">${ws === 100 ? 'Итог считается из 100 баллов.' : 'Итог всё равно нормируется до 100, но лучше выровнять веса.'} N/A перераспределяет вес между применимыми критериями. Округление до 2 знаков.</span>
       </div>
-      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}`;
+      ${changes.length ? `<div class="cl-diff"><span class="kicker">Изменения к сохранению</span><ul>${changes.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${sameQuestions(cl, draft) ? '<p class="muted small">Меняются только веса, порядок или секции: ответы AI сохранятся, итог пересчитается сразу, без нового вызова AI.</p>' : ''}${openHere ? `<p class="muted small">Открытых апелляций по v${cl.version}: ${openHere}. Они останутся привязаны к v${cl.version}: решение по ним можно принять, вернув эту версию активной.</p>` : ''}</div>` : ''}`;
   };
   summary();
   if (focusKey) { const el = view.querySelector(`[data-id="${focusKey[0]}"] [data-k="${focusKey[1]}"]`); el?.focus(); }
@@ -132,23 +209,32 @@ export function viewChecklist(view, _arg, query) {
   });
   rowsEl.addEventListener('change', (e) => {
     const k = e.target.dataset.k; if (!k) return; const c = find(e.target);
-    if (k === 'weight') { c.weight = Math.max(0, Number(e.target.value) || 0); summary(); return; }
+    // clamp and show the stored value, so the field never says "-5" while the draft holds 0
+    if (k === 'weight') { c.weight = Math.max(0, Number(e.target.value) || 0); e.target.value = String(c.weight); summary(); return; }
     if (['title', 'description', 'na_condition'].includes(k)) { c[k] = e.target.value; summary(); return; }
     if (k === 'na_allowed') { c.na_allowed = e.target.checked; if (!c.na_allowed) delete c.na_condition; }
-    else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).map(Number).filter(Number.isFinite); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
+    else if (k === 'scale') { const vals = e.target.value.split(/[,;\s]+/).filter(Boolean).map(Number).filter((v) => Number.isFinite(v) && v >= 0); c.scale = [...new Set(vals)].sort((a, b) => b - a).map((v) => ({ value: v, label: String(v) })); }
+    else if (k === 'input') { if (e.target.value === 'audio') c.input = 'audio'; else delete c.input; }
     else if (k === 'type') { c.type = e.target.value; if (c.type === 'scale' && !c.scale) c.scale = [10, 5, 0].map((v) => ({ value: v, label: String(v) })); if (c.type === 'flag') { c.weight = 0; c.na_allowed = false; delete c.na_condition; } }
     else c[k] = e.target.value;
     viewChecklist(view);
   });
   rowsEl.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return; const c = find(b); const l = draft.criteria.sort((x, y) => x.order - y.order); const i = l.indexOf(c);
+    if (b.hasAttribute('data-toggle')) {
+      const open = !(openRows.has(c.id) || c.id === newId);
+      if (open) openRows.add(c.id); else { openRows.delete(c.id); if (c.id === newId) newId = null; }
+      viewChecklist(view);
+      if (open) view.querySelector(`[data-id="${c.id}"] [data-k="title"]`)?.focus();
+      return;
+    }
     if (b.hasAttribute('data-del')) draft.criteria = l.filter((x) => x !== c);
     if (b.hasAttribute('data-up') && i > 0) [l[i - 1].order, c.order] = [c.order, l[i - 1].order];
     if (b.hasAttribute('data-down') && i < l.length - 1) [l[i + 1].order, c.order] = [c.order, l[i + 1].order];
     if (b.hasAttribute('data-replace')) {
       const id = `c${uid()}`; const prev = replaced.get(c.id);
       replaced.delete(c.id); replaced.set(id, prev || { oldId: c.id, oldTitle: c.title });
-      Object.assign(c, { id, title: '', description: '', type: 'binary', na_allowed: false }); delete c.na_condition; delete c.scale;
+      Object.assign(c, { id, title: '', description: '', type: 'binary', na_allowed: false }); delete c.na_condition; delete c.scale; delete c.input;
       if (!(Number(c.weight) > 0)) c.weight = 10;
       newId = id;
     }
@@ -161,35 +247,82 @@ export function viewChecklist(view, _arg, query) {
     const flagOrder = draft.criteria.find((c) => c.type === 'flag')?.order;
     const order = flagOrder ?? draft.criteria.length + 1;
     draft.criteria.forEach((c) => { if (c.order >= order) c.order++; });
-    draft.criteria.push({ id: newId, order, section_id: draft.sections?.find((s) => s.id !== 's4')?.id || draft.sections?.[0]?.id, title: 'Новый критерий', description: 'Да — …', type: 'binary', weight: 10, na_allowed: false });
+    draft.criteria.push({ id: newId, order, section_id: draft.sections?.find((s) => s.id !== 's4')?.id || draft.sections?.[0]?.id, title: 'Новый критерий', description: '', type: 'binary', weight: 10, na_allowed: false });
     viewChecklist(view);
     const el = view.querySelector(`[data-id="${newId}"] [data-k="title"]`); el?.focus(); el?.select();
   };
   $('#reset', view).onclick = () => { draft = null; replaced.clear(); newId = null; viewChecklist(view); };
-  $('#mode', view)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.v; $$('#mode button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
+  $('#mode', view)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.v; $$('#mode button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); const sc = $('#cl-scope', view); if (sc) sc.hidden = mode !== 'ai'; });
+  $('#scope', view)?.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return; scope = b.dataset.v;
+    $$('#scope button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const inp = $('#scope-ids', view); inp.hidden = scope !== 'ids'; if (scope === 'ids') inp.focus();
+    $('#scope-est', view).textContent = scopeEst(kind);
+  });
+  $('#scope-ids', view)?.addEventListener('input', (e) => { scopeIds = e.target.value; e.target.removeAttribute('aria-invalid'); $('#scope-est', view).textContent = scopeEst(kind); });
   $('#cl-kind', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.dataset.v === kind) return; switchKind(b.dataset.v); history.replaceState(null, '', `#/checklist?kind=${kind}`); emit('change'); });
-  $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
+  $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; lastRun = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
   $('#save', view).onclick = async () => {
-    const bad = draft.criteria.find((c) => !String(c.title).trim()) ? 'У каждого критерия должно быть название'
-      : draft.criteria.find((c) => c.type === 'scale' && (!c.scale || c.scale.length < 2)) ? `У «${draft.criteria.find((c) => c.type === 'scale' && (!c.scale || c.scale.length < 2)).title}» нужна шкала минимум из двух ступеней`
-      : draft.criteria.some((c) => c.type !== 'flag' && !(Number(c.weight) >= 0)) ? 'Вес должен быть числом от 0'
-      : !draft.criteria.some((c) => c.type !== 'flag' && Number(c.weight) > 0) ? 'Нужен хотя бы один критерий с весом больше 0' : null;
-    if (bad) { toast(bad, 'warn'); return; }
-    const before = devAvg(kind); const fromV = cl.version; const k = kind;
+    const bad = problemOf(draft);
+    if (bad) {
+      toast(bad.msg, 'warn');
+      if (bad.c && !openRows.has(bad.c.id)) { openRows.add(bad.c.id); viewChecklist(view); }
+      const el = bad.c && view.querySelector(`[data-id="${bad.c.id}"] [data-k="${bad.k}"]`);
+      if (el) {
+        el.setAttribute('aria-invalid', 'true');
+        el.addEventListener('input', () => el.removeAttribute('aria-invalid'), { once: true });
+        el.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' }); el.focus({ preventScroll: true });
+      }
+      return;
+    }
+    const fromV = cl.version; const k = kind;
     const { __base: _, ...clean } = draft;
     clean.criteria = clean.criteria.map((c) => ({ ...c, weight: Number(c.weight) || 0 }));
+    // the scope matters only when the AI is asked new questions; check it before a version is created
+    const target = mode === 'ai' && !sameQuestions(checklistOf(k), clean) ? scopeTarget(k) : { ids: null };
+    if (target.error) {
+      toast(target.error, 'warn');
+      const inp = $('#scope-ids', view);
+      if (inp && scope === 'ids') { inp.setAttribute('aria-invalid', 'true'); inp.focus(); }
+      return;
+    }
+    const before = target.ids ? avgOf(k, target.ids) : devAvg(k);
     refresh();
+    const fromCl = checklistOf(k);
     addVersion(k, { ...structuredClone(clean), version: nextV, updated_at: new Date().toISOString() });
     draft = null; newId = null; replaced.clear();
     lastRun = null;
+    // weights / order / sections only: the evaluator would be asked the same questions, so keep its answers and
+    // let the scoring engine recompute the totals now (no LLM call, no cost, same evidence)
+    if (sameQuestions(fromCl, checklistOf(k))) {
+      const t0 = performance.now(); const total = S.convs.filter((c) => kindOf(c) === k).length;
+      const n = carryAnswers(k, fromCl, checklistOf(k));
+      lastRun = { kind: k, version: nextV, fromV, before, after: devAvg(k), done: total, total, failed: 0, cost: 0, ms: performance.now() - t0, mode: 'carry', carried: n };
+      toast(`${KINDS[k].name} v${nextV} применён: итог пересчитан по новым весам, ответы AI сохранены`);
+      emit('change');
+      scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
+      return;
+    }
+    // dialogs outside the chosen scope keep the AI answers to unchanged questions (new criteria: «не оценён»)
+    carryUnchanged(k, fromCl, checklistOf(k));
     emit('change');
-    const res = await reevaluateAll(mode, `${KINDS[k].label}: переоценка по v${nextV}`, k);
+    // the progress card and its result sit under the save bar: bring them into view instead of leaving the user mid-list
+    scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
+    const res = await reevaluateAll(mode, `${KINDS[k].label}: переоценка по v${nextV}${target.ids ? ` · ${target.ids.length} ${plural(target.ids.length, ['диалог', 'диалога', 'диалогов'])}` : ''}`, k, target.ids);
     if (!res) return;
-    const run = { ...res, fromV, before, after: devAvg(k) };
-    if (kind === k) lastRun = run; else parked[k].lastRun = run;
+    finishRun(k, res, { fromV, before, ids: target.ids });
     toast(`${KINDS[k].name} v${nextV} применён: ${res.done - res.failed} из ${res.total} диалогов переоценены`, res.failed ? 'warn' : 'ok');
-    emit('change');
   };
+  // after a partial run: evaluate the dialogs that still show «Без AI» for the active version
+  $('#cl-run', view).addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-rest]'); if (!b || S.busy) return;
+    const k = b.dataset.rest; const ids = missingAI(k); if (!ids.length) return;
+    const fromV = checklistOf(k).version; const before = avgOf(k, ids);
+    const res = await reevaluateAll('ai', `${KINDS[k].label}: остальные по v${fromV} · ${ids.length} ${plural(ids.length, ['диалог', 'диалога', 'диалогов'])}`, k, ids);
+    if (!res) return;
+    finishRun(k, res, { fromV, before, ids });
+    toast(`${KINDS[k].name} v${fromV}: ещё ${res.done - res.failed} из ${res.total} диалогов оценены AI`, res.failed ? 'warn' : 'ok');
+  });
   offBusy?.();
   offBusy = on('busy', (b) => { const box = $('#cl-run', view); if (box) box.innerHTML = runBlock(b); if (!b && view.isConnected) summary(); });
   return () => { offBusy?.(); offBusy = null; };
@@ -207,9 +340,13 @@ function runBlock(b) {
   if (lastRun) {
     const r = lastRun; const d = r.after != null && r.before != null ? r.after - r.before : null;
     return `<section class="card run-card run-card--done" role="status">
-      <div class="run-card__head">${icon('check')}<b>${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалог переоценён', 'диалога переоценены', 'диалогов переоценены'])} за ${fmt(r.ms / 1000, 1)} с</b></div>
-      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${d > 0 ? '+' : ''}${fix(d, 1)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
-      <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a></div>
+      <div class="run-card__head">${icon('check')}<b>${r.mode === 'carry'
+        ? `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: итог ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} пересчитан по новым весам`
+        : `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} переоценено за ${fmt(r.ms / 1000, 1)} с`}</b></div>
+      ${r.mode === 'carry' ? `<p class="muted small">Изменились только веса, порядок или секции: вопросы к AI те же, поэтому ответы и доказательства из v${r.fromV} сохранены (${r.carried} ${plural(r.carried, ['диалог', 'диалога', 'диалогов'])}), а баллы пересчитал движок оценки. Без нового вызова AI.</p>` : ''}
+      <p class="run-card__res">${r.partial ? 'Средний балл этих диалогов' : 'Средний балл'}: <b class="num">${fix(r.before, 1)}</b> ${r.fromV === r.version ? 'без AI' : `по v${r.fromV}`} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : r.mode === 'carry' ? ' · $0' : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
+      ${r.mode === 'ai' && r.rest ? `<p class="muted small">Ещё ${r.rest} ${plural(r.rest, ['диалог', 'диалога', 'диалогов'])}: ответы на неизменённые критерии перенесены из v${r.fromV}, новые или изменённые критерии AI ещё не оценил (в списке пометка «Не все критерии», в карточке «не оценён»). Их можно оценить AI сейчас или позже.</p>` : ''}
+      <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a>${r.mode === 'ai' && r.rest ? `<button class="btn btn--s" type="button" data-rest="${r.kind}">Оценить остальные AI · ${r.rest} · ${estimate(r.rest, r.kind)}</button>` : ''}</div>
     </section>`;
   }
   return '';

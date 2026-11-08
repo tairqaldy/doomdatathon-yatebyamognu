@@ -1,0 +1,40 @@
+{
+ "answers": {
+  "c09": {
+   "answer": 4,
+   "explanation": "Оператор говорит подчёркнуто безучастно, холодно и сухо, отвечая односложно. Из-за такого тона клиент напрямую замечает усталость сотрудника и ощущение, что она навязывается.",
+   "deduction_reason": "Холодный и безучастный тон оператора, вызвавший у клиента дискомфорт.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 23,
+     "quote": "Да."
+    },
+    {
+     "kind": "message",
+     "turn_index": 39,
+     "quote": "Нет, не делаем."
+    }
+   ],
+   "audio_metrics": {
+    "op_turns": 13,
+    "op_words": 205,
+    "op_wpm_median": 124,
+    "measured_turns": 8,
+    "long_waits": []
+   }
+  }
+ },
+ "problems": [],
+ "model": "google/gemini-3.8-flash",
+ "prompt_version": "tone-v4",
+ "attempts": 1,
+ "latency_ms": 16926,
+ "audio_bytes": 1921932,
+ "usage": {
+  "prompt_tokens": 10581,
+  "audio_tokens": 0,
+  "completion_tokens": 1207,
+  "cost": 0.012462
+ }
+}

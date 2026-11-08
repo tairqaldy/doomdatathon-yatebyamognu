@@ -1,0 +1,150 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал себя Әсел.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент ясно сообщил, какой отчёт нужен, и спросил, как задать даты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент запросил отчёт за прошлый год и спросил, как выставить даты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Для запроса о загрузке отчёта и выборе дат идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор дал общую инструкцию по навигации и выбору периода."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор дал конкретную инструкцию, а клиент сообщил, что всё готово.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Дайын болды. Рақмет!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался вежливо; необходимости отдельно реагировать на неудобство клиента не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор чётко описал порядок действий, и клиент понял инструкцию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Фраза о том, что оператор рад помочь, является вежливой формулой, а не предложением дальнейшей помощи или итогом.",
+   "deduction_reason": "Оператор попрощался, но не подвёл итог и не предложил дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Көмегім тигеніне қуаныштымын. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Әсел. «Отчёт брокера» тармағын ашыңыз. Өткен жылдың басы мен соңын таңдап, есепті жүктеңіз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту понадобился брокерский отчёт за прошлый год и помощь с выбором дат.",
+  "operator_actions": "Оператор объяснил, где открыть отчёт, и как выбрать прошлогодний период.",
+  "outcome": "Клиент сообщил, что всё готово."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиенту нужен брокерский отчёт за прошлый год.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Клиент спросил, как указать даты для отчёта.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19273,
+ "usage": {
+  "prompt_tokens": 5818,
+  "completion_tokens": 2278,
+  "cost": 0.001721
+ }
+}

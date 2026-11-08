@@ -1,0 +1,140 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, уточняющие вопросы не требовались.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос был ясен с самого начала"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, это общий вопрос о навигации в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о навигации, идентификация не требовалась"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент подтвердил, что нашёл облигации, вопрос полностью решён.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Таптым."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор предложил оставить личный номер для платной консультации в обход компании, что недопустимо.",
+   "deduction_reason": "Предложение платной консультации в обход компании",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жеке нөміріңізді қалдырсаңыз, жұмыстан кейін хабарласып, қандай қағаз алу керегін ақылы түрде айтып беремін."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и связные, клиент понял и продолжил.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айданамын. «Котировки» бөлімін ашсаңыз, атауы бойынша іздей аласыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Чат закрыт оператором без прощания и без подведения итога.",
+   "deduction_reason": "Отсутствие прощания и итога при закрытии чата",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оператор чатты жапты."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Выявлено предложение платной услуги в обход компании.",
+   "deduction_reason": "Предложение платной консультации в обход компании",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Жеке нөміріңізді қалдырсаңыз, жұмыстан кейін хабарласып, қандай қағаз алу керегін ақылы түрде айтып беремін."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал, где посмотреть облигации в приложении.",
+  "operator_actions": "Оператор ответил на вопрос, но затем предложил платную консультацию в обход компании.",
+  "outcome": "Клиент отказался от предложения, оператор закрыл чат без прощания."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Облигацияларды қайдан қараймын? Бұрын сатып алып көрмедім.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 14861,
+ "usage": {
+  "prompt_tokens": 5527,
+  "completion_tokens": 2328,
+  "cost": 0.006925
+ }
+}

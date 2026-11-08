@@ -1,0 +1,162 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, уточнять не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "I’m trying to figure out how to find bonds in the app."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация не требовалась для общего вопроса о поиске облигаций в приложении.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Open Quotes and search by the bond’s name or ticker."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенный запрос закрыт, клиент подтвердил, что понял и нашёл нужный раздел.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Adrian. Open Quotes and search by the bond's name or ticker."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Okay, I see the search bar now."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор допустил недопустимое предложение и не отреагировал на возражение клиента.",
+   "deduction_reason": "Недопустимое предложение частной платной консультации и игнорирование возражения клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Один заметный сбой: клиенту пришлось отреагировать на недопустимое предложение оператора.",
+   "deduction_reason": "Клиенту пришлось возражать против предложения оператора.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор не завершил диалог: нет прощания, итога или предложения помощи.",
+   "deduction_reason": "Последнее возражение клиента проигнорировано, прощания и итога нет.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "No, I'm only asking for help with the app."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Agent closed the chat."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор предложил услугу в обход компании.",
+   "deduction_reason": "Предложение частной платной консультации и запрос личного номера.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Send me your personal number and I'll call you after work. I charge for private advice and can tell you which bonds to buy."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал, как найти облигации в приложении.",
+  "operator_actions": "Оператор дал инструкцию, затем предложил частную платную консультацию и запросил личный номер.",
+  "outcome": "Клиент отказался, оператор закрыл чат без прощания и итога."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": 11,
+  "last_client_question_ignored_turn": 12,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "How to find bonds in the app",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [
+   12
+  ],
+  "ending": "operator_closed_chat",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 21497,
+ "usage": {
+  "prompt_tokens": 5304,
+  "completion_tokens": 2342,
+  "cost": 0.006465
+ }
+}

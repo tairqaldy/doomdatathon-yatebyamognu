@@ -1,0 +1,155 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор алғашқы репликасында амандасып, атын айтты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Сұрауға жауап беру үшін қолда бар ақпарат жеткілікті еді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Бұл сұрау үшін жеке тұлғаны растау талап етілмеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор нақты жолды көрсетті, клиент оны тауып, растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Көрдім, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта дөрекілік немесе клиенттің мәселесіне немқұрайлы қарау байқалмайды.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалогта оператор тарапынан түсініксіздік, переспрашивание немесе ескертілмеген ұзақ күту болған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор қоштасты, алайда қорытынды немесе қосымша көмек ұсынбады.",
+   "deduction_reason": "Қоштасу кезінде қорытынды не әрі қарай көмек ұсыну болмады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубое нарушение анықталған жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент тарифін қайдан көруге болатынын сұрады.",
+  "operator_actions": "Оператор веб-нұсқадағы «Кабинет» бөлімін және тарифтің орналасқан жерін көрсетті.",
+  "outcome": "Клиент тарифті тауып, алғыс айтты."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сұрады, қазір қай тарифте тұрғанын қайдан көруге болады.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19879,
+ "usage": {
+  "prompt_tokens": 5807,
+  "completion_tokens": 2351,
+  "cost": 0.001756
+ }
+}

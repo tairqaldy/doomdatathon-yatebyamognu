@@ -9,6 +9,7 @@ import * as live from '/shared/live-store.js';
 export { score, tier, maxStep };
 export const LS_KEY = 'cqa-prototype-v2';           // chat checklist versions, appeals, role, AI cache (shared with /prototype)
 export const CALL_KEY = 'cqa-call-checklists-v1';    // call checklist versions (admin only)
+export const IMPORT_KEY = 'cqa-admin-imported-v1';   // dialogs added in «Загрузка» (pasted, uploaded, fetched by group_id)
 export const KINDS = { chat: { label: 'Чаты', name: 'Чек-лист чатов', file: '/data/checklists/freedom-chat-v1.json' }, call: { label: 'Звонки', name: 'Чек-лист звонков', file: '/data/checklists/freedom-call-v1.json' } };
 export const S = {
   convs: [], byId: {}, checklists: [], activeVersion: 1, appeals: [], role: 'qa', ai: {}, call: { checklists: [], activeVersion: 1 },
@@ -23,7 +24,7 @@ export const emit = (type, detail) => bus.dispatchEvent(new CustomEvent(type, { 
 /* ---------- hashing (identical to the prototype) ---------- */
 const strHash = (s) => { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
 export { strHash };
-export const clHash = (cl) => strHash(JSON.stringify(cl.criteria.map(({ id, title, description, type, weight, na_allowed, na_condition, scale }) => [id, title, description, type, weight, na_allowed, na_condition, scale])));
+export const clHash = (cl) => strHash(JSON.stringify(cl.criteria.map(({ id, title, description, type, weight, na_allowed, na_condition, scale, input }) => [id, title, description, type, weight, na_allowed, na_condition, scale, ...(input ? [input] : [])])));
 const aiKey = (convId, cl) => `${convId}|${clHash(cl)}`;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -44,7 +45,9 @@ export const modelLabel = (m) => { const s = String(m || '').replace(/^openai:/,
 
 /* ---------- persistence ---------- */
 export function persist() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: S.ai })); }
+  // answers copied from data/evaluations/DEV.json are not saved: the committed file stays the source of truth
+  const ai = Object.fromEntries(Object.entries(S.ai).filter(([, v]) => !v?.from_pre));
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai })); }
   catch (e) { console.warn('CQA: не удалось сохранить состояние', e); }
   try { localStorage.setItem(CALL_KEY, JSON.stringify({ checklists: S.call.checklists, activeVersion: S.call.activeVersion })); } catch {}
 }
@@ -56,10 +59,15 @@ const restoreCall = () => { try { return JSON.parse(localStorage.getItem(CALL_KE
 function mergePre() {
   const pre = S.pre; if (!pre?.results || !S.checklists.length) return;
   const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
+  // A saved answer under a base checklist survives only if it is a real run with the same evaluator prompt as the
+  // committed file (a fresh «Оценить заново»). Anything older (no prompt_version, an earlier prompt, or a copy of an
+  // older DEV.json) is replaced, so a browser that ran eval-v4 yesterday shows the eval-v5.3 answers today.
+  const stale = (e, pv) => !e || e.from_pre || !e.prompt_version || e.prompt_version !== pv;
   for (const [id, r] of Object.entries(pre.results)) {
-    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage });
-    if (!S.ai[`${id}|${k}`]) S.ai[`${id}|${k}`] = v();
-    if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v();
+    const pv = r.prompt_version || pre.prompt_version || null;
+    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, agreement: r.agreement, samples: r.samples, prompt_version: pv, from_pre: true });
+    if (stale(S.ai[`${id}|${k}`], pv)) S.ai[`${id}|${k}`] = v();
+    if (kc && isCall(S.byId[id]) && stale(S.ai[`${id}|${kc}`], pv)) S.ai[`${id}|${kc}`] = v();
   }
 }
 /** Re-read the shared state (another tab, e.g. /prototype, may have written it). */
@@ -82,7 +90,7 @@ async function apiHealth() {
   } catch { S.api = { ok: false, ai: false, model: null }; }
 }
 async function loadMetrics() {
-  for (const u of ['/eval/runs/gpt-6-luna-eval-v4.metrics.json', '/eval/runs/gpt-6-luna-eval-v1.metrics.json']) {
+  for (const u of ['/eval/runs/gpt-6-luna-eval-v5.3.metrics.json', '/eval/runs/gpt-6-luna-eval-v5.1.metrics.json', '/eval/runs/gpt-6-luna-eval-v4.metrics.json', '/eval/runs/gpt-6-luna-eval-v1.metrics.json']) {
     try { const r = await fetch(u, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch {}
   }
   return null;
@@ -95,6 +103,7 @@ export async function load() {
     get('/data/evaluations/DEV.json').catch(() => null), loadMetrics(), apiHealth(),
   ]);
   S.convs = ds.data.records; S.byId = Object.fromEntries(S.convs.map((c) => [c.conversation_id, c]));
+  for (const c of restoreImported()) if (!S.byId[c.conversation_id]) { S.convs.push(c); S.byId[c.conversation_id] = c; }
   S.pre = pre; S.metrics = metrics;
   const saved = restore();
   S.checklists = saved?.checklists?.length ? saved.checklists : [{ ...cl, version: 1, updated_at: new Date().toISOString() }];
@@ -105,9 +114,66 @@ export async function load() {
   mergePre();
 }
 
+/* ---------- imported dialogs (pasted text, JSON file, organizers' group) ---------- */
+function restoreImported() { try { const j = JSON.parse(localStorage.getItem(IMPORT_KEY) || 'null'); return Array.isArray(j?.convs) ? j.convs : []; } catch { return []; } }
+const persistImported = () => {
+  try { localStorage.setItem(IMPORT_KEY, JSON.stringify({ convs: S.convs.filter((c) => c._source) })); }
+  catch (e) { console.warn('CQA: не удалось сохранить загруженные диалоги', e); }
+};
+export const isImported = (conv) => !!conv?._source;
+export const importedConvs = () => S.convs.filter((c) => c._source);
+/** The conversation exactly as the server evaluates it (internal _fields stripped). */
+export const plainConv = (c) => Object.fromEntries(Object.entries(c).filter(([k]) => !k.startsWith('_')));
+/** Add dialogs to the workspace. A DEV id is never replaced; an earlier import with the same id is. */
+export function addImported(list, source) {
+  const out = { added: [], replaced: [], skipped: [] };
+  for (const raw of list) {
+    const id = raw.conversation_id;
+    const prev = S.byId[id];
+    if (prev && !prev._source) { out.skipped.push(id); continue; }
+    const conv = { ...plainConv(raw), _source: source, _added_at: new Date().toISOString() };
+    if (prev) { S.convs[S.convs.indexOf(prev)] = conv; out.replaced.push(id); } else { S.convs.push(conv); out.added.push(id); }
+    S.byId[id] = conv;
+  }
+  persistImported(); emit('change');
+  return out;
+}
+export function removeImported(ids) {
+  const drop = new Set(ids.filter((id) => S.byId[id]?._source));
+  S.convs = S.convs.filter((c) => !drop.has(c.conversation_id));
+  for (const id of drop) delete S.byId[id];
+  persistImported(); emit('change');
+  return drop.size;
+}
+/** After the control run is pushed, data/evaluations/<group>.json holds its AI answers: show them under the base checklists. */
+export async function mergeGroupEvaluations(group) {
+  try {
+    const r = await fetch(`/data/evaluations/${encodeURIComponent(group)}.json`, { cache: 'no-store' }); if (!r.ok) return 0;
+    const pre = await r.json(); let n = 0;
+    const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
+    for (const [id, x] of Object.entries(pre.results || {})) {
+      if (!S.byId[id]?._source || !x?.answers) continue;
+      const v = { answers: x.answers, summary: x.summary, model: x.model || pre.model, usage: x.usage, agreement: x.agreement, samples: x.samples, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
+      if (!S.ai[`${id}|${k}`]) { S.ai[`${id}|${k}`] = v; n++; }
+      if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v;
+    }
+    persist(); emit('change'); return n;
+  } catch { return 0; }
+}
+/** Whether this dialog already has an AI result for the checklist it is scored with. */
+/** Dialog cards opened in this tab, newest first: the default scope of a re-evaluation after a checklist change. */
+const RECENT_KEY = 'cqa-admin-recent';
+export const recentDialogs = () => { try { const a = JSON.parse(sessionStorage.getItem(RECENT_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch { return []; } };
+export const markRecent = (id) => { try { sessionStorage.setItem(RECENT_KEY, JSON.stringify([id, ...recentDialogs().filter((x) => x !== id)].slice(0, 8))); } catch {} };
+// a partial entry (answers carried from the previous version, new criteria not asked yet) does not count as evaluated
+export const hasAI = (convId) => { const c = S.byId[convId]; const e = c && S.ai[aiKey(convId, checklistFor(c))]; return !!(e && !e.partial); };
+/** Dialogs of one kind that have no AI result for the active checklist yet (shown «Без AI»). */
+export const missingAI = (kind) => S.convs.filter((c) => kindOf(c) === kind && !hasAI(c.conversation_id)).map((c) => c.conversation_id);
+
 /* ---------- time helpers (chat = MM:SS, call = ISO 8601) ---------- */
 export function offsetSec(conv, i) {
   const ts = conv.transcript[i]?.timestamp || '';
+  if (!ts) return i * 10; // pasted text without times: evenly spaced on the timeline only (no time shown or sent)
   if (/^\d{1,2}:\d{2}$/.test(ts)) { const [m, s] = ts.split(':').map(Number); return m * 60 + s; }
   const t0 = Date.parse(conv.transcript[0]?.timestamp), t = Date.parse(ts);
   return Number.isFinite(t - t0) ? Math.max(0, (t - t0) / 1000) : 0;
@@ -135,6 +201,13 @@ export function evaluation(convId) {
   const evaluatedAt = base.evaluated_at || (src === 'ai' && isBaseHash ? S.pre?.generated_at : null);
   return { cl, kind: kindOf(conv), conv, src, model: base.model, base, answers: base.answers, summary: base.summary, aiScore: score(cl, aiAnswers), finalScore: score(cl, finalAnswers), finalAnswers, appeals, evaluatedAt, live: false };
 }
+/** How sure the AI was about one criterion: self-consistency votes that agree with the shown answer, e.g. { k: 2, n: 3 }.
+ *  null without AI answers or with a single sample. Low (< all) means the samples split: a human should look (issue #33). */
+export function confidenceOf(E, critId) {
+  const n = E.src === 'ai' ? Number(E.base?.samples) : 0; const v = E.base?.agreement?.[critId];
+  if (!(n > 1) || v == null) return null;
+  const k = Math.round(v * n); return { k, n, low: k < n };
+}
 /** A closed live session that has an evaluation (scored with the active checklist). */
 export function liveEvaluation(s) {
   const cl = checklist(); const conv = live.toConversation(s);
@@ -159,30 +232,33 @@ export function evidenceIdx(E, c) {
   const e = E.answers[c.id]?.evidence?.find((x) => x.kind === 'message' || x.kind === 'range');
   return e ? (e.kind === 'message' ? e.turn_index : e.range[0]) : null;
 }
-export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Да (нарушение)' : 'Да') : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
+export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' && c.type === 'flag' ? 'Нет нарушения' : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
 
 /* ---------- AI calls ---------- */
 export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.byId[convId]), save = true } = {}) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000);
+  // 3 votes run in parallel: chats ≈ 30–60 s, calls up to ≈ 2.5 min; the server allows 300 s (api/evaluate.js)
+  const timeout = setTimeout(() => controller.abort(), 280000);
   const t0 = performance.now();
   let r;
   try {
     r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal });
+      body: JSON.stringify({ conversation_id: convId, ...(isImported(S.byId[convId]) ? { conversation: plainConv(S.byId[convId]) } : {}), checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal });
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, problems: j.problems,
-    evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
+    roles: j.roles || null, no_client: Boolean(j.no_client), message: j.message || null, evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;
 }
 
-/** Re-evaluate every DEV dialog of one kind with its active checklist. mode: 'ai' (/api/evaluate) or 'mock' (offline evaluator). */
-export async function reevaluateAll(mode, label, kind = 'chat') {
+/** Re-evaluate the dialogs of one kind with its active checklist. mode: 'ai' (/api/evaluate) or 'mock' (offline evaluator).
+ *  `only`: a list of dialog ids to limit the run to (the rest keep no AI answer for this version and show «Без AI»). */
+export async function reevaluateAll(mode, label, kind = 'chat', only = null) {
   if (S.busy) return null;
-  const cl = checklistOf(kind); const ids = S.convs.filter((c) => kindOf(c) === kind).map((c) => c.conversation_id);
+  const cl = checklistOf(kind); const pick = only ? new Set(only) : null;
+  const ids = S.convs.filter((c) => kindOf(c) === kind && (!pick || pick.has(c.conversation_id))).map((c) => c.conversation_id);
   S.busy = { label, mode, kind, done: 0, total: ids.length, failed: 0, cost: 0, startedAt: Date.now(), version: cl.version };
   emit('busy', S.busy);
   if (mode === 'ai') {
@@ -204,6 +280,47 @@ export async function reevaluateAll(mode, label, kind = 'chat') {
   return res;
 }
 
+/** Same questions for the evaluator: same criteria ids and the same text, type, N/A rule and scale.
+ *  Only weights, order or sections differ, so the AI answers stay valid and only the arithmetic changes. */
+const QUESTION = (c) => JSON.stringify([c.title, c.description || '', c.type, !!c.na_allowed, c.na_allowed ? c.na_condition || '' : '', c.scale || null]);
+export function sameQuestions(a, b) {
+  if (a.criteria.length !== b.criteria.length) return false;
+  const m = new Map(a.criteria.map((c) => [c.id, QUESTION(c)]));
+  return b.criteria.every((c) => m.get(c.id) === QUESTION(c));
+}
+/** Reuse the AI answers of `fromCl` for `toCl` (weights/order changed only). Returns how many dialogs got them. */
+export function carryAnswers(kind, fromCl, toCl) {
+  const a = clHash(fromCl), b = clHash(toCl); let n = 0;
+  for (const c of S.convs) {
+    if (kindOf(c) !== kind) continue;
+    const src = S.ai[`${c.conversation_id}|${a}`];
+    // the copy is a saved answer of its own (not a DEV.json mirror), so it must persist
+    if (src && !S.ai[`${c.conversation_id}|${b}`]) { const { from_pre, ...rest } = src; S.ai[`${c.conversation_id}|${b}`] = { ...rest, carried_from: fromCl.version }; n++; }
+  }
+  persist(); emit('change');
+  return n;
+}
+/** The new version asks some new questions (a criterion added, replaced or reworded). Every dialog that is not
+ *  re-evaluated keeps the AI answers to the unchanged questions; new or changed criteria stay unanswered («не оценён»,
+ *  dropped from the total by scoring.js) until the AI evaluates that dialog. Never falls back to the keyword mock. */
+export function carryUnchanged(kind, fromCl, toCl) {
+  const a = clHash(fromCl), b = clHash(toCl);
+  const prev = new Map(fromCl.criteria.map((c) => [c.id, QUESTION(c)]));
+  const keep = toCl.criteria.filter((c) => prev.get(c.id) === QUESTION(c)).map((c) => c.id);
+  let n = 0;
+  for (const c of S.convs) {
+    if (kindOf(c) !== kind) continue;
+    const src = S.ai[`${c.conversation_id}|${a}`]; const key = `${c.conversation_id}|${b}`;
+    if (!src?.answers || S.ai[key]) continue;
+    const { from_pre, ...rest } = src;
+    const answers = Object.fromEntries(keep.filter((id) => rest.answers[id]).map((id) => [id, rest.answers[id]]));
+    S.ai[key] = { ...rest, answers, carried_from: fromCl.version, partial: true, missing: toCl.criteria.map((x) => x.id).filter((id) => !answers[id]) };
+    n++;
+  }
+  persist(); emit('change');
+  return n;
+}
+
 /* ---------- rows + aggregates ---------- */
 function rowFrom(id, source, E) {
   const dd = deductions(E);
@@ -213,9 +330,24 @@ function rowFrom(id, source, E) {
 }
 /** Every evaluated dialog: DEV set + closed live sessions that have an evaluation. */
 export function rows() {
-  const out = S.convs.map((c) => rowFrom(c.conversation_id, 'DEV', evaluation(c.conversation_id)));
+  const out = S.convs.map((c) => rowFrom(c.conversation_id, c._source ? 'import' : 'DEV', evaluation(c.conversation_id)));
   for (const s of live.all()) if (s.evaluation?.answers) out.push(rowFrom(s.id, 'live', liveEvaluation(s)));
   return out;
+}
+/** Sort rows: order · order-desc · low · high (score) · lang (RU, KZ, EN) · channel (chats, then calls).
+ *  Ties keep the incoming order, so the sort is stable and predictable. */
+const LANG_ORDER = { RU: 0, KZ: 1, EN: 2 };
+export function sortRows(list, key = 'order') {
+  const idx = new Map(list.map((r, i) => [r, i]));
+  const tv = (r) => (r.total == null ? -1 : r.total);
+  const by = {
+    'order-desc': (a, b) => idx.get(b) - idx.get(a),
+    low: (a, b) => tv(a) - tv(b),
+    high: (a, b) => tv(b) - tv(a),
+    lang: (a, b) => (LANG_ORDER[a.language] ?? 9) - (LANG_ORDER[b.language] ?? 9),
+    channel: (a, b) => (a.channel === b.channel ? 0 : a.channel === 'chat' ? -1 : 1),
+  }[key] || (() => 0);
+  return [...list].sort((a, b) => by(a, b) || idx.get(a) - idx.get(b));
 }
 export const hrefFor = (r) => (r.source === 'live' ? `#/live/${encodeURIComponent(r.id)}` : `#/dialog/${encodeURIComponent(r.id)}`);
 /** The gross-error flag that fired in this dialog: { c, answer } (explanation + evidence come from the AI answer). */

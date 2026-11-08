@@ -1,0 +1,49 @@
+{
+  "group": "Swap",
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v5.3",
+  "samples": null,
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-08T05:54:28.257Z",
+  "n": 3,
+  "errors": 0,
+  "cached": 0,
+  "fresh_calls": 3,
+  "cost_usd_total": 0.01868,
+  "cost_usd_per_eval": 0.00623,
+  "latency_ms_p50": 21859,
+  "latency_ms_p95": 63870,
+  "rows": [
+    {
+      "id": "p3-en-001",
+      "lang": "EN",
+      "cached": false,
+      "ms": 21664,
+      "model_ms": 20925,
+      "cost": 0.004839,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p3-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 22555,
+      "model_ms": 21859,
+      "cost": 0.004844,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p3-kz-001",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 65201,
+      "model_ms": 63870,
+      "cost": 0.009001,
+      "total": 40,
+      "problems": 1
+    }
+  ]
+}

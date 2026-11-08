@@ -26,12 +26,16 @@ test('candidate preserves transcript, checklist, original prompt and index ancho
 
 test('uncertain voice deduction is withheld from confirmed score; no unauthorized N/A', () => {
   const before = structuredClone(evaluations[conversation.conversation_id]);
+  // This regression exercises the text checklist. Production call results now also carry C09.
+  before.answers = Object.fromEntries(Object.entries(before.answers).filter(([id]) => checklist.criteria.some(c => c.id === id)));
+  before.answers.c01.answer = 'no'; // Controlled deduction fixture; independent of moving saved verdicts.
+  const snapshot = structuredClone(before);
   const review = reviewEvaluation(conversation, before, checklist, boundProbe(conversation, 'needs_review'));
   assert.equal(review.publishable, false);
   assert.equal(review.confirmed_total, null);
   assert.equal(typeof review.provisional_total, 'number');
   assert.equal(before.answers.c01.answer, 'no');
-  assert.deepEqual(before, evaluations[conversation.conversation_id]);
+  assert.deepEqual(before, snapshot);
 });
 
 test('quality uncertainty never clears a detected critical violation', () => {

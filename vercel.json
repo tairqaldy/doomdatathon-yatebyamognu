@@ -22,5 +22,42 @@
       "source": "/",
       "destination": "/landing-tair/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "/admin/",
+      "permanent": false
+    },
+    {
+      "source": "/support",
+      "destination": "/support/",
+      "permanent": false
+    },
+    {
+      "source": "/broker",
+      "destination": "/broker/",
+      "permanent": false
+    },
+    {
+      "source": "/phone",
+      "destination": "/phone/",
+      "permanent": false
+    },
+    {
+      "source": "/prototype",
+      "destination": "/prototype/",
+      "permanent": false
+    },
+    {
+      "source": "/preview-hub",
+      "destination": "/preview-hub/",
+      "permanent": false
+    },
+    {
+      "source": "/landing-tair",
+      "destination": "/landing-tair/",
+      "permanent": false
+    }
   ]
 }

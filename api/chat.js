@@ -9,6 +9,6 @@ export default async function handler(req, res) {
     const b = await body(req);
     const messages = (b.messages || []).filter((m) => m && typeof m.text === 'string').map((m) => ({ speaker: m.speaker, text: m.text.slice(0, 2000) })).slice(-30);
     if (!messages.length) return send(res, 400, { error: 'messages required' });
-    send(res, 200, await botReply(messages));
+    send(res, 200, await botReply(messages, { lang: ['RU', 'KZ', 'EN'].includes(b.lang) ? b.lang : null }));
   } catch (e) { fail(res, e); }
 }

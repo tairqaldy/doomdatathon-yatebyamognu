@@ -1,0 +1,158 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил недостающую валюту до того, как указал, какие реквизиты скачать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nina from Freedom Broker support. Which currency are you sending?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация для указания пути к реквизитам в приложении не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий запрос о том, где скачать реквизиты; защищённого действия или раскрытия данных счёта не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил нужные реквизиты и подтвердил результат.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Got them. Thanks for checking."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив, повода реагировать на недовольство не возникло.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "You're welcome. You have the EUR transfer details now. Goodbye!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор дал понятные инструкции по шагам, клиент смог ими воспользоваться.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "The transfer details is available in the app. Open Menu, then Add Funds, and choose the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Select EUR and download the details for that currency. Take them with you to the branch."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "После подтверждения клиента оператор указал, что реквизиты EUR получены, и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "You're welcome. You have the EUR transfer details now. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиенту нужны были реквизиты для пополнения счёта в евро через отделение банка.",
+  "operator_actions": "Оператор уточнил валюту и указал путь в приложении, затем дал инструкцию выбрать EUR.",
+  "outcome": "Клиент скачал реквизиты и подтвердил, что получил их."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": 15,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент спросил, где скачать реквизиты для банковского перевода на брокерский счёт, чтобы взять их с собой в отделение.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20012,
+ "usage": {
+  "prompt_tokens": 5816,
+  "completion_tokens": 2181,
+  "cost": 0.001672
+ }
+}

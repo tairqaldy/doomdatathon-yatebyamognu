@@ -20,6 +20,20 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-08 · lane-d · Nazar/claude · no issue (docs-only ruling)
+Done: organizer ruling logged in `docs/case/telegram-qa.md` and AGENTS.md §1.1: C8 never zeroes the total, a gross-error dialog can score 100 with `critical_flag: true` (experts check per-criterion scores and gross-error detection separately).
+Code already matches: `prototype/scoring.js` (self-test "gross flag never adds points"), `eval/export-results.mjs` (`final_score` = total, `critical_flag` separate), `eval/validate-results.mjs`, admin card (verdict "Грубая ошибка" + red banner, score kept).
+Contracts touched: none.
+How to verify: `node eval/validate-results.mjs results/dev/results.json`; 8 flagged DEV dialogs keep their totals (e.g. p1-ru-023 = 92.31).
+
+### 2026-11-07 21:15 · lane-a · claude · #24 · branch a/24-expo-go
+Done: `mobile/`, an Expo SDK 58 Expo Go wrapper that shows `/phone/` full screen as a native app (WebView, edge to edge on iOS, loading and error screens, mic allowed, outside links open in the browser). Run: `cd mobile && npm install && npx expo start`, scan the QR with Expo Go. README, TOOLING and DECISIONS updated.
+Verified: `tsc --noEmit` clean, `expo-doctor` 20/20, page checked in the iOS 26 Simulator WebKit. On a real iPhone, Metro logged `iOS Bundled index.ts` after Expo Go first asked for an Expo CLI login (`npx expo login`). The simulator Expo Go download was too slow over a hotspot, so there's no simulator run.
+In progress: not merged yet; waiting for a confirmed run on the phone.
+Contracts touched: none.
+How to verify: `cd mobile && npx expo start` → scan → Меню → Поддержка → «AIM · ответ сразу».
+
+
 ### 2026-11-07 · lane-c · requested pull and commit · audit/na-cache-compatibility
 Done: user authorized pull followed by a local commit. Fast-forwarded to origin/audit/na-cache-compatibility@23de85e; preserved local STATUS through a path-scoped backup and clean reapplication. Review-case work and comparison preparation included in the local commit; no push requested or performed.
 How to verify: 88 Node tests and 9 scoring self-tests; source/data/cache remain unchanged.
@@ -441,3 +455,99 @@ Checks: 102/102 Node tests (8 new audio tests), 9/9 scoring; JSON and diff check
 
 ### 2026-11-08 · lane-c · publication authorized by user
 User explicitly requested pull and push. Upstream pull completed (already current). Preparing audit-only commit and push to audit/na-cache-compatibility; no main merge or PR. Preserve user-local deletion of .env.example outside staging; never stage .env. Prior no-publish notes describe earlier phases. Validation: 102 Node tests and 9 scoring tests passed; check staged JSON, secrets and whitespace before commit. Production deployment remains unapproved.
+
+### 2026-11-07 20:40 +05:00 · lane-c · #23 · c/23-call-tone
+Done: tone of voice on calls. New c09 «Тон и подача речи» in `data/checklists/freedom-call-v1.json` (`input: "audio"`, weight 10); `lib/tone.js` sends the mp3 + operator turns to Gemini 3.8 Flash, voice metrics (words/min, long silences) are plain arithmetic. DEV: p4-ru-001 → 4/10, other calls 10/10, ≈ $0.013 per call. Admin call card shows it with metrics; the audio jump now starts at the phrase start (call timestamps mark where a phrase ends). Chat checklist and `results/dev/results.json` are unchanged: the exporter drops audio criteria.
+In progress: none.
+Next: at T+23h, after `npm run results -- --group <ID>`, run `node scripts/tone-run.mjs --group <ID>` so control-set calls get c09 in the card (it never touches results.json).
+Blocked by / Requests: none. `lib/evaluator.js` is untouched (identical to main), so all 65 DEV eval-v5.1 text answers still hit the cache; the audio merge lives in `lib/tone.js evaluateWithAudio`. Browsers that already saved a call checklist in localStorage don't see c09 until it is reset.
+Contracts touched: additive `criterion.input`, `answer.audio_metrics`, `audio_model`, `usage.audio` (CONTRACTS §2–3).
+How to verify: /admin → Диалоги → p4-ru-001 → «09 Тон и подача речи»; `npm test` (12/12); `node eval/export-results.mjs` → 65 ok, unchanged.
+
+### 2026-11-07 21:45 +05:00 · team · tair/claude · #18 · evening merge (v5.3, UI audit, README, video, leaves)
+Done (all on main → production):
+- **Evaluator eval-v5.3** (lane C): held-out gold 54/56 strict, blind consensus 180/185, gross 7/7 with 0 FP; playbook justifies every rule; DEV + `results/dev/results.json` regenerated (valid 65/65); control rehearsal 10 chats 79 s $0.064 incl. the error path. Report `eval/runs/2026-11-07T16-05-00Z-v53-report.md`. Weak spot: C6 is noisy (3 of 10 C6 answers differ between draws).
+- **UI audit** (lane A): 19 fixes (gross-error verdict, checklist validation, weight-only edits recompute from the same AI answers, drawer focus trap, KZ language in support chat, double-click guard on paid evaluation, call seek, number formatting …); admin overview reads the v5.3 metrics.
+- **README** rewritten for the jury: diagrams, accuracy charts (still v4 vs v5.1; a note gives the v5.3 numbers), research per theme, cost, control procedure.
+- **Demo video** `landing-tair/assets/demo.mp4` (3:17, recorded from the real product, `node scripts/demo/record.mjs` reproduces it) on the landing; 8 stills in `docs/media/`.
+- **Leaves** on the landing: a few fall when scrolling up, heaps along the footer (`landing-tair/leaves.js`, no dependency, off under reduced motion).
+- Amina's audit PRs #26–#28 merged earlier tonight.
+Next: regenerate README charts for v5.3 (`scripts/readme-charts.mjs` RUNS → the v5.3 DEV run); a possible final video re-record from the video branch; C6 procedure experiment if budget allows. Demo tip: re-evaluate a chat live (≈30 s), not a call (can pass 60 s); weight changes recompute instantly.
+Control run Sun 11:00: `npm run results -- --group <CONTROL_ID> --push` from an up-to-date main with `.env`.
+
+### 2026-11-07 22:30 +05:00 · team · tair/claude · #18 · HANDOFF while tair is offline (read this first)
+**State of main = production** (https://freedom-cqa.vercel.app, `/api/health` shows commit, `prompt_version: eval-v5.3`, `shared_cache: redis`, `sessions_store: redis`):
+- Evaluator **eval-v5.3** (lane C): held-out gold 96.4% strict, all gold 95.4%, blind consensus 180/185, gross 7/7 with 0 FP. Playbook with a "why" per rule: `docs/playbook/scoring-playbook.md`. Reports in `eval/runs/*-v5-report.md`, `*-v53-report.md`.
+- **Results**: `results/dev/results.json` valid 65/65 (official JSON 1.0). Control at **Sun 11:00**: from an up-to-date `main` with `.env`: `npm run results -- --group <CONTROL_ID> --push` (≈ 80 s for 10 chats, ≈ $0.07; error records are written, never fake scores). Check: `node eval/validate-results.mjs results/prod/results.json --expect 10`.
+- **Admin**: 19 UI-audit fixes + tonight's: «Оценить заново» waits up to 280 s (server 300 s), search click, gross filter, banner wording; `/admin` without a slash now redirects. Overview shows v5.3 accuracy.
+- **Landing**: demo video (`landing-tair/assets/demo.mp4`, 3:17, re-record with `node scripts/demo/record.mjs`), autumn leaves (`landing-tair/leaves.js`). README rewritten for the jury with v5.3 charts (`node scripts/readme-charts.mjs`).
+- **Voice**: Whisper mic + `gpt-4o-mini-tts` replies in `/support`, `/broker`, `/phone` (not yet tested with a real microphone on a phone).
+- Amina's audit PRs #26–#28 merged.
+
+**Open items, pick one and claim it here (gh is logged out on tair's laptop; use issues if yours works):**
+1. *Lane C (Nazar):* C6 is the noisiest criterion (3 of 10 answers differ between draws). One-sentence C6 procedure experiment on tuning/held-out/blind, adopt only by the rule in AGENTS §8.1. Budget ≈ $0.5.
+2. *Lane C:* `eval/fairness/candidate.test.mjs` 2 failing tests (Amina's older candidate; see the 21:05 entry).
+3. *Lane A (Dameli):* prototype shows call appeals with the chat checklist (call appeals made in admin don't appear there).
+4. *Lane A:* AIM (support bot) hands simple Kazakh FAQs to a human too often: retrieval matches mostly Russian examples (`lib/support-bot.js`).
+5. *Anyone:* test the voice mic on a real phone (`/support/`, `/phone/`); test a live chat phone → admin laptop (Redis is on now).
+6. *Defense prep:* 5-minute script in AGENTS §1; demo tips: re-evaluate a **chat** live (≈ 30–60 s), weight changes recompute instantly, «Без AI» for bulk re-apply; admin passcode is set on Vercel (ask tair).
+**Rules that bit us tonight** (LESSONS): never rebase branches with merges; chain git steps with `&&`; don't edit `lib/evaluator.js` without measuring (it invalidates every eval cache entry).
+
+### 2026-11-08 00:40 +05:00 · lane-a · tair/claude · #18 · landing polish
+Done: footer leaves redrawn (maple/oak/birch/ginkgo, gradients, veins, corner heaps); leaves fall only on a fast upward flick; smooth mouse-wheel scrolling (`landing-tair/smooth.js`, trackpads untouched) + smooth anchors; one section rhythm (`--sec-y`, `--sec-gap`); text-heavy sections rewritten into short leads + bold points; numbers section now shows eval-v5.3 (95% / 97% / 7 из 7 / $0,006).
+How to verify: production `/`, scroll fast upward once (leaves), scroll to the footer (heaps), wheel-scroll on a mouse.
+
+### 2026-11-08 09:45 +05:00 · team · tair/claude · #29 merged · organizer news
+Done: Amina's PR #29 merged (five-case review, review-case tooling, candidate test updates; only `eval/` and `docs/`). Organizer news saved in `docs/case/telegram-qa.md` and AGENTS §1.1: submission form, 8–10 min defense showing the whole cycle, top ~10 evaluate transcripts live (→ #30 matters).
+For Amina: on her branch all `eval/fairness` tests pass; on main 3 fail because they read the current DEV evaluations, which are eval-v5.3 since last night (`candidate` #2 "uncertain voice deduction…" object !== number; `review-cases` #1 "upstream c08=no now cites checked operator range"; `validation` #23 "ambiguous identity context…" reads `turn_index` of undefined). Pin them to the v5.1 run file or update the expectations. App, `scripts/check.sh` and readiness 39/39 are unaffected.
+For Nazar (#30): pull main first; last night `api/evaluate.js` got `maxDuration: 300` + a 240 s vote deadline and admin waits 280 s (`admin/store.js` `aiEvaluate`).
+
+### 2026-11-08 09:55 +05:00 · lane-c · Nazar/claude · #30 · c/30-live-eval
+Done: **/admin → Загрузка диалогов** (`admin/import.js`): paste a transcript as text (roles per line, optional `[mm:ss]`, RU/KZ/EN detection, 3 built-in examples), upload or paste JSON (record / array / API response), or load a set by `group_id`. Dialogs are sent inline to `/api/evaluate`, which now validates them (`cleanConversation`: roles, ≤ 600 turns, an operator turn required, `audio_url` only from the organizers' host). Imported dialogs live in localStorage `cqa-admin-imported-v1`, show «Загружен» in «Диалоги», open in the normal card (evidence, appeals); the card's run line says «новый запрос к модели» or «ответ из кэша». If `data/evaluations/<group>.json` exists, a loaded group gets those answers at once. `eval/control-run.mjs --file <set.json> [--group ID]` for a control set handed over as a file (refuses to overwrite DEV).
+Measured: pasted RU example 24 s, $0.0058, gross error found (balance before identification); 2 DEV KZ chats uploaded under new ids → 16–20 s each, totals identical to the stored DEV results (92.31 / 92.31); `control-run --file` with 2 chats 23 s, valid. Rehearsal files removed.
+Next: control at 11:00: `npm run results -- --group <CONTROL_ID> --push` (or `--file`). Defense: paste a dialog the jury gives into «Вставить текст» → «Оценить AI-агентом».
+Contracts touched: none (`/api/evaluate` already took `conversation`; now validated).
+How to verify: /admin → Загрузка диалогов → Пример RU → Оценить AI-агентом.
+Merged to main 10:10 (`--no-ff`). Landing pages untouched. Measured per language (eval-v5.3 gold): EN 100%, KZ 97.5%, RU 91.7% strict; KZ example pasted live: 24 s, 100.
+
+### 2026-11-08 09:50 +05:00 · lane-c · Nazar/claude · #31 · c/31-reeval-scope
+Done: after a checklist change the save bar asks «Что переоценить»: all chats (≈ 9 min with AI), imported dialogs (control set, pasted), or dialog ids. Unknown ids block saving before a version is created. The result card shows the covered dialogs' average and offers «Оценить остальные AI» for dialogs still shown «Без AI». Weight-only edits keep the instant recompute.
+Why: Freedom Q&A #3398: defense is max 8–10 min with questions; the jury asks to replace a criterion and re-apply it.
+Demo: Чек-лист → edit/replace a criterion → AI · «По ID» → the dialogs the jury names → Сохранить (2 chats ≈ 35 s, ≈ $0.007 per chat).
+Contracts touched: none.
+How to verify: /admin → Чек-лист → change a criterion text → «По ID» `p1-ru-009, p1-kz-015` → only those get AI answers, the rest show «Без AI».
+
+### 2026-11-08 10:05 +05:00 · lane-d · tair/claude · (no issue: `gh` not logged in on this worktree) · 49 s voiced demo
+Plan + done: the landing demo is now a 49 s cut with tair's voiceover, following the jury's cycle (checklist → dialogs → evaluation → results → overview → appeal + reviewer decision → end card). `node scripts/demo/record.mjs --cut short --timings <8 block lengths> --events ev.json`, then `node scripts/demo/sfx.mjs` (soft click / chime / low alert synthesized in code, mixed under the voice) and `swift scripts/demo/mux.swift` (H.264 + AAC ≤ 12 MB). The short cut zooms like Screen Studio (crop in `encode.swift`, follows the cursor) and draws the captions in the encoder; `scripts/demo/pauses.swift voice.wav` gives block lengths for a new voice. One-command flow at the top of `record.mjs`.
+Voice: the final take (49.2 s) says no numbers; captions show the real ones (v1: 46 из 100; appeal «Эмпатия» Нет → Да, 46 → 61, because the committed C2 is «Да»). Video 10:20 re-render: 49 s, appeal-comment zoom after the drawer settles, no cursor on the end card.
+Contracts touched: none. Landing: only the demo section caption + `landing-tair/assets/demo.mp4` / `demo-poster.jpg`.
+How to verify: open `/#demo` and play; or `afinfo landing-tair/assets/demo.mp4` (AAC 49.2 s).
+
+### 2026-11-08 10:15 +05:00 · lane-d · Nazar/claude · #32 · d/32-call-tone-rationale
+Done: `docs/research/call-tone.md`: why c09 «Тон и подача речи» is scored (brief: «для дикции и интонации нужен звук», organizer answers #2343/#2838), what it measures (audible behaviour only, flat tone = 10), safeguards (out of results.json, evidence + audio jump, appeal, weight 0 in UI), limits (no expert labels, 5 RU calls, p4-ru-001 7↔4 between runs, card total ≠ official total on calls), EU AI Act emotion-recognition angle, RU answers for the jury. Linked from `docs/research/README.md`; short Q&A block in `pitch/demo-script.md`.
+Next (optional, after control): team listens to 5 DEV calls and labels c09 by hand; check p4-ru-002 long silences (31/66/55 s, scored 10).
+Contracts touched: none. No code or prompt change.
+How to verify: read `docs/research/call-tone.md`.
+
+### 2026-11-08 10:40 +05:00 · lane-c · Nazar/claude · #33 · c/33-metrics-confidence-qwen
+Done: `eval/agreement.py` (kappa, 95% CI, labeler A vs B ceiling, unanimous votes; free) with eval-v5.3 numbers in README «Beyond percent agreement» and `eval/runs/agreement-v53.*`. Admin card (lane A files `admin/card.js`, `admin/store.js`, `admin/admin.css`, additive) shows the vote per criterion: «3 из 3», warning «2 из 3 · проверьте», split count in the header. `lib/llm.js` `local:<model>` → any OpenAI-compatible server (`CQA_LOCAL_BASE_URL`, `CQA_LOCAL_API_KEY`); `lib/evaluator.js` untouched, eval cache valid, OpenAI path smoke-tested.
+In progress: comparison runs on 42 labeled chats: `qwen/qwen3.8-27b` (OpenRouter) and `local:alemllm` (llm.alem.ai). Measured only; production stays eval-v5.3 / gpt-6-luna.
+Next: control at 11:00 from main as planned. Numbers for the two open models go to README after the runs.
+Contracts touched: none.
+How to verify: /admin → Диалоги → p1-ru-014 → C05 «2 из 3 · проверьте»; `python3 -I eval/agreement.py`.
+
+### 2026-11-08 10:52 +05:00 · lane-d · lane-c/claude · #34 · d/34-jury-qa
+Done: `pitch/jury-qa.md`: 132 likely jury questions with short RU answers, a "show on screen" line and a second layer for follow-ups. Heaviest on evaluation (model choice, prompt pipeline, 3 votes, evidence guard, accuracy vs gold / blind / ceiling, kappa, N/A, C7 bet, gross errors, KZ, calls and tone, cost, cache, "not a replay"), then checklist replacement (ready replacements to type), appeals, control run, Dynamics 365, data and privacy, product, team, trick questions and a "don't say" list. Every number is from committed files (sources in section 0); Qwen 3.8 27B numbers come from branch `c/33-metrics-confidence-qwen`.
+Next: after the control run fill section 14 (time, cost, gross errors, mean score); rehearse the top-15 once.
+Contracts touched: none. Docs only.
+How to verify: read `pitch/jury-qa.md`.
+
+### 2026-11-08 11:10 +05:00 · lane-d · lane-c/claude · #34 · d/34-control-numbers
+Done: `pitch/jury-qa.md` section 14 filled with the FBroker control run (10 chats, 67 s, $0.061, 0 errors, mean 73.44, gross 2 of 10: p2-ru-004 disclosure, p2-kz-003 off-company offer with total 100; 72 of 80 answers unanimous) and the SWAP set (3 chats pre-evaluated, cache does not apply after a criterion swap). New answers: why p2-kz-003 is 100 with a gross error, why p2-kz-002 is 20, why splits are more frequent on control, cache vs live at the defense. Corrected: explanations in KZ chats are often in Kazakh (3 of 4 KZ control chats).
+Contracts touched: none. Docs only.
+How to verify: read `pitch/jury-qa.md` sections 0 and 14.
+
+### 2026-11-08 · lane-c · resolve audit branch conflicts with main
+User requested conflict resolution after authorizing pull/push. Merged origin/main 14a53ee into audit/na-cache-compatibility; STATUS conflict resolved by retaining both complete blocks. TOOLING auto-merged. Incoming production/UI/data changes are preserved as main supplied them; no manual production changes.
+Fixed merge-exposed test coupling: historical v5.1 citation replay and evidence proposals now use pinned 965f782 source/results; the historical replay has throwing model/cache stubs. Identity uncertainty fixture no longer assumes message-shaped cached evidence; C01 deduction fixture explicitly supplies a text-only failed verdict without depending on current DEV generation. No evidence/scoring rules weakened.
+Checks: 102/102 audit tests, 12/12 scoring, 921 tracked JSON parse, diff check. Full scripts/check.sh attempted but interrupted after confirming Git Bash resolves python3 to an inaccessible WindowsApps alias; its invalid-JSON messages were interpreter failures, not corrupt JSON. Node independently parsed every tracked JSON. Full shell gate/mobile build not claimed passed. Paid inference: none.

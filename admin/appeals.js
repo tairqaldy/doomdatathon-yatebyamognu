@@ -1,11 +1,16 @@
 // Апелляции: queue of disputed scores (same records as /prototype). Reviewer opens one, confirms or changes the score.
-import { $, esc, fmt, plural, icon, setHead, seg, dateTime } from './ui.js';
+import { $, esc, fmt, plural, icon, setHead, seg, dateTime, toast } from './ui.js';
 import { S, evaluation, checklistFor, versionsOf, clHash, answerText, appealStats, setRole, rows, checklistLabel } from './store.js';
 import { openReview } from './card.js';
 
 let filter = 'open';
 
-export function viewAppeals(view) {
+export function viewAppeals(view, _arg, query) {
+  // step 6 of the jury scenario links here as #/appeals?role=reviewer: switch role once, then drop the query
+  if (query?.get('role') === 'reviewer') {
+    history.replaceState(null, '', '#/appeals');
+    if (S.role !== 'reviewer') { setRole('reviewer'); toast('Роль: проверяющий. Можно принимать решения по апелляциям'); return; }
+  }
   const st = appealStats();
   setHead('Апелляции', `${st.open} ${plural(st.open, ['открыта', 'открыты', 'открыто'])} · ${st.changed + st.confirmed} ${plural(st.changed + st.confirmed, ['решена', 'решены', 'решено'])}`);
   const allVersions = [...versionsOf('chat'), ...versionsOf('call')];
@@ -50,9 +55,12 @@ export function viewAppeals(view) {
           <a class="btn btn--s btn--ghost" href="#/dialog/${encodeURIComponent(a.conversation_id)}">Открыть диалог</a>
           ${a.status === 'open' && reviewer ? `<button class="btn btn--s btn--primary" type="button" data-review="${a.id}" ${sameVer ? '' : 'disabled title="Апелляция к другой версии чек-листа"'}>Принять решение</button>` : ''}
         </footer>
-      </li>`; }).join('')}</ol>` : `<div class="empty empty--s"><p>${filter === 'open' ? 'Открытых апелляций нет.' : 'Решённых апелляций пока нет.'}</p></div>`}</div>`;
+      </li>`; }).join('')}</ol>` : `<div class="empty empty--s"><p>${filter === 'open' ? 'Открытых апелляций нет.' : 'Решённых апелляций пока нет.'}</p>${filter === 'open' && st.changed + st.confirmed ? `<button class="btn btn--s" type="button" data-filter="done">Показать решённые · ${st.changed + st.confirmed}</button>` : ''}</div>`}</div>`;
 
   $('#ap-filter', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; filter = b.dataset.v; viewAppeals(view); });
   $('#ap-role', view)?.addEventListener('click', () => setRole('reviewer'));
-  $('.appeals', view).addEventListener('click', (e) => { const b = e.target.closest('[data-review]'); if (b) openReview(b.dataset.review); });
+  $('.appeals', view).addEventListener('click', (e) => {
+    const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; viewAppeals(view); $('#ap-filter button[aria-pressed="true"]', view)?.focus(); return; }
+    const b = e.target.closest('[data-review]'); if (b) openReview(b.dataset.review);
+  });
 }

@@ -1,0 +1,157 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и представился на казахском языке.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе! Мен Нұрланмын. «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, дополнительное уточнение не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Брокерлік шотқа банк арқылы ақша аударғым келеді. Деректемелер қайда?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации по приложению и не требовал идентификации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "«Меню → Пополнить → Перевод по реквизитам»"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Запрос решён, клиент подтвердил, что нашёл реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе! Мен Нұрланмын. «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қажетті валютаны таңдап, деректемелерді жүктеп алыңыз. Аударым жасарда сол деректемелерді банкке бересіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Таптым."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив и помог клиенту найти реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жақсы. Күніңіз сәтті өтсін!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиент понял инструкции и сообщил, что нашёл реквизиты; сбоев ведения диалога не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе! Мен Нұрланмын. «Меню → Пополнить → Перевод по реквизитам» деген жолмен өтіңіз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Таптым."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, но нет итога, следующего шага или предложения помощи.",
+   "deduction_reason": "Не добавил итог или предложение дальнейшей помощи к прощанию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Жақсы. Күніңіз сәтті өтсін!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в ответах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел найти реквизиты для пополнения брокерского счёта банковским переводом.",
+  "operator_actions": "Оператор указал путь в меню и объяснил, как выбрать валюту и загрузить реквизиты.",
+  "outcome": "Клиент нашёл реквизиты и подтвердил это."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Где найти реквизиты для пополнения брокерского счёта банковским переводом?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 22900,
+ "usage": {
+  "prompt_tokens": 5884,
+  "completion_tokens": 2498,
+  "cost": 0.001837
+ }
+}

@@ -1,0 +1,155 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала; клиент сформулировал вопрос до подключения оператора.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос понятен из реплики клиента [4]: «Ескі логин босай ма деп едім»."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации: оператор ответил на общий вопрос о логине.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о логине; проверки или действия по счёту не было [9]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил прямой ответ о старом логине и инструкцию для регистрации нового счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Грубости или пренебрежения нет; клиент подтвердил, что понял ответ [10].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Түсіндім."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Сбой управления диалогом не выявлен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Түсіндім."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть только прощание без итога, следующего шага или предложения помощи.",
+   "deduction_reason": "Нет итога или предложения дальнейшей помощи в заключительной реплике.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Ермек. Бұрын қолданылған логин шот жабылғаннан кейін де жүйеде қалады. Жаңадан тіркелгенде басқа логин таңдаңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент сұрады: жабылған шоттың логині босай ма және жаңа шотты қалай ашуға болады.",
+  "operator_actions": "Оператор логин жабылғаннан кейін де жүйеде қалатынын түсіндіріп, басқа логин таңдауды ұсынды.",
+  "outcome": "Клиент жауапты түсінгенін растады; оператор қоштасты."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сообщает, что при открытии нового счёта логин занят.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Уточняет, освободится ли логин после закрытия старого счёта.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 29379,
+ "usage": {
+  "prompt_tokens": 5816,
+  "completion_tokens": 3033,
+  "cost": 0.002098
+ }
+}

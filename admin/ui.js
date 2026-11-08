@@ -6,7 +6,9 @@ export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&a
 export const fmt = (x, d = 2) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { maximumFractionDigits: d }));
 /** Exactly `d` decimals. */
 export const fix = (x, d = 1) => (x == null || !Number.isFinite(Number(x)) ? '—' : Number(x).toLocaleString('ru-RU', { minimumFractionDigits: d, maximumFractionDigits: d }));
-export const plural = (n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
+/** Signed delta with a real minus sign, like the "−7,69" deductions: +16,67 · −20. */
+export const signed = (x, d = 2, f = fmt) => (x > 0 ? '+' : x < 0 ? '−' : '') + f(Math.abs(x), d);
+export const plural =(n, [one, few, many]) => { const a = Math.abs(n) % 100, b = a % 10; return a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many; };
 export const LANG = { RU: 'Русский', KZ: 'Қазақша', EN: 'English' };
 export const CHAN = { chat: 'Чат', call: 'Звонок' };
 export const TIER_LABEL = { high: '85 и выше', mid: '60–84', low: 'ниже 60' };
@@ -15,6 +17,15 @@ export const clock = (ms) => { const t = Math.max(0, Math.floor(ms / 1000)); con
 export const timeOf = (iso) => { try { return new Date(iso).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
 export const dateTime = (iso) => { try { return new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
 export const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Count a number up to `to` (d decimals, Russian format) once; instant when the user asks for reduced motion. */
+export function countUp(el, to, d = 0, ms = 600) {
+  if (!el || !Number.isFinite(to)) return;
+  const end = () => { if (el.isConnected) el.textContent = fix(to, d); };
+  if (reduced()) { end(); return; }
+  const t0 = performance.now();
+  const step = (now) => { if (!el.isConnected) return; const k = Math.min(1, (now - t0) / ms); el.textContent = fix(to * (1 - (1 - k) ** 3), d); if (k < 1) requestAnimationFrame(step); else end(); };
+  requestAnimationFrame(step);
+}
 export const uid = () => Math.random().toString(36).slice(2, 9);
 
 const P = {
@@ -31,7 +42,7 @@ const P = {
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   check: '<path d="m5 12 5 5L20 7"/>', x: '<path d="M18 6 6 18M6 6l12 12"/>', dash: '<path d="M6 12h12"/>',
   alert: '<path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
-  plus: '<path d="M12 5v14M5 12h14"/>', up: '<path d="m18 15-6-6-6 6"/>', down: '<path d="m6 9 6 6 6-6"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>', upload: '<path d="M12 15V4M7 9l5-5 5 5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>', up: '<path d="m18 15-6-6-6 6"/>', down: '<path d="m6 9 6 6 6-6"/>',
   trash: '<path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14"/>',
   swap: '<path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>',
   refresh: '<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>',
@@ -43,6 +54,7 @@ const P = {
   ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/>',
   panel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
   quote: '<path d="M7 7h4v4c0 3-2 5-4 6M15 7h4v4c0 3-2 5-4 6"/>',
+  copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
 };
 const FILLED = {
   play: '<path d="M8 5v14l11-7z"/>',
@@ -74,6 +86,14 @@ export function drawer(title, body, foot, { wide = false } = {}) {
   document.body.appendChild(wrap);
   wrap.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => closeDrawer()));
   document.addEventListener('keydown', escClose);
+  // aria-modal sheet: Tab / Shift+Tab cycle inside it instead of walking into the page behind the scrim
+  wrap.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const f = [...wrap.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter((el) => el.offsetParent !== null);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
+    else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+  });
   setTimeout(() => (wrap.querySelector('textarea, select, input') || wrap.querySelector('.drawer__head .icon-btn'))?.focus(), 60);
   return wrap;
 }
@@ -104,7 +124,7 @@ const trunc = (s, n) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
  * Horizontal bars with the label above each bar and the value at the end of it.
  * rows: [{ label, value, valueText, sub, color, href, group }] (group rows are section headers).
  */
-export function hbarsSVG(width, rows, { title, desc, max }) {
+export function hbarsSVG(width, rows, { title, desc, max, valueClass = '' }) {
   const tid = nid('t'), did = nid('d');
   const m = max ?? Math.max(1e-9, ...rows.filter((r) => !r.group).map((r) => r.value || 0));
   const valW = 64, barH = 12, labelH = 20, gap = 14, groupH = 26;
@@ -117,7 +137,7 @@ export function hbarsSVG(width, rows, { title, desc, max }) {
     const inner = `<text x="0" y="${y + 13}" class="ch-label">${esc(label)}${r.sub ? `<tspan class="ch-sub" dx="8">${esc(r.sub)}</tspan>` : ''}</text>
       <rect x="0" y="${y + labelH}" width="${width - valW}" height="${barH}" rx="${barH / 2}" class="ch-track"/>
       <rect x="0" y="${y + labelH}" width="${bw}" height="${barH}" rx="${barH / 2}" fill="${r.color || 'var(--ink-3)'}"/>
-      <text x="${bw + 8}" y="${y + labelH + barH - 1.5}" class="ch-val">${esc(r.valueText ?? fmt(r.value, 1))}</text>
+      <text x="${bw + 8}" y="${y + labelH + barH - 1.5}" class="ch-val ${valueClass}">${esc(r.valueText ?? fmt(r.value, 1))}</text>
       <title>${esc(`${r.label}: ${r.valueText ?? fmt(r.value, 1)}${r.sub ? ` (${r.sub})` : ''}`)}</title>`;
     parts.push(r.href ? `<a href="${esc(r.href)}" class="ch-link" aria-label="${esc(`${r.label}: ${r.valueText ?? fmt(r.value, 1)}. Открыть диалоги`)}"><rect x="-4" y="${y - 2}" width="${width + 8}" height="${labelH + barH + 8}" rx="8" class="ch-hit"/>${inner}</a>` : `<g>${inner}</g>`);
     y += labelH + barH + gap;
@@ -127,7 +147,7 @@ export function hbarsSVG(width, rows, { title, desc, max }) {
 }
 
 /** Histogram of totals in 10-point bins; each bar is stacked by tier so colours match the score rings. */
-export function histogramSVG(width, bins, { title, desc, hrefFor }) {
+export function histogramSVG(width, bins, { title, desc, hrefFor, calm = false }) {
   const tid = nid('t'), did = nid('d');
   const H = 220, pad = { l: 28, r: 4, t: 22, b: 28 };
   const max = Math.max(1, ...bins.map((b) => b.n));
@@ -135,7 +155,8 @@ export function histogramSVG(width, bins, { title, desc, hrefFor }) {
   const y = (v) => pad.t + (H - pad.t - pad.b) * (1 - v / max);
   const step = max <= 5 ? 1 : max <= 12 ? 2 : max <= 30 ? 5 : 10;
   const ticks = []; for (let v = 0; v <= max; v += step) ticks.push(v);
-  const col = { low: 'var(--bad)', mid: 'var(--mid)', high: 'var(--good)' };
+  // calm: neutral bars, only the band that needs attention (below 60) keeps its colour
+  const col = calm ? { low: 'var(--bad)', mid: 'var(--calm)', high: 'var(--calm)' } : { low: 'var(--bad)', mid: 'var(--mid)', high: 'var(--good)' };
   return `<svg class="chart" width="${width}" height="${H}" viewBox="0 0 ${width} ${H}" role="img" aria-labelledby="${tid} ${did}">
     <title id="${tid}">${esc(title)}</title><desc id="${did}">${esc(desc || '')}</desc>
     ${ticks.map((v) => `<line x1="${pad.l}" x2="${width - pad.r}" y1="${y(v)}" y2="${y(v)}" class="ch-grid"/><text x="${pad.l - 8}" y="${y(v) + 4}" text-anchor="end" class="ch-tick">${v}</text>`).join('')}

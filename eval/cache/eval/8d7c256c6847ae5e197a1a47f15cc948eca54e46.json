@@ -1,0 +1,184 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор приветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Анна. Откройте «Меню → Поручения → Персональные данные → Изменение сведений». Там подайте поручение."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Оператор не ответил на вопрос о повторном выводе и оставил его без решения.",
+   "deduction_reason": "Не учтена уже указанная клиентом проблема с выводом денег.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Подал. Мне сейчас можно заново нажать на вывод или нужно дождаться чего-то?"
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Для обновления используется указанное меню."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации в приложении и общего порядка действий, а не операций по конкретному счёту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор указал общий путь в меню приложения."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 10,
+   "explanation": "Часть запроса решена: клиент получил путь для обновления данных. Существенный вопрос о повторном выводе остался открытым.",
+   "deduction_reason": "Не дан ответ о том, можно ли повторить вывод сразу или нужно дождаться обновления данных.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Анна. Откройте «Меню → Поручения → Персональные данные → Изменение сведений». Там подайте поручение."
+    },
+    {
+     "kind": "range",
+     "range": [
+      10,
+      13
+     ]
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "После повторного уточнения вопроса оператор не ответил на него и завершил диалог.",
+   "deduction_reason": "Не отреагировал на повторное указание клиента, что он спрашивает именно о выводе.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я про вывод спрашиваю. Уже второй день не получается."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Если появятся ещё вопросы, напишите нам. До свидания."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за ответа не на заданный вопрос клиенту пришлось повторить, что его интересует вывод денег.",
+   "deduction_reason": "Клиенту пришлось повторить вопрос из-за того, что оператор ответил не по существу.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      10,
+      13
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Последний вопрос клиента был проигнорирован, поэтому завершение не соответствует условию критерия.",
+   "deduction_reason": "Не ответил на последний вопрос клиента перед прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Я про вывод спрашиваю. Уже второй день не получается."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Если появятся ещё вопросы, напишите нам. До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог вывести деньги и спросил, где обновить данные и когда повторить вывод.",
+  "operator_actions": "Оператор указал путь для подачи поручения, но не ответил на вопрос о повторном выводе.",
+  "outcome": "Путь для обновления данных клиент получил, вопрос о сроке повторного вывода остался открытым."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": 12,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": 13,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где обновить анкетные данные для вывода денег.",
+    "status": "resolved"
+   },
+   {
+    "turn": 0,
+    "request": "Узнать, когда можно повторить вывод денег.",
+    "status": "open"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, можно ли повторить вывод сразу после подачи поручения или нужно ждать.",
+    "status": "open"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "ignored_stated_details",
+  "need_missed_turn": 11
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 23450,
+ "usage": {
+  "prompt_tokens": 5825,
+  "completion_tokens": 2734,
+  "cost": 0.00195
+ }
+}

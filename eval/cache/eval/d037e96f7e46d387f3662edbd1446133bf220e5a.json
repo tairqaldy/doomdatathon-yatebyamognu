@@ -1,0 +1,170 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор сәлемдесіп, есімін атады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айбекпін. «Меню → Поручения → Персональные данные → Изменение сведений» бөлімін ашыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Сұраныс анық болғандықтан, бұл критерийге N/A қолданылады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Сұраныс навигация мен жалпы шарт туралы болды, идентификация талап етілмеді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: общая навигация и условие повторной подачи заявки."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиенттің екі сұрағына да нақты жауап берілді, соңғы жауаптың түсінікті болғанын клиент растады.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айбекпін. «Меню → Поручения → Персональные данные → Изменение сведений» бөлімін ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Деректер жаңарып, тапсырма орындалғаннан кейін ақша шығаруға қайта өтінім бере аласыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Енді түсінікті, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Диалогта дөрекілік те, назардан тыс қалған наразылық та жоқ.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айбекпін. «Меню → Поручения → Персональные данные → Изменение сведений» бөлімін ашыңыз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Клиентке қайта сұрауға тура келмеді және жауаптар диалогты түсінікті жалғастыруға мүмкіндік берді.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айбекпін. «Меню → Поручения → Персональные данные → Изменение сведений» бөлімін ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Деректер жаңарып, тапсырма орындалғаннан кейін ақша шығаруға қайта өтінім бере аласыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Қоштасу бар, алайда талап етілген қорытынды/келесі қадам немесе қосымша көмек ұсынысы жоқ.",
+   "deduction_reason": "Қоштасу кезінде қорытынды не қосымша көмек ұсынылмады.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Айбекпін. «Меню → Поручения → Персональные данные → Изменение сведений» бөлімін ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Деректер жаңарып, тапсырма орындалғаннан кейін ақша шығаруға қайта өтінім бере аласыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент ақшаны шығару үшін анкетаны жаңарту қажет болғанын айтып, тапсырманы қайдан жіберу және содан кейін ақшаны бірден шығаруға бола ма деп сұрады.",
+  "operator_actions": "Оператор тапсырманы жіберетін мәзір жолын көрсетіп, ақшаны деректер жаңарып, тапсырма орындалған соң қайта сұрауға болатынын түсіндірді.",
+  "outcome": "Клиент жауапты түсінгенін айтып, оператор қоштасты."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент сообщил, что для вывода денег требуется обновить анкету; хотел понять, как действовать.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Где отправить задание «Изменение сведений»?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Можно ли вывести деньги сразу после отправки задания?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 26984,
+ "usage": {
+  "prompt_tokens": 5878,
+  "completion_tokens": 3124,
+  "cost": 0.00215
+ }
+}

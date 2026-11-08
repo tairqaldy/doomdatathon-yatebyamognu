@@ -1,5 +1,5 @@
 // Local dev server = Vercel layout: static files from repo root + /api/*.js handlers. No deps.
-// npm run dev  → http://localhost:3000/prototype/
+// npm run dev  → http://localhost:3000/admin/ (QA workspace, passcode «freedom» unless ADMIN_PASSCODE is set)
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -15,7 +15,11 @@ http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/')) {
       const name = url.pathname.slice(5).replace(/[^a-z0-9-]/gi, '');
       const mod = await import(path.resolve('api', `${name}.js`) + `?t=${Date.now()}`);
-      if (req.method === 'POST' || req.method === 'PUT') { const ch = []; for await (const c of req) ch.push(c); req.body = JSON.parse(Buffer.concat(ch).toString() || '{}'); }
+      if (req.method === 'POST' || req.method === 'PUT') {
+        const ch = []; for await (const c of req) ch.push(c);
+        // same answer as Vercel for a broken body, not a stack trace
+        try { req.body = JSON.parse(Buffer.concat(ch).toString() || '{}'); } catch { res.writeHead(400, { 'Content-Type': 'application/json' }); return res.end(JSON.stringify({ error: 'Invalid JSON' })); }
+      }
       return mod.default(req, res);
     }
     let file = path.resolve('.' + decodeURIComponent(url.pathname));
@@ -27,4 +31,4 @@ http.createServer(async (req, res) => {
   } catch (e) {
     res.writeHead(e.code === 'ENOENT' ? 404 : 500, { 'Content-Type': 'text/plain' }); res.end(e.code === 'ENOENT' ? 'Not found' : String(e.stack || e));
   }
-}).listen(PORT, () => console.log(`CQA dev server → http://localhost:${PORT}/prototype/  (OpenRouter key ${process.env.OPENROUTER_API_KEY ? 'loaded' : 'MISSING'})`));
+}).listen(PORT, () => console.log(`CQA dev server → http://localhost:${PORT}/admin/  (passcode ${process.env.ADMIN_PASSCODE ? 'from ADMIN_PASSCODE' : '«freedom»'}; landing /, prototype /prototype/; OpenRouter key ${process.env.OPENROUTER_API_KEY ? 'loaded' : 'MISSING'})`));

@@ -1,0 +1,177 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и назвал себя в первой реплике.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "К началу консультации у оператора было достаточно данных, чтобы подсказать поиск по известному тикеру.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент сообщил «Тикерді жазып алдым» [9]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации и порядка действий, идентификация для ответа не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: «Тикерді іздеу жолағына енгізіңіз» [10]."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все существенные вопросы получили конкретные инструкции. Клиент подтвердил, что нашёл бумагу и понял дальнейшие действия [11], [18].",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Сол қағазды таңдап, сатып алу өтінімінің параметрлерін толтырыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Сізде нақты тикер болса, соған сәйкес келетін нәтижені ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "Жарайды. Параметрлерді қарап шығыңыз. Сатып алуды қаласаңыз ғана өтінімді жіберіңіз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор общался вежливо и отреагировал на вопросы и уточнения клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "Жарайды. Параметрлерді қарап шығыңыз. Сатып алуды қаласаңыз ғана өтінімді жіберіңіз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор последовательно отвечал на вопросы, клиент понял инструкции и продолжил диалог без вызванных оператором сбоев.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Сәлеметсіз бе! Мен Айсұлумын. Тикерді іздеу жолағына енгізіңіз де, нәтижеден сол тикері бар қағазды ашыңыз."
+    },
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Сізде нақты тикер болса, соған сәйкес келетін нәтижені ашыңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "В заключительной реплике есть прощание, однако нет итога, следующего шага или предложения помощи.",
+   "deduction_reason": "В завершении оператор только попрощался, не подведя итог и не предложив дальнейшую помощь.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    },
+    {
+     "kind": "range",
+     "range": [
+      18,
+      19
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Оператор давал общие инструкции; грубых нарушений не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Сол қағазды таңдап, сатып алу өтінімінің параметрлерін толтырыңыз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел определить нужную бумагу среди похожих результатов и узнать порядок покупки.",
+  "operator_actions": "Оператор объяснил поиск по точному тикеру и заполнение параметров заявки, уточнив, что отправлять её следует только при желании купить.",
+  "outcome": "Клиент нашёл нужную бумагу, понял инструкции и решил сначала ознакомиться с параметрами."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 19,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Атауы бойынша бірнеше қағаз шыққанда қайсысын таңдау керегін анықтау.",
+    "status": "resolved"
+   },
+   {
+    "turn": 11,
+    "request": "Қағазды сатып алу үшін ары қарай не істеу керегін білу.",
+    "status": "resolved"
+   },
+   {
+    "turn": 14,
+    "request": "Атауы ұқсас, тикерлері бөлек қағаздардың ішінен дұрысын таңдау.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 35252,
+ "usage": {
+  "prompt_tokens": 6080,
+  "completion_tokens": 3800,
+  "cost": 0.002508
+ }
+}

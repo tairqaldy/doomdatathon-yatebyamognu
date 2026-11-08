@@ -13,7 +13,7 @@ const S = {
   convs: [], byId: {}, checklists: [], activeVersion: 1, appeals: [], role: 'qa',
   ai: {}, mock: {}, lastTotals: {}, api: { ok: false, openrouter: false, model: null }, busy: null, singleEval: null,
 };
-const persist = () => { try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: S.ai })); } catch {} };
+const persist = () => { try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: Object.fromEntries(Object.entries(S.ai).filter(([, v]) => !v?.from_pre)) })); } catch {} };
 const restore = () => { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch { return null; } };
 const checklist = () => S.checklists.find((c) => c.version === S.activeVersion) || S.checklists.at(-1);
 
@@ -119,13 +119,13 @@ async function apiHealth() {
 async function aiEvaluate(convId, { force = false } = {}) {
   const cl = checklist();
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 45000);
+  const timeout = setTimeout(() => controller.abort(), 280000); // server allows 300 s (api/evaluate.js)
   let r;
   try { r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal }); }
   finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, problems: j.problems };
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, problems: j.problems };
   persist();
   return j;
 }
@@ -665,7 +665,8 @@ async function boot() {
     S.activeVersion = saved?.activeVersion || 1; S.appeals = saved?.appeals || []; S.role = saved?.role || 'qa'; S.ai = saved?.ai || {};
     // precomputed AI results (scripts/eval-run.mjs) for the base checklist → instant demo without calling the API
     const pre = await fetch('../data/evaluations/DEV.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-    if (pre?.results) { const k = clHash(S.checklists[0]); for (const [id, r] of Object.entries(pre.results)) if (!S.ai[`${id}|${k}`]) S.ai[`${id}|${k}`] = { answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage }; }
+    // a saved answer wins only if it is a real run with the same prompt as the file (same rule as admin/store.js mergePre)
+    if (pre?.results) { const k = clHash(S.checklists[0]); for (const [id, r] of Object.entries(pre.results)) { const pv = r.prompt_version || pre.prompt_version || null; const e = S.ai[`${id}|${k}`]; if (!e || e.from_pre || !e.prompt_version || e.prompt_version !== pv) S.ai[`${id}|${k}`] = { answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, prompt_version: pv, from_pre: true }; } }
   } catch (err) {
     view.innerHTML = `<div class="cqa-empty"><div class="cqa-glow"></div><h2 class="cqa-header-4">Не удалось загрузить данные</h2><p class="cqa-muted">Запустите <code>npm run dev</code> (или <code>python3 -m http.server</code>) из корня репозитория и откройте <code>/prototype/</code>.</p><code class="cqa-mono">${esc(err.message)}</code></div>`;
     return;

@@ -1,0 +1,160 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поприветствовал клиента и назвал своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Для ответа данных хватало с самого начала, поэтому уточнять недостающие сведения не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "[0] “How can I find the exact stock?”; [4] “I have the ticker”"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запросы не требовали идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о поиске бумаги и инструкции по настройке приказа; сведения о конкретном счёте не раскрывались."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 15,
+   "explanation": "Основные запросы закрыты, но последующий вопрос о существующей позиции оператор отослал в сторону, не предложив решения или следующего шага.",
+   "deduction_reason": "Не закрыт вопрос о влиянии Use Margin на уже имеющуюся позицию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор был вежлив; реакции на недовольство не требовалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Hi, I'm Sofia. Enter the ticker in the search bar under Quotes. Check that the result shows the ticker you intended before opening an order."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 7,
+   "explanation": "Ответы были связными, но один вопрос остался без решения; клиент продолжил диалог, не переспрашивая.",
+   "deduction_reason": "Один заметный сбой — не дан ответ о влиянии настройки на уже имеющуюся позицию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    },
+    {
+     "kind": "message",
+     "turn_index": 18,
+     "quote": "Okay, I'll leave the order unsubmitted for now."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Прощание есть, однако в заключительной реплике нет ни итога или следующего шага, ни предложения помощи.",
+   "deduction_reason": "Оператор попрощался без итога и предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 19,
+     "quote": "Of course. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 17,
+     "quote": "That setting is for the order you're entering now. It doesn't answer what's happening with an existing position."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал, как найти нужную акцию и разобраться с настройкой Use Margin.",
+  "operator_actions": "Оператор объяснил поиск по тикеру и настройку приказа.",
+  "outcome": "Вопрос о влиянии настройки на уже имеющуюся позицию остался без ответа."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 19,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Как найти нужную акцию, если в поиске несколько результатов по компании.",
+    "status": "resolved"
+   },
+   {
+    "turn": 11,
+    "request": "Что делать после того, как в поиске остался один результат.",
+    "status": "resolved"
+   },
+   {
+    "turn": 14,
+    "request": "Как отключить флажок Use Margin на экране приказа.",
+    "status": "resolved"
+   },
+   {
+    "turn": 16,
+    "request": "Изменит ли настройка Use Margin уже имеющуюся позицию.",
+    "status": "deflected"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 37679,
+ "usage": {
+  "prompt_tokens": 5938,
+  "completion_tokens": 3548,
+  "cost": 0.002368
+ }
+}

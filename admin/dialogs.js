@@ -1,17 +1,33 @@
 // Диалоги: every evaluated dialog with search and simple filters. "Грубые ошибки" switches to a list that shows,
 // for every dialog with a gross-error flag, the AI explanation and the evidence line.
-import { $, esc, fmt, plural, icon, LANG, CHAN, TIER_LABEL, tierVar, setHead, seg } from './ui.js';
-import { rows, hrefFor, reasonOf, grossOf, checklistOf, isCall, offsetSec, mmss } from './store.js';
+import { $, esc, fmt, fix, plural, icon, LANG, CHAN, TIER_LABEL, tierVar, setHead, seg } from './ui.js';
+import { rows, hrefFor, reasonOf, grossOf, checklistOf, isCall, offsetSec, mmss, sortRows } from './store.js';
 import * as live from '/shared/live-store.js';
 
 const KEY = 'cqa-admin-dialog-filters-v2';
 const EMPTY = { q: '', lang: '', channel: '', band: '', crit: '', range: '', gross: '', sort: 'order' };
 const loadF = () => { try { return { ...EMPTY, ...JSON.parse(sessionStorage.getItem(KEY) || '{}') }; } catch { return { ...EMPTY }; } };
-const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify(f)); } catch {} };
-const SORTS = { order: 'По порядку', low: 'Сначала низкие', high: 'Сначала высокие' };
+// The gross-error list is a mode reached by link (#/dialogs?gross=1), not a sticky filter: it lives in the URL only,
+// so opening «Диалоги» from the menu shows every dialog again.
+const saveF = (f) => { try { sessionStorage.setItem(KEY, JSON.stringify({ ...f, gross: '' })); } catch {} };
+const SORTS = { order: 'По порядку', 'order-desc': 'В обратном порядке', low: 'Балл ↑ (сначала низкие)', high: 'Балл ↓ (сначала высокие)', lang: 'По языку', channel: 'По каналу' };
+/** Sort button for a column header: asc/desc sort keys (desc optional); returns the button and its aria-sort state.
+ *  A second click flips the direction, or goes back to the original order when the column has one direction. */
+const sortBtn = (label, asc, desc, cur) => {
+  const dir = cur === asc ? 'ascending' : desc && cur === desc ? 'descending' : 'none';
+  const next = dir === 'ascending' ? (desc || 'order') : dir === 'descending' ? asc : asc === 'low' ? 'high' : asc;
+  return { dir, html: `<button type="button" class="th-sort ${dir !== 'none' ? 'is-on' : ''}" data-sort="${next}">${esc(label)}<span class="th-sort__ic" aria-hidden="true">${dir === 'ascending' ? '↑' : dir === 'descending' ? '↓' : '↕'}</span></button>` };
+};
+const thSort = (btns, cls = '') => {
+  const dir = btns.find((b) => b.dir !== 'none')?.dir || 'none';
+  return `<th scope="col" class="${cls}" aria-sort="${dir}">${btns.map((b) => b.html).join('<span class="th-sort__sep" aria-hidden="true">·</span>')}</th>`;
+};
 
 const chanCell = (r) => `<span class="chan">${icon(r.channel === 'call' ? 'phone' : 'chat')}${CHAN[r.channel]}</span>`;
-const scorePill = (r) => `<span class="score-pill" style="--c:${tierVar(r.tier)}">${r.total == null ? '—' : fmt(r.total, 2)}</span>`;
+// exactly 2 decimals so the right-aligned column lines up (92,31 · 70,00 · 57,50), as totals are rounded in results.json
+const scorePill = (r) => (r.total == null
+  ? '<span class="score-pill" style="--c:var(--ink-4)" title="Итог не рассчитан: нет применимых критериев с весом">—</span>'
+  : `<span class="score-pill" style="--c:${tierVar(r.tier)}">${fix(r.total, 2)}</span>`);
 const evLine = (E, a) => {
   const e = (a.evidence || []).find((x) => x.kind === 'message' || x.kind === 'range');
   if (!e) return null;
@@ -36,10 +52,7 @@ export function viewDialogs(view, _arg, query) {
       && (rf == null || (r.total != null && r.total >= rf && (rt >= 100 ? r.total <= 100 : r.total < rt)))
       && (!q || r.id.toLowerCase().includes(q) || (r.E.summary?.reason || '').toLowerCase().includes(q)
         || r.dd.some((d) => reasonOf(r.E, d.c).toLowerCase().includes(q)) || r.conv.transcript.some((m) => String(m.text).toLowerCase().includes(q))));
-    const tv = (r) => (r.total == null ? -1 : r.total);
-    if (f.sort === 'low') list.sort((a, b) => tv(a) - tv(b));
-    if (f.sort === 'high') list.sort((a, b) => tv(b) - tv(a));
-    return list;
+    return sortRows(list, SORTS[f.sort] ? f.sort : 'order');
   };
 
   const syncUrl = () => {
@@ -59,7 +72,7 @@ export function viewDialogs(view, _arg, query) {
       <button type="button" class="chip-toggle chip-toggle--bad" id="f-gross" aria-pressed="${!!f.gross}">${icon('alert')}Грубые ошибки <b class="num">${grossCount}</b></button>
       <label class="select select--sort"><span class="sr-only">Порядок</span><select id="f-sort">${Object.entries(SORTS).map(([k, v]) => `<option value="${k}" ${f.sort === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
     </form>
-    <div class="filter-line"><span class="count" id="d-count" aria-live="polite"></span><span id="d-active"></span></div>
+    <div class="filter-line"><span class="count" id="d-count" aria-live="polite"></span><span id="d-active"></span><a class="btn btn--s filter-line__add" href="#/import">${icon('upload')}Загрузить диалог</a></div>
     <div id="d-body"></div>`;
 
   const draw = () => {
@@ -77,14 +90,14 @@ export function viewDialogs(view, _arg, query) {
 
   const table = (list) => `<div class="table-wrap"><table class="table">
     <caption class="sr-only">Оценённые диалоги</caption>
-    <thead><tr><th scope="col">Диалог</th><th scope="col">Канал</th><th scope="col">Главная причина снижения</th><th scope="col">Статус</th><th scope="col" class="num-col">Итог</th></tr></thead>
+    <thead><tr>${thSort([sortBtn('Диалог', 'order', 'order-desc', f.sort), sortBtn('Язык', 'lang', null, f.sort)])}${thSort([sortBtn('Канал', 'channel', null, f.sort)])}<th scope="col">Главная причина снижения</th><th scope="col">Статус</th>${thSort([sortBtn('Итог', 'low', 'high', f.sort)], 'num-col')}</tr></thead>
     <tbody>${list.map((r) => {
       const d = r.main; const open = r.E.appeals.some((a) => a.status === 'open'); const decided = r.E.appeals.some((a) => a.status !== 'open');
       return `<tr data-href="${hrefFor(r)}">
         <td class="td-id"><a class="mono" href="${hrefFor(r)}">${esc(r.id)}</a><span class="lang">${esc(r.language)}</span><span class="td-sub">${esc(r.E.summary?.reason || '')}</span></td>
         <td class="td-chan">${chanCell(r)}</td>
         <td class="td-reason">${d ? `<b>${esc(d.c.title)}</b>${d.gross ? '' : ` <span class="loss num">−${fmt(d.lost, 2)}</span>`}<span class="td-sub">${esc(reasonOf(r.E, d.c))}</span>` : '<span class="muted">Без снижений</span>'}</td>
-        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : ''}</td>
+        <td class="td-status">${r.gross ? '<span class="l-chip l-chip--bad">Грубая ошибка</span>' : ''}${open ? '<span class="l-chip l-chip--warn">Апелляция</span>' : ''}${decided ? '<span class="l-chip l-chip--info">Пересмотрено</span>' : ''}${r.source === 'live' ? '<span class="l-chip">Живой чат</span>' : ''}${r.source === 'import' ? '<span class="l-chip l-chip--info">Загружен</span>' : ''}${r.E.src !== 'ai' ? '<span class="l-chip">Без AI</span>' : r.E.base.partial ? '<span class="l-chip" title="Новые критерии чек-листа AI ещё не оценил, остальные ответы перенесены">Не все критерии</span>' : ''}</td>
         <td class="num-col">${scorePill(r)}</td></tr>`;
     }).join('')}</tbody></table></div>`;
 
@@ -97,7 +110,7 @@ export function viewDialogs(view, _arg, query) {
         <span class="gross__crit">${esc(g?.c.title || 'Грубая ошибка')}</span>
         <span class="gross__score">${scorePill(r)}</span>
       </header>
-      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p>${a.deduction_reason && a.explanation && a.explanation !== a.deduction_reason ? `<p class="muted">${esc(a.explanation)}</p>` : ''}</div>
+      <div class="gross__why"><span class="kicker">Почему</span><p>${esc(a.deduction_reason || a.explanation || 'AI не дал пояснения')}</p></div>
       ${ev ? `<a class="evidence" href="${href}"><span class="evidence__meta mono">#${ev.i} · ${esc(ev.time)} · ${esc({ operator: 'Оператор', client: 'Клиент', bot: 'Бот', system: 'Система' }[ev.speaker] || ev.speaker)}</span><q>${esc(ev.text)}</q></a>` : '<p class="muted small">Реплика не указана.</p>'}
       <div class="gross__foot"><a class="btn btn--s" href="${href}">Открыть анализ ${icon('arrow')}</a></div>
     </li>`; }).join('')}</ol>`;
@@ -107,6 +120,9 @@ export function viewDialogs(view, _arg, query) {
   const tb = view.querySelector('.toolbar');
   tb.addEventListener('input', (e) => { if (e.target.id === 'f-q') { f.q = e.target.value; syncUrl(); draw(); } });
   tb.addEventListener('change', (e) => {
+    // the search box already filters on 'input'; its 'change' fires on blur, i.e. on the mousedown of the click the
+    // user is making on a result, and a redraw there swallows that click
+    if (e.target.id === 'f-q') return;
     if (e.target.id === 'f-band') f.band = e.target.value;
     if (e.target.id === 'f-sort') f.sort = e.target.value;
     syncUrl(); draw();
@@ -124,6 +140,11 @@ export function viewDialogs(view, _arg, query) {
     f[b.dataset.clear] = ''; syncUrl(); draw();
   });
   $('#d-body', view).addEventListener('click', (e) => {
+    const sb = e.target.closest('[data-sort]');
+    if (sb) {
+      f.sort = sb.dataset.sort; const sel = $('#f-sort', view); if (sel) sel.value = f.sort;
+      syncUrl(); draw(); view.querySelector(".th-sort.is-on")?.focus(); return;
+    }
     if (e.target.closest('a, button')) return;
     const tr = e.target.closest('tr[data-href]'); if (tr) location.hash = tr.dataset.href;
   });

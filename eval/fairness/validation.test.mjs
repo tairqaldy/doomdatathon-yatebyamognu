@@ -62,7 +62,8 @@ reject('customer assertion alone does not establish completed identity verificat
   f.r.answers.c03.evidence = [{ kind: 'message', turn_index: index, quote: f.c.transcript[index].text }];
 }, 'identity_evidence_speaker_mismatch');
 reject('ambiguous identity context needs review, not an automatic failed identity answer', f => {
-  f.p.quality_flags = [{ index: f.r.answers.c03.evidence.find(e => e.kind === 'message').turn_index, kind: 'damaged_segment' }];
+  // Exercise uncertainty on a concrete operator segment independently of cached evidence shape.
+  f.p.quality_flags = [{ index: f.p.message_index, kind: 'damaged_segment' }];
 }, 'transcript_quality_warning');
 reject('missing audio segment prevents final publication', f => { f.c.audio_missing = true; }, 'source_quality_uncertainty');
 reject('low confidence cannot be hidden by a clean probe', f => {

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Freedom CQA · руководство для жюри</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens from shared/theme-light.css */
+  :root {
+    --bg: #ffffff; --soft: #f6f7f4; --mint: #ecf7ef; --sky: #eef4fb;
+    --line: #e6e8e4; --line-2: #d4d8d2;
+    --ink: #0e151c; --ink-2: #3c4650; --ink-3: #6b7680; --ink-4: #9aa3ab;
+    --green: #02b140; --green-ink: #0a7a33; --forest: #164734;
+    --red: #c93a3a; --red-bg: #fdecec; --amber: #b7791f; --amber-bg: #fdf3e1;
+    --sans: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); }
+  body { font-family: var(--sans); color: var(--ink-2); font-size: 9.4pt; line-height: 1.45;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; -webkit-font-smoothing: antialiased; }
+  a { color: var(--green-ink); text-decoration: none; }
+  code, .mono { font-family: var(--mono); font-size: .86em; color: var(--ink); background: var(--soft); padding: .05em .3em; border-radius: 3px; }
+  pre { font-family: var(--mono); font-size: 7.2pt; line-height: 1.45; background: var(--ink); color: #e9eef2; padding: 3.2mm 3.6mm; border-radius: 2.5mm; margin: 0; white-space: pre-wrap; word-break: break-all; }
+  pre .c { color: #8fd3a7; }
+
+  .page { width: 210mm; height: 296mm; padding: 15mm 16mm 16mm; position: relative; overflow: hidden; break-after: page; page-break-after: always; }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  .page-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 3mm; border-bottom: .3mm solid var(--line); margin-bottom: 7mm; }
+  .page-head img { height: 6.2mm; }
+  .page-head span { font-size: 7.6pt; color: var(--ink-3); letter-spacing: .02em; }
+  .page-foot { position: absolute; left: 16mm; right: 16mm; bottom: 8mm; display: flex; justify-content: space-between; font-size: 7.2pt; color: var(--ink-4); }
+  .page-foot b { color: var(--ink-3); font-weight: 500; }
+
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; font-weight: 600; letter-spacing: -0.02em; line-height: 1.12; }
+  h2 { font-size: 21pt; margin-bottom: 2.5mm; display: flex; align-items: baseline; gap: 3.5mm; }
+  h2 .n { font-size: 11pt; color: var(--green); font-weight: 600; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  h3 { font-size: 12pt; margin: 6mm 0 2.4mm; }
+  h3:first-child { margin-top: 0; }
+  h4 { font-size: 9.6pt; margin: 0 0 1.2mm; letter-spacing: -0.01em; }
+  p { margin: 0 0 2.2mm; }
+  .lead { font-size: 11pt; line-height: 1.5; color: var(--ink-2); max-width: 165mm; margin-bottom: 5mm; }
+  .muted { color: var(--ink-3); }
+  .small { font-size: 8pt; }
+  .tiny { font-size: 7.2pt; color: var(--ink-3); }
+  ul { margin: 0 0 2.4mm; padding-left: 4.2mm; }
+  li { margin: 0 0 1.1mm; }
+  li::marker { color: var(--green); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.2pt; line-height: 1.38; }
+  th { text-align: left; font-weight: 600; color: var(--ink); font-size: 7.6pt; padding: 1.6mm 2mm; border-bottom: .4mm solid var(--ink); vertical-align: bottom; }
+  td { padding: 1.7mm 2mm; border-bottom: .25mm solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--ink); font-weight: 500; }
+  tr.hl td { background: var(--mint); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .t-tight td { padding: 1.3mm 2mm; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .shot { border: .3mm solid var(--line-2); border-radius: 2.2mm; overflow: hidden; background: var(--soft); }
+  .shot img { display: block; width: 100%; height: auto; }
+  figure { margin: 0; }
+  figcaption { font-size: 7.4pt; color: var(--ink-3); margin-top: 1.6mm; line-height: 1.35; }
+  .chart { border: .3mm solid var(--line); border-radius: 2.2mm; padding: 2mm; background: #fff; }
+  .chart img { display: block; width: 100%; height: auto; }
+
+  .box { border: .3mm solid var(--line); border-radius: 2.5mm; padding: 3.4mm 3.8mm; background: #fff; }
+  .box.soft { background: var(--soft); border-color: var(--soft); }
+  .box.mint { background: var(--mint); border-color: var(--mint); }
+  .box.red { background: var(--red-bg); border-color: var(--red-bg); }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+  .tag { display: inline-block; font-size: 7pt; font-weight: 600; padding: .5mm 1.8mm; border-radius: 10mm; background: var(--mint); color: var(--green-ink); letter-spacing: .01em; }
+  .tag.red { background: var(--red-bg); color: var(--red); }
+  .tag.ink { background: var(--ink); color: #fff; }
+
+  /* cover */
+  .cover { padding: 0; display: flex; flex-direction: column; }
+  .cover-top { padding: 16mm 16mm 0; }
+  .cover-top img.logo { height: 11mm; }
+  .cover-title { padding: 22mm 16mm 0; }
+  .kicker { font-size: 9pt; color: var(--green-ink); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 5mm; }
+  .cover h1 { font-size: 54pt; letter-spacing: -0.035em; line-height: 1; margin-bottom: 5mm; }
+  .cover .sub { font-size: 15pt; color: var(--ink); font-weight: 500; margin-bottom: 6mm; letter-spacing: -0.01em; }
+  .cover .pitch { font-size: 11.5pt; line-height: 1.5; max-width: 150mm; color: var(--ink-2); }
+  .cover-shot { height: 96mm; margin: 12mm 16mm 0; border-radius: 3mm; overflow: hidden; border: .3mm solid var(--line-2); }
+  .cover-shot img { display: block; width: 100%; }
+  .cover-bottom { margin-top: auto; background: var(--forest); color: #dfe9e3; padding: 9mm 16mm 10mm; display: grid; grid-template-columns: 1fr 1.15fr; gap: 8mm; }
+  .cover-bottom h4 { color: #fff; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2.4mm; opacity: .75; }
+  .cover-bottom .team { font-size: 10.5pt; color: #fff; line-height: 1.55; }
+  .cover-bottom .team b { font-weight: 600; }
+  .cover-bottom a { color: #9be3b4; }
+  .cover-bottom .links { font-size: 9pt; line-height: 1.75; white-space: nowrap; }
+
+  /* stat tiles */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.4mm; margin: 2mm 0 6mm; }
+  .stat { border: .3mm solid var(--line); border-radius: 2.5mm; padding: 3.6mm 3.8mm 3.4mm; background: #fff; }
+  .stat.key { background: var(--mint); border-color: var(--mint); }
+  .stat .v { font-size: 22pt; font-weight: 600; color: var(--ink); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 11pt; font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
+  .stat .l { font-size: 8.1pt; color: var(--ink-2); margin-top: 2mm; line-height: 1.35; }
+  .stat .s { font-size: 7pt; color: var(--ink-3); margin-top: 1.2mm; }
+
+  /* cycle */
+  .cycle { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2.2mm; margin: 2mm 0 2mm; position: relative; }
+  .cyc { background: var(--soft); border-radius: 2.5mm; padding: 3mm 2.6mm; position: relative; }
+  .cyc .i { width: 6.4mm; height: 6.4mm; border-radius: 50%; background: var(--forest); color: #fff; font-weight: 600; font-size: 8.4pt; display: flex; align-items: center; justify-content: center; margin-bottom: 2mm; }
+  .cyc b { display: block; color: var(--ink); font-size: 8.8pt; font-weight: 600; line-height: 1.2; margin-bottom: 1mm; }
+  .cyc span { font-size: 7.2pt; color: var(--ink-3); line-height: 1.3; display: block; }
+  .cyc:not(:last-child)::after { content: "→"; position: absolute; right: -2.3mm; top: 3.4mm; color: var(--green); font-weight: 700; font-size: 9pt; }
+  .loop { font-size: 7.4pt; color: var(--ink-3); text-align: right; margin-bottom: 5mm; }
+  .loop b { color: var(--green-ink); font-weight: 600; }
+
+  /* pipeline */
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 2mm 0 2mm; }
+  .node { flex: 1; border: .3mm solid var(--line-2); border-radius: 2.5mm; padding: 2.8mm 2.6mm; background: #fff; }
+  .node.in { background: var(--soft); border-color: var(--soft); }
+  .node.code { background: var(--mint); border-color: #cfe9d7; }
+  .node .k { font-size: 6.8pt; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 1mm; }
+  .node b { display: block; color: var(--ink); font-size: 8.8pt; line-height: 1.2; margin-bottom: 1mm; }
+  .node span { display: block; font-size: 7.2pt; line-height: 1.32; color: var(--ink-2); }
+  .arr { width: 5mm; flex: 0 0 5mm; display: flex; align-items: center; justify-content: center; color: var(--green); font-weight: 700; font-size: 10pt; }
+  .branch { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; margin: 3mm 0 5mm; }
+  .branch .box { padding: 2.6mm 3mm; font-size: 7.8pt; line-height: 1.35; }
+  .branch .box b { color: var(--ink); }
+
+  .formula { white-space: nowrap; font-family: var(--mono); font-size: 7.8pt; color: var(--ink); background: #fff; border: .3mm solid var(--line); border-radius: 2mm; padding: 2.2mm 3mm; display: inline-block; margin: 1mm 0 2mm; }
+  .cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 6mm; }
+  .k-list { display: grid; grid-template-columns: 30mm 1fr; row-gap: 1.6mm; column-gap: 3mm; font-size: 8.4pt; margin: 0; }
+  .k-list dt { color: var(--ink-3); }
+  .k-list dd { margin: 0; color: var(--ink); }
+
+  .arch { display: flex; align-items: stretch; margin: 2mm 0 4mm; }
+  .arch .node { padding: 2.6mm 2.4mm; }
+  .road { display: grid; grid-template-columns: 1fr 1fr; gap: 2.6mm 5mm; }
+  .road div { border-left: .8mm solid var(--green); padding: .6mm 0 .6mm 3mm; font-size: 8.3pt; }
+  .road b { color: var(--ink); display: block; font-size: 8.8pt; margin-bottom: .5mm; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Cover -->
+<section class="page cover">
+  <div class="cover-top"><img class="logo" src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"></div>
+  <div class="cover-title">
+    <div class="kicker">NU Datathon 2026 · кейс Freedom Broker</div>
+    <h1>Freedom CQA</h1>
+    <div class="sub">Руководство для жюри и организаторов</div>
+    <p class="pitch">Автоматический контроль качества чатов и звонков операторов по чек-листу Freedom Broker. По каждому критерию система даёт ответ, реплику-доказательство и объяснение, баллы считает код, а последнее слово остаётся за проверяющим.</p>
+  </div>
+  <div class="cover-shot"><img src="../media/dialog-card.jpg" alt="Карточка анализа диалога p1-ru-009"></div>
+  <div class="cover-bottom">
+    <div>
+      <h4>Команда YaTebyaMognu</h4>
+      <div class="team"><b>Tair Kaldybayev</b> · <b>Dameli Kalikhanova</b><br><b>Nazar Akanov</b> · <b>Amina Aktayeva</b></div>
+      <div style="margin-top:3mm;font-size:8.6pt;opacity:.8">Nazarbayev University · 7–8 ноября 2026</div>
+    </div>
+    <div class="links">
+      <h4>Ссылки</h4>
+      <a href="https://freedom-cqa.vercel.app">freedom-cqa.vercel.app</a><br>
+      <a href="https://freedom-cqa.vercel.app/admin/">freedom-cqa.vercel.app/admin/</a> · код <b style="color:#fff">freedom-agent</b><br>
+      <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu">github.com/tairqaldy/doomdatathon-yatebyamognu</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · One minute -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>Freedom CQA · руководство для жюри</span></div>
+  <h2><span class="n">01</span>За 1 минуту</h2>
+  <p class="lead">QA-команда Freedom Broker проверяет разговоры вручную: всех диалогов не охватить, а одну и ту же метрику люди читают по-разному. Freedom CQA проверяет каждый диалог на русском, казахском и английском по официальному чек-листу из 8 критериев.</p>
+
+  <div class="grid2" style="margin-bottom:5mm">
+    <div class="box soft">
+      <h4>Как устроено</h4>
+      <ul class="small" style="margin:0">
+        <li>Модель по каждому критерию выбирает только ответ (да / нет / N/A или ступень шкалы) и реплику-доказательство.</li>
+        <li>Баллы, перераспределение веса N/A и округление считает код по правилам чек-листа. Грубые ошибки отмечаются отдельно.</li>
+        <li>Любой ответ можно оспорить. Решение проверяющего сразу пересчитывает итог.</li>
+      </ul>
+    </div>
+    <div class="box soft">
+      <h4>Со стороны клиента</h4>
+      <ul class="small" style="margin:0">
+        <li>Ассистент AIM в чате поддержки сразу говорит, что он AI.</li>
+        <li>Если вопрос не решён или клиент просит человека, AIM передаёт его живому оператору вместе со всей перепиской.</li>
+        <li>Работа оператора после этого проходит ту же автоматическую проверку.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Ключевые числа · оценщик eval-v5.3</h3>
+  <div class="stats">
+    <div class="stat key"><div class="v">95,4%</div><div class="l">совпадение с эталоном на 19 диалогах, проверенных вручную</div><div class="s">152 ответа, strict; 97,2% на 18 чатах</div></div>
+    <div class="stat key"><div class="v">96,4%</div><div class="l">на отложенной части эталона (held-out)</div><div class="s">7 диалогов, 56 ответов</div></div>
+    <div class="stat key"><div class="v">97,3%</div><div class="l">с независимой слепой разметкой двух AI-разметчиков</div><div class="s">24 чата, 185 ответов, κ 0,97</div></div>
+    <div class="stat"><div class="v">7 <small>из</small> 7</div><div class="l">грубых ошибок найдено на эталоне</div><div class="s">0 ложных срабатываний</div></div>
+    <div class="stat"><div class="v">≈ $0,006</div><div class="l">за чат, все вызовы моделей</div><div class="s">≈ $0,016 за звонок</div></div>
+    <div class="stat"><div class="v">≈ 30 <small>с</small></div><div class="l">на чат (p50 27,5 с)</div><div class="s">повторный запрос из кэша ≈ 20 мс</div></div>
+  </div>
+
+  <h3>Где смотреть</h3>
+  <table class="t-tight">
+    <tr><td style="width:44mm">Продукт</td><td><a href="https://freedom-cqa.vercel.app">https://freedom-cqa.vercel.app</a></td></tr>
+    <tr class="hl"><td>QA-кабинет</td><td><a href="https://freedom-cqa.vercel.app/admin/">https://freedom-cqa.vercel.app/admin/</a> · код доступа <code>freedom-agent</code></td></tr>
+    <tr><td>Чат клиента с AIM</td><td><a href="https://freedom-cqa.vercel.app/support/">https://freedom-cqa.vercel.app/support/</a></td></tr>
+    <tr><td>Репозиторий и README</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu">https://github.com/tairqaldy/doomdatathon-yatebyamognu</a></td></tr>
+    <tr><td>Результаты, контроль</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/results/prod/results.json"><code>results/prod/results.json</code></a> · 10 чатов FBroker, «Формат JSON 1.0», валидатор пройден</td></tr>
+    <tr><td>Результаты, DEV</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/results/dev/results.json"><code>results/dev/results.json</code></a> · 65 диалогов DEV (60 чатов, 5 звонков)</td></tr>
+  </table>
+
+  <p class="tiny" style="margin-top:4mm">Модели: GPT-6 Luna оценивает чек-лист (3 независимых прогона, голосование по критерию), Gemini 3.8 Flash оценивает тон по записи звонка, Qwen 3.8 27B с открытыми весами проверен как вариант для собственного сервера. Все числа пересчитываются из файлов в репозитории: <code>node scripts/readme-charts.mjs</code>, <code>python3 -I eval/agreement.py</code>.</p>
+
+  <div class="page-foot"><span><b>02</b> / 12</span><span>freedom-cqa.vercel.app</span></div>
+</section>
+
+<!-- 3 · How to check (cycle) -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>02 · Как проверить</span></div>
+  <h2><span class="n">02</span>Как проверить: цикл за шесть шагов</h2>
+  <p class="lead">Все шаги работают в <a href="https://freedom-cqa.vercel.app/admin/">/admin/</a> на продакшене. Начните с экрана «Обзор»: панель «Для жюри · Сценарий проверки» ведёт на каждый шаг.</p>
+
+  <div class="cycle">
+    <div class="cyc"><div class="i">1</div><b>Чек-лист</b><span>веса, N/A</span></div>
+    <div class="cyc"><div class="i">2</div><b>Диалоги</b><span>набор, текст</span></div>
+    <div class="cyc"><div class="i">3</div><b>Оценка</b><span>≈ 30 с на чат</span></div>
+    <div class="cyc"><div class="i">4</div><b>Результаты</b><span>доказательства</span></div>
+    <div class="cyc"><div class="i">5</div><b>Апелляция</b><span>комментарий</span></div>
+    <div class="cyc"><div class="i">6</div><b>Переоценка</b><span>вручную</span></div>
+  </div>
+  <div class="loop">6 → 4: <b>новый итог</b> · 1 → 3: <b>изменённый критерий оценивается заново</b></div>
+
+  <table>
+    <tr><th style="width:28mm">Шаг</th><th style="width:47mm">Где в продукте</th><th>Что сделать и что увидеть</th></tr>
+    <tr><td>1 · Настройка чек-листа</td><td>Чек-лист <code>/admin/#/checklist</code></td><td>Вес в строке критерия, «Изменить» для текста, типа ответа, шкалы и N/A; добавить, заменить, удалить. Вес пересчитывает итоги сразу, изменённый критерий: «Сохранить vN и переоценить» (два чата ≈ 35 с).</td></tr>
+    <tr><td>2 · Получение диалогов</td><td>Загрузка диалогов <code>/admin/#/import</code>; Живые чаты</td><td>«Набор по group_id» берёт набор организаторов через наш <code>/api/dataset</code>, «Вставить текст» и «JSON-файл» принимают свой транскрипт. Чат из <code>/support/</code> после передачи оператору попадает в «Живые чаты».</td></tr>
+    <tr><td>3 · Оценка</td><td>Карточка → «Оценить заново»; у загруженного диалога «Оценить AI-агентом»</td><td>Например, <code>p1-ru-009</code>. Строка запуска показывает модель, время, стоимость и пометку о новом запросе к модели.</td></tr>
+    <tr><td>4 · Результаты</td><td>Диалоги → любая строка; Обзор; Диалоги → «Грубые ошибки»</td><td>Итог, «Как посчитан итог», разделы, «Причина снижения оценки», блок грубой ошибки, голоса «3 из 3» или «2 из 3 · проверьте». Клик по снижению прокручивает транскрипт к реплике и подсвечивает её.</td></tr>
+    <tr><td>5 · Апелляция</td><td>Карточка → «Оспорить» у критерия</td><td>Выбрать критерий, написать комментарий, сохранить. В «Апелляциях» проверяющий видит спорный ответ, комментарий и фрагмент диалога.</td></tr>
+    <tr><td>6 · Ручная переоценка</td><td>Роль «Проверяющий» → «Принять решение»</td><td>Подтвердить или изменить ответ с причиной. Итог пересчитывается без вызова модели. Карточка показывает исходный балл, решение и итог.</td></tr>
+  </table>
+
+  <div class="grid2" style="margin-top:5mm">
+    <figure><div class="shot"><img src="../media/checklist-editor.jpg" alt="Редактор чек-листа"></div><figcaption>Шаг 1. Чек-лист: вес в строке, «Изменить» открывает полную форму критерия.</figcaption></figure>
+    <figure><div class="shot"><img src="../media/admin-overview.jpg" alt="Обзор с панелью для жюри"></div><figcaption>Обзор: панель «Для жюри», четыре KPI, «Где теряем баллы», «Грубые ошибки».</figcaption></figure>
+  </div>
+
+  <div class="page-foot"><span><b>03</b> / 12</span><span>freedom-cqa.vercel.app/admin/ · код freedom-agent</span></div>
+</section>
+
+<!-- 4 · Own transcript, SWAP, control -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>02 · Как проверить</span></div>
+  <h2><span class="n">02</span>Свой транскрипт и контрольный набор</h2>
+  <p class="lead">Оценка идёт вживую, готовые результаты не подставляются. Новый текст никогда не лежит в кэше, поэтому каждый новый диалог уходит в модель.</p>
+
+  <div class="cols">
+    <div>
+      <h3>В продукте</h3>
+      <p><b style="color:var(--ink)">Загрузка диалогов</b> <code>/admin/#/import</code> → «Вставить текст». Одна реплика на строку, в начале роль: <code>Оператор:</code>, <code>Клиент:</code>, <code>Бот:</code>, <code>Система:</code> (или <code>Operator:</code>, <code>Client:</code>), время вида <code>[00:45]</code> по желанию. Язык определяется сам; примеры на RU, KZ, EN встроены.</p>
+      <p>«Оценить AI-агентом» запускает таймер, затем открывает карточку со строкой <i>модель · время · стоимость · новый запрос к модели</i>. Загруженный диалог помечен «Загружен», его можно оспорить, как любой другой.</p>
+      <figure style="margin-top:3mm"><div class="shot"><img src="../media/import-dialog.jpg" alt="Загрузка диалогов"></div><figcaption>Загрузка диалогов: вставка текста, JSON-файл или набор по group_id.</figcaption></figure>
+    </div>
+    <div>
+      <h3>Через API</h3>
+      <p><code>POST /api/evaluate</code> принимает <code>{ conversation, checklist }</code>. Чек-лист чатов лежит на продакшене, клонировать ничего не нужно.</p>
+<pre><span class="c"># dialog.json: conversation_id, channel,
+# language, transcript[{timestamp, speaker, text}]</span>
+curl -s https://freedom-cqa.vercel.app/data/checklists/freedom-chat-v1.json -o checklist.json
+jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json \
+  '{conversation: $conv[0], checklist: $cl[0]}' \
+| curl -s -X POST https://freedom-cqa.vercel.app/api/evaluate \
+  -H 'Content-Type: application/json' --data @-</pre>
+      <p class="small" style="margin-top:2.4mm">Ответ содержит ответы по критериям, объяснения и доказательства, баллов в нём нет: их считает <code>scoring.js</code>, та же функция, что в интерфейсе. Пример целиком в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu#evaluate-your-own-transcript">README</a>.</p>
+      <div class="box mint small" style="margin-top:2mm"><b style="color:var(--ink)">Проверка на продакшене, 8 ноября, 09:56:</b> 33,7 с, $0,0064, все 3 прогона совпали по каждому критерию. C3 = N/A, C7 = «нет» по буквальному прочтению; итог 75 из 80 → <b style="color:var(--ink)">93,75</b>.</div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:6mm">
+    <div class="box soft">
+      <h4>Набор SWAP готов к живому прогону</h4>
+      <p class="small">3 чата (RU, KZ, EN) загружены по group_id и сохранены в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/data/datasets/Swap.json"><code>data/datasets/Swap.json</code></a>. Они заранее оценены с официальным чек-листом, поэтому живой прогон отвечает из кэша сразу, а карточка пишет, что ответ из кэша. «Оценить заново» запускает новую оценку моделью. В <code>results/prod</code> SWAP не добавлен, как просили организаторы.</p>
+    </div>
+    <div class="box soft">
+      <h4>Контрольный набор: 10 чатов FBroker</h4>
+      <p class="small"><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/results/prod/results.json"><code>results/prod/results.json</code></a>: 10 записей, 0 ошибок, «Формат JSON 1.0». Валидатор <code>eval/validate-results.mjs --expect 10</code> проверяет ровно 10 записей, все 8 критериев, номера реплик с 1, <code>final_score</code>, пересчитанный независимо с half-up округлением. Неудачный диалог записывается как <code>status: "error"</code> с причиной, без выдуманного балла.</p>
+    </div>
+  </div>
+
+  <div class="page-foot"><span><b>04</b> / 12</span><span>freedom-cqa.vercel.app/admin/#/import</span></div>
+</section>
+
+<!-- 5 · How evaluation works -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>03 · Как работает оценка</span></div>
+  <h2><span class="n">03</span>Как работает оценка</h2>
+  <p class="lead">Модель отвечает на вопросы чек-листа и показывает реплику-доказательство, арифметику делает код. Оценивается только оператор; бот и система служат контекстом.</p>
+
+  <div class="flow">
+    <div class="node in"><div class="k">вход</div><b>Транскрипт</b><span>RU / KZ / EN + чек-лист JSON</span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">1 · модель</div><b>Факты</b><span>запросы, идентификация, раскрытие, завершение</span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">2 · модель</div><b>3 прогона</b><span>GPT-6 Luna, проверка и ответ по критерию</span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">3 · код</div><b>Цитаты</b><span>реплика есть, цитата совпадает</span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">4 · код</div><b>Голос</b><span>большинство, при ничьей медиана</span></div>
+    <div class="arr">→</div>
+    <div class="node code"><div class="k">5 · код</div><b>Баллы</b><span><code>scoring.js</code>: веса, N/A</span></div>
+  </div>
+  <div class="branch">
+    <div class="box red"><span class="tag red">C8</span> <b>Грубая ошибка</b> идёт отдельным красным флагом. Баллов не даёт и итог не обнуляет.</div>
+    <div class="box mint"><span class="tag">выход</span> <b>Карточка</b> с переходом к реплике или к моменту записи, и <b>results.json</b> в «Формате JSON 1.0».</div>
+    <div class="box soft"><span class="tag ink">возврат</span> <b>Апелляция → решение</b> заменяет ответ, тот же <code>scoring.js</code> пересчитывает итог.</div>
+  </div>
+
+  <table>
+    <tr><th style="width:32mm">Шаг</th><th>Что делает</th><th style="width:58mm">Зачем</th></tr>
+    <tr><td>Сначала факты</td><td>Схема заставляет модель заполнить факты диалога до вердикта, затем <code>checks</code> и ответ.</td><td>Подвопросы до оценки повышают надёжность (<a href="https://arxiv.org/abs/2403.18771">CheckEval</a>, <a href="https://arxiv.org/abs/2303.16634">G-Eval</a>)</td></tr>
+    <tr><td>Процедуры</td><td>Процедура решения по смыслу для каждого критерия, подсказки RU / KZ / EN (<a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/playbook/scoring-playbook.md">playbook</a>).</td><td>Новый критерий оценивается по своему тексту, без правок кода</td></tr>
+    <tr><td>Проверка цитат</td><td>Реплика существует, цитата совпадает; 1 повторный запрос, затем ошибка, а не половина результата.</td><td>Не выдумывать факты (#2981)</td></tr>
+    <tr><td>Правила в коде</td><td>Для неизменённых официальных критериев: C7 по фактам завершения; раскрытие до идентификации → C3 «нет», C8 «да».</td><td>Механика надёжнее в коде (<a href="https://mlflow.org/articles/llm-judge-calibration/">MLflow</a>)</td></tr>
+    <tr><td>3 прогона и голос</td><td>Доля голосов видна в карточке: «3 из 3» или «2 из 3 · проверьте». eval-v4 менял 6,6% ответов между прогонами, v5.x около 2%.</td><td>Большинство из 3 точнее одного (<a href="https://arxiv.org/pdf/2510.27106">Rating Roulette</a>)</td></tr>
+  </table>
+
+  <div class="cols" style="margin-top:5mm">
+    <div class="box soft">
+      <h4>Правила подсчёта (из чек-листа)</h4>
+      <ul class="small">
+        <li>«Да» = полный вес, «нет» = 0, шкала = вес × ступень / верхняя ступень.</li>
+        <li>N/A только если критерий это разрешает и условие выполнено. Вес N/A перераспределяется:</li>
+      </ul>
+      <div class="formula">итог = Σ баллов / Σ применимых весов × 100</div>
+      <ul class="small">
+        <li>Округление один раз, half-up, до 2 знаков: 50,625 → 50,63. Нет применимых критериев → итог <code>null</code>.</li>
+      </ul>
+    </div>
+    <div class="box mint">
+      <h4>Пример: DEV-чат p1-ru-001</h4>
+      <p class="small">C2 и C3 = N/A (запрос ясен, данные счёта не нужны): из 100 веса выпадает 35. C7 = «нет»: в «Пожалуйста. Хорошего вечера!» есть прощание, но нет итога и предложения помощи.</p>
+      <div class="formula">10 + 20 + 15 + 15 + 0 = 60 из 65 → 92,31</div>
+    </div>
+  </div>
+
+  <div class="page-foot"><span><b>05</b> / 12</span><span>lib/evaluator.js · prototype/scoring.js</span></div>
+</section>
+
+<!-- 6 · Organizer rulings -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>03 · Как работает оценка</span></div>
+  <h2><span class="n">03</span>Решения организаторов, которым мы следуем</h2>
+  <p class="lead">Спорные места чек-листа решены так, как ответили организаторы в Q&amp;A-чате. Номер в скобках указывает на сообщение; где каждое правило живёт в коде, описано в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/research/organizer-rulings.md">organizer-rulings.md</a>.</p>
+
+  <table>
+    <tr><th style="width:44mm">Вопрос</th><th style="width:48mm">Ответ организаторов</th><th>Что делает продукт</th></tr>
+    <tr><td>C2, клиент сразу дал всё нужное</td><td>N/A (#2814)</td><td>Ясный и полный запрос → N/A</td></tr>
+    <tr><td>C7, только «Пожалуйста. Хорошего вечера!»</td><td>(итог <b>или</b> предложение помощи) <b>и</b> прощание (#2814, #3024)</td><td>Буквальное прочтение в <code>closingAnswer()</code>: вежливость с прощанием = «нет»</td></tr>
+    <tr><td>C1 на звонке без записанного приветствия</td><td>N/A (#2978)</td><td>Чек-лист звонков разрешает C1 = N/A, когда приветствия нет в записи</td></tr>
+    <tr><td>Данные счёта до идентификации</td><td>C3 «нет»; C8 на наше усмотрение (#2814)</td><td>C3 «нет» <b>и</b> грубая ошибка C8. Шаги идентификации раскрытием не считаются</td></tr>
+    <tr><td>Когда нужна идентификация</td><td>По запросу; вход в приложение не идентификация (#3074, #3082)</td><td>Засчитывается только событие или завершённый шаг идентификации</td></tr>
+    <tr><td>Округление</td><td>Half-up до 2 знаков (#2978)</td><td><code>round2()</code> только для итога</td></tr>
+    <tr><td>Замена критерия</td><td>Переоценить (#2978)</td><td>Ключ кэша включает полный текст критериев: изменённый критерий означает новый вызов модели</td></tr>
+    <tr><td>Не хватает информации</td><td>Не выдумывать факты (#2981)</td><td>Проверка цитат; C4 не считает уверенный ответ ошибочным без видимого противоречия</td></tr>
+    <tr><td>Звонки</td><td>Та же логика, адаптированная к речи (#2343)</td><td>Отдельный чек-лист звонков, переход к моменту записи, тон по аудио</td></tr>
+    <tr><td>Первый ответ за 3 минуты</td><td>Это SLA, вне чек-листа (#3088)</td><td>Не оценивается</td></tr>
+  </table>
+
+  <h3 style="margin-top:7mm">Грубые ошибки видны отдельным списком</h3>
+  <div class="cols">
+    <figure><div class="shot"><img src="../media/gross-errors.jpg" alt="Список диалогов с грубыми ошибками"></div><figcaption>Диалоги → «Грубые ошибки»: каждый диалог с флагом, причина и реплика оператора.</figcaption></figure>
+    <div class="small">
+      <p>Это ответ на просьбу жюри показать все диалоги с грубыми ошибками и объяснить почему (#2991).</p>
+      <ul>
+        <li>Причины C8: раскрытие конфиденциальных данных до идентификации, оскорбление клиента, предложение услуг вне компании.</li>
+        <li>Флаг не меняет итог в баллах: оператор видит и качество разговора, и нарушение.</li>
+        <li>На эталоне найдены все 7 грубых ошибок, ложных срабатываний 0. eval-v3 был отклонён, хотя набирал больше: он ставил грубую ошибку на двух реальных звонках, где оператор только проверял личность.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-foot"><span><b>06</b> / 12</span><span>docs/case/telegram-qa.md</span></div>
+</section>
+
+<!-- 7 · Accuracy -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>04 · Точность</span></div>
+  <h2><span class="n">04</span>Точность</h2>
+  <p class="lead">Топ-50 выбирают в основном по совпадению ответов по каждому критерию с экспертами на 10 новых контрольных чатах (#2292, #2978). Мы меряем то же самое на двух независимых эталонах.</p>
+
+  <div class="grid2" style="margin-bottom:5mm">
+    <div class="box soft">
+      <h4>Эталон (gold)</h4>
+      <p class="small">19 DEV-диалогов (18 чатов и 1 звонок) × 8 критериев = 152 ответа. Черновик меток подготовил агент, человек проверил и принял каждую метку; отдельный аудит перечитал все 19 диалогов и не изменил ни одного ответа. Held-out: 7 диалогов, разбиение заморожено до первого запуска eval-v5.</p>
+    </div>
+    <div class="box soft">
+      <h4>Слепая разметка</h4>
+      <p class="small">Два независимых AI-разметчика из другого семейства моделей, чем наш оценщик, видели только чек-лист и решения организаторов и разметили 24 других DEV-чата. Сравниваем на 185 из 192 ответов, где они согласны. Это не эксперты Freedom, а проверка согласованности.</p>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>Проверка, eval-v5.3</th><th class="num">Ответов</th><th class="num">Совпадение</th><th class="num">eval-v4</th></tr>
+    <tr class="hl"><td>Эталон, 18 чатов (контрольный набор состоит из чатов)</td><td class="num">144</td><td class="num"><b>97,2%</b> (95% ДИ 93,1–98,9), κ 0,96</td><td class="num"></td></tr>
+    <tr><td>Эталон, все 19 диалогов</td><td class="num">152</td><td class="num"><b>95,4%</b> strict / 98,7% lenient</td><td class="num">91,4% / 96,7%</td></tr>
+    <tr><td>Held-out, 7 диалогов</td><td class="num">56</td><td class="num"><b>96,4%</b> strict / 100% lenient</td><td class="num">92,9% / 96,4%</td></tr>
+    <tr><td>Слепой консенсус, 24 чата</td><td class="num">185</td><td class="num"><b>97,3%</b> (ДИ 93,8–98,8), κ 0,97</td><td class="num">91,9%</td></tr>
+    <tr><td>Потолок: разметчик A против B</td><td class="num">192</td><td class="num">96,4%, κ 0,95</td><td class="num"></td></tr>
+    <tr><td>Грубые ошибки на эталоне</td><td class="num">7</td><td class="num">7 найдено, 0 ложных</td><td class="num">так же</td></tr>
+  </table>
+  <p class="tiny" style="margin-top:2mm">Strict: тот же ответ, что в эталоне. Lenient: эталон или указанная в нём допустимая альтернатива. κ: каппа Коэна, согласие с поправкой на случайность. Разница 97,2% и 95,4% даёт один звонок эталона, p4-ru-001 (C4, C5, C6).</p>
+
+  <div class="cols" style="margin-top:4mm; align-items:start; grid-template-columns: 1.6fr 1fr">
+    <figure><div class="chart"><img src="../media/charts/accuracy-overall.svg" alt="Общее совпадение: held-out, весь эталон, слепой консенсус"></div><figcaption>Совпадение strict: eval-v4 и eval-v5.3 на трёх проверках.</figcaption></figure>
+    <div class="box mint small">
+      <h4>Как читать</h4>
+      <p>С каждым слепым разметчиком мы совпадаем в 95,3% случаев, они между собой в 96,4%. На этих данных оценщик читает диалоги как второй внимательный проверяющий, не лучше его.</p>
+      <p>eval-v5.3 принят по правилу, зафиксированному заранее: held-out и слепой консенсус не падают, грубые ошибки 7/7 без ложных. По тому же правилу отклонён eval-v5.2. Все платные прогоны v5 стоили $1,42.</p>
+    </div>
+  </div>
+
+  <div class="page-foot"><span><b>07</b> / 12</span><span>eval/runs/2026-11-07T16-05-00Z-v53-report.md</span></div>
+</section>
+
+<!-- 8 · Accuracy per criterion + limits -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>04 · Точность</span></div>
+  <h2><span class="n">04</span>По критериям и пределы</h2>
+
+  <div class="cols" style="grid-template-columns: 1fr 1fr; align-items:start">
+    <figure><div class="chart"><img src="../media/charts/accuracy-per-criterion.svg" alt="Совпадение по критериям"></div><figcaption>Совпадение strict по критериям, все 19 диалогов эталона: eval-v4 и eval-v5.3.</figcaption></figure>
+    <table class="t-tight" style="font-size:7.6pt">
+      <tr><th>Критерий</th><th class="num">Эталон, 18 чатов</th><th class="num">Слепые, 24</th><th class="num">A vs B</th></tr>
+      <tr><td>C1 контакт</td><td class="num">100 · 1,00</td><td class="num">100 · 1,00</td><td class="num">100</td></tr>
+      <tr><td>C2 потребность</td><td class="num">100 · 1,00</td><td class="num">95,8 · 0,78</td><td class="num">100</td></tr>
+      <tr><td>C3 идентификация</td><td class="num">100 · 1,00</td><td class="num">100 · н/д</td><td class="num">100</td></tr>
+      <tr><td>C4 консультация</td><td class="num">94,4 · 0,91</td><td class="num">95,7 · 0,88</td><td class="num">95,8</td></tr>
+      <tr><td>C5 эмпатия</td><td class="num">100 · 1,00</td><td class="num">100 · 1,00</td><td class="num">95,8</td></tr>
+      <tr class="hl"><td>C6 ведение диалога</td><td class="num"><b>83,3 · 0,68</b></td><td class="num"><b>85,7 · 0,57</b></td><td class="num"><b>87,5</b></td></tr>
+      <tr><td>C7 завершение</td><td class="num">100 · 1,00</td><td class="num">100 · 1,00</td><td class="num">91,7</td></tr>
+      <tr><td>C8 грубые ошибки</td><td class="num">100 · 1,00</td><td class="num">100 · н/д</td><td class="num">100</td></tr>
+    </table>
+  </div>
+  <p class="tiny" style="margin-top:2mm">Таблица: % совпадения · κ на чатах (<code>eval/agreement.py</code>, без вызовов моделей). A vs B: согласие двух слепых разметчиков между собой.</p>
+
+  <h3>Пределы</h3>
+  <table>
+    <tr><th style="width:44mm">Предел</th><th>Что это значит</th></tr>
+    <tr><td>Эталон наш, не Freedom</td><td>19 диалогов размечены командой, слепые разметчики тоже AI. Единственная экспертная проверка будет на контрольных чатах, и это новые истории.</td></tr>
+    <tr><td>C6 трудный для всех</td><td>Это шкала суждения: даже слепые разметчики между собой дают κ 0,61. Поэтому карточка помечает разошедшиеся голоса «2 из 3 · проверьте», а исправляет такие случаи апелляция.</td></tr>
+    <tr><td>C7 буквально</td><td>По буквальному прочтению 45 из 60 DEV-чатов получают «нет». Если эксперты Freedom засчитывают вежливое прощание после решённого вопроса, здесь мы потеряем ответы. Правило в одной функции, <code>closingAnswer()</code>.</td></tr>
+    <tr><td>Малые выборки</td><td>На 18 чатах критерий со 100% известен только как выше ~82%. В held-out 56 ответов, один ответ = 1,8 пункта. C3 и C8 в слепом наборе одноклассовые (κ н/д), там 100% мало что доказывает.</td></tr>
+    <tr><td>Held-out не «невиданный»</td><td>Промпт не менялся под эти 7 диалогов, но правила v4 и v5 писались после чтения всех 19. В DEV большинство историй повторены трижды (RU / KZ / EN).</td></tr>
+    <tr><td>Стабильность</td><td>Около 2% смены ответов у v5.x оценено по согласию прогонов, а не измерено платным повтором.</td></tr>
+  </table>
+
+  <div class="box mint" style="margin-top:5mm"><p class="small"><b style="color:var(--ink)">Языки, strict на всём эталоне:</b> RU 91,7% (72 ответа), KZ 97,5% (40), EN 100% (40). Настоящая проверка — контрольные чаты с метками экспертов; результаты по ним сданы в <code>results/prod/results.json</code>.</p></div>
+
+  <div class="page-foot"><span><b>08</b> / 12</span><span>eval/agreement.py · eval/blind/blind-24.json</span></div>
+</section>
+
+<!-- 9 · Calls and tone -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>05 · Звонки и тон</span></div>
+  <h2><span class="n">05</span>Звонки и тон голоса</h2>
+  <p class="lead">Звонки оцениваются по той же логике, адаптированной к речи (решение организаторов). 5 DEV-звонков — реальные записи с транскриптами организаторов.</p>
+
+  <figure><div class="shot"><img style="height:86mm;object-fit:cover;object-position:top" src="../media/call-audio.jpg" alt="Карточка звонка с таймлайном и плеером"></div><figcaption>Карточка звонка: таймлайн по говорящим и плеер. Клик по доказательству переводит запись на этот момент.</figcaption></figure>
+
+  <div class="grid2" style="margin-top:5mm">
+    <div>
+      <h3 style="margin-top:0">Как устроено</h3>
+      <ul class="small">
+        <li>Отдельный чек-лист звонков (<a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/data/checklists/freedom-call-v1.json"><code>freedom-call-v1.json</code></a>) разрешает N/A там, где запись может что-то упустить, например C1 без записанного приветствия.</li>
+        <li>Ссылки на аудио у организаторов истекают примерно через час, поэтому плеер идёт через <code>/api/audio</code>, который каждый раз получает свежую ссылку.</li>
+        <li>Оценка идёт по транскриптам организаторов. Оператор не теряет баллы из-за слов, искажённых распознаванием.</li>
+        <li>Распознавание: Nemotron на 5 звонках дал WER 35,5% / CER 24,4% против транскриптов организаторов. Транскрипты тоже машинные, так что это согласие двух ASR, а не точность.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0">c09 «Тон и подача речи»</h3>
+      <p class="small">В брифе: «Для оценки дикции и интонации нужен звук». Поэтому тон оценивает модель, которая слушает запись.</p>
+      <table class="t-tight" style="font-size:7.6pt">
+        <tr><td style="width:22mm">Критерий</td><td>Только чек-лист звонков, шкала 10 / 7 / 4 / 0, вес 10; N/A без записи или если оператора не слышно</td></tr>
+        <tr><td>Модель</td><td>Gemini 3.8 Flash, промпт <code>tone-v4</code>. Дословно процитировал известный фрагмент p4-ru-002; <code>gpt-audio-mini</code> в той же проверке его выдумал и отброшен</td></tr>
+        <tr><td>Разделение</td><td>Модель выбирает ступень и реплики-доказательства, баллы считает <code>scoring.js</code>; по таймкодам добавлены темп речи и долгие паузы (≥ 20 с)</td></tr>
+        <tr><td>DEV</td><td>p4-ru-001 → 4/10 (холодный тон, клиент это замечает), остальные 4 звонка 10/10. ≈ $0,013 за звонок, 10–17 с</td></tr>
+        <tr><td>results.json</td><td>Не входит: официальный файл содержит ровно 8 критериев чек-листа. Карточка показывает оба итога</td></tr>
+        <tr><td>Пределы</td><td>Нет экспертных меток тона, все 5 звонков на русском, один прогон без голосования</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot"><span><b>09</b> / 12</span><span>lib/tone.js · lib/audio.js · docs/research/call-tone.md</span></div>
+</section>
+
+<!-- 10 · Integration -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>06 · Интеграция</span></div>
+  <h2><span class="n">06</span>Интеграция с системами Freedom</h2>
+  <p class="lead">Продукт с самого начала спроектирован для встраивания: интерфейс собран как статический веб-ресурс для Dynamics 365, а оценка доступна любой CRM или платформе контакт-центра через один HTTP-вызов.</p>
+
+  <div class="arch">
+    <div class="node in"><div class="k">источники</div><b>Диалоги</b><span>API организаторов, CRM, контакт-центр, чат <code>/support/</code></span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">API</div><b><code>/api/evaluate</code></b><span><code>{ conversation, checklist }</code> → ответы, объяснения, доказательства</span></div>
+    <div class="arr">→</div>
+    <div class="node code"><div class="k">код</div><b><code>scoring.js</code></b><span>одна функция для UI, API, экспорта и тестов</span></div>
+    <div class="arr">→</div>
+    <div class="node"><div class="k">выход</div><b>Web resource D365</b><span>карточка, апелляции, решения</span></div>
+    <div class="arr">+</div>
+    <div class="node"><div class="k">выход</div><b>results.json</b><span>«Формат JSON 1.0»</span></div>
+  </div>
+
+  <table>
+    <tr><th style="width:40mm">Задача</th><th>Что уже сделано</th><th style="width:42mm">Где</th></tr>
+    <tr class="hl"><td>Dynamics 365 HTML web resource</td><td>Статический HTML, CSS и JS: ES-модули, без сборки и фреймворка, hash-роутинг. Рабочее место монтируется в один корневой элемент <code>#cqa-root</code> с относительными путями; API отдаёт CORS-заголовки, так что веб-ресурс на другом домене вызывает его напрямую.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/prototype"><code>prototype/</code></a>, <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/lib/http.js"><code>lib/http.js</code></a></td></tr>
+    <tr><td>Передача клиента оператору</td><td>AIM передаёт оператору всю переписку. В экосистеме Microsoft Copilot Studio так же передаёт полный разговор агенту Dynamics 365 (<a href="https://learn.microsoft.com/microsoft-copilot-studio/advanced-hand-off">Microsoft Learn</a>).</td><td><code>/support/</code></td></tr>
+    <tr><td>Чек-лист как данные</td><td>Критерии, веса, типы ответов, ступени, правила N/A и разделы хранятся в JSON. Руководитель QA меняет их в интерфейсе, а не в коде.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/data/checklists"><code>data/checklists/</code></a></td></tr>
+    <tr><td>API организаторов</td><td><code>GET /api/dataset?group_id=</code> забирает набор на сервере, браузер не упирается в CORS. Контрольный прогон идёт тем же путём.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/api/dataset.js"><code>api/dataset.js</code></a></td></tr>
+    <tr><td>Официальный формат</td><td>Экспорт в «Формат JSON 1.0» и независимый валидатор.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/eval/export-results.mjs"><code>export-results.mjs</code></a>, <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/eval/validate-results.mjs"><code>validate-results.mjs</code></a></td></tr>
+    <tr><td>Любая CRM</td><td><code>POST /api/evaluate</code> возвращает ответы, доказательства и объяснения; вызывающая сторона считает баллы через <code>scoring.js</code>. Форматы описаны в CONTRACTS.md.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/CONTRACTS.md"><code>docs/CONTRACTS.md</code></a></td></tr>
+    <tr><td>Стоимость на объёме</td><td>Каждый вызов модели кэшируется по модели, промпту, транскрипту, чек-листу и отпечатку логики: память → файлы в репозитории → Upstash Redis на продакшене. 10 000 диалогов ≈ $70.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/lib/cache.js"><code>lib/cache.js</code></a>, <code>/api/health</code></td></tr>
+    <tr><td>Модель на своём сервере</td><td><code>local:&lt;model&gt;</code> отправляет те же промпты на любой OpenAI-совместимый сервер. Qwen 3.8 27B с открытыми весами: 94,1% на чатах эталона против 97,1% у GPT-6 Luna, те же 7/7 грубых ошибок.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/lib/llm.js"><code>lib/llm.js</code></a></td></tr>
+    <tr><td>Приватность</td><td>Ключи только в <code>.env</code> и Vercel env; <code>scripts/check.sh</code> блокирует коммиты с секретами. Записей звонков в репозитории нет (идут потоком через <code>/api/audio</code>), живые чаты хранятся в Redis или Postgres. Номера карт и 12-значный ИИН маскируются до отправки в модель и в кэш.</td><td><a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/lib/nav-agent.js"><code>maskPII()</code></a></td></tr>
+  </table>
+
+  <div class="page-foot"><span><b>10</b> / 12</span><span>docs/CONTRACTS.md</span></div>
+</section>
+
+<!-- 11 · Research and models -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>07 · Исследования и модели</span></div>
+  <h2><span class="n">07</span>Исследования → решения</h2>
+  <p class="lead" style="margin-bottom:4mm">Полные страницы и источники: <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/research/README.md">docs/research</a>. Где число не удалось проверить, страница так и пишет.</p>
+
+  <table class="t-tight">
+    <tr><th style="width:84mm">Что узнали</th><th>Что сделали</th></tr>
+    <tr><td>Топ-50 выбирают по совпадению по критериям на 10 новых чатах; запрещено только подставлять готовые результаты; README читают, код не запускают (#2292, #2978, #2177, #2980)</td><td>Метрики по критериям и языкам, каждый диалог через <code>/api/evaluate</code>, README как главный документ</td></tr>
+    <tr><td>Сильный LLM-судья может достигать согласия людей между собой, но оно зависит от задачи (<a href="https://arxiv.org/abs/2306.05685">Zheng 2023</a>, <a href="https://arxiv.org/abs/2406.18403">Bavaresco 2025</a>); судьи смещены и непостоянны (<a href="https://arxiv.org/abs/2305.17926">Wang 2024</a>)</td><td>Проверка по каждому критерию, факты и доказательства до вердикта, 3 прогона и голосование</td></tr>
+    <tr><td>Казахский остаётся малоресурсным (<a href="https://arxiv.org/abs/2502.12829">KazMMLU</a>); Whisper-large без дообучения: 43,58% WER на казахском FLEURS; смешение KZ–RU обычно</td><td>KZ в метриках отдельно; звонки по транскриптам организаторов; русский путь в меню в казахском ответе не ошибка языка</td></tr>
+    <tr><td>64% клиентов предпочли бы, чтобы компании не использовали AI в сервисе (<a href="https://www.gartner.com/en/newsroom/press-releases/2024-07-09-gartner-survey-finds-64-percent-of-customers-would-prefer-that-companies-didnt-use-ai-for-customer-service">Gartner 2024</a>); раскрытие бота — закон в РК с 18.01.2026 и в ЕС (AI Act, ст. 50) с 02.08.2026</td><td>AIM говорит, что он AI, не выдумывает тарифы и цифры и передаёт вопросы о счёте и деньгах человеку со всем чатом</td></tr>
+    <tr><td>Ручной QA покрывает несколько процентов разговоров (вендоры: 2–5%); QA-команды калибруются на общих разговорах (<a href="https://sqmgroup.com/resources/library/blog/call-calibration-comprehensive-guide">SQM Group</a>)</td><td>Оцениваем каждый диалог; эталон и слепая разметка играют роль калибровки</td></tr>
+    <tr><td>GPT-6 Luna против Claude Haiku 5.5 на одном промпте: 86,2% против 75,7% strict, $0,00112 против $0,00177 за оценку</td><td>Оценщик на GPT-6 Luna через OpenAI API</td></tr>
+    <tr><td>Интонации нет в транскрипте; в проверке «что сказано на 03:00» gpt-audio-mini выдумал текст, Gemini процитировал дословно</td><td>c09 на Gemini 3.8 Flash, вне официального results.json</td></tr>
+    <tr><td>Поддержка в iOS-приложении Freedom — асинхронная форма тикета; fbroker.kz построен на Tailwind</td><td><code>/phone/</code> ставит AIM перед формой тикета; токены и зелёные цвета взяты с сайта</td></tr>
+  </table>
+
+  <h3 style="margin-top:6mm">Модели, стоимость, задержка</h3>
+  <table class="t-tight">
+    <tr><th style="width:38mm">Задача</th><th>Модель</th><th class="num">Стоимость</th><th class="num">Задержка</th></tr>
+    <tr class="hl"><td>Оценка диалога</td><td><code>openai:gpt-6-luna</code>, промпт eval-v5.3, 3 прогона, строгая JSON-схема</td><td class="num">чат $0,0058 · звонок $0,016<br><span class="tiny">$0,0070 в среднем по 65 DEV</span></td><td class="num">p50 27,5 с · p95 44,8 с<br><span class="tiny">звонок ≈ 155 с · кэш ≈ 20 мс</span></td></tr>
+    <tr><td>Тон на звонках (c09)</td><td><code>google/gemini-3.8-flash</code>, tone-v4, слушает mp3</td><td class="num">≈ $0,013 / звонок</td><td class="num">10–17 с</td></tr>
+    <tr><td>AIM: бот и навигация</td><td><code>openai:gpt-6-luna</code></td><td class="num">≈ $0,001 / реплика*</td><td class="num">≈ 2 с · 4–8 с</td></tr>
+    <tr><td>AIM: микрофон</td><td>OpenAI <code>whisper-1</code>, запасной Nemotron 3.5 Transcribe</td><td class="num">$0,006 / мин</td><td class="num">p50 1,2 с</td></tr>
+    <tr><td>AIM: голос</td><td>OpenAI <code>gpt-4o-mini-tts</code></td><td class="num">≈ $0,015 / мин*</td><td class="num">1,1–1,5 с</td></tr>
+    <tr><td>Open-weight проверка</td><td><code>qwen3.8-27b</code>, тот же промпт; любой сервер через <code>local:&lt;model&gt;</code></td><td class="num">$0,034 / чат</td><td class="num">p50 61 с</td></tr>
+  </table>
+  <p class="tiny" style="margin-top:1.6mm">* оценка. 10 контрольных чатов на репетиции: 79 с и $0,064. Повторная оценка после апелляции бесплатна: пересчитывается только <code>scoring.js</code>.</p>
+
+  <div class="page-foot"><span><b>11</b> / 12</span><span>docs/research · docs/TOOLING.md</span></div>
+</section>
+
+<!-- 12 · Architecture, roadmap, team -->
+<section class="page">
+  <div class="page-head"><img src="../../shared/brand/freedom-broker-logo.svg" alt="Freedom Broker"><span>08 · Архитектура, планы, команда</span></div>
+  <h2><span class="n">08</span>Архитектура</h2>
+
+  <div class="arch">
+    <div class="node in"><b>Клиент</b><span>чат или звонок</span></div>
+    <div class="arr">→</div>
+    <div class="node"><b>AIM</b><span>говорит, что он AI</span></div>
+    <div class="arr">→</div>
+    <div class="node"><b>Оператор</b><span>видит весь чат</span></div>
+    <div class="arr">→</div>
+    <div class="node code"><b>Авто-QA</b><span>8 критериев с доказательствами</span></div>
+    <div class="arr">→</div>
+    <div class="node"><b>QA-кабинет</b><span>диалоги, грубые ошибки, аналитика</span></div>
+    <div class="arr">⇄</div>
+    <div class="node"><b>Апелляция</b><span>решение проверяющего</span></div>
+  </div>
+
+  <table class="t-tight">
+    <tr><th style="width:24mm">Слой</th><th>Что</th><th style="width:56mm">Где</th></tr>
+    <tr><td>UI</td><td>Статический HTML, CSS и JS (ES-модули), без сборки и фреймворка</td><td><code>admin/</code>, <code>support/</code>, <code>prototype/</code>, <code>shared/</code></td></tr>
+    <tr><td>API</td><td>Serverless-функции Vercel, чистый Node ESM, ноль npm-зависимостей; <code>npm run dev</code> запускает тот же код</td><td><code>api/</code>, <code>lib/</code></td></tr>
+    <tr><td>Модели</td><td>Один маршрутизатор: <code>openai:</code> → OpenAI, <code>local:</code> → свой сервер, остальное → OpenRouter</td><td><code>lib/llm.js</code></td></tr>
+    <tr><td>Подсчёт</td><td>Одна чистая функция для UI, API, экспорта и тестов</td><td><code>prototype/scoring.js</code></td></tr>
+    <tr><td>Данные</td><td>Наборы, чек-листы, оценки — JSON в репозитории; эталон, прогоны, кэш; живые чаты в Redis или Postgres</td><td><code>data/</code>, <code>eval/</code>, <code>results/</code></td></tr>
+  </table>
+
+  <h3>Что дальше</h3>
+  <div class="road">
+    <div><b>Калибровка на экспертах Freedom</b>Метки экспертов по контрольным чатам → уточнить C6 и C7, где расхождение вероятнее всего.</div>
+    <div><b>Пилот в Dynamics 365</b>Рабочее место QA как web resource, передача клиента из Copilot Studio оператору.</div>
+    <div><b>Общее хранилище для QA-команды</b>Апелляции и версии чек-листа на сервере, а не в браузере проверяющего.</div>
+    <div><b>Звонки</b>Экспертные метки тона, казахская речь, более строгая проверка транскриптов из аудита Амины.</div>
+    <div><b>Локальные модели</b>Адаптер ответа для alemllm (llm.alem.ai) и Qwen на собственном GPU банка.</div>
+    <div><b>Аналитика</b>Тренды ошибок по операторам и критериям для доработки скриптов.</div>
+  </div>
+
+  <h3>Команда YaTebyaMognu</h3>
+  <table class="t-tight">
+    <tr><td style="width:44mm">Tair Kaldybayev</td><td>Продукт, исследования, лендинг, чат поддержки, QA-кабинет, питч</td></tr>
+    <tr><td>Dameli Kalikhanova</td><td>UX рабочего места QA (<code>/prototype/</code>)</td></tr>
+    <tr><td>Nazar Akanov</td><td>Оценщик, эталон, метрики согласия, тон голоса, импорт транскриптов, навигационный агент AIM, экспорт результатов</td></tr>
+    <tr><td>Amina Aktayeva</td><td>Хранилище Postgres и KV, аудиты честности и валидности транскриптов</td></tr>
+  </table>
+
+  <p class="small muted" style="margin-top:5mm">Спасибо Freedom Broker за кейс, данные, чек-лист и быстрые ответы в Q&amp;A-чате, и клубу NU DataSci за организацию дататона. Процесс работы: <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/AGENTS.md">AGENTS.md</a>, решения: <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/DECISIONS.md">DECISIONS.md</a>, инструменты: <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/blob/main/docs/TOOLING.md">TOOLING.md</a>.</p>
+
+  <div class="page-foot"><span><b>12</b> / 12</span><span>github.com/tairqaldy/doomdatathon-yatebyamognu</span></div>
+</section>
+
+</body>
+</html>

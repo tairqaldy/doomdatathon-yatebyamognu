@@ -1,0 +1,165 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровалась и назвала своё имя в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Клиент ясно спросил, где получить реквизиты; оператор дал путь в приложении и объяснил выбор валюты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала: клиент спросил, где получить реквизиты."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался общей навигации и получения реквизитов, а не конкретной операции или данных счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации: оператор объяснил общий путь в приложении."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оператор объяснил, где найти реквизиты и как выбрать евро; клиент подтвердил, что получил нужные данные.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Got them, thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Ответы были уважительными и помогли клиенту получить нужные реквизиты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Got them, thanks."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Оператор дал ясные пошаговые инструкции и ответил на вопрос о валюте без заметной задержки.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Select the currency you need before downloading the details. Take those details to the branch."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощалась, но в заключительной реплике не подвела итог и не предложила дальнейшую помощь.",
+   "deduction_reason": "Не соблюдено требование завершить диалог итогом или предложением помощи вместе с прощанием.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Goodbye!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в репликах оператора нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Lina. In the app, open Menu, then Add Funds, then the bank transfer details option."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел получить реквизиты для банковского пополнения и уточнил, как выбрать евро.",
+  "operator_actions": "Оператор указала путь к реквизитам в приложении и объяснила, что перед скачиванием нужно выбрать валюту.",
+  "outcome": "Клиент получил реквизиты и поблагодарил оператора."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, где получить банковские реквизиты для пополнения брокерского счёта.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Уточнить, подходит ли та же страница для перевода в евро.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 20348,
+ "usage": {
+  "prompt_tokens": 5765,
+  "completion_tokens": 2369,
+  "cost": 0.001761
+ }
+}

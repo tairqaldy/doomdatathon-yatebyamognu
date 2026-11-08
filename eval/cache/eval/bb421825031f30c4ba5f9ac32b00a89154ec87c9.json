@@ -1,0 +1,160 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Первый ответ содержит приветствие и имя оператора на казахском языке.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Запрос был сформулирован ясно; по процедуре выявления потребности уточняющий вопрос не требовался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Условие N/A: запрос был ясен с самого начала — клиент просил выяснить причину блокировки вывода денег [0]."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "no",
+   "explanation": "Оператор раскрыл ограничение по счёту до подтверждения личности клиента.",
+   "deduction_reason": "До проверки личности сообщил о наличии ограничения на вывод средств по счёту клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 5,
+   "explanation": "Главный вопрос не решён, дано только общее обещание отправить его на проверку без конкретного дальнейшего шага для клиента.",
+   "deduction_reason": "Причина блокировки не сообщена; оператор ограничился обещанием отправить вопрос на проверку без указания дальнейшего порядка или срока ответа.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 0,
+     "quote": "Менің шотымда неге ақша шығару жабық екенін қарап беріңізші."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор отмахнулся от опасения клиента по поводу раскрытия сведений до подтверждения личности.",
+   "deduction_reason": "На возражение клиента о непроведённой проверке личности оператор не отреагировал по существу.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Мен әлі жеке басымды растаған жоқпын ғой."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Қазір растаудың қажеті жоқ."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог понятен, а заметных сбоев управления или длительных необъяснённых пауз не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      13
+     ]
+    }
+   ]
+  },
+  "c07": {
+   "answer": "yes",
+   "explanation": "Оператор сообщил, что отправит вопрос на проверку, и попрощался.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Оны тексеруге жіберемін. Сау болыңыз."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Есть раскрытие конфиденциальной информации до подтверждения личности.",
+   "deduction_reason": "До проверки личности оператор раскрыл наличие ограничения на счёте клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Мұратпын. Сіздің шотыңызда ақша шығаруға шектеу қойылғанын көріп тұрмын."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать причину блокировки вывода денег со счёта.",
+  "operator_actions": "Оператор сообщил о наличии ограничения до подтверждения личности и сказал, что отправит вопрос на проверку.",
+  "outcome": "Причина блокировки осталась неизвестной; конкретный порядок или срок ответа не указан."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": 9,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": 13,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент просит выяснить причину блокировки вывода денег со своего счёта.",
+    "status": "handed_off_without_next_step"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "reaction_to_misconduct"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 36016,
+ "usage": {
+  "prompt_tokens": 5845,
+  "completion_tokens": 2860,
+  "cost": 0.002014
+ }
+}

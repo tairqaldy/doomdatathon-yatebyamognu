@@ -1,0 +1,155 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "no",
+   "explanation": "Приветствие есть, но представление отсутствует.",
+   "deduction_reason": "Оператор не представился в первом ответе.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "no",
+   "explanation": "Потребность не выявлена корректно: уточнен уже известный факт.",
+   "deduction_reason": "Оператор спросил уже известную информацию.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлем. Қай сайтқа кірдіңіз?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация не требовалась для общего навигационного ответа.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенный запрос клиента решён и подтверждён.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Ашылды, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор ответил по существу, но не отреагировал на раздражение клиента.",
+   "deduction_reason": "Недовольство клиента из-за повторного вопроса не было принято.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жоғарыда жаздым ғой, Global сайты."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Диалог понятен, но клиент повторил информацию из-за оператора.",
+   "deduction_reason": "Один сбой ведения диалога: повторный вопрос по уже известному.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Жоғарыда жаздым ғой, Global сайты."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Чат закончился репликой клиента без финального ответа оператора.",
+   "deduction_reason": "Завершение отсутствует.",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      12,
+      12
+     ]
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Ол ақпараттық сайт. Сауда шотына tradernet.global веб-нұсқасы немесе Freedom Broker қосымшасы арқылы кіресіз."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "operator_actions": "Оператор уточнил сайт, затем указал, что для входа в торговый счёт нужно использовать tradernet.global или приложение Freedom Broker.",
+  "outcome": "Клиент подтвердил, что открылся, и поблагодарил.",
+  "reason": "Клиент не нашёл вход в личный кабинет с сайта Freedom Finance Global."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "request": "Не нашёл, где войти в личный кабинет с сайта Freedom Finance Global.",
+    "status": "resolved",
+    "turn": 0
+   }
+  ],
+  "client_reasks": [
+   {
+    "cause": "operator_asked_known_info",
+    "turn": 10
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   10
+  ],
+  "ending": "client_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "asked_known_info",
+  "need_missed_turn": 9
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 29528,
+ "usage": {
+  "prompt_tokens": 5450,
+  "completion_tokens": 5879,
+  "cost": 0.01374
+ }
+}

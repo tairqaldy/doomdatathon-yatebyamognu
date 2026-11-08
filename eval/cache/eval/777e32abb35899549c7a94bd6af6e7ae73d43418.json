@@ -1,0 +1,158 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор начал с приветствия и назвал себя.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nora. Which site are you on right now?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор учёл, что клиент открыл несколько вкладок, и уточнил, на каком сайте тот находится.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Nora. Which site are you on right now?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос касался навигации по сайтам, идентификация не требовалась.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о том, где войти на сайт; защищённых действий не было."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретный адрес для входа и подтвердил, что он сработал.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Sorry, let me be specific. The company site is informational. Open tradernet.global to sign in on the web, or use the Freedom Broker app."
+    },
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "That worked. Thanks."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "После непонятного ответа оператор извинился и дал конкретную инструкцию.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Sorry, let me be specific. The company site is informational. Open tradernet.global to sign in on the web, or use the Freedom Broker app."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Клиенту пришлось переспросить, какой именно сайт открыть.",
+   "deduction_reason": "Снижено за неясную инструкцию, из-за которой клиенту пришлось уточнять.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Go to the other one, not the one you're on. You can use it there."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Which other one? What address should I open?"
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не предложил дальнейшую помощь и не подвёл итог.",
+   "deduction_reason": "Прощание не сопровождается итогом или предложением дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 15,
+     "quote": "Glad you got in. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "В диалоге не выявлено грубых нарушений.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "range",
+     "range": [
+      9,
+      15
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход на сайте и спросил, не отключён ли сайт.",
+  "operator_actions": "Уточнил, на каком сайте клиент находится, затем указал tradernet.global и приложение Freedom Broker.",
+  "outcome": "Клиент подтвердил, что инструкция сработала."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 15,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Клиент не может найти кнопку входа и спрашивает, не отключён ли сайт.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 12,
+    "cause": "operator_unclear"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 9,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 26524,
+ "usage": {
+  "prompt_tokens": 5811,
+  "completion_tokens": 2969,
+  "cost": 0.002066
+ }
+}

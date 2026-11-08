@@ -1,0 +1,154 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор сразу поздоровался и представился.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "D-шоттағы ақшамен бірден акция ала аламын ба?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Идентификация не требовалась для общего вопроса о счёте.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенные вопросы закрыты корректным ответом.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор ответил корректно и без грубости.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог был понятным и связным.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Иә, акция сатып алу үшін сауда шотын қараңыз."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Завершение было невозможно из-за обрыва связи.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиентпен байланыс үзілді."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, мен Саматпын. D-шоттағы қаражат акция сатып алуға тікелей қолданылмайды."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спрашивал разницу между D-шотом и торговым счётом и можно ли купить акции с D-шота.",
+  "operator_actions": "Оператор представился, ответил, что D-шот не используется напрямую для покупки акций, и подтвердил, что для покупки нужно смотреть торговый счёт.",
+  "outcome": "Клиент получил ответ и подтвердил понимание, затем связь прервалась."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "D-шот пен сауда шотының айырмасын білу",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "D-шоттағы ақшамен бірден акция сатып алу мүмкіндігін білу",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Акция сатып алу үшін сауда шотын қарау керектігін растату",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "connection_lost",
+  "cut_before_operator_could_close": true,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 11881,
+ "usage": {
+  "prompt_tokens": 5516,
+  "completion_tokens": 1814,
+  "cost": 0.005188
+ }
+}

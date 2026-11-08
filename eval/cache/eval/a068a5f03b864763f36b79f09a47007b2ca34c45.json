@@ -1,0 +1,149 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился на русском языке в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, уточняющий вопрос не был нужен.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Клиент сразу спросил о языке формы 1042-S и наличии русской версии."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации клиента.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о форме 1042-S, без действий по счёту."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "На вопрос о языке формы дан ответ по существу, клиент завершил обращение, подтвердив, что больше ничего не хотел узнать.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Ок, это всё что хотел узнать."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "В ответе оператора нет грубости или пренебрежения, недовольство клиента не выражалось.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог был ясным и связным, клиент понял ответ и завершил обращение.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "na",
+   "explanation": "Чат оборвался до возможности попрощаться и завершить разговор.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "После «это всё что хотел узнать» система зафиксировала: «Соединение с клиентом прервано»."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых нарушений в диалоге не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте. Я Илья. Форма 1042-S предоставляется на английском языке."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент уточнял, на каком языке предоставляется форма 1042-S и есть ли русская версия.",
+  "operator_actions": "Оператор представился и сообщил, что форма предоставляется на английском языке.",
+  "outcome": "Клиент подтвердил, что это всё, что он хотел узнать; затем соединение прервалось."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": null,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Узнать, на каком языке предоставляется форма 1042-S.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Узнать, есть ли форма 1042-S на русском языке.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "connection_lost",
+  "cut_before_operator_could_close": true,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "openai:gpt-6-luna",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19128,
+ "usage": {
+  "prompt_tokens": 5741,
+  "completion_tokens": 2267,
+  "cost": 0.001708
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Уточнение не требовалось, так как данных для ответа хватало.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Данных для ответа хватало с самого начала."
+    },
+    {
+     "kind": "message",
+     "turn_index": 4,
+     "quote": "Мен компьютердемін. Операторға қосыңызшы."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, так как это общий вопрос о навигации.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос не требовал идентификации (общий вопрос о навигации)."
+    },
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Все существенные вопросы закрыты.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Көрдім, рақмет."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Ведение диалога вежливое, недовольства не было.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог понятен и без заметных задержек.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Көрдім, рақмет."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Завершение содержит только вежливые формулы.",
+   "deduction_reason": "В заключительной реплике нет итога, следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Сәлеметсіз бе, менің атым Аружан. Веб-нұсқада «Кабинет» бөлімін ашыңыз. Тариф аты-жөніңіздің астында жазылады."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Оқасы жоқ. Сау болыңыз!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент хотел узнать, где в веб-версии посмотреть текущий тариф.",
+  "operator_actions": "Оператор указал открыть раздел «Кабинет» и посмотреть тариф под именем.",
+  "outcome": "Клиент подтвердил, что увидел тариф."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 11,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Қазір қай тарифте тұрғанымды қайдан көремін?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 10210,
+ "usage": {
+  "prompt_tokens": 5440,
+  "completion_tokens": 5899,
+  "cost": 0.020145
+ }
+}
