@@ -480,3 +480,9 @@ Why: Freedom Q&A #3398: defense is max 8–10 min with questions; the jury asks 
 Demo: Чек-лист → edit/replace a criterion → AI · «По ID» → the dialogs the jury names → Сохранить (2 chats ≈ 35 s, ≈ $0.007 per chat).
 Contracts touched: none.
 How to verify: /admin → Чек-лист → change a criterion text → «По ID» `p1-ru-009, p1-kz-015` → only those get AI answers, the rest show «Без AI».
+
+### 2026-11-08 10:15 +05:00 · lane-d · Nazar/claude · #32 · d/32-call-tone-rationale
+Done: `docs/research/call-tone.md`: why c09 «Тон и подача речи» is scored (brief: «для дикции и интонации нужен звук», organizer answers #2343/#2838), what it measures (audible behaviour only, flat tone = 10), safeguards (out of results.json, evidence + audio jump, appeal, weight 0 in UI), limits (no expert labels, 5 RU calls, p4-ru-001 7↔4 between runs, card total ≠ official total on calls), EU AI Act emotion-recognition angle, RU answers for the jury. Linked from `docs/research/README.md`; short Q&A block in `pitch/demo-script.md`.
+Next (optional, after control): team listens to 5 DEV calls and labels c09 by hand; check p4-ru-002 long silences (31/66/55 s, scored 10).
+Contracts touched: none. No code or prompt change.
+How to verify: read `docs/research/call-tone.md`.

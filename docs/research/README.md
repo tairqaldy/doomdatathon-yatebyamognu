@@ -17,6 +17,7 @@ Research date: 2026-11-07 (hackathon day 1). Official case files in [`docs/case/
 | [models-cost-latency.md](models-cost-latency.md) | Prices, limits and our measured cost and latency for GPT-6 Luna and Nemotron 3.5 Transcribe (eval-v4 era; eval-v5.1 numbers are in the v5 report below). |
 | [models-and-metrics.md](models-and-metrics.md) | Earlier candidate list for text, ASR and TTS models and the metric definitions (written before we measured anything). |
 | [freedom-app.md](freedom-app.md) | What the live Freedom Broker iOS app looks like, and where AIM fits in its support flow. |
+| [call-tone.md](call-tone.md) | Why we score tone of voice on calls (c09), what it measures, its limits (no expert labels), emotion-recognition ethics, ready answers for the jury. |
 | [design-system.md](design-system.md) | Freedom design tokens reverse-engineered from fbroker.kz. |
 | [navigation-references.md](navigation-references.md) | Visual references saved for the team (not used in the product). |
 
