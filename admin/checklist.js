@@ -2,13 +2,15 @@
 // Ported from prototype/app.js viewChecklist. Two checklists: chats (versions in the shared "cqa-prototype-v2" state)
 // and calls (versions in "cqa-call-checklists-v1"). Each dialog is evaluated with the checklist for its channel.
 import { $, $$, esc, fmt, plural, icon, toast, setHead, seg, uid, dateTime, fix, reduced, signed } from './ui.js';
-import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers } from './store.js';
+import { S, checklistOf, versionsOf, setActiveVersion, addVersion, KINDS, kindOf, refresh, emit, on, reevaluateAll, aiReady, rows, compute, clHash, sameQuestions, carryAnswers, isImported, missingAI } from './store.js';
 
 let kind = 'chat';          // which checklist is being edited: 'chat' | 'call'
 let draft = null;
 let newId = null;
 let replaced = new Map();   // newId → { oldId, oldTitle }
 let mode = null;            // 'ai' | 'mock'
+let scope = 'all';          // which dialogs an AI re-evaluation covers: 'all' | 'imported' | 'ids'
+let scopeIds = '';          // comma-separated dialog ids for scope 'ids'
 let lastRun = null;         // outcome of the last re-evaluation in this session
 let offBusy = null;
 const parked = { chat: {}, call: {} }; // per-kind editor state while the other checklist is open
@@ -62,6 +64,46 @@ function problemOf(d) {
 }
 const devAvg = (k) => compute(rows().filter((r) => r.source === 'DEV' && r.E.kind === k)).avg;
 
+/* ---------- which dialogs an AI re-evaluation covers ---------- */
+const kindIds = (k) => S.convs.filter((c) => kindOf(c) === k).map((c) => c.conversation_id);
+const importedIds = (k) => S.convs.filter((c) => kindOf(c) === k && isImported(c)).map((c) => c.conversation_id);
+const parseIds = (s) => [...new Set(String(s).split(/[\s,;]+/).map((x) => x.trim()).filter(Boolean))];
+/** 3 votes per dialog, 5 dialogs at a time (store.reevaluateAll): ≈ 45 s per chat round, ≈ 150 s per call round. */
+function estimate(n, k) {
+  if (!n) return '';
+  const sec = Math.ceil(n / 5) * (k === 'call' ? 150 : 45);
+  return sec < 90 ? `≈ ${Math.max(30, Math.round(sec / 10) * 10)} с` : `≈ ${Math.round(sec / 60)} мин`;
+}
+/** { ids, error } for the chosen scope; ids = null means every dialog of the kind. */
+function scopeTarget(k) {
+  if (scope === 'imported') { const ids = importedIds(k); return ids.length ? { ids } : { error: 'Нет загруженных диалогов: загрузите их в разделе «Загрузка диалогов» или выберите другой охват' }; }
+  if (scope === 'ids') {
+    const want = parseIds(scopeIds); const have = new Set(kindIds(k));
+    if (!want.length) return { error: 'Укажите ID диалогов через запятую, например p1-ru-009, p1-kz-015' };
+    const bad = want.filter((id) => !have.has(id));
+    if (bad.length) return { error: `Не найдены среди ${k === 'call' ? 'звонков' : 'чатов'}: ${bad.slice(0, 4).join(', ')}${bad.length > 4 ? '…' : ''}` };
+    return { ids: want };
+  }
+  return { ids: null };
+}
+const avgOf = (k, ids) => { const set = new Set(ids); return compute(rows().filter((r) => r.E.kind === k && set.has(r.id))).avg; };
+/** Store the outcome of an AI run for the result card: partial runs report the average of the dialogs they covered. */
+function finishRun(k, res, { fromV, before, ids }) {
+  const run = { ...res, fromV, before, after: ids ? avgOf(k, ids) : devAvg(k), partial: !!ids, rest: missingAI(k).length };
+  if (kind === k) lastRun = run; else parked[k].lastRun = run;
+  emit('change');
+}
+const scopeCount = (k) => (scope === 'all' ? kindIds(k).length : scope === 'imported' ? importedIds(k).length : parseIds(scopeIds).length);
+const scopeEst = (k) => { const n = scopeCount(k); return n ? `${n} ${plural(n, ['диалог', 'диалога', 'диалогов'])} · ${estimate(n, k)}` : ''; };
+function scopeBlock(k) {
+  const imp = importedIds(k).length;
+  if (scope === 'imported' && !imp) scope = 'all';
+  const opts = [{ v: 'all', label: `Все · ${kindIds(k).length}` }, ...(imp ? [{ v: 'imported', label: `Загруженные · ${imp}` }] : []), { v: 'ids', label: 'По ID' }];
+  return `<span class="field__label">Что переоценить</span>${seg('scope', opts, scope, 'Какие диалоги переоценить')}
+    <input class="input input--s mono cl-scope__ids" id="scope-ids" value="${esc(scopeIds)}" placeholder="p1-ru-009, p1-kz-015" aria-label="ID диалогов через запятую" ${scope === 'ids' ? '' : 'hidden'}>
+    <span class="muted small" id="scope-est">${scopeEst(k)}</span>`;
+}
+
 export function viewChecklist(view, _arg, query) {
   refresh();
   if (query?.get('kind')) switchKind(query.get('kind'));
@@ -94,6 +136,7 @@ export function viewChecklist(view, _arg, query) {
           <div class="cl-bar__mode"><span class="field__label">Переоценка после сохранения</span>
             ${aiReady() ? seg('mode', [{ v: 'ai', label: 'AI · /api/evaluate' }, { v: 'mock', label: 'Без AI · быстро' }], mode, 'Способ переоценки') : '<span class="muted small">AI недоступен на сервере, переоценка без AI</span>'}
           </div>
+          ${aiReady() ? `<div class="cl-bar__mode cl-scope" id="cl-scope" ${mode === 'ai' ? '' : 'hidden'}>${scopeBlock(kind)}</div>` : ''}
           <button class="btn btn--primary" type="button" id="save" disabled>Сохранить v${nextV} и переоценить</button>
         </div>
         <div id="cl-summary"></div>
@@ -189,7 +232,14 @@ export function viewChecklist(view, _arg, query) {
     const el = view.querySelector(`[data-id="${newId}"] [data-k="title"]`); el?.focus(); el?.select();
   };
   $('#reset', view).onclick = () => { draft = null; replaced.clear(); newId = null; viewChecklist(view); };
-  $('#mode', view)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.v; $$('#mode button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
+  $('#mode', view)?.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.v; $$('#mode button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); const sc = $('#cl-scope', view); if (sc) sc.hidden = mode !== 'ai'; });
+  $('#scope', view)?.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return; scope = b.dataset.v;
+    $$('#scope button', view).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    const inp = $('#scope-ids', view); inp.hidden = scope !== 'ids'; if (scope === 'ids') inp.focus();
+    $('#scope-est', view).textContent = scopeEst(kind);
+  });
+  $('#scope-ids', view)?.addEventListener('input', (e) => { scopeIds = e.target.value; e.target.removeAttribute('aria-invalid'); $('#scope-est', view).textContent = scopeEst(kind); });
   $('#cl-kind', view).addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.dataset.v === kind) return; switchKind(b.dataset.v); history.replaceState(null, '', `#/checklist?kind=${kind}`); emit('change'); });
   $('#ver', view).onchange = (e) => { setActiveVersion(kind, Number(e.target.value)); draft = null; lastRun = null; toast(`${KINDS[kind].name}: активна v${e.target.value}`); emit('change'); };
   $('#save', view).onclick = async () => {
@@ -204,9 +254,18 @@ export function viewChecklist(view, _arg, query) {
       }
       return;
     }
-    const before = devAvg(kind); const fromV = cl.version; const k = kind;
+    const fromV = cl.version; const k = kind;
     const { __base: _, ...clean } = draft;
     clean.criteria = clean.criteria.map((c) => ({ ...c, weight: Number(c.weight) || 0 }));
+    // the scope matters only when the AI is asked new questions; check it before a version is created
+    const target = mode === 'ai' && !sameQuestions(checklistOf(k), clean) ? scopeTarget(k) : { ids: null };
+    if (target.error) {
+      toast(target.error, 'warn');
+      const inp = $('#scope-ids', view);
+      if (inp && scope === 'ids') { inp.setAttribute('aria-invalid', 'true'); inp.focus(); }
+      return;
+    }
+    const before = target.ids ? avgOf(k, target.ids) : devAvg(k);
     refresh();
     const fromCl = checklistOf(k);
     addVersion(k, { ...structuredClone(clean), version: nextV, updated_at: new Date().toISOString() });
@@ -226,13 +285,21 @@ export function viewChecklist(view, _arg, query) {
     emit('change');
     // the progress card and its result sit under the save bar: bring them into view instead of leaving the user mid-list
     scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' });
-    const res = await reevaluateAll(mode, `${KINDS[k].label}: переоценка по v${nextV}`, k);
+    const res = await reevaluateAll(mode, `${KINDS[k].label}: переоценка по v${nextV}${target.ids ? ` · ${target.ids.length} ${plural(target.ids.length, ['диалог', 'диалога', 'диалогов'])}` : ''}`, k, target.ids);
     if (!res) return;
-    const run = { ...res, fromV, before, after: devAvg(k) };
-    if (kind === k) lastRun = run; else parked[k].lastRun = run;
+    finishRun(k, res, { fromV, before, ids: target.ids });
     toast(`${KINDS[k].name} v${nextV} применён: ${res.done - res.failed} из ${res.total} диалогов переоценены`, res.failed ? 'warn' : 'ok');
-    emit('change');
   };
+  // after a partial run: evaluate the dialogs that still show «Без AI» for the active version
+  $('#cl-run', view).addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-rest]'); if (!b || S.busy) return;
+    const k = b.dataset.rest; const ids = missingAI(k); if (!ids.length) return;
+    const fromV = checklistOf(k).version; const before = avgOf(k, ids);
+    const res = await reevaluateAll('ai', `${KINDS[k].label}: остальные по v${fromV} · ${ids.length} ${plural(ids.length, ['диалог', 'диалога', 'диалогов'])}`, k, ids);
+    if (!res) return;
+    finishRun(k, res, { fromV, before, ids });
+    toast(`${KINDS[k].name} v${fromV}: ещё ${res.done - res.failed} из ${res.total} диалогов оценены AI`, res.failed ? 'warn' : 'ok');
+  });
   offBusy?.();
   offBusy = on('busy', (b) => { const box = $('#cl-run', view); if (box) box.innerHTML = runBlock(b); if (!b && view.isConnected) summary(); });
   return () => { offBusy?.(); offBusy = null; };
@@ -252,10 +319,11 @@ function runBlock(b) {
     return `<section class="card run-card run-card--done" role="status">
       <div class="run-card__head">${icon('check')}<b>${r.mode === 'carry'
         ? `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: итог ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} пересчитан по новым весам`
-        : `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалог переоценён', 'диалога переоценены', 'диалогов переоценены'])} за ${fmt(r.ms / 1000, 1)} с`}</b></div>
+        : `${esc(KINDS[r.kind]?.name || 'Чек-лист')} v${r.version} применён: ${r.done - r.failed} из ${r.total} ${plural(r.total, ['диалога', 'диалогов', 'диалогов'])} переоценено за ${fmt(r.ms / 1000, 1)} с`}</b></div>
       ${r.mode === 'carry' ? `<p class="muted small">Изменились только веса, порядок или секции: вопросы к AI те же, поэтому ответы и доказательства из v${r.fromV} сохранены (${r.carried} ${plural(r.carried, ['диалог', 'диалога', 'диалогов'])}), а баллы пересчитал движок оценки. Без нового вызова AI.</p>` : ''}
-      <p class="run-card__res">Средний балл: <b class="num">${fix(r.before, 1)}</b> по v${r.fromV} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : r.mode === 'carry' ? ' · $0' : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
-      <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a></div>
+      <p class="run-card__res">${r.partial ? 'Средний балл этих диалогов' : 'Средний балл'}: <b class="num">${fix(r.before, 1)}</b> ${r.fromV === r.version ? 'без AI' : `по v${r.fromV}`} → <b class="num">${fix(r.after, 1)}</b> по v${r.version}${d != null && Math.abs(d) >= 0.05 ? ` <span class="delta ${d > 0 ? 'delta--up' : 'delta--down'}">${signed(d, 1, fix)}</span>` : ''}${r.mode === 'ai' ? ` · $${r.cost.toFixed(4)}` : r.mode === 'carry' ? ' · $0' : ' · без AI'}${r.failed ? ` · ошибок ${r.failed}` : ''}</p>
+      ${r.mode === 'ai' && r.rest ? `<p class="muted small">Ещё ${r.rest} ${plural(r.rest, ['диалог показан', 'диалога показаны', 'диалогов показаны'])} по v${r.version} с пометкой «Без AI»: для них нет ответа AI на новые вопросы чек-листа. Их можно оценить AI сейчас или позже.</p>` : ''}
+      <div class="btn-row"><a class="btn btn--s btn--primary" href="#/dialogs?channel=${r.kind === 'call' ? 'call' : 'chat'}&sort=low">Открыть диалоги</a><a class="btn btn--s" href="#/overview">Открыть обзор</a>${r.mode === 'ai' && r.rest ? `<button class="btn btn--s" type="button" data-rest="${r.kind}">Оценить остальные AI · ${r.rest} · ${estimate(r.rest, r.kind)}</button>` : ''}</div>
     </section>`;
   }
   return '';

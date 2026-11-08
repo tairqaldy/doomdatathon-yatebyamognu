@@ -34,6 +34,15 @@ If showing a call, demonstrate playback or navigation to the relevant part.
 
 **Close:** “The checklist can evolve with the business, while reviewers can trace and challenge each assessment.”
 
+## Questions about tone of voice (c09, calls)
+
+Full rationale and limits: [`docs/research/call-tone.md`](../docs/research/call-tone.md).
+
+- **Зачем?** «Тон есть только в звуке, в брифе так и написано: для дикции и интонации нужен звук. Это отдельный критерий чек-листа звонков, в официальный файл результатов он не попадает.»
+- **Корректно ли?** «Эмоции мы не определяем. Снижаем только за конкретный слышимый момент с привязкой к реплике: повысил голос, перебил, молчал без пояснения. Темп и паузы считает код, оператор может оспорить, решает человек.»
+- **Точность?** «Экспертной разметки по тону нет, процент не называем. Модель различает звонки: из 5 DEV снижен один (p4-ru-001), там клиент сам говорит о холодном тоне.»
+- **Не нужен?** «Это строка в чек-листе: вес 0 или удалить в редакторе, без кода.»
+
 ## After rehearsal
 
 | Item | Result |
