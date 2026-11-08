@@ -45,7 +45,9 @@ export const modelLabel = (m) => { const s = String(m || '').replace(/^openai:/,
 
 /* ---------- persistence ---------- */
 export function persist() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai: S.ai })); }
+  // answers copied from data/evaluations/DEV.json are not saved: the committed file stays the source of truth
+  const ai = Object.fromEntries(Object.entries(S.ai).filter(([, v]) => !v?.from_pre));
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ checklists: S.checklists, activeVersion: S.activeVersion, appeals: S.appeals, role: S.role, ai })); }
   catch (e) { console.warn('CQA: не удалось сохранить состояние', e); }
   try { localStorage.setItem(CALL_KEY, JSON.stringify({ checklists: S.call.checklists, activeVersion: S.call.activeVersion })); } catch {}
 }
@@ -57,10 +59,15 @@ const restoreCall = () => { try { return JSON.parse(localStorage.getItem(CALL_KE
 function mergePre() {
   const pre = S.pre; if (!pre?.results || !S.checklists.length) return;
   const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
+  // A saved answer under a base checklist survives only if it is a real run with the same evaluator prompt as the
+  // committed file (a fresh «Оценить заново»). Anything older (no prompt_version, an earlier prompt, or a copy of an
+  // older DEV.json) is replaced, so a browser that ran eval-v4 yesterday shows the eval-v5.3 answers today.
+  const stale = (e, pv) => !e || e.from_pre || !e.prompt_version || e.prompt_version !== pv;
   for (const [id, r] of Object.entries(pre.results)) {
-    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage });
-    if (!S.ai[`${id}|${k}`]) S.ai[`${id}|${k}`] = v();
-    if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v();
+    const pv = r.prompt_version || pre.prompt_version || null;
+    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, prompt_version: pv, from_pre: true });
+    if (stale(S.ai[`${id}|${k}`], pv)) S.ai[`${id}|${k}`] = v();
+    if (kc && isCall(S.byId[id]) && stale(S.ai[`${id}|${kc}`], pv)) S.ai[`${id}|${kc}`] = v();
   }
 }
 /** Re-read the shared state (another tab, e.g. /prototype, may have written it). */
@@ -227,7 +234,7 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, prompt_version: j.prompt_version || null, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
     evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;
@@ -274,7 +281,8 @@ export function carryAnswers(kind, fromCl, toCl) {
   for (const c of S.convs) {
     if (kindOf(c) !== kind) continue;
     const src = S.ai[`${c.conversation_id}|${a}`];
-    if (src && !S.ai[`${c.conversation_id}|${b}`]) { S.ai[`${c.conversation_id}|${b}`] = { ...src, carried_from: fromCl.version }; n++; }
+    // the copy is a saved answer of its own (not a DEV.json mirror), so it must persist
+    if (src && !S.ai[`${c.conversation_id}|${b}`]) { const { from_pre, ...rest } = src; S.ai[`${c.conversation_id}|${b}`] = { ...rest, carried_from: fromCl.version }; n++; }
   }
   persist(); emit('change');
   return n;
