@@ -757,3 +757,24 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
   .spinner, .pulse, .nav-item__badge--pulse, .skel { animation: none !important; }
   .tx { scroll-behavior: auto; }
 }
+
+/* ---------- Загрузка диалогов (admin/import.js) ---------- */
+.filter-line__add { margin-left: auto; }
+.imp-card .card__head { padding-bottom: 4px; }
+.imp-body { padding: 16px 20px 20px; }
+.imp-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+.imp-grid--group { grid-template-columns: minmax(0, 1fr); }
+.imp-text { min-height: 260px; resize: vertical; font-size: 13.5px; line-height: 1.5; white-space: pre-wrap; }
+.imp-side { display: flex; flex-direction: column; gap: 14px; }
+.imp-side .btn { justify-content: center; }
+.imp-parsed { padding: 10px 12px; border-radius: var(--r-s); background: var(--bg); font-size: 13.5px; line-height: 1.45; }
+.imp-errors { margin: 6px 0 0; padding-left: 18px; color: var(--bad-ink); font-size: 13px; }
+.imp-recs { margin: 6px 0 0; padding-left: 18px; font-size: 13px; max-height: 220px; overflow: auto; }
+.imp-drop { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border: 1.5px dashed var(--line-2); border-radius: var(--r-s); cursor: pointer; font-size: 14px; color: var(--ink-2); transition: border-color .2s, background .2s; }
+.imp-drop:hover, .imp-drop.is-over { border-color: var(--good); background: var(--good-bg); }
+.imp-drop:focus-within { outline: 2px solid var(--good); outline-offset: 2px; }
+.imp-run { margin: 16px 0 0; }
+.imp-list { margin-top: 16px; }
+.imp-list .card__head { flex-wrap: wrap; }
+.imp-table { max-height: none; border: 0; box-shadow: none; border-radius: 0 0 var(--r) var(--r); }
+@media (max-width: 960px) { .imp-grid { grid-template-columns: minmax(0, 1fr); } }

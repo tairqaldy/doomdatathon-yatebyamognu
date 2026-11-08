@@ -1,12 +1,16 @@
 // One command for the graded submission (issue #22, docs/case/results-format.md).
 //   node eval/control-run.mjs --group <CONTROL_ID> --out results/prod/results.json --expect 10 --push
 //   node eval/control-run.mjs --group DEV --out results/dev/results.json --expect 65        (rehearsal / DEV file)
+//   node eval/control-run.mjs --file ~/Downloads/control.json [--group <ID>] --push         (set handed over as a file)
+//     --file takes the organizers' API response, { records: [...] }, an array of records or one record; the group id
+//     comes from --group, else the file's dataset_group_id, else the file name. It is saved as data/datasets/<ID>.json.
 // Steps: 1 fetch + save the set (organizers' API, CQA_API_URL) · 2 evaluate every dialog (cached, parallel)
 //        3 retry dialogs that failed, once · 4 export results.json · 5 validate · 6 (--push) commit + push.
 // Run it from an up-to-date `main` checkout with keys in .env. It never invents results: a dialog that still fails
 // is written as status "error" with the reason, as the format requires.
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { execFileSync, spawnSync } from 'node:child_process';
+import { basename } from 'node:path';
 import { loadEnv } from '../scripts/env.mjs';
 import { datasetUrl } from '../lib/data.js';
 import { buildResults } from './export-results.mjs';
@@ -16,8 +20,18 @@ loadEnv();
 const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
 const has = (k) => argv.includes(`--${k}`);
-const group = opt('group');
-if (!group || !/^[A-Za-z0-9_-]+$/.test(group)) { console.error('usage: node eval/control-run.mjs --group <GROUP_ID> [--out results/prod/results.json] [--expect 10] [--concurrency 8] [--push]'); process.exit(2); }
+const file = opt('file');
+let fileJson = null;
+if (file) {
+  try { fileJson = JSON.parse(readFileSync(file, 'utf8')); } catch (e) { console.error(`cannot read ${file}: ${e.message}`); process.exit(2); }
+  const recs = Array.isArray(fileJson) ? fileJson : fileJson?.data?.records || fileJson?.records || (fileJson?.transcript ? [fileJson] : null);
+  if (!Array.isArray(recs) || !recs.length || !recs.every((r) => r?.conversation_id && Array.isArray(r.transcript))) { console.error(`${file}: no records with conversation_id + transcript`); process.exit(2); }
+  const gid = opt('group') || fileJson?.data?.dataset_group_id || fileJson?.dataset_group_id || basename(file).replace(/\.json$/i, '');
+  fileJson = { error: null, isSuccess: true, data: { dataset_group_id: gid, total_records: recs.length, records: recs } };
+}
+const group = String(opt('group') || fileJson?.data.dataset_group_id || '').replace(/[^A-Za-z0-9_-]/g, '_');
+if (!group || !/^[A-Za-z0-9_-]+$/.test(group)) { console.error('usage: node eval/control-run.mjs --group <GROUP_ID> | --file <set.json> [--out results/prod/results.json] [--expect 10] [--concurrency 8] [--push]'); process.exit(2); }
+if (fileJson && group === 'DEV') { console.error('--file would overwrite data/datasets/DEV.json; pass --group <CONTROL_ID>'); process.exit(2); }
 const outPath = opt('out', group === 'DEV' ? 'results/dev/results.json' : 'results/prod/results.json');
 const expect = opt('expect') != null ? Number(opt('expect')) : group === 'DEV' ? null : 10;
 const conc = String(opt('concurrency', 8));
@@ -29,7 +43,11 @@ const git = (...a) => execFileSync('git', a, { encoding: 'utf8' }).trim();
 
 // 1 · dataset
 step(1, `dataset ${group}`);
-if (!existsSync(datasetPath)) {
+if (fileJson) {
+  mkdirSync('data/datasets', { recursive: true });
+  writeFileSync(datasetPath, JSON.stringify(fileJson, null, 2) + '\n');
+  console.log(`saved ${file} → ${datasetPath} (${fileJson.data.records.length} records)`);
+} else if (!existsSync(datasetPath)) {
   // Direct organizer API if .env has the real link; otherwise our deployed proxy (/api/dataset), which has it in Vercel.
   const base = process.env.CQA_API_URL;
   const direct = base && !base.includes('<') && /^https?:\/\//.test(base);

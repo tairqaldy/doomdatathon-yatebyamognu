@@ -11,6 +11,7 @@ import { viewAppeals } from './appeals.js';
 import { viewChecklist } from './checklist.js';
 import { viewLive } from './live.js';
 import { viewAnalyst } from './analyst.js';
+import { viewImport } from './import.js';
 
 const ROUTES = {
   overview: { render: viewOverview, nav: 'overview' },
@@ -20,10 +21,12 @@ const ROUTES = {
   checklist: { render: viewChecklist, nav: 'checklist' },
   live: { render: viewLive, nav: 'live' },
   analyst: { render: viewAnalyst, nav: 'analyst' },
+  import: { render: viewImport, nav: 'import' },
 };
 const NAV = [
   { id: 'overview', label: 'Обзор', icon: 'overview' },
   { id: 'dialogs', label: 'Диалоги', icon: 'dialogs' },
+  { id: 'import', label: 'Загрузка диалогов', short: 'Загрузка', icon: 'upload' },
   { id: 'appeals', label: 'Апелляции', icon: 'appeals', badge: () => appealStats().open },
   { id: 'checklist', label: 'Чек-лист', icon: 'checklist' },
   { id: 'live', label: 'Живые чаты', short: 'Чаты', icon: 'live', badge: () => liveStats().waiting, pulse: true },
