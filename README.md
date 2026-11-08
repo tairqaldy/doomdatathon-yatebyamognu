@@ -31,7 +31,7 @@ Built in 24 hours by team **YaTebyaMognu** for the Freedom Broker case at NU Dat
 | Two blind AI labelers, 24 other DEV chats | **97.3%** (180 of the 185 answers they agree on, κ 0.97). They agree with each other on 96.4% | [`eval/blind/`](eval/blind/blind-24.json) |
 | **Gross errors** on gold | **7 of 7 found, 0 false alarms** | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
 | **Cost** per evaluation | ≈ $0.006 per chat, ≈ $0.016 per call; $0.0070 average over all 65 DEV dialogs | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.1 run](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
-| **Latency** | chat p50 27.5 s / p95 44.8 s; call ≈ 155 s; cached ≈ 20 ms. 10 control chats: 79 s and $0.064 in a full rehearsal | same |
+| **Latency** | chat p50 27.5 s / p95 44.8 s; call ≈ 155 s; cached ≈ 20 ms. 10 control chats: 79 s and $0.064 in a full rehearsal | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
 | **Languages** | RU, KZ, EN. Strict on all gold: RU 91.7% (72 answers), KZ 97.5% (40), EN 100% (40) | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
 | **Channels** | Chats (60 DEV) and calls (5 real DEV recordings): audio player, evidence seek, tone of voice from the recording | [Calls](#calls-and-tone-of-voice) |
 
