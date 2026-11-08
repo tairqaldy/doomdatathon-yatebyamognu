@@ -505,3 +505,8 @@ Done: `pitch/jury-qa.md`: 132 likely jury questions with short RU answers, a "sh
 Next: after the control run fill section 14 (time, cost, gross errors, mean score); rehearse the top-15 once.
 Contracts touched: none. Docs only.
 How to verify: read `pitch/jury-qa.md`.
+
+### 2026-11-08 11:10 +05:00 · lane-d · lane-c/claude · #34 · d/34-control-numbers
+Done: `pitch/jury-qa.md` section 14 filled with the FBroker control run (10 chats, 67 s, $0.061, 0 errors, mean 73.44, gross 2 of 10: p2-ru-004 disclosure, p2-kz-003 off-company offer with total 100; 72 of 80 answers unanimous) and the SWAP set (3 chats pre-evaluated, cache does not apply after a criterion swap). New answers: why p2-kz-003 is 100 with a gross error, why p2-kz-002 is 20, why splits are more frequent on control, cache vs live at the defense. Corrected: explanations in KZ chats are often in Kazakh (3 of 4 KZ control chats).
+Contracts touched: none. Docs only.
+How to verify: read `pitch/jury-qa.md` sections 0 and 14.
