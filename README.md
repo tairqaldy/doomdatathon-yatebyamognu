@@ -2,7 +2,9 @@
 
 **Every operator chat and call checked against Freedom Broker's 8-criterion checklist, with the exact line behind each deduction and a human reviewer who has the final word.**
 
-Freedom Broker's QA team checks conversations by hand. Volume is large, one manual check per dialog is not enough, and people read the same metric differently ([briefing notes](docs/case/briefing-notes.md)). Freedom CQA evaluates every dialog in Russian, Kazakh and English. A model picks the answer and the evidence line for each criterion, code computes the points, and a reviewer can overturn any answer through an appeal. On the customer side, the AIM assistant says it is AI and hands the client to a live operator with the full context; that operator's work then goes through the same QA.
+**[Live product](https://freedom-cqa.vercel.app)** · [QA workspace `/admin/`](https://freedom-cqa.vercel.app/admin/) (passcode from the team) · [Customer chat `/support/`](https://freedom-cqa.vercel.app/support/) · [Demo video](landing-tair/assets/demo.mp4) · Results: [`results/dev/results.json`](results/dev/results.json), [`results/prod/results.json`](results/prod/results.json) (control run, Sun 11:00) · [Team](#team)
+
+Freedom Broker's QA team checks conversations by hand. There are too many dialogs to check each one, and people read the same metric differently ([briefing notes](docs/case/briefing-notes.md)). Freedom CQA evaluates every dialog in Russian, Kazakh and English. A model picks the answer and the evidence line for each criterion, code computes the points, and a reviewer can overturn any answer through an appeal. On the customer side, the AIM assistant says it is AI and hands the client to a live operator with the full context; that operator's work then goes through the same QA.
 
 Built in 24 hours by team **YaTebyaMognu** for the Freedom Broker case at NU Datathon 2026 (Data Challenge'26, NU DataSci club, Nazarbayev University).
 
@@ -10,47 +12,195 @@ Built in 24 hours by team **YaTebyaMognu** for the Freedom Broker case at NU Dat
 
 *Click the image for the demo video.*
 
-## Try it
-
-Production: **https://freedom-cqa.vercel.app**
-
-| Surface | Link | What you see |
-|---|---|---|
-| Landing | [/](https://freedom-cqa.vercel.app/) | The product story and the way into support |
-| Customer chat | [/support/](https://freedom-cqa.vercel.app/support/) | AIM answers, says it is AI, hands off to a live operator with the whole chat, asks for CSAT; the operator's part is then evaluated |
-| QA workspace | [/admin/](https://freedom-cqa.vercel.app/admin/) | Обзор, Диалоги, analysis card, Апелляции, Чек-лист, Живые чаты, AI-аналитик. The demo passcode is printed on the login page |
-| Client app demos | [/broker/](https://freedom-cqa.vercel.app/broker/) · [/phone/](https://freedom-cqa.vercel.app/phone/) | A broker web app and a copy of the Freedom iOS app with AIM inside: explains steps, acts only after the client agrees, never presses money buttons. `/phone/` also runs as a native app through Expo Go ([mobile/](mobile/README.md)) |
-| Original workspace | [/prototype/](https://freedom-cqa.vercel.app/prototype/) | The first analyst workspace, kept in sync with `/admin/` |
-| Preview hub | [/preview-hub/](https://freedom-cqa.vercel.app/preview-hub/) | Every surface on phone, tablet and laptop, build and AI status |
-
-**Model and cost (required by the brief):** OpenAI **GPT-6 Luna** (`openai:gpt-6-luna`), 3 samples per dialog. About **$0.007 per evaluation**, all model calls included (measured on 65 DEV dialogs). Details in [Models, cost, latency](#models-cost-latency).
-
 ### At a glance
 
-| Question | Answer (evaluator `eval-v5.3`) | Source |
+| | Evaluator `eval-v5.3` | Source |
 |---|---|---|
-| Agreement with our gold labels, per criterion answer | **95.4% strict**, 98.7% lenient (19 dialogs, 152 answers) | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
-| Same, on the 7 held-out gold dialogs | **96.4% strict**, 100% lenient (56 answers) | same |
+| **Accuracy**, per-criterion answers vs our gold labels | **95.4% strict**, 98.7% lenient (19 dialogs, 152 answers); held-out 7 dialogs: **96.4%** strict, 100% lenient (56 answers) | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
 | Agreement with two blind AI labelers, 24 other DEV chats | **97.3%** (180 of the 185 answers they agree on) | [`eval/blind/`](eval/blind/blind-24.json) |
-| Gross errors on gold | **7 of 7 found, 0 false alarms** | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
-| Cost per evaluation | ≈ $0.006 per chat, ≈ $0.016 per call (3 votes, all calls); $0.0070 average over all 65 DEV dialogs | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.1 run](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
-| 10 control chats | 79 s and $0.064 in a full rehearsal of the 11:00 procedure, error path included | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
-| Tone of voice on calls (c09, Gemini 3.8 Flash listens to the mp3) | ≈ $0.013 per call; on DEV 1 of 5 calls lowered (p4-ru-001 → 4/10: cold, detached tone the client remarks on) | [`eval/runs/`](eval/runs/) `*-DEV-tone.json` |
+| **Gross errors** on gold | **7 of 7 found, 0 false alarms** | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
+| **Cost** per evaluation, all model calls | ≈ $0.006 per chat, ≈ $0.016 per call (3 votes); $0.0070 average over all 65 DEV dialogs | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.1 run](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) |
+| **Latency** | chat p50 27.5 s / p95 44.8 s; call ≈ 155 s; cached ≈ 20 ms. 10 control chats: 79 s and $0.064 in a full rehearsal | [v5.3 run](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json), [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
+| **Languages** | RU, KZ, EN. Strict on gold: RU 91.7% (72 answers), KZ 97.5% (40), EN 100% (40) | [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md) |
+| **Channels** | Chats (60 DEV) and calls (5 real DEV recordings): audio player, evidence seek, tone of voice from the recording | [Calls and tone of voice](#calls-and-tone-of-voice) |
+| **Model** | OpenAI **GPT-6 Luna** (`openai:gpt-6-luna`), 3 samples and a majority vote; tone of voice: Gemini 3.8 Flash | [Models, cost, latency](#models-cost-latency) |
 
-> `eval-v5.3` replaced `eval-v5.1` on Saturday evening under the rule we fixed in advance: held-out and blind consensus must not drop, gross errors must stay 7/7 with 0 false alarms. v5.1 scored 96.1% on all gold but 94.6% held-out and 96.8% blind; v5.3 trades one all-gold answer for better held-out, blind and C2/C5 consistency. Full comparison: [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md).
+> `eval-v5.3` replaced `eval-v5.1` on Saturday evening under a rule we fixed in advance: held-out and blind consensus must not drop, gross errors must stay 7/7 with 0 false alarms. v5.1 scored 96.1% on all gold but 94.6% held-out and 96.8% blind; v5.3 gives up one all-gold answer for better held-out, blind and C2/C5 consistency. Full comparison: [v5.3 report](eval/runs/2026-11-07T16-05-00Z-v53-report.md).
 
 Every number in this README is recomputed by `node scripts/readme-charts.mjs` from committed files, or quoted from the linked run file or report.
 
 ### Коротко по-русски
 
-Модель по каждому критерию выбирает только ответ (да / нет / N/A или ступень шкалы) и реплику-доказательство. Баллы считает код по правилам чек-листа: «да» даёт полный вес, шкала пропорциональна весу, вес критериев с N/A перераспределяется, итог округляется один раз, half-up, до двух знаков. Грубые ошибки отмечаются отдельно и баллов не дают. Спорные места решаем так, как ответили организаторы: C2 = N/A при полном запросе, C7 читаем буквально, C1 на звонках без записанного приветствия = N/A, раскрытие данных до идентификации = C3 «нет» и грубая ошибка. Любой ответ можно оспорить; решение проверяющего пересчитывает итог.
+Модель по каждому критерию выбирает только ответ (да / нет / N/A или ступень шкалы) и реплику-доказательство. Баллы считает код по правилам чек-листа: «да» даёт полный вес, шкала пропорциональна весу, вес критериев с N/A перераспределяется, итог округляется один раз, half-up, до двух знаков. Грубые ошибки отмечаются отдельно и баллов не дают. Спорные места решаем так, как ответили организаторы: C2 = N/A при полном запросе, C7 читаем буквально, C1 на звонках без записанного приветствия = N/A, раскрытие данных до идентификации = C3 «нет» и грубая ошибка. Любой ответ можно оспорить; решение проверяющего пересчитывает итог. Новый диалог можно оценить прямо в админке: **Загрузка диалогов → Вставить текст → «Оценить AI-агентом»**.
 
 ## Contents
 
-- [The jury's live tasks](#the-jurys-live-tasks) · [Screenshots](#screenshots) · [The six must-haves](#the-six-must-haves)
-- [How evaluation works](#how-evaluation-works) · [Accuracy](#accuracy) · [Research findings](#research-findings)
-- [Models, cost, latency](#models-cost-latency) · [Run it](#run-it) · [Control set](#control-set-procedure)
-- [Architecture and Dynamics 365](#architecture-and-dynamics-365-readiness) · [Limitations](#limitations) · [Team](#team)
+1. [The cycle, step by step](#the-cycle-step-by-step) · [Evaluate your own transcript](#evaluate-your-own-transcript) · [The jury's live tasks](#the-jurys-live-tasks) · [The six must-haves](#the-six-must-haves)
+2. [How evaluation works](#how-evaluation-works) · [Calls and tone of voice](#calls-and-tone-of-voice) · [Accuracy](#accuracy) · [Research findings](#research-findings)
+3. [Models, cost, latency](#models-cost-latency) · [Run it](#run-it) · [Control set procedure](#control-set-procedure)
+4. [Integration with Freedom's systems](#integration-with-freedoms-systems) · [Architecture](#architecture) · [Limitations](#limitations) · [Team](#team) · [IP](#ip-and-licensing)
+
+### Try it
+
+| Surface | Link | What you see |
+|---|---|---|
+| Landing | [/](https://freedom-cqa.vercel.app/) | The product story and the way into support |
+| Customer chat | [/support/](https://freedom-cqa.vercel.app/support/) | AIM answers, says it is AI, hands off to a live operator with the whole chat, asks for CSAT; the operator's part is then evaluated |
+| QA workspace | [/admin/](https://freedom-cqa.vercel.app/admin/) | Обзор, Диалоги, analysis card, Апелляции, Чек-лист, Загрузка диалогов, Живые чаты, AI-аналитик. The production passcode comes from the team (the login page says «Код доступа выдаёт команда»); a local run without `ADMIN_PASSCODE` uses `freedom` |
+| Client app demos | [/broker/](https://freedom-cqa.vercel.app/broker/) · [/phone/](https://freedom-cqa.vercel.app/phone/) | A broker web app and a copy of the Freedom iOS app with AIM inside: explains steps, acts only after the client agrees, never presses money buttons. `/phone/` also runs as a native app through Expo Go ([mobile/](mobile/README.md)) |
+| Original workspace | [/prototype/](https://freedom-cqa.vercel.app/prototype/) | The first analyst workspace, kept in sync with `/admin/` |
+| Preview hub | [/preview-hub/](https://freedom-cqa.vercel.app/preview-hub/) | Every surface on phone, tablet and laptop, build and AI status |
+
+## The cycle, step by step
+
+The organizers asked to see the whole cycle at the defense ([telegram-qa.md](docs/case/telegram-qa.md), Sunday update). All six steps run in `/admin/` on production.
+
+```mermaid
+flowchart LR
+    S1["1 Checklist<br/>setup"] --> S2["2 Getting<br/>dialogs"]
+    S2 --> S3["3 Evaluation"]
+    S3 --> S4["4 Results"]
+    S4 --> S5["5 Appeal"]
+    S5 --> S6["6 Manual<br/>re-evaluation"]
+    S6 -- "new total" --> S4
+    S1 -. "edit a criterion:<br/>evaluate again" .-> S3
+```
+
+### 1. Checklist setup
+
+Add, edit, replace or reorder a criterion; change its wording, weight, answer type (yes/no, scale with steps, flag), N/A rule. Each save is a new version. A weight-only change recomputes every total at once; a changed criterion needs new model answers, and the save bar asks «Что переоценить»: «Все» (every dialog of that checklist's kind), «Загруженные» (control set, pasted) or «По ID». Two chats take about 35 s; the rest are marked «Без AI» until «Оценить остальные AI». Chats and calls have separate checklists ([`freedom-chat-v1.json`](data/checklists/freedom-chat-v1.json), [`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)).
+
+**Where:** `/admin/#/checklist` (Чек-лист).
+
+<img src="docs/media/checklist-editor.jpg" alt="Checklist editor with criteria, weights, answer types and N/A rules" width="720">
+
+### 2. Getting dialogs
+
+Three ways in: the organizers' set by `group_id` through our `/api/dataset` proxy (the browser never meets the API's CORS limits); a pasted or uploaded transcript; and live chats from `/support/`, where AIM hands the client to an operator and the finished chat lands in «Живые чаты» for QA.
+
+**Where:** Загрузка диалогов (`/admin/#/import`): «Вставить текст», «JSON-файл», «Набор по group_id». Live chats: Живые чаты.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/media/import-dialog.jpg" alt="Загрузка диалогов: a pasted RU transcript ready for «Оценить AI-агентом»"><br><sub>Загрузка диалогов: paste a transcript, upload JSON or load a set by group_id</sub></td>
+<td width="50%"><img src="docs/media/support-handoff.jpg" alt="Customer chat: AIM says it is AI and hands off to a live operator"><br><sub>/support/: AIM says it is AI and hands off with the whole chat and an expected wait</sub></td>
+</tr>
+</table>
+
+### 3. Evaluation
+
+GPT-6 Luna runs 3 samples per dialog: dialog facts first, then a check and an answer per criterion with the evidence turn. A guard rejects evidence that is not in the transcript, a majority vote picks each answer, and `prototype/scoring.js` computes the points. Only the operator is graded; bot and system lines are context.
+
+**Where:** card → «Оценить заново», or «Оценить AI-агентом» on an imported dialog. A chat takes about 30 s. Details: [How evaluation works](#how-evaluation-works).
+
+### 4. Results
+
+Per criterion: answer, points, weight, explanation and evidence. A missed action points to the checked range, an N/A gives its reason. Section subtotals, the total, and a red gross-error banner. Click a deduction and the transcript scrolls to the line and highlights it; on calls the player jumps to that moment.
+
+**Where:** Диалоги → any row (analysis card). Обзор for averages and points lost per criterion; Диалоги → «Грубые ошибки» for every flagged dialog.
+
+<img src="docs/media/dialog-card.jpg" alt="Analysis card with transcript, score ring and deduction reasons" width="720">
+
+<table>
+<tr>
+<td width="50%"><img src="docs/media/gross-errors.jpg" alt="List of dialogs with gross errors and the evidence line"><br><sub>Грубые ошибки: every flagged dialog with the reason and the operator line</sub></td>
+<td width="50%"><img src="docs/media/admin-overview.jpg" alt="Admin overview with average score and points lost per criterion"><br><sub>Обзор: average score, points lost per criterion, what to fix first</sub></td>
+</tr>
+</table>
+
+### 5. Appeal
+
+Pick a criterion, write a comment, save. The appeal goes to the «Апелляции» queue with the disputed answer, the comment and the dialog fragment.
+
+**Where:** analysis card → «Оспорить» on a criterion.
+
+### 6. Manual re-evaluation
+
+The reviewer confirms or changes the answer with a reason. The same scoring function recomputes the total at once, no model call. The card shows the original score, the decision and the final score.
+
+**Where:** role switch «Проверяющий» → «Принять решение», in the card or in «Апелляции».
+
+<img src="docs/media/appeal-decision.jpg" alt="Reviewer decision on an appeal with the original answer, the decision and the new total" width="720">
+
+Also in `/admin/`: «AI-аналитик» answers questions about the aggregated QA data.
+
+<img src="docs/media/ai-analyst.jpg" alt="AI analyst answering a question about QA data" width="480">
+
+## Evaluate your own transcript
+
+The top teams will be asked to evaluate transcripts live ([telegram-qa.md](docs/case/telegram-qa.md)). Nothing is replayed: a new text is never in the cache, so a new dialog always goes to the model.
+
+### In the product
+
+**/admin → Загрузка диалогов**:
+- **Вставить текст**: one turn per line, starting with the role (`Оператор:`, `Клиент:`, `Бот:`, `Система:` or `Operator:`, `Client:` …) and an optional time like `[00:45]`. The language is detected (RU / KZ / EN) and can be changed. Built-in RU, KZ and EN examples.
+- **JSON-файл**: one record, an array or the organizers' API response, picked, dropped or pasted.
+- **Набор по group_id**: a whole set through `/api/dataset`.
+
+«Оценить AI-агентом» sends the dialog to `POST /api/evaluate`, shows a timer while it runs, then opens the analysis card: answers with evidence jumps, total, gross-error flag and the run line *model · time · cost · new request to the model*. Imported dialogs are tagged «Загружен» in «Диалоги» and take appeals and decisions like any other.
+
+### Through the API
+
+`POST https://freedom-cqa.vercel.app/api/evaluate` takes `{ conversation, checklist }`: the dialog in the dataset's shape and the checklist JSON. Production serves the chat checklist at `/data/checklists/freedom-chat-v1.json`, so nothing needs to be cloned. Needs `curl` and `jq`.
+
+```bash
+cat > dialog.json <<'EOF'
+{
+  "conversation_id": "readme-demo-ru-01",
+  "channel": "agent chat",
+  "language": "RU",
+  "transcript": [
+    { "timestamp": "00:00", "speaker": "client",   "text": "Здравствуйте, хочу вывести деньги с брокерского счёта на карту. Как это сделать?" },
+    { "timestamp": "00:01", "speaker": "system",   "text": "Чат передан оператору." },
+    { "timestamp": "00:40", "speaker": "operator", "text": "Здравствуйте! Меня зовут Алия, я специалист поддержки Freedom Broker. С какого счёта планируете вывод: в тенге или в долларах?" },
+    { "timestamp": "01:05", "speaker": "client",   "text": "В тенге, на карту Freedom Bank." },
+    { "timestamp": "01:30", "speaker": "operator", "text": "В приложении откройте раздел «Вывод средств», выберите счёт в тенге и карту Freedom Bank, укажите сумму и подтвердите кодом из SMS. Обычно деньги поступают в течение рабочего дня." },
+    { "timestamp": "02:10", "speaker": "client",   "text": "Понятно, спасибо!" },
+    { "timestamp": "02:20", "speaker": "operator", "text": "Пожалуйста. Хорошего дня!" },
+    { "timestamp": "02:25", "speaker": "system",   "text": "Чат закрыт." }
+  ]
+}
+EOF
+curl -s https://freedom-cqa.vercel.app/data/checklists/freedom-chat-v1.json -o checklist.json
+
+jq -n --slurpfile conv dialog.json --slurpfile cl checklist.json '{conversation: $conv[0], checklist: $cl[0]}' \
+| curl -s -X POST https://freedom-cqa.vercel.app/api/evaluate -H 'Content-Type: application/json' --data @- \
+| tee response.json | jq '{latency_ms, usage, answers: (.answers | map_values(.answer)), c07: .answers.c07}'
+```
+
+`speaker` is `client`, `operator`, `bot` or `system`; the server checks roles and sizes and refuses a dialog with no operator turn. For a call, send the call checklist and the call record. Change the text or the `conversation_id` to get a fresh model call; an identical body comes back from the cache.
+
+Real response from production, Sun 2026-11-08 09:56, trimmed (full response also has `facts`, `samples`, every explanation and evidence):
+
+```json
+{
+  "conversation_id": "readme-demo-ru-01",
+  "cached": false,
+  "model": "openai:gpt-6-luna",
+  "prompt_version": "eval-v5.3",
+  "latency_ms": 32153,
+  "usage": { "prompt_tokens": 22428, "completion_tokens": 8362, "cost": 0.006424 },
+  "summary": {
+    "reason": "Клиент спросил, как вывести деньги с брокерского счёта на карту.",
+    "operator_actions": "Уточнила валюту счёта и описала шаги вывода на карту Freedom Bank.",
+    "outcome": "Клиент понял инструкцию и поблагодарил."
+  },
+  "answers": {
+    "c01": "yes", "c02": "yes", "c03": "na", "c04": 20, "c05": "yes", "c06": 10, "c08": "no",
+    "c07": {
+      "answer": "no",
+      "explanation": "В заключительной реплике есть прощание, но нет итога, следующего шага или предложения помощи.",
+      "deduction_reason": "Не добавил итог или предложение дальнейшей помощи перед завершением чата.",
+      "evidence": [{ "kind": "message", "turn_index": 6, "quote": "Пожалуйста. Хорошего дня!" }]
+    }
+  },
+  "agreement": { "c01": 1, "c02": 1, "c03": 1, "c04": 1, "c05": 1, "c06": 1, "c07": 1, "c08": 1 }
+}
+```
+
+(In the raw response every criterion has the same object shape as `c07`; here the other seven are cut to their answers.) **33.7 s** wall time, **$0.0064**, all 3 samples agreed on every criterion. C3 came back N/A with the reason «Запрос не требовал идентификации: оператор объяснил общий порядок вывода средств.» C7 is "no" under the organizers' literal reading: a goodbye with no summary and no offer of help. `turn_index` is 0-based over the full transcript (the results file uses 1-based turn numbers).
+
+The response carries answers and evidence, not points. Any client scores them with [`prototype/scoring.js`](prototype/scoring.js), the same pure function the UI uses: C3 N/A takes 20 of the 100 weight out, C7 "no" loses 5, so 75 of 80 → **93.75**.
 
 ## The jury's live tasks
 
@@ -61,29 +211,9 @@ The organizers listed what they will ask for in the live demo ([telegram-qa.md](
 | Show all dialogs with gross errors and why | Обзор → KPI «Грубые ошибки», or Диалоги → «Грубые ошибки» | A list of every flagged dialog with the AI explanation and the operator line that proves it. On DEV, eval-v5.3 flags 8 of 65 dialogs |
 | Send a result to appeal | Card → «Оспорить» on a criterion → comment → save | The appeal goes to «Апелляции» with the disputed answer, the comment and the dialog fragment |
 | Reviewer decision | Role switch «Проверяющий» → «Принять решение» | Confirm or change the answer with a reason. `prototype/scoring.js` recomputes the total; the card shows the original score, the decision and the final score |
-| Change the checklist and re-evaluate | Чек-лист → add, edit, replace, reorder a criterion or change a weight → «Сохранить vN и переоценить» | A new checklist version is saved and every dialog is evaluated again with it. Chats and calls have separate checklists |
+| Change the checklist and re-evaluate | Чек-лист → add, edit, replace, reorder a criterion or change a weight → «Что переоценить» («Все», «Загруженные», «По ID») → save | A new checklist version is saved. A weight change recomputes at once; a changed criterion gets fresh model answers for the chosen dialogs (about 35 s for two chats). Chats and calls have separate checklists |
 | Justify one dialog's score | Диалоги → any row | Per criterion: answer, points, weight, explanation, evidence. Click a deduction to scroll to and highlight the line; on calls the player jumps to that moment |
-
-## Screenshots
-
-<table>
-<tr>
-<td width="50%"><img src="docs/media/support-handoff.jpg" alt="Customer chat: AIM hands off to a live operator"><br><sub>/support/: AIM says it is AI and hands off with the whole chat and an expected wait</sub></td>
-<td width="50%"><img src="docs/media/admin-overview.jpg" alt="Admin overview with average score and points lost per criterion"><br><sub>Обзор: average score, points lost per criterion, what to fix first</sub></td>
-</tr>
-<tr>
-<td><img src="docs/media/gross-errors.jpg" alt="List of dialogs with gross errors and the evidence line"><br><sub>Грубые ошибки: every flagged dialog with the reason and the operator line</sub></td>
-<td><img src="docs/media/dialog-card.jpg" alt="Analysis card with transcript, score ring and deduction reasons"><br><sub>Analysis card: transcript, score ring, «Причина снижения оценки», evidence jump</sub></td>
-</tr>
-<tr>
-<td><img src="docs/media/call-audio.jpg" alt="Call card with speaker timeline and audio player"><br><sub>Call card: per-speaker timeline, player seeks to the evidence moment</sub></td>
-<td><img src="docs/media/appeal-decision.jpg" alt="Reviewer decision on an appeal"><br><sub>Апелляция: original answer, reviewer decision with reason, new total</sub></td>
-</tr>
-<tr>
-<td><img src="docs/media/checklist-editor.jpg" alt="Checklist editor"><br><sub>Чек-лист: criteria, weights, answer types, N/A rules, versions</sub></td>
-<td><img src="docs/media/ai-analyst.jpg" alt="AI analyst answering a question about QA data"><br><sub>AI-аналитик: questions about the aggregated QA data</sub></td>
-</tr>
-</table>
+| Evaluate a new transcript | Загрузка диалогов → «Вставить текст» → «Оценить AI-агентом» | A fresh model call, about 30 s for a chat; see [Evaluate your own transcript](#evaluate-your-own-transcript) |
 
 ## The six must-haves
 
@@ -92,7 +222,7 @@ From the [brief](docs/case/brief.md).
 | # | Must-have | Where in the product |
 |---|---|---|
 | 1 | **Checklist editor:** add and edit criteria, wording, weight, answer type, N/A, scale; a new criterion applies through the UI; save the configuration | `/admin/#/checklist`. Each save is a new version. The checklist is JSON data ([`data/checklists/`](data/checklists/)); nothing in the evaluator is hard-coded per criterion id |
-| 2 | **Evaluate a dialog** in RU / KZ / EN; bot and system lines are context | Card → «Оценить заново» → `POST /api/evaluate` → [`lib/evaluator.js`](lib/evaluator.js). Only the operator is graded |
+| 2 | **Evaluate a dialog** in RU / KZ / EN; bot and system lines are context | Card → «Оценить заново» or Загрузка диалогов → `POST /api/evaluate` → [`lib/evaluator.js`](lib/evaluator.js). Only the operator is graded |
 | 3 | **Show the result:** answer, points, weight, explanation, evidence; the checked range for a missed action; the reason for N/A; total and section subtotals | Analysis card: score ring, «Итоги по секциям», every criterion with its justification, gross-error banner |
 | 4 | **Card with evidence jump;** for calls, a player | Click a deduction or a timeline marker: the transcript scrolls to the line and highlights it; calls seek the recording through [`/api/audio`](lib/audio.js) |
 | 5 | **Appeal:** pick a criterion, comment, save; the reviewer sees the score, comment and fragment | «Оспорить» on the card → «Апелляции» queue |
@@ -131,7 +261,7 @@ flowchart TD
 
 | Step | What it does | Why |
 |---|---|---|
-| Facts first | One call per sample. The schema makes the model fill dialog facts before any verdict: client requests and outcome, first operator turn, verification turn, disclosure / insult / off-company offer turns, client re-asks and their cause, how the chat ended, goodbye / summary / offer turns. Then a short `checks` line per criterion, then the answer | Decomposing a fuzzy criterion into checkable questions and filling facts before scoring makes LLM judges more reliable ([CheckEval](https://arxiv.org/abs/2403.18771), [G-Eval](https://arxiv.org/abs/2303.16634)); in contact-center QA, "find evidence, reason, then answer" helped ([Ingle et al., EMNLP 2024](https://aclanthology.org/2024.emnlp-industry.60)) |
+| Facts first | One call per sample. The schema makes the model fill dialog facts before any verdict: client requests and outcome, first operator turn, verification turn, disclosure / insult / off-company offer turns, client re-asks and their cause, how the chat ended, goodbye / summary / offer turns. Then a short `checks` line per criterion, then the answer | Splitting a fuzzy criterion into checkable questions and filling facts before scoring makes LLM judges more reliable ([CheckEval](https://arxiv.org/abs/2403.18771), [G-Eval](https://arxiv.org/abs/2303.16634)); in contact-center QA, "find evidence, reason, then answer" helped ([Ingle et al., EMNLP 2024](https://aclanthology.org/2024.emnlp-industry.60)) |
 | Playbook procedures | The prompt carries a decision procedure per criterion, written by meaning (greeting, need, identification, resolution, empathy, dialog management, closing, gross violation), with RU / KZ / EN cues | An edited or new criterion falls back to its own text, so the live "replace a criterion" test needs no code change ([scoring playbook](docs/playbook/scoring-playbook.md)) |
 | Evidence guard | Turn indices must exist, quotes must match the cited line, every scored or flagged answer needs a reference, N/A evidence only for an allowed N/A. Any problem triggers one repair call; still incomplete → an error, never a half result | Judges can invent evidence; the organizers said "don't invent facts" (#2981) |
 | Built-in rules | For the unchanged official criteria only: C7 from the closing facts (literal ruling), disclosure before verification → C3 "no" and C8 "yes", insult or off-company offer → C8 "yes". Turned off when a criterion's text, type or N/A rule is edited | Mechanical rules belong in code ([MLflow on judge calibration](https://mlflow.org/articles/llm-judge-calibration/)). On 65 DEV dialogs × 3 samples they never had to override the model; they are a safety net |
@@ -166,6 +296,23 @@ From the Q&A chat ([telegram-qa.md](docs/case/telegram-qa.md)); where each one l
 | Replacing a criterion | Re-evaluate: yes (#2978) | The cache key includes the full criteria, so any checklist change means a fresh model call per dialog |
 | Missing information | Don't invent facts (#2981) | Evidence guard; C4 does not mark a confident answer wrong without a visible contradiction (no knowledge base was given) |
 | 3-minute first reply | SLA, out of scope (#3088) | Not scored |
+
+## Calls and tone of voice
+
+<img src="docs/media/call-audio.jpg" alt="Call card with speaker timeline and audio player" width="720">
+
+**Calls use the same logic, adapted to speech** (organizer ruling). The 5 DEV calls are real recordings with organizer transcripts. The call card has a per-speaker timeline and a player; clicking evidence seeks the recording to that moment. Organizer audio links expire after about 1 h, so the player goes through [`/api/audio`](lib/audio.js), which resolves a fresh mp3 link. Calls are graded on the organizer transcripts, and the operator is never penalised for garbled ASR words. The call checklist ([`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)) allows N/A where a recording can miss things, such as C1 when the greeting is not recorded.
+
+**Tone of voice: criterion c09 «Тон и подача речи».** The brief says diction and intonation need audio («Для оценки дикции и интонации нужен звук»), and a transcript does not show them, so a model listens to the recording itself ([`lib/tone.js`](lib/tone.js), decision in [DECISIONS.md](docs/DECISIONS.md), #23). Why we score it and how far to trust it: [call-tone.md](docs/research/call-tone.md).
+
+| | |
+|---|---|
+| Criterion | c09 in the call checklist, `input: "audio"`, scale **10 / 7 / 4 / 0**, **weight 10**, N/A when there is no recording or the operator cannot be heard. Each step has a written description, from «Вежливо и спокойно» (10) to «Грубый или повышенный тон» (0) |
+| Model | **Gemini 3.8 Flash** (`google/gemini-3.8-flash` via OpenRouter), prompt `tone-v4`. It quoted a known stretch of p4-ru-002 word for word; `gpt-audio-mini` invented it in the same "what is said at 03:00" check, so it was dropped |
+| Same split as the text evaluator | The model picks the scale step, an explanation and operator turns as evidence; `scoring.js` computes the points. Plain arithmetic on the transcript timestamps adds voice metrics: operator speaking rate (median words per minute) and long waits (≥ 20 s that the operator's own words don't explain) |
+| DEV result | 1 of 5 calls lowered: p4-ru-001 → 4/10, a cold, detached tone the client remarks on. ≈ $0.013 per call ($0.011–0.018), 10–17 s per call ([`eval/runs/*-DEV-tone.json`](eval/runs/2026-11-07T15-29-59-107Z-DEV-tone.json)) |
+| Official results | **Left out of the results file.** The official format has exactly the 8 checklist criteria, so [`eval/export-results.mjs`](eval/export-results.mjs) drops every `input: "audio"` criterion. In the app a call's total includes c09, so a call's card total differs from its official total |
+| Limits | No accuracy number: there are no expert labels for tone, and the 5 DEV calls are all Russian. c09 uses one sample, no 3-way vote, and p4-ru-001 got 7 on one run and 4 on another. Every deduction cites operator turns, jumps to the audio and can be appealed; a QA lead can set the weight to 0 in the checklist editor |
 
 ## Accuracy
 
@@ -273,7 +420,7 @@ Full pages and sources: [research index](docs/research/README.md). Outside facts
 | Finding | What we did |
 |---|---|
 | GPT-6 Luna: $0.10 input / $0.50 output per 1M tokens, structured outputs ([OpenAI](https://developers.openai.com/api/docs/models/gpt-6-luna)) | Default evaluator, chosen on gold agreement, error and cost |
-| QA runs after the conversation, so seconds are fine; a live voice agent needs about 500 ms ([briefing notes](docs/case/briefing-notes.md)) | Batch evaluation with 3 samples (32 s per chat); voice replies start with the first sentence (about 1.1–1.5 s) |
+| QA runs after the conversation, so seconds are fine; a live voice agent needs about 500 ms ([briefing notes](docs/case/briefing-notes.md)) | Batch evaluation with 3 samples (about 30 s per chat); voice replies start with the first sentence (about 1.1–1.5 s) |
 
 ### Freedom's own products → [freedom-app.md](docs/research/freedom-app.md), [design-system.md](docs/research/design-system.md)
 
@@ -287,12 +434,13 @@ Full pages and sources: [research index](docs/research/README.md). Outside facts
 | Job | Model | Via | Cost | Latency |
 |---|---|---|---|---|
 | **Evaluate a dialog** | `openai:gpt-6-luna`, prompt `eval-v5.3`, 3 samples, strict JSON schema | OpenAI API (falls back to OpenRouter `openai/gpt-6-luna` without `OPENAI_API_KEY`) | **$0.0070 per evaluation**, all calls (3 samples + repair calls on about 9% of samples). Chats $0.0061, calls $0.018 | chats p50 32 s / p95 62 s; calls p50 128 s / p95 153 s; cached ≈ 20 ms |
+| Tone of voice on calls (c09) | `google/gemini-3.8-flash`, prompt `tone-v4`, listens to the mp3 | OpenRouter | ≈ $0.013 per call | 10–17 s per call |
 | AIM support bot, navigation agent | `openai:gpt-6-luna` | OpenAI API | ≈ $0.001 per turn (estimate) | ≈ 2 s chat; 4–8 s navigation (local) |
 | AIM microphone | OpenAI `whisper-1`; fallback NVIDIA Nemotron 3.5 Transcribe | OpenAI / OpenRouter | $0.006 per audio minute | p50 1.2 s / p95 2.5 s cold; 3–5 ms cached |
 | AIM voice | OpenAI `gpt-4o-mini-tts`, voice `sage` | OpenAI | ≈ $0.015 per spoken minute (estimate) | p50 1.4 s / p95 1.75 s per chunk cold; first sentence 1.1–1.5 s |
 | Call transcription experiment | `nvidia/nemotron-3.5-transcribe` | OpenRouter | $0.041 for all 5 calls | 10–18 s per call |
 
-Sources: [eval-v5.1 run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) (all 65 DEV dialogs fresh, 0 errors, $0.457 total), [eval-v5.3 run summary](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json) (22 fresh: chats $0.0058, p50 27.5 s / p95 44.8 s; calls $0.016, ≈ 155 s), [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6, voice benchmarks in `eval/runs/voice-bench-*.json`, [TOOLING.md](docs/TOOLING.md) §4. Latency is model time per dialog with the 3 samples in parallel. eval-v5.x costs about 6× eval-v4 ($0.0012) and takes about 2× as long; we pay that for the accuracy above.
+Sources: [eval-v5.1 run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.json) (all 65 DEV dialogs fresh, 0 errors, $0.457 total), [eval-v5.3 run summary](eval/runs/2026-11-07T16-02-37-681Z-v53-dev-DEV.json) (22 fresh: chats $0.0058, p50 27.5 s / p95 44.8 s; calls $0.016, ≈ 155 s), [v5 report](eval/runs/2026-11-07T15-15-00Z-v5-report.md) §6, [tone run](eval/runs/2026-11-07T15-29-59-107Z-DEV-tone.json), voice benchmarks in `eval/runs/voice-bench-*.json`, [TOOLING.md](docs/TOOLING.md) §4. Latency is model time per dialog with the 3 samples in parallel. eval-v5.x costs about 6× eval-v4 ($0.0012) and takes about 2× as long; we pay that for the accuracy above. The live API test in [Evaluate your own transcript](#evaluate-your-own-transcript) matched: 33.7 s, $0.0064.
 
 - **Caching.** Every model call goes through [`lib/cache.js`](lib/cache.js). The key holds the model, prompt version, conversation, full transcript, checklist criteria, sample number and a fingerprint of the logic file (`lib/evaluator.js` for evaluation). An identical request is free and returns in milliseconds; any change to the evaluator code or the checklist produces a fresh answer. Paid answers are committed in `eval/cache/`, so teammates and Vercel reuse them.
 - **Re-scoring is free.** An appeal decision only re-runs `prototype/scoring.js` on stored answers. A checklist change re-runs the model, as the organizers ruled.
@@ -302,7 +450,7 @@ Sources: [eval-v5.1 run summary](eval/runs/2026-11-07T15-00-49-475Z-v51-dev-DEV.
 
 ```bash
 git clone https://github.com/tairqaldy/doomdatathon-yatebyamognu.git && cd doomdatathon-yatebyamognu
-cp .env.example .env    # OPENAI_API_KEY (evaluation, voice), OPENROUTER_API_KEY (call ASR), CQA_API_URL (dataset API);
+cp .env.example .env    # OPENAI_API_KEY (evaluation, voice), OPENROUTER_API_KEY (call ASR, tone), CQA_API_URL (dataset API);
                         # optional: DATABASE_URL or Upstash Redis for live chats across devices
 npm run dev             # Node >= 20, no npm dependencies -> http://localhost:3000 (same code as Vercel)
 ```
@@ -332,7 +480,7 @@ From an up-to-date `main` with keys in `.env`:
 npm run results -- --group <CONTROL_ID> --push
 ```
 
-[`eval/control-run.mjs`](eval/control-run.mjs) fetches the set from the organizers' API (or our `/api/dataset` proxy), evaluates every chat (cached, 8 in parallel), retries failures once, writes `results/prod/results.json` in the appendix's "Формат JSON 1.0", validates it and commits and pushes. The validator checks exactly 10 records, all 8 criteria per record, 1-based turn numbers over the full transcript, `final_score` recomputed independently with half-up rounding, and failed dialogs as `status: "error"` with a reason, never a made-up score. Expected: about 3 minutes and $0.07. Then spot-check gross errors and N/A answers in `/admin/`.
+[`eval/control-run.mjs`](eval/control-run.mjs) fetches the set from the organizers' API (or our `/api/dataset` proxy), evaluates every chat (cached, 8 in parallel), retries failures once, writes `results/prod/results.json` in the appendix's "Формат JSON 1.0", validates it, commits and pushes. The validator checks exactly 10 records, all 8 criteria per record, 1-based turn numbers over the full transcript, `final_score` recomputed independently with half-up rounding, and failed dialogs as `status: "error"` with a reason, never a made-up score. Expected: about 3 minutes and $0.07. Then spot-check gross errors and N/A answers in `/admin/`.
 
 If the set comes as a file instead of a `group_id`, pass the file (the organizers' API response, `{ records }`, an array of records or one record):
 
@@ -342,18 +490,23 @@ npm run results -- --file ~/Downloads/control.json --group <CONTROL_ID> --push
 
 To look at the set in the admin: **/admin → Загрузка диалогов → Набор по group_id**. Once the control run is pushed, its answers load from `data/evaluations/<CONTROL_ID>.json` at once; without it, «Оценить AI» evaluates the set in the browser session.
 
-### New transcript, evaluated live
-
-**/admin → Загрузка диалогов** takes any new dialog and runs the same evaluator as the DEV set, on the spot:
-- **Вставить текст**: one turn per line, starting with the role (`Оператор:`, `Клиент:`, `Бот:`, `Система:` or `Operator:`, `Client:` …), an optional time like `[00:45]`. The language is detected (RU / KZ / EN) and can be changed. Built-in RU, KZ and EN examples.
-- **JSON-файл**: one record, an array or the API response, picked or dropped as a file or pasted.
-- **Набор по group_id**: a whole set through our `/api/dataset` proxy.
-
-The dialog goes inline to `POST /api/evaluate` (checked server-side: roles, sizes, at least one operator turn). The screen shows the request running with a timer (a chat takes about 15–40 s), then opens the card: per-criterion answers with evidence jumps, total, gross-error flag, and the run line *model · time · cost · new request to the model*. A new text is never in the cache, so nothing can be replayed. Imported dialogs are tagged «Загружен» in «Диалоги» and support appeals and decisions like any other.
-
 After stop code: no commits. Data processing and checklist edits through the UI are still allowed.
 
-## Architecture and Dynamics 365 readiness
+## Integration with Freedom's systems
+
+| Need | What exists today | Where |
+|---|---|---|
+| **Dynamics 365 HTML web resource** | Static HTML, CSS and JS only: ES modules, no build step, no framework, hash routing. `/prototype/` mounts in one root element (`#cqa-root`) and loads styles and data by relative paths. The API sends CORS headers so a web resource on another origin can call it | [`prototype/`](prototype/), [`lib/http.js`](lib/http.js) |
+| **Checklist as data** | Criteria, weights, answer types, scale steps, N/A rules and sections are JSON. The evaluator reads them; nothing is hard-coded per criterion id, so a QA lead changes the checklist in the UI, not in code | [`data/checklists/`](data/checklists/), `/admin/#/checklist` |
+| **Organizers' dataset API** | `GET /api/dataset?group_id=` fetches server-side (no browser CORS problem); `control-run.mjs` uses the same path | [`api/dataset.js`](api/dataset.js), [`eval/control-run.mjs`](eval/control-run.mjs) |
+| **Results in the official format** | Exporter to "Формат JSON 1.0" plus an independent validator | [`eval/export-results.mjs`](eval/export-results.mjs), [`eval/validate-results.mjs`](eval/validate-results.mjs) |
+| **Any CRM or contact-center platform** | `POST /api/evaluate` with `{ conversation, checklist }` returns answers, evidence and explanations; the caller scores them with the pure function in `scoring.js`. Shapes in [CONTRACTS.md](docs/CONTRACTS.md) | [Evaluate your own transcript](#evaluate-your-own-transcript) |
+| **Cost control at scale** | Every model call is cached by model, prompt, transcript, checklist and logic fingerprint: memory → committed files → Upstash Redis on production (Cloudflare KV as an alternative) | [`lib/cache.js`](lib/cache.js), `/api/health` |
+| **Privacy** | Keys live in `.env` and Vercel env; `scripts/check.sh` blocks commits with secrets. The repo holds only the organizers' DEV set: no recordings (streamed from the organizers' host through `/api/audio`; an inline dialog may only point audio there), no live-chat data (kept in Redis or Postgres), no spoken AIM replies. The AIM navigation agent and its voice input mask card numbers and 12-digit IIN before anything reaches a model or the cache | [`lib/nav-agent.js`](lib/nav-agent.js) `maskPII()`, [`.gitignore`](.gitignore) |
+
+**Still to do for Dynamics 365:** `/admin/` uses root-absolute paths (`/shared/…`, `/api/…`); embedding needs them relative and one API base URL pointing at the hosted backend. We have not tested inside a Dynamics 365 org. For the handoff side, Copilot Studio already passes the full conversation to a Dynamics 365 agent ([Microsoft Learn](https://learn.microsoft.com/microsoft-copilot-studio/advanced-hand-off)).
+
+## Architecture
 
 | Layer | What | Where |
 |---|---|---|
@@ -366,23 +519,18 @@ After stop code: no commits. Data processing and checklist edits through the UI 
 
 API: `POST /api/evaluate` · `GET /api/dataset?group_id=` · `GET /api/audio?id=` (organizer audio links expire after about 1 h) · `POST /api/transcribe` · `POST /api/chat` · `POST /api/agent` · `POST /api/agent-voice` · `GET/POST /api/speak` · `POST /api/insights` · `POST /api/admin-login` · `GET/PUT/DELETE /api/sessions` · `GET /api/health`. Shapes: [CONTRACTS.md](docs/CONTRACTS.md).
 
-**Dynamics 365.** The brief asks for a UI that can later become a Dynamics 365 HTML web resource.
-- Ready: static files only, no build step, no framework; ES modules; hash routing; the dataset is fetched server-side, so the browser never hits the organizers' CORS limits.
-- The `/prototype/` workspace mounts in one root element (`#cqa-root`) and loads its styles and data by relative paths.
-- Still to do: `/admin/` uses root-absolute paths (`/shared/…`, `/api/…`); embedding needs them relative and one API base URL pointing at the hosted backend. We have not tested inside a Dynamics 365 org. For the handoff side, Copilot Studio already passes the full conversation to a Dynamics 365 agent ([Microsoft Learn](https://learn.microsoft.com/microsoft-copilot-studio/advanced-hand-off)).
-
 ### Repo map
 
 | Path | What |
 |---|---|
 | `landing-tair/`, `support/`, `admin/`, `broker/`, `phone/`, `prototype/`, `preview-hub/` | The surfaces listed under [Try it](#try-it) |
 | `shared/`, `design/` | Light theme, Freedom logo, design tokens, shared voice client, live-chat store |
-| `api/`, `lib/` | Serverless endpoints; evaluator, model router, cache, audio, support bot, navigation agent |
+| `api/`, `lib/` | Serverless endpoints; evaluator, tone of voice, model router, cache, audio, support bot, navigation agent |
 | `data/` | DEV dataset, chat and call checklists, committed evaluations |
 | `eval/` | Gold set, blind labels, accuracy harness, run files, cache, results exporter and validator, audits |
 | `results/` | `dev/results.json` (65 dialogs) and, at control time, `prod/results.json` |
 | `docs/` | Case files, research, scoring playbook, contracts, decisions, status log |
-| `scripts/` | Dev server, eval and ASR runners, scoring tests, README charts, pre-merge check |
+| `scripts/` | Dev server, eval and ASR runners, scoring tests, README charts, demo video recorder, pre-merge check |
 
 ## Limitations
 
@@ -390,8 +538,8 @@ API: `POST /api/evaluate` · `GET /api/dataset?group_id=` · `GET /api/audio?id=
 - **Small samples.** Held-out gold is 56 answers (one answer = 1.8 points); KZ and EN have 5 gold dialogs each.
 - **C7 literal reading is a bet.** If the experts accept a polite goodbye after a solved request, we lose C7 on many chats (−5 points before redistribution). It is one function, `closingAnswer()`.
 - **Weakest criteria:** C6 dialog management (84.2% strict) and C5 empathy (89.5%). C4 is slightly harsh on handoffs that were a correct next step.
-- **Calls.** ASR noise can make an operator look worse on C1 and C6. An offline audit by Amina found call moments that need listening to the audio before any automatic fix ([TRANSCRIPT_FAIRNESS.md](docs/TRANSCRIPT_FAIRNESS.md), [TRANSCRIPT_VALIDATION.md](docs/TRANSCRIPT_VALIDATION.md), [NA_CACHE_COMPATIBILITY.md](docs/NA_CACHE_COMPATIBILITY.md)); its stricter guard is not wired into production.
-- **Latency and limits.** 3 samples take about 32 s per chat. On Vercel's 60 s limit the vote uses the samples finished within 45 s.
+- **Calls.** ASR noise can make an operator look worse on C1 and C6. An offline audit by Amina found call moments that need listening to the audio before any automatic fix ([TRANSCRIPT_FAIRNESS.md](docs/TRANSCRIPT_FAIRNESS.md), [TRANSCRIPT_VALIDATION.md](docs/TRANSCRIPT_VALIDATION.md), [NA_CACHE_COMPATIBILITY.md](docs/NA_CACHE_COMPATIBILITY.md)); its stricter guard is not wired into production. Tone of voice (c09) was checked on 5 DEV calls only.
+- **Latency.** 3 samples take about 30 s per chat and 2–2.5 min per long call. `/api/evaluate` may run up to 300 s and votes over the samples finished within 240 s.
 - **Stability.** The 2% flip rate for eval-v5.x is estimated from sample agreement, not measured with a paid repeat run.
 - **Shared state.** Appeals and checklist versions live in the reviewer's browser (localStorage), not on a server.
 - **Handoff wait time** in `/support/` is a fixed demo text; in production it must come from real queue data.
@@ -405,7 +553,7 @@ Team **YaTebyaMognu**, NU Datathon 2026, Freedom Broker case.
 |---|---|
 | Tair Kaldybayev | Product, research, landing, support chat, admin console, pitch |
 | Dameli Kalikhanova | QA workspace UX (`/prototype/`) |
-| Nazar Akanov | Evaluator, gold set, AIM navigation agent, results export |
+| Nazar Akanov | Evaluator, gold set, tone of voice, transcript import, AIM navigation agent, results export |
 | Amina Aktayeva | Postgres and KV storage, transcript fairness and validation audits |
 
 How we work (issues, small commits, lanes, AI call rules): [AGENTS.md](AGENTS.md). Every tool, model and library we used: [TOOLING.md](docs/TOOLING.md). Decisions: [DECISIONS.md](docs/DECISIONS.md).

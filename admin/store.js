@@ -155,6 +155,8 @@ export async function mergeGroupEvaluations(group) {
 }
 /** Whether this dialog already has an AI result for the checklist it is scored with. */
 export const hasAI = (convId) => { const c = S.byId[convId]; return !!(c && S.ai[aiKey(convId, checklistFor(c))]); };
+/** Dialogs of one kind that have no AI result for the active checklist yet (shown «Без AI»). */
+export const missingAI = (kind) => S.convs.filter((c) => kindOf(c) === kind && !hasAI(c.conversation_id)).map((c) => c.conversation_id);
 
 /* ---------- time helpers (chat = MM:SS, call = ISO 8601) ---------- */
 export function offsetSec(conv, i) {
@@ -231,10 +233,12 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   return j;
 }
 
-/** Re-evaluate every DEV dialog of one kind with its active checklist. mode: 'ai' (/api/evaluate) or 'mock' (offline evaluator). */
-export async function reevaluateAll(mode, label, kind = 'chat') {
+/** Re-evaluate the dialogs of one kind with its active checklist. mode: 'ai' (/api/evaluate) or 'mock' (offline evaluator).
+ *  `only`: a list of dialog ids to limit the run to (the rest keep no AI answer for this version and show «Без AI»). */
+export async function reevaluateAll(mode, label, kind = 'chat', only = null) {
   if (S.busy) return null;
-  const cl = checklistOf(kind); const ids = S.convs.filter((c) => kindOf(c) === kind).map((c) => c.conversation_id);
+  const cl = checklistOf(kind); const pick = only ? new Set(only) : null;
+  const ids = S.convs.filter((c) => kindOf(c) === kind && (!pick || pick.has(c.conversation_id))).map((c) => c.conversation_id);
   S.busy = { label, mode, kind, done: 0, total: ids.length, failed: 0, cost: 0, startedAt: Date.now(), version: cl.version };
   emit('busy', S.busy);
   if (mode === 'ai') {
