@@ -486,3 +486,9 @@ Plan + done: the landing demo is now a 52 s cut with tair's voiceover, following
 Watch out: the voice says «21 из 100» and «24,7», but the committed v1 evaluation of p1-ru-009 (DEV.json and the shared cache) is **46**, and its C2 «Выявление потребности» is «Да», so the appeal in the video changes «Эмпатия» Нет → Да (46 → 61; double penalty with C3). Captions show the real numbers. Re-record those two phrases (and re-run sfx + mux) to make voice and screen agree.
 Contracts touched: none. Landing: only the demo section caption + `landing-tair/assets/demo.mp4` / `demo-poster.jpg`.
 How to verify: open `/#demo` and play; or `afinfo landing-tair/assets/demo.mp4` (AAC 52.35 s).
+
+### 2026-11-08 10:15 +05:00 · lane-d · Nazar/claude · #32 · d/32-call-tone-rationale
+Done: `docs/research/call-tone.md`: why c09 «Тон и подача речи» is scored (brief: «для дикции и интонации нужен звук», organizer answers #2343/#2838), what it measures (audible behaviour only, flat tone = 10), safeguards (out of results.json, evidence + audio jump, appeal, weight 0 in UI), limits (no expert labels, 5 RU calls, p4-ru-001 7↔4 between runs, card total ≠ official total on calls), EU AI Act emotion-recognition angle, RU answers for the jury. Linked from `docs/research/README.md`; short Q&A block in `pitch/demo-script.md`.
+Next (optional, after control): team listens to 5 DEV calls and labels c09 by hand; check p4-ru-002 long silences (31/66/55 s, scored 10).
+Contracts touched: none. No code or prompt change.
+How to verify: read `docs/research/call-tone.md`.
