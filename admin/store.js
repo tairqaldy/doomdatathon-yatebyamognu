@@ -9,6 +9,7 @@ import * as live from '/shared/live-store.js';
 export { score, tier, maxStep };
 export const LS_KEY = 'cqa-prototype-v2';           // chat checklist versions, appeals, role, AI cache (shared with /prototype)
 export const CALL_KEY = 'cqa-call-checklists-v1';    // call checklist versions (admin only)
+export const IMPORT_KEY = 'cqa-admin-imported-v1';   // dialogs added in «Загрузка» (pasted, uploaded, fetched by group_id)
 export const KINDS = { chat: { label: 'Чаты', name: 'Чек-лист чатов', file: '/data/checklists/freedom-chat-v1.json' }, call: { label: 'Звонки', name: 'Чек-лист звонков', file: '/data/checklists/freedom-call-v1.json' } };
 export const S = {
   convs: [], byId: {}, checklists: [], activeVersion: 1, appeals: [], role: 'qa', ai: {}, call: { checklists: [], activeVersion: 1 },
@@ -95,6 +96,7 @@ export async function load() {
     get('/data/evaluations/DEV.json').catch(() => null), loadMetrics(), apiHealth(),
   ]);
   S.convs = ds.data.records; S.byId = Object.fromEntries(S.convs.map((c) => [c.conversation_id, c]));
+  for (const c of restoreImported()) if (!S.byId[c.conversation_id]) { S.convs.push(c); S.byId[c.conversation_id] = c; }
   S.pre = pre; S.metrics = metrics;
   const saved = restore();
   S.checklists = saved?.checklists?.length ? saved.checklists : [{ ...cl, version: 1, updated_at: new Date().toISOString() }];
@@ -104,6 +106,55 @@ export async function load() {
   S.call = sc?.checklists?.length ? { checklists: sc.checklists, activeVersion: sc.activeVersion || 1 } : { checklists: [{ ...callBase, version: 1, updated_at: new Date().toISOString() }], activeVersion: 1 };
   mergePre();
 }
+
+/* ---------- imported dialogs (pasted text, JSON file, organizers' group) ---------- */
+function restoreImported() { try { const j = JSON.parse(localStorage.getItem(IMPORT_KEY) || 'null'); return Array.isArray(j?.convs) ? j.convs : []; } catch { return []; } }
+const persistImported = () => {
+  try { localStorage.setItem(IMPORT_KEY, JSON.stringify({ convs: S.convs.filter((c) => c._source) })); }
+  catch (e) { console.warn('CQA: не удалось сохранить загруженные диалоги', e); }
+};
+export const isImported = (conv) => !!conv?._source;
+export const importedConvs = () => S.convs.filter((c) => c._source);
+/** The conversation exactly as the server evaluates it (internal _fields stripped). */
+export const plainConv = (c) => Object.fromEntries(Object.entries(c).filter(([k]) => !k.startsWith('_')));
+/** Add dialogs to the workspace. A DEV id is never replaced; an earlier import with the same id is. */
+export function addImported(list, source) {
+  const out = { added: [], replaced: [], skipped: [] };
+  for (const raw of list) {
+    const id = raw.conversation_id;
+    const prev = S.byId[id];
+    if (prev && !prev._source) { out.skipped.push(id); continue; }
+    const conv = { ...plainConv(raw), _source: source, _added_at: new Date().toISOString() };
+    if (prev) { S.convs[S.convs.indexOf(prev)] = conv; out.replaced.push(id); } else { S.convs.push(conv); out.added.push(id); }
+    S.byId[id] = conv;
+  }
+  persistImported(); emit('change');
+  return out;
+}
+export function removeImported(ids) {
+  const drop = new Set(ids.filter((id) => S.byId[id]?._source));
+  S.convs = S.convs.filter((c) => !drop.has(c.conversation_id));
+  for (const id of drop) delete S.byId[id];
+  persistImported(); emit('change');
+  return drop.size;
+}
+/** After the control run is pushed, data/evaluations/<group>.json holds its AI answers: show them under the base checklists. */
+export async function mergeGroupEvaluations(group) {
+  try {
+    const r = await fetch(`/data/evaluations/${encodeURIComponent(group)}.json`, { cache: 'no-store' }); if (!r.ok) return 0;
+    const pre = await r.json(); let n = 0;
+    const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
+    for (const [id, x] of Object.entries(pre.results || {})) {
+      if (!S.byId[id]?._source || !x?.answers) continue;
+      const v = { answers: x.answers, summary: x.summary, model: x.model || pre.model, usage: x.usage, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
+      if (!S.ai[`${id}|${k}`]) { S.ai[`${id}|${k}`] = v; n++; }
+      if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v;
+    }
+    persist(); emit('change'); return n;
+  } catch { return 0; }
+}
+/** Whether this dialog already has an AI result for the checklist it is scored with. */
+export const hasAI = (convId) => { const c = S.byId[convId]; return !!(c && S.ai[aiKey(convId, checklistFor(c))]); };
 
 /* ---------- time helpers (chat = MM:SS, call = ISO 8601) ---------- */
 export function offsetSec(conv, i) {
@@ -170,11 +221,11 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   let r;
   try {
     r = await fetch('/api/evaluate', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ conversation_id: convId, checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal });
+      body: JSON.stringify({ conversation_id: convId, ...(isImported(S.byId[convId]) ? { conversation: plainConv(S.byId[convId]) } : {}), checklist: { id: cl.id, version: cl.version, criteria: cl.criteria, sections: cl.sections }, force }), signal: controller.signal });
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, problems: j.problems,
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
     evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;
@@ -234,7 +285,7 @@ function rowFrom(id, source, E) {
 }
 /** Every evaluated dialog: DEV set + closed live sessions that have an evaluation. */
 export function rows() {
-  const out = S.convs.map((c) => rowFrom(c.conversation_id, 'DEV', evaluation(c.conversation_id)));
+  const out = S.convs.map((c) => rowFrom(c.conversation_id, c._source ? 'import' : 'DEV', evaluation(c.conversation_id)));
   for (const s of live.all()) if (s.evaluation?.answers) out.push(rowFrom(s.id, 'live', liveEvaluation(s)));
   return out;
 }
