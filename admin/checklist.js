@@ -12,6 +12,7 @@ let mode = null;            // 'ai' | 'mock'
 let scope = 'ids';          // which dialogs an AI re-evaluation covers: 'ids' (default: the dialogs just opened) | 'imported' | 'all'
 let scopeIds = '';          // comma-separated dialog ids for scope 'ids'
 let lastRun = null;         // outcome of the last re-evaluation in this session
+const openRows = new Set();  // criteria rows expanded for editing (the list is a compact table otherwise)
 let offBusy = null;
 const parked = { chat: {}, call: {} }; // per-kind editor state while the other checklist is open
 function switchKind(k) {
@@ -137,7 +138,7 @@ export function viewChecklist(view, _arg, query) {
           <span class="cl-bar__spacer"></span>
           <button class="btn btn--s btn--ghost" type="button" id="reset" hidden>Отменить изменения</button>
         </div>
-        <div class="cl-bar__row cl-bar__row--save">
+        <div class="cl-bar__row cl-bar__row--save" id="cl-save-row" hidden>
           <div class="cl-bar__mode"><span class="field__label">Переоценка после сохранения</span>
             ${aiReady() ? seg('mode', [{ v: 'ai', label: 'AI · /api/evaluate' }, { v: 'mock', label: 'Без AI · быстро' }], mode, 'Способ переоценки') : '<span class="muted small">AI недоступен на сервере, переоценка без AI</span>'}
           </div>
@@ -149,29 +150,33 @@ export function viewChecklist(view, _arg, query) {
 
       <div id="cl-run">${runBlock(busy)}</div>
 
-      <div class="crit-edit-list" id="rows">${list.map((c, i) => `
-        <article class="crit-edit ${c.id === newId ? 'is-new' : ''} ${c.type === 'flag' ? 'is-flag' : ''}" data-id="${c.id}">
-          <div class="crit-edit__top">
+      <div class="crit-edit-list" id="rows" role="list">${list.map((c, i) => { const open = openRows.has(c.id) || c.id === newId; return `
+        <article class="crit-edit ${open ? 'is-open' : ''} ${c.id === newId ? 'is-new' : ''} ${c.type === 'flag' ? 'is-flag' : ''}" data-id="${c.id}" role="listitem">
+          <div class="crit-row">
             <span class="crit-edit__n mono" aria-hidden="true">${String(c.order).padStart(2, '0')}</span>
-            <label class="field crit-edit__title"><span class="field__label">Название</span><input class="input" data-k="title" value="${esc(c.title)}" placeholder="Например: Предложил дополнительную помощь"></label>
-            <label class="field crit-edit__w"><span class="field__label">Вес</span><input class="input num" type="number" inputmode="numeric" min="0" max="100" step="1" data-k="weight" value="${c.weight}" ${c.type === 'flag' ? 'disabled' : ''}></label>
-            <label class="field crit-edit__type"><span class="field__label">Тип ответа</span><select class="input" data-k="type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${c.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
-            <label class="check crit-edit__na"><input type="checkbox" data-k="na_allowed" ${c.na_allowed ? 'checked' : ''} ${c.type === 'flag' ? 'disabled' : ''}><span>N/A разрешён</span></label>
+            <button type="button" class="crit-row__title" data-toggle aria-expanded="${open}"><b>${esc(c.title || 'Без названия')}</b><span class="crit-row__meta">${TYPES[c.type]}${c.type === 'scale' ? ` ${(c.scale || []).map((x) => x.value).join('/')}` : ''}${c.na_allowed ? ' · N/A разрешён' : ''}${c.input === 'audio' ? ' · по записи' : ''}</span></button>
+            ${c.type === 'flag' ? '<span class="crit-row__w muted small">без баллов</span>' : `<label class="crit-row__w"><span class="sr-only">Вес «${esc(c.title)}»</span><input class="input input--s num" type="number" inputmode="numeric" min="0" max="100" step="1" data-k="weight" value="${c.weight}"></label>`}
             <div class="crit-edit__actions">
               <button class="icon-btn" type="button" data-up ${i === 0 ? 'disabled' : ''} aria-label="Поднять «${esc(c.title)}»">${icon('up')}</button>
               <button class="icon-btn" type="button" data-down ${i === list.length - 1 ? 'disabled' : ''} aria-label="Опустить «${esc(c.title)}»">${icon('down')}</button>
               <button class="icon-btn" type="button" data-replace aria-label="Заменить «${esc(c.title)}» новым критерием" title="Заменить новым критерием">${icon('swap')}</button>
               <button class="icon-btn icon-btn--danger" type="button" data-del aria-label="Удалить «${esc(c.title)}»" title="Удалить">${icon('trash')}</button>
+              <button class="btn btn--s ${open ? 'btn--ghost' : ''}" type="button" data-toggle aria-expanded="${open}">${open ? 'Свернуть' : 'Изменить'}</button>
             </div>
+          </div>
+          ${open ? `<div class="crit-edit__top">
+            <label class="field crit-edit__title"><span class="field__label">Название</span><input class="input" data-k="title" value="${esc(c.title)}" placeholder="Например: Предложил дополнительную помощь"></label>
+            <label class="field crit-edit__type"><span class="field__label">Тип ответа</span><select class="input" data-k="type">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${c.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+            <label class="check crit-edit__na"><input type="checkbox" data-k="na_allowed" ${c.na_allowed ? 'checked' : ''} ${c.type === 'flag' ? 'disabled' : ''}><span>N/A разрешён</span></label>
           </div>
           <div class="crit-edit__more">
             <label class="field"><span class="field__label">${c.type === 'flag' ? 'Что считается нарушением' : c.type === 'scale' ? 'Что оценивается (высший балл = полный вес)' : 'Что значит «Да»'}</span><textarea class="input" rows="2" data-k="description" placeholder="${DESC_PH[c.type] || ''}">${esc(c.description || '')}</textarea></label>
             ${c.na_allowed ? `<label class="field"><span class="field__label">Когда ставить N/A</span><input class="input" data-k="na_condition" value="${esc(c.na_condition || '')}" placeholder="Например: клиент сам дал все данные"></label>` : ''}
-            ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((s) => s.value).join(', ')}"></label>` : ''}
+            ${c.type === 'scale' ? `<label class="field"><span class="field__label">Ступени шкалы через запятую</span><input class="input num" data-k="scale" value="${(c.scale || []).map((x) => x.value).join(', ')}"></label>` : ''}
             ${kind === 'call' ? `<label class="field"><span class="field__label">Как оценивать</span><select class="input" data-k="input"><option value="text" ${c.input !== 'audio' ? 'selected' : ''}>По расшифровке</option><option value="audio" ${c.input === 'audio' ? 'selected' : ''}>По записи звонка (тон, темп, паузы)</option></select></label>` : ''}
-            ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((s) => `<option value="${s.id}" ${s.id === c.section_id ? 'selected' : ''}>${esc(s.title)}</option>`).join('')}</select></label>` : ''}
-          </div>
-        </article>`).join('')}</div>
+            ${draft.sections?.length ? `<label class="field"><span class="field__label">Секция</span><select class="input" data-k="section_id">${draft.sections.map((x) => `<option value="${x.id}" ${x.id === c.section_id ? 'selected' : ''}>${esc(x.title)}</option>`).join('')}</select></label>` : ''}
+          </div>` : ''}
+        </article>`; }).join('')}</div>
     </div>`;
 
   const summary = () => {
@@ -181,6 +186,7 @@ export function viewChecklist(view, _arg, query) {
     const openHere = S.appeals.filter((a) => a.status === 'open' && a.checklist_hash === clHash(cl)).length;
     $('#save', view).disabled = !dirty || !!S.busy;
     $('#reset', view).hidden = !dirty;
+    $('#cl-save-row', view).hidden = !dirty && !S.busy;
     $('#cl-summary', view).innerHTML = `
       <div class="cl-sum">
         <span class="cl-sum__w ${ws === 100 ? 'is-ok' : 'is-warn'}">${icon(ws === 100 ? 'check' : 'alert')}Сумма весов <b class="num">${fmt(ws, 2)}</b> из 100${audioWeight(draft) ? ` + ${fmt(audioWeight(draft), 2)} по записи звонка` : ''}</span>
@@ -213,6 +219,13 @@ export function viewChecklist(view, _arg, query) {
   });
   rowsEl.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return; const c = find(b); const l = draft.criteria.sort((x, y) => x.order - y.order); const i = l.indexOf(c);
+    if (b.hasAttribute('data-toggle')) {
+      const open = !(openRows.has(c.id) || c.id === newId);
+      if (open) openRows.add(c.id); else { openRows.delete(c.id); if (c.id === newId) newId = null; }
+      viewChecklist(view);
+      if (open) view.querySelector(`[data-id="${c.id}"] [data-k="title"]`)?.focus();
+      return;
+    }
     if (b.hasAttribute('data-del')) draft.criteria = l.filter((x) => x !== c);
     if (b.hasAttribute('data-up') && i > 0) [l[i - 1].order, c.order] = [c.order, l[i - 1].order];
     if (b.hasAttribute('data-down') && i < l.length - 1) [l[i + 1].order, c.order] = [c.order, l[i + 1].order];
@@ -251,6 +264,7 @@ export function viewChecklist(view, _arg, query) {
     const bad = problemOf(draft);
     if (bad) {
       toast(bad.msg, 'warn');
+      if (bad.c && !openRows.has(bad.c.id)) { openRows.add(bad.c.id); viewChecklist(view); }
       const el = bad.c && view.querySelector(`[data-id="${bad.c.id}"] [data-k="${bad.k}"]`);
       if (el) {
         el.setAttribute('aria-invalid', 'true');
