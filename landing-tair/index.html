@@ -468,7 +468,7 @@
     <section class="sec numbers acc" id="accuracy" aria-labelledby="accuracy-title">
       <div class="wrap">
         <div class="sec-head">
-          <h2 id="accuracy-title" class="l-h2" data-reveal>Точность, как она есть.</h2>
+          <h2 id="accuracy-title" class="l-h2" data-reveal>Точность: замеры и их пределы.</h2>
           <p class="l-lead" data-reveal style="--d:100">Сравниваем ответ системы с разметкой по каждому пункту, как будут сравнивать организаторы. Версия оценщика <span class="l-mono">eval-v5.3</span>.</p>
         </div>
         <dl class="stats">
@@ -493,7 +493,7 @@
             </ol>
           </figure>
           <div class="acc__text" data-reveal style="--d:120">
-            <h3 class="l-h3">Правило записали заранее, до запусков.</h3>
+            <h3 class="l-h3">Правило записали до запусков.</h3>
             <p class="l-after">Новая версия принимается, только если не падают результаты на отложенных диалогах и у независимых разметчиков, а грубые ошибки остаются 7 из 7 без ложных тревог. Поэтому v5.2 отклонили, хотя у разметчиков она набрала на 2 ответа больше: на отложенных она потеряла 2.</p>
             <ul class="l-points">
               <li><b>Наша разметка.</b> 19 диалогов по 8 пунктов. Черновик сделал агент, каждую метку проверил человек.</li>
@@ -511,7 +511,7 @@
       <div class="wrap calls__grid">
         <div class="calls__text">
           <h2 id="calls-title" class="l-h2" data-reveal>Звонки: тот же <span class="nw">чек-лист</span> и ещё тон голоса.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Звонок оценивается по тем же 8 пунктам и весам, что и чат. Девятый пункт слушает саму запись, потому что интонации в тексте нет.</p>
+          <p class="l-lead" data-reveal style="--d:100">Звонок оценивается по тем же 8 пунктам и весам, что и чат. Девятый пункт оценивается по самой записи, потому что интонации в тексте нет.</p>
           <ul class="l-points" data-reveal style="--d:160">
             <li><b>C1 = N/A</b>, если приветствие оператора не попало в запись. Так ответили организаторы.</li>
             <li><b>Ошибки распознавания речи</b> не снижают оценку: шум и искажённые слова не вина оператора.</li>
@@ -570,7 +570,7 @@
           </li>
           <li class="ig" data-reveal style="--d:0">
             <h3 class="ig__t">Кэш у каждого запроса</h3>
-            <p>Ключ: модель, версия промпта, транскрипт, чек-лист и отпечаток кода оценщика. Повторный вопрос бесплатен и приходит за миллисекунды, любое изменение даёт новый ответ.</p>
+            <p>Ключ: модель, версия промпта, транскрипт, чек-лист и отпечаток кода оценщика. Повторный запрос бесплатен, ответ приходит за миллисекунды. Любое изменение даёт новый ответ.</p>
           </li>
           <li class="ig" data-reveal style="--d:60">
             <h3 class="ig__t">Общее состояние</h3>
@@ -582,7 +582,7 @@
             <p>Диалоги в репозитории взяты у организаторов, имена в них уже скрыты. Сырые расшифровки звонков с именами не сохраняем. Навигатор AIM маскирует номера карт и ИИН до модели и кэша.</p>
           </li>
           <li class="ig ig--code" data-reveal style="--d:180">
-            <h3 class="ig__t">Любая CRM пришлёт диалог</h3>
+            <h3 class="ig__t">Диалог из любой CRM</h3>
             <pre class="ig__pre"><code>POST /api/evaluate
 { "conversation": {
     "conversation_id": "crm-1042",
@@ -599,7 +599,7 @@
       <div class="wrap">
         <div class="sec-head">
           <h2 id="research-title" class="l-h2" data-reveal>Что узнали и что из этого построили.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Каждое решение в продукте опирается на источник или на наш замер. Полные страницы с ссылками лежат в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/docs/research" target="_blank" rel="noopener">docs/research</a>.</p>
+          <p class="l-lead" data-reveal style="--d:100">Решения ниже опираются на источник или на наш замер. Полные страницы с ссылками лежат в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/docs/research" target="_blank" rel="noopener">docs/research</a>.</p>
         </div>
         <ul class="rd" aria-label="Находки и решения">
           <li class="rd__row" data-reveal>
