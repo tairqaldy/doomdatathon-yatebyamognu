@@ -1,0 +1,175 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "The operator greeted the client and introduced himself in the first message.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "The client's request was clear, so no clarification was required before answering.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "I need my broker statement for last year, not just the current balance."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "The request did not require identity verification because the operator did not disclose account data or perform a protected action.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "The operator provided the correct navigation and download step, and the client confirmed it worked.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "That worked. Thanks!"
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "The operator was courteous and the client did not express dissatisfaction.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "The dialogue was clear and the client did not need to ask for clarification.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "The operator said goodbye but did not summarize the solution or offer further assistance.",
+   "deduction_reason": "The final message lacks a summary, next step, or offer of further help.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "The operator did not insult the client, make an off-company offer, or disclose account-specific data.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Hi, I'm Alex. Open Reports and Documents, choose Broker Report, then select the dates for the year you need."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Yes. Download the report for that date range."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "You're welcome. Have a good day!"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Client requested last year's broker statement.",
+  "operator_actions": "Operator provided app navigation and download instructions.",
+  "outcome": "Client confirmed the report was successfully downloaded."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "I need my broker statement for last year, not just the current balance.",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Can an agent walk me through it?",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Do I download it after I set the dates?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 94788,
+ "usage": {
+  "prompt_tokens": 10580,
+  "completion_tokens": 12350,
+  "cost": 0.024232
+ }
+}
