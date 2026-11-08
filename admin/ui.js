@@ -123,7 +123,7 @@ const trunc = (s, n) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
  * Horizontal bars with the label above each bar and the value at the end of it.
  * rows: [{ label, value, valueText, sub, color, href, group }] (group rows are section headers).
  */
-export function hbarsSVG(width, rows, { title, desc, max }) {
+export function hbarsSVG(width, rows, { title, desc, max, valueClass = '' }) {
   const tid = nid('t'), did = nid('d');
   const m = max ?? Math.max(1e-9, ...rows.filter((r) => !r.group).map((r) => r.value || 0));
   const valW = 64, barH = 12, labelH = 20, gap = 14, groupH = 26;
@@ -136,7 +136,7 @@ export function hbarsSVG(width, rows, { title, desc, max }) {
     const inner = `<text x="0" y="${y + 13}" class="ch-label">${esc(label)}${r.sub ? `<tspan class="ch-sub" dx="8">${esc(r.sub)}</tspan>` : ''}</text>
       <rect x="0" y="${y + labelH}" width="${width - valW}" height="${barH}" rx="${barH / 2}" class="ch-track"/>
       <rect x="0" y="${y + labelH}" width="${bw}" height="${barH}" rx="${barH / 2}" fill="${r.color || 'var(--ink-3)'}"/>
-      <text x="${bw + 8}" y="${y + labelH + barH - 1.5}" class="ch-val">${esc(r.valueText ?? fmt(r.value, 1))}</text>
+      <text x="${bw + 8}" y="${y + labelH + barH - 1.5}" class="ch-val ${valueClass}">${esc(r.valueText ?? fmt(r.value, 1))}</text>
       <title>${esc(`${r.label}: ${r.valueText ?? fmt(r.value, 1)}${r.sub ? ` (${r.sub})` : ''}`)}</title>`;
     parts.push(r.href ? `<a href="${esc(r.href)}" class="ch-link" aria-label="${esc(`${r.label}: ${r.valueText ?? fmt(r.value, 1)}. Открыть диалоги`)}"><rect x="-4" y="${y - 2}" width="${width + 8}" height="${labelH + barH + 8}" rx="8" class="ch-hit"/>${inner}</a>` : `<g>${inner}</g>`);
     y += labelH + barH + gap;
@@ -146,7 +146,7 @@ export function hbarsSVG(width, rows, { title, desc, max }) {
 }
 
 /** Histogram of totals in 10-point bins; each bar is stacked by tier so colours match the score rings. */
-export function histogramSVG(width, bins, { title, desc, hrefFor }) {
+export function histogramSVG(width, bins, { title, desc, hrefFor, calm = false }) {
   const tid = nid('t'), did = nid('d');
   const H = 220, pad = { l: 28, r: 4, t: 22, b: 28 };
   const max = Math.max(1, ...bins.map((b) => b.n));
@@ -154,7 +154,8 @@ export function histogramSVG(width, bins, { title, desc, hrefFor }) {
   const y = (v) => pad.t + (H - pad.t - pad.b) * (1 - v / max);
   const step = max <= 5 ? 1 : max <= 12 ? 2 : max <= 30 ? 5 : 10;
   const ticks = []; for (let v = 0; v <= max; v += step) ticks.push(v);
-  const col = { low: 'var(--bad)', mid: 'var(--mid)', high: 'var(--good)' };
+  // calm: neutral bars, only the band that needs attention (below 60) keeps its colour
+  const col = calm ? { low: 'var(--bad)', mid: 'var(--calm)', high: 'var(--calm)' } : { low: 'var(--bad)', mid: 'var(--mid)', high: 'var(--good)' };
   return `<svg class="chart" width="${width}" height="${H}" viewBox="0 0 ${width} ${H}" role="img" aria-labelledby="${tid} ${did}">
     <title id="${tid}">${esc(title)}</title><desc id="${did}">${esc(desc || '')}</desc>
     ${ticks.map((v) => `<line x1="${pad.l}" x2="${width - pad.r}" y1="${y(v)}" y2="${y(v)}" class="ch-grid"/><text x="${pad.l - 8}" y="${y(v) + 4}" text-anchor="end" class="ch-tick">${v}</text>`).join('')}
