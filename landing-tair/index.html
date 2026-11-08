@@ -411,14 +411,18 @@
     <section class="sec case" aria-labelledby="case-title">
       <div class="wrap">
         <div class="case__head">
-          <h2 id="case-title" class="l-h2" data-reveal>Разбор настоящего чата: 21 из 100.</h2>
-          <p class="l-lead" data-reveal style="--d:100">Клиент не может вывести деньги и просит проверить счёт. Слева последние реплики, справа решения системы. Нажмите на пункт, чтобы увидеть строку, на которую он ссылается.</p>
+          <h2 id="case-title" class="l-h2" data-reveal>Разбор настоящего чата: 46 из 100.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Клиент не может вывести деньги и просит проверить счёт. Слева реплики после подключения оператора, справа решения оценщика <span class="l-mono">eval-v5.3</span>. Нажмите на пункт, чтобы увидеть строку, на которую он ссылается.</p>
         </div>
 
         <article class="case__card" data-reveal aria-label="Оценка чата p1-ru-009">
           <div class="case__log">
             <p class="case__meta"><span class="l-mono">p1-ru-009</span><span>чат, русский</span></p>
             <ol class="lines">
+              <li class="line" id="ln-0151">
+                <time class="line__t">01:51</time>
+                <div><span class="line__who">Оператор</span><p>«Здравствуйте, я Руслан. Какое сообщение вы видите в приложении?»</p></div>
+              </li>
               <li class="line" id="ln-0251">
                 <time class="line__t">02:51</time>
                 <div><span class="line__who">Оператор</span><p>«Я посмотрел: на вашем счёте есть ограничение на вывод.»</p></div>
@@ -426,6 +430,10 @@
               <li class="line" id="ln-0306">
                 <time class="line__t">03:06</time>
                 <div><span class="line__who">Клиент</span><p>«Подождите, я ещё не подтверждал, что это мой счёт.»</p></div>
+              </li>
+              <li class="line" id="ln-0346">
+                <time class="line__t">03:46</time>
+                <div><span class="line__who">Оператор</span><p>«Подтверждение пока не нужно. Напишите, если приложение опять зависнет.»</p></div>
               </li>
               <li class="line" id="ln-0419">
                 <time class="line__t">04:19</time>
@@ -439,24 +447,39 @@
           </div>
 
           <div class="case__verdicts">
-            <button class="verdict" type="button" data-ref="ln-0419 ln-0435" aria-pressed="true">
-              <span class="verdict__top"><span class="verdict__name">Корректная и полная консультация</span><span class="verdict__score">5 из 20</span></span>
-              <span class="verdict__why">Причину ограничения оператор не назвал и не объяснил, что будет дальше.</span>
-              <span class="verdict__ref">Строки 04:19 и 04:35</span>
-            </button>
-            <button class="verdict" type="button" data-ref="ln-0251 ln-0306" aria-pressed="false">
+            <button class="verdict" type="button" data-ref="ln-0251 ln-0306" aria-pressed="true">
               <span class="verdict__top"><span class="verdict__name">Идентификация</span><span class="verdict__score">0 из 20</span></span>
-              <span class="verdict__why">Статус счёта сообщён до подтверждения личности.</span>
+              <span class="verdict__why">Ограничение на счёте названо до подтверждения личности.</span>
               <span class="verdict__ref">Строки 02:51 и 03:06</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0251 ln-0435" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Корректная и полная консультация</span><span class="verdict__score">10 из 20</span></span>
+              <span class="verdict__why">Часть ответа есть, но причина ограничения осталась открытой. Передача на проверку без следующего шага и срока.</span>
+              <span class="verdict__ref">Строки 02:51 и 04:35</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0306 ln-0346" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Эмпатия</span><span class="verdict__score">0 из 15</span></span>
+              <span class="verdict__why">На возражение клиента о неподтверждённой личности оператор не ответил по существу.</span>
+              <span class="verdict__ref">Строки 03:06 и 03:46</span>
+            </button>
+            <button class="verdict" type="button" data-ref="ln-0419" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Управление диалогом</span><span class="verdict__score">6 из 15</span></span>
+              <span class="verdict__why">Клиенту пришлось повторить вопрос после ответа не по сути. Шкала: 4 из 10.</span>
+              <span class="verdict__ref">Строка 04:19</span>
             </button>
             <button class="verdict verdict--flag" type="button" data-ref="ln-0251" aria-pressed="false">
               <span class="verdict__top"><span class="verdict__name">Грубая ошибка</span><span class="verdict__score">флаг</span></span>
               <span class="verdict__why">Данные счёта раскрыты клиенту до идентификации.</span>
               <span class="verdict__ref">Строка 02:51</span>
             </button>
+            <button class="verdict verdict--ok" type="button" data-ref="ln-0151 ln-0435" aria-pressed="false">
+              <span class="verdict__top"><span class="verdict__name">Полные баллы: контакт, потребность, завершение</span><span class="verdict__score">30 из 30</span></span>
+              <span class="verdict__why">Поздоровался и представился, уточнил «Какое сообщение вы видите в приложении?», назвал следующий шаг и попрощался.</span>
+              <span class="verdict__ref">Строки 01:51 и 04:35</span>
+            </button>
             <div class="case__total">
-              <span>Итог по 7 пунктам</span>
-              <span class="case__num"><b>21</b> из 100</span>
+              <span>Итог по 7 пунктам, N/A нет</span>
+              <span class="case__num"><b>46</b> из 100</span>
             </div>
             <p class="case__appeal">Проверяющий может оспорить любой пункт. Итог пересчитается, а исходная оценка останется в карточке.</p>
           </div>

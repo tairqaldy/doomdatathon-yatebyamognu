@@ -255,6 +255,7 @@ body.l { margin: 0; overflow-x: clip; }
 .verdict--flag { background: var(--l-red-bg); border-color: transparent; }
 .verdict--flag .verdict__score { color: #fff; background: var(--l-red); border-radius: 999px; padding: 2px 10px; font-size: 12.5px; }
 .verdict--flag[aria-pressed="true"] { border-color: var(--l-red); box-shadow: 0 0 0 3px rgba(201,58,58,.15); }
+.verdict--ok .verdict__score { color: var(--l-green-ink); }
 .case__total { margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--l-line); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; color: var(--l-ink-3); font-size: 15px; }
 .case__num { color: var(--l-ink); font-size: 18px; }
 .case__num b { font-size: 40px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
