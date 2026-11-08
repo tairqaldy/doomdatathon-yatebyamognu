@@ -1,0 +1,1478 @@
+{
+  "revision": "15f1835d2b10d83fb74b36d9a278dcacc05af711",
+  "mode": "offline_saved_result_check_not_controlled_AB",
+  "paid_calls": 0,
+  "prompt_version": "eval-v5.3",
+  "model": "openai:gpt-6-luna",
+  "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+  "scoring_checks": [
+    {
+      "name": "all yes → 100",
+      "passed": true
+    },
+    {
+      "name": "N/A redistributes, still 100",
+      "passed": true
+    },
+    {
+      "name": "c04=10 of 20 with weight 20 → 90",
+      "passed": true
+    },
+    {
+      "name": "gross flag never adds points",
+      "passed": true
+    },
+    {
+      "name": "N/A where allowed + worst elsewhere → 0",
+      "passed": true
+    },
+    {
+      "name": "nothing applicable → total null (not calculated)",
+      "passed": true
+    },
+    {
+      "name": "mixed case rounds to 2 decimals (88.82)",
+      "passed": true
+    },
+    {
+      "name": "total rounds once at the end (30.59, not 30.58)",
+      "passed": true
+    },
+    {
+      "name": "half-up rounding of an exact .xx5 total (38.13)",
+      "passed": true
+    },
+    {
+      "name": "perfect answers return 100.00",
+      "passed": true
+    },
+    {
+      "name": "perfect answers with N/A return 100.00",
+      "passed": true
+    }
+  ],
+  "dialogs": 65,
+  "validation": [
+    {
+      "conversation_id": "p1-ru-001",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-002",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-003",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-004",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-005",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-006",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-007",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-008",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-009",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-010",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-011",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-012",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-013",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-014",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-015",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-016",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-017",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-018",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-019",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-020",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-021",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-022",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-023",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-024",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-025",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c04"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-026",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-027",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-028",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-029",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-ru-030",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-001",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-002",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-003",
+      "structural_issues": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": [
+        "s2 c02: quote not found in turn 13"
+      ]
+    },
+    {
+      "conversation_id": "p1-kz-004",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-005",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-006",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-007",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-008",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-009",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-010",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-011",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-012",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-013",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-014",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-kz-015",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-001",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-002",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-003",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-004",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-005",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-006",
+      "structural_issues": [],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-007",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-008",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-009",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-010",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-011",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-012",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-013",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-014",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": true,
+      "computed_gross_error": true,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p1-en-015",
+      "structural_issues": [
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        }
+      ],
+      "answer_count": 8,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p4-ru-003",
+      "structural_issues": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 9,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": [
+        "s2 c04: quote not found in turn 70",
+        "s2 c05: quote not found in turn 70",
+        "s2 c08: quote not found in turn 70"
+      ]
+    },
+    {
+      "conversation_id": "p4-ru-002",
+      "structural_issues": [
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        }
+      ],
+      "answer_count": 9,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": []
+    },
+    {
+      "conversation_id": "p4-ru-001",
+      "structural_issues": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c02"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c03"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 9,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": [
+        "s3 c04: quote not found in turn 25"
+      ]
+    },
+    {
+      "conversation_id": "p4-ru-005",
+      "structural_issues": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 9,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": [
+        "s1 c02: quote not found in turn 57",
+        "s1 c04: quote not found in turn 43",
+        "s1 c04: quote not found in turn 66"
+      ]
+    },
+    {
+      "conversation_id": "p4-ru-004",
+      "structural_issues": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09"
+        },
+        {
+          "reason": "missing_original_reference",
+          "criterion_id": "c07"
+        }
+      ],
+      "answer_count": 9,
+      "gross_error": false,
+      "computed_gross_error": false,
+      "diagnostics": [
+        "s2 c03: quote not found in turn 78",
+        "s3 c02: quote not found in turn 33",
+        "s3 c03: quote not found in turn 70",
+        "s3 c03: quote not found in turn 78",
+        "s3 c04: quote not found in turn 89",
+        "s3 c04: quote not found in turn 111",
+        "s3 c05: quote not found in turn 90",
+        "s3 c06: quote not found in turn 95",
+        "s3 c08: quote not found in turn 78"
+      ]
+    }
+  ],
+  "ordinal_errors": {
+    "comparable": 105,
+    "lower_than_gold": 2,
+    "higher_than_gold": 5,
+    "na_mismatches": 0,
+    "false_penalty_rate": 0.01904761904761905,
+    "false_pass_rate": 0.047619047619047616,
+    "definition": "Strict directional mismatches / comparable non-flag gold criteria; excludes N/A on either side. Also-acceptable alternatives are not applied. Rates describe gold disagreement, not independently established unfairness."
+  },
+  "validation_scope": "Raw findings from the older audit validator, not a publication or invalidity decision. missing_original_reference includes allowed N/A; unexpected_criterion may be newer c09. Requires current policy classification.",
+  "paired_prompt_preparation": {
+    "executed": false,
+    "samples_per_arm": 3,
+    "schema_sha256": "d4381446ae486d754e56d546bd4d7accc2bd809bc400bb0469a3f303d913b199",
+    "addendum_sha256": "8e92716e31dfb2240c5b976a692ea9b817ca3ced9e530294a34db4cc1f3e5dbf",
+    "dialogs": [
+      {
+        "conversation_id": "p1-ru-001",
+        "transcript_sha256": "e3de4212af9e11b747848f6d053d64a4348bc4ed0639820a437d4f6c84bdad74",
+        "baseline_messages_sha256": "b15f8119f1f2028598ca3d266f5072c674cefb87d574edcee505bb53779b8d0c",
+        "candidate_messages_sha256": "c5630e18f2c73b4cb453fce220cf73eab215704856a45f0a5fcd3f797f64a0c3"
+      },
+      {
+        "conversation_id": "p1-ru-002",
+        "transcript_sha256": "2ac6d0904defc56eca8fc27d85d41514bf5d3842d1f4f3ae3ca55c10454fb976",
+        "baseline_messages_sha256": "ae4bbc2ce1502f3400d8c48eac35c6910dce32b7c5ea4f6976e657de3c0b36d3",
+        "candidate_messages_sha256": "8899c1597e3a4aeff3f04094bf5e1b56ef91e893be3a0271ba8c41bdaf3b7941"
+      },
+      {
+        "conversation_id": "p1-ru-003",
+        "transcript_sha256": "1cc5e3f62ef8b38aeb11379c075e6be0bb624679e768e5a35e4f433eecb4ee02",
+        "baseline_messages_sha256": "f3ce14e707157717cb78a01c77332f939dd84bb294cb6a24133018131e7e2689",
+        "candidate_messages_sha256": "b0dc16922ec46dedacd6b1bbe0c73a6087ff572c318c4fdbaff3396e13ce4511"
+      },
+      {
+        "conversation_id": "p1-ru-004",
+        "transcript_sha256": "a26f912e872a3e812b4b3d1d90d2b25dc38b642238b51eaae42e9816a32d5167",
+        "baseline_messages_sha256": "d37a17de14d38997df56cc5cbc9e03e026e950da46ad7514b4720532b962ef1d",
+        "candidate_messages_sha256": "4d474535bde4aa3d0058944ab0cad6b01282019885d98d0518c2411fb6739aa9"
+      },
+      {
+        "conversation_id": "p1-ru-005",
+        "transcript_sha256": "3c357f08dbc6e8b6af609199079a3f40b866b8416578becbba091277669a0b1a",
+        "baseline_messages_sha256": "e12bed40ce04cbd2da3c82dfc4e1501b9a24a0de6aae1043d15b294bb82e600c",
+        "candidate_messages_sha256": "6fe4a58ed7e3d667e184ee3e3cc157743f905ec7a137cf201cc4b54ffdbeef9e"
+      },
+      {
+        "conversation_id": "p1-ru-006",
+        "transcript_sha256": "8244e708d4833f7299888a5c2dcb3bb6f8c8301ac9eed57b4187bf8f6af361db",
+        "baseline_messages_sha256": "78095552469c004f896fd91039a62466f3ec025c5332fa5faec1d8f0921043fa",
+        "candidate_messages_sha256": "3f01d131663e1a94174a44c7dff1db183c7713228f45d311830cde7caa8f6729"
+      },
+      {
+        "conversation_id": "p1-ru-007",
+        "transcript_sha256": "edb2c3ec6adee4135be97caa70bcd34b1e9e4cde739393620b85bf5d8567c0f4",
+        "baseline_messages_sha256": "b98377a5d8c99b0d2ac49801fd7fd45b9272f9091ec47483b672c0c7281bcc2d",
+        "candidate_messages_sha256": "dfacd8c686fd4d078ba481070483cb47fe84dc4fafa30c3e0a1422afaf936b06"
+      },
+      {
+        "conversation_id": "p1-ru-008",
+        "transcript_sha256": "7247ed9a5aad0b4c2c50559ac8d753807003854c71aa6a97f7bddd930306999a",
+        "baseline_messages_sha256": "3e894db76e329e6aa69b7009b2d8a8a142461694c359bf08230c80d8a726a6d3",
+        "candidate_messages_sha256": "decdab674e8a78ed1c87f0775d525d98305354335470693a9fd59e39d6fedb20"
+      },
+      {
+        "conversation_id": "p1-ru-009",
+        "transcript_sha256": "f2956bff1597b01c79a44eb67bf6c4da0fd03bfeec83f77940e1a9cba94382ea",
+        "baseline_messages_sha256": "62b46b8e41c018c6d772ce9ffd1786f323d47fcfaba290bbbaa855d3e8450e12",
+        "candidate_messages_sha256": "5318eb6968441f28fc00b4ec2e609bbe6265d0f3d9d957e19b98962b07ab78be"
+      },
+      {
+        "conversation_id": "p1-ru-010",
+        "transcript_sha256": "7a5a6ca00d0aef4e2850d0ec9ccca4fa58d969f3373ddf71bb47288fff76f114",
+        "baseline_messages_sha256": "9058e4e2302b09369df6d3d84c7e9da4967b2d1a7ed82a0eb4b424c0164e20c1",
+        "candidate_messages_sha256": "26b55b4cdd58390e02d88246433db64bf286a9dccd66902af1c6f102a8b6b91c"
+      },
+      {
+        "conversation_id": "p1-ru-011",
+        "transcript_sha256": "860992e45b96711f296d2278804152a764bda681e196b858b0fc4138523d281b",
+        "baseline_messages_sha256": "040e48c123cf0d655970d517654acbf716f47df62117a252e4169801b2128f31",
+        "candidate_messages_sha256": "44209617b4e6aa27d74db6676e0b0856c78cb1302c9eb3908ea638e951e38eea"
+      },
+      {
+        "conversation_id": "p1-ru-012",
+        "transcript_sha256": "b0d25d6bcd1c1f583f9806b250e513d535e41d106a2f54d4e7d1176ec052f5ae",
+        "baseline_messages_sha256": "2269e7494dc821dc09b4894b726396803823b6fed3e518e4df3186c1ef335562",
+        "candidate_messages_sha256": "c8a194e396f13c6b2df090c8c54abeb32f7f837eda98ec5d344b1794636a2439"
+      },
+      {
+        "conversation_id": "p1-ru-013",
+        "transcript_sha256": "ce85997c2f2f5fcf7f0a535cda71e431d13dc6b9aea270f5c829f89456c472c4",
+        "baseline_messages_sha256": "fe03d06e6636016e23c9b9750364be438e5f84b66a90ae0b3acfe6812a1c1875",
+        "candidate_messages_sha256": "09ab764b73e30a4ae6cfe1823885cece20c5891028323cf9d24c3e5ea54efed2"
+      },
+      {
+        "conversation_id": "p1-ru-014",
+        "transcript_sha256": "995944872480ddc69e81b8b609a5397e6f130c3ae18d5818ad389ce3ce4e34b6",
+        "baseline_messages_sha256": "dee8281c058cda5a35b38969e67c9960e38dc6da9f90b167af2faf07174865b8",
+        "candidate_messages_sha256": "d3feadfdbc22335770848fb6a19fb87dc28950903752ac81b636df6a35ecd169"
+      },
+      {
+        "conversation_id": "p1-ru-015",
+        "transcript_sha256": "1f9505e4ae3532410b6240c5e657e33de0f1bad2ffb7e9dfd7d24b5693b47acd",
+        "baseline_messages_sha256": "e19fcea6f49c5605e00734f4378b172d46f1c1aecce69b00e86f3c3c405684cf",
+        "candidate_messages_sha256": "3213387519fa6ea5f2d2e158a27e3db288297e3c8e4e43bc8e7eb9ae3e9e080f"
+      },
+      {
+        "conversation_id": "p1-ru-016",
+        "transcript_sha256": "109e7c79c73546ec7b346ff834c59d6d996df87eb917c51466f6c5efda015dee",
+        "baseline_messages_sha256": "72bbe382c27e5d2facb6d08c253faebf80df2d381b12e7f6201fc842d4a62350",
+        "candidate_messages_sha256": "b6940f0355fbc69c67ab3afe6b538456a076ccde720d5e8f8f39e5f6e2b9574f"
+      },
+      {
+        "conversation_id": "p1-ru-017",
+        "transcript_sha256": "b15ad3724ec99352022b01e8b025527251ea944614d60bf979b52a8d2787f263",
+        "baseline_messages_sha256": "3f0bfcec356ed70301ee0c94c2145e68b790d81b8136eaade80e5699fdc2f173",
+        "candidate_messages_sha256": "c99614a1d15c8e3032b20e3fa8e9a213c7cb927c75286bc394dd5d67c36df251"
+      },
+      {
+        "conversation_id": "p1-ru-018",
+        "transcript_sha256": "5f49af71e7766feadab50f1a97f66bc22b0c566a0701ad24a0cc44bcf0133817",
+        "baseline_messages_sha256": "dd533f42ddf6535f5359d0cb46a27527a6b8721f73c45e1ce3f22a35ee76f7dd",
+        "candidate_messages_sha256": "f224f6c3ee9ee930579e3f9360c09ba2c5dc59513bffd3c4fc9c4788827f4d49"
+      },
+      {
+        "conversation_id": "p1-ru-019",
+        "transcript_sha256": "45b24a5b01393f0d78a6277c7ad632e424711deeda3a05b24609e8e48789e428",
+        "baseline_messages_sha256": "42c12fa340315078b52d2e37ec33b61999be8731b6dc233f8b73a12260b23606",
+        "candidate_messages_sha256": "f4f9522593d829c011730d06ffef4f79401e8fbe46c0a00f6c4b9416155d4148"
+      },
+      {
+        "conversation_id": "p1-ru-020",
+        "transcript_sha256": "1559303babd9f38ece0ad49532192d5bc9b16fbb9535f401262ef8a2fa846805",
+        "baseline_messages_sha256": "ac98c9f787f19e22b548ff7b5a119acbcd7d31ee73080d18b667a428d19b15c5",
+        "candidate_messages_sha256": "a06c112514d95e08f6190b6ec688e80aeadb5186c4c2e1d7e6f1e795aa6a4d75"
+      },
+      {
+        "conversation_id": "p1-ru-021",
+        "transcript_sha256": "94d46e81ee2deb6c84202ee345db2e32cc277923f15b42c46cda7b438e041f1e",
+        "baseline_messages_sha256": "42eb098391a5bbd38fba88adb117b5150b7002b25d468e5bea32a51187c5051b",
+        "candidate_messages_sha256": "a8e72080556a94937869e6ad0fbbbe8bc6b14026686970e463663b210a73a3e1"
+      },
+      {
+        "conversation_id": "p1-ru-022",
+        "transcript_sha256": "3700a373f2fa64fa71e1f6e0aadd4bc90d09fca3996b694f1c14439d64ea788a",
+        "baseline_messages_sha256": "0e034d70d5028f223dd50d8ed3d4dddc25cf9bed442c1bc6f6a9d7e5376b1de1",
+        "candidate_messages_sha256": "64ceb8394574cd6ef6073192df484b9df154b4a90caa948e28b1f2cc4b47e17b"
+      },
+      {
+        "conversation_id": "p1-ru-023",
+        "transcript_sha256": "58ef961e64e2f2430bbe12d68b4daa15931713a99ea309325e36520bca74a7b7",
+        "baseline_messages_sha256": "d83dfc2f2752e54dcf23ac446af2a31bfb0a966d26642aeb76098b568a0c2955",
+        "candidate_messages_sha256": "b42bdb0621ccefccab0884e51580da3e2435f329b0108c78e2e2d6405d1e57ae"
+      },
+      {
+        "conversation_id": "p1-ru-024",
+        "transcript_sha256": "252cdfef81829194ad6335210635f22e1bd1f291388a04211289f436a24d512c",
+        "baseline_messages_sha256": "0647c7403d9f4fb18400a62da1269e1230b617add2b27b33148f15025f023c1e",
+        "candidate_messages_sha256": "5fba09c8232fe35dc6518cdc75443358bd8ad5fac649388bcda9449a87306304"
+      },
+      {
+        "conversation_id": "p1-ru-025",
+        "transcript_sha256": "56a059641e96f387e2e8f81b09f7d8e1df880a110b35b355abca0f0ebc5f361e",
+        "baseline_messages_sha256": "5e0a8778cf0864441aaa26355fb63327c833d9c9031c793813f5f87bae9e993e",
+        "candidate_messages_sha256": "78266a9c2cfb3791281f99296ace0d67ceac816dd6188b773158ce6e30493ee8"
+      },
+      {
+        "conversation_id": "p1-ru-026",
+        "transcript_sha256": "d3de7aead261369f2a1639901cec19375759456c9a9b5d69051b3f24f3f72418",
+        "baseline_messages_sha256": "d60bd4ab8dab7c5d5a628f98aded1a648d9edb768d37c025c93b326246b16e0e",
+        "candidate_messages_sha256": "96fe2259c37aef28b4a5455523dfe2f4778ecd9d236d26330378bb9e7fcb27da"
+      },
+      {
+        "conversation_id": "p1-ru-027",
+        "transcript_sha256": "0035645bcad28e3c4137f3b4af4c7e3cae756bd4eee069c6310ce4ca25398701",
+        "baseline_messages_sha256": "a67dc13fa281b251fc0b176e45c5a6ac175180e2ac783b181aa498cb200ad6d2",
+        "candidate_messages_sha256": "7fbaeb50b93c49e5d07b4282d8da6264eb66d62e26fd07b4710c5ce2a9eb5937"
+      },
+      {
+        "conversation_id": "p1-ru-028",
+        "transcript_sha256": "35696ab012b268d841675030c7b957caf544298d5f2cee1fe4c97cba9b21f13b",
+        "baseline_messages_sha256": "69f0e181f01e1ff0495659735c9d83b82e15716b600b17f0d8f68ebb2ccbc450",
+        "candidate_messages_sha256": "a09718bb86f1ce69a9d11150a1078576bf9ef695b74cd179ee7c574c5c00f4d4"
+      },
+      {
+        "conversation_id": "p1-ru-029",
+        "transcript_sha256": "287d68632958fc13324169df89ce2cfdeb828597ad55f5ba57af8cf44c4e601b",
+        "baseline_messages_sha256": "003dbab942201eb9376b7ed63e7a9f6b6760d16997a79c1b0db7527fc9c8b5e2",
+        "candidate_messages_sha256": "4c2df11885986d635cc71b39ce8fc592ad9a889ad35ed8fc45c05af4d5558e21"
+      },
+      {
+        "conversation_id": "p1-ru-030",
+        "transcript_sha256": "81b1362bd3335c452400a4a7f8029a5c4573adf53efc322cf7889016effddefb",
+        "baseline_messages_sha256": "0d2e4c5cbdab9261b40830b426aa20a7e6ab8afc81ee7c6d49123d0e5ec189c4",
+        "candidate_messages_sha256": "24282c77f566974bdf09a3330d9a9620d202faa22deffcb0d855c7560f41d91f"
+      },
+      {
+        "conversation_id": "p1-kz-001",
+        "transcript_sha256": "a0ffdc6a045104cee4c3780a0358f8baaf378395ba18d1d765700c85d6764993",
+        "baseline_messages_sha256": "7342a1f935f7edeb142fe8f0bc295e2a9327d76f8d304e8bb707967a27cc34fa",
+        "candidate_messages_sha256": "8ce6afebe6461e5a12defc74e1246a4def4a1ede830c05094707639ebb0f57ea"
+      },
+      {
+        "conversation_id": "p1-kz-002",
+        "transcript_sha256": "a75648f5e533c7bd9529e3e15fd34f878db46dcc894271cc74878e4f1d0d9558",
+        "baseline_messages_sha256": "c0622a44189f914d222f14a58839d452eacd4f27d42d57df16ad4c89568a41d8",
+        "candidate_messages_sha256": "ec1f99ab4247d9c7678cc474a9f7746454424d93c1724d5fab422a542ff4bcb3"
+      },
+      {
+        "conversation_id": "p1-kz-003",
+        "transcript_sha256": "98edab5f83e7e1a9735c7fa175ce83103ffc62a01d254570083babf6e3283ae7",
+        "baseline_messages_sha256": "589b0bc3d1bec22be6510a938c29e9a97efe2ef5c7cd0d2ed32b2e864703d72a",
+        "candidate_messages_sha256": "3ccb6c4334d65300c9319ea41b93d6adf8d15723eff5a9f659c4d3c27917215a"
+      },
+      {
+        "conversation_id": "p1-kz-004",
+        "transcript_sha256": "878745e147dec224966477ff245b1eb66b863299d7660ca8d16ffb18234d5125",
+        "baseline_messages_sha256": "9a6c94c7a37eee8855e8d1b7742269ce8dda9510be0e2a84a72226193510f73d",
+        "candidate_messages_sha256": "484be33e62e8b0b05a8557434e624e0a1ba5dfa1b3f9823c869a46598ebd507d"
+      },
+      {
+        "conversation_id": "p1-kz-005",
+        "transcript_sha256": "713310b3a84de811e7958452df48c6280da9618006945fbc3fd20c9236e0390a",
+        "baseline_messages_sha256": "74fbbc20d0895f70e72f0068753a001d3b2c0f52e8c5221cd5c7d25c112ec440",
+        "candidate_messages_sha256": "d7e317206dd31212d04d01bfbba4ca1470028fde10500eba2202d022fdce16b4"
+      },
+      {
+        "conversation_id": "p1-kz-006",
+        "transcript_sha256": "25af0b7dce3c363d690a68e56311109969a574e5f62789222eb5320fafba3160",
+        "baseline_messages_sha256": "97baef7f57fad6a358520c0c99dcedc308548298441e303e3dcd07143daa18f9",
+        "candidate_messages_sha256": "762aeab790a2a42a4ccd1fb0b2060e6425533ca1aff10a79f27fdea3af52b4cd"
+      },
+      {
+        "conversation_id": "p1-kz-007",
+        "transcript_sha256": "1d930c52de415c1dcea056f109061982ed40305b82c0b37e26e0ffed6853fae9",
+        "baseline_messages_sha256": "3a019ce17ee43a276a9e5303d704f505fef55178ea5fa65c1191b996e724fcc0",
+        "candidate_messages_sha256": "fa9122dd46c7bdd1579d65124011410d0949f8dea082fdc172fadc9b6863fb32"
+      },
+      {
+        "conversation_id": "p1-kz-008",
+        "transcript_sha256": "d775e5fab731f28d099cc4b180bd01ba19a6a16480bdc793b7af84ad7d95c674",
+        "baseline_messages_sha256": "886316497fc7d0917863cd32e52edbe1638b478bd5b778ed2471bf05c65a3a91",
+        "candidate_messages_sha256": "61c017402aa19400a5fb81e79b0e2ad398f9a21005ff011e63b5b20855e2733b"
+      },
+      {
+        "conversation_id": "p1-kz-009",
+        "transcript_sha256": "688d9afc0c65ad63c99c2d01ea6caba003c64bf660829016876eecbf7c7ca75f",
+        "baseline_messages_sha256": "f282fcb5f6c6a73b58f9ae3ce1f103eb52c82530905cf34a3138dca9c2e8fa3e",
+        "candidate_messages_sha256": "5104cd3b892e012c5038589df1069e988702ed59255dc8c8d7f68fb3d619f9d8"
+      },
+      {
+        "conversation_id": "p1-kz-010",
+        "transcript_sha256": "272dce03c78cdff611a103638c5d711634765a170ca0ad597695aae36288214e",
+        "baseline_messages_sha256": "2c65291c90e614c6329c2e2f5b88226dc717251cec6520f85bec6b8e214d845e",
+        "candidate_messages_sha256": "99c1f8c917dc95e06f839a09950950b4d56bd8abddb32d64bc1af38aa5154790"
+      },
+      {
+        "conversation_id": "p1-kz-011",
+        "transcript_sha256": "a5b94e043b85444569805833a1ec4e02414b106e2203ddb343bce1f6144dc80d",
+        "baseline_messages_sha256": "e6113a18aac0c571d94d29b99b7aa20c6b8dab2091fd7818e7296f3077b5df3a",
+        "candidate_messages_sha256": "2f0ebd44285232d7fc98d44949174de0ef649afd27ebdd85aaeeb8877a57f17a"
+      },
+      {
+        "conversation_id": "p1-kz-012",
+        "transcript_sha256": "258992f591393b54cd43e4ea9cc9b7a631359b3d8f00fa3369a04356af50264c",
+        "baseline_messages_sha256": "84e4e0ac28619b923cdf1d88ef85d6d1a44894b289483fb758abdbdced9b79e0",
+        "candidate_messages_sha256": "3324877c7e039cdf90f75ab739fbbe8113b21891fe8b0b2211e9d2e5f2c27e1c"
+      },
+      {
+        "conversation_id": "p1-kz-013",
+        "transcript_sha256": "d2627bab9e8f3ae1f1b14ab2afe38f492b608f9d6e6be4c14c6371c101a66f68",
+        "baseline_messages_sha256": "ed234d7fa463cfac6d9e44a9f34d20435c09223c518bd636830a23a98b0ae2c5",
+        "candidate_messages_sha256": "3b3a2712c2e4f043818cec9a8f83300166626c7383f0d84c9be808f1983fac01"
+      },
+      {
+        "conversation_id": "p1-kz-014",
+        "transcript_sha256": "2208dbc600dbc5c7e8e18dcbb587484088e12314789b6ff8dafc6b0041d34b7c",
+        "baseline_messages_sha256": "156f2118cc00b97b65e7306ec3ae9447367d6cf5266f4784a05a7c9532c9d5de",
+        "candidate_messages_sha256": "48b850cc149900890d15c2bd5a73fc57f3a7f0ba4f70af8414728a48100100de"
+      },
+      {
+        "conversation_id": "p1-kz-015",
+        "transcript_sha256": "eeb6e870b946da3e159328a90e2676f610a669890df28ee3482126f3854a2d68",
+        "baseline_messages_sha256": "bb5c7a69849ae06e5a6f8e39f6a144729b87110ad592e633d103443c25a4b28b",
+        "candidate_messages_sha256": "1a3484dc94cf3dcb74a64e3fcb041e179592e95dc12e0170803081022c917b12"
+      },
+      {
+        "conversation_id": "p1-en-001",
+        "transcript_sha256": "f4cca2febfec93d70baec118fa18fb83563d4253efe95866c620178ace8460ac",
+        "baseline_messages_sha256": "ff63da6013e606901efe630462c6c2d7388eccd7976c5a6914f6cdd81451e041",
+        "candidate_messages_sha256": "df9e90d86aac1baefbec268f01cd74fe0acb33f357f763e20033b3b13f488f9c"
+      },
+      {
+        "conversation_id": "p1-en-002",
+        "transcript_sha256": "ab9a7fc23640df9f9e1b40ac50cf183873abff6a3d3d8528d83bef8442f87972",
+        "baseline_messages_sha256": "e4ff99e31b8891a8cb29dd975f19aae14fcdc356efefbd541bbe48afb0b17a02",
+        "candidate_messages_sha256": "347780f2db1b3e35ac374b8da7ea113a9fef330dca0196b0d40ce48e9518a23f"
+      },
+      {
+        "conversation_id": "p1-en-003",
+        "transcript_sha256": "f7d4c003d0830ebad3f4ffd660c4d1f0c334bc265fc93a437714dc2644b7e55b",
+        "baseline_messages_sha256": "05941ad56d92fac83af615d03ab74f9fcbded0a094c20d52cf9ca14b1cd519fa",
+        "candidate_messages_sha256": "76468c57f56d5dbc8d9893ea8ab737001ba9ca60b0af9a82826cb8c6f93847a0"
+      },
+      {
+        "conversation_id": "p1-en-004",
+        "transcript_sha256": "18562e2f38236aa55c820e3f9370394d5e2e3085b84093770b60f6858ba8f481",
+        "baseline_messages_sha256": "405e60b9457a96e36cce6291a6d5043e2ac34150653a19fa490a3baa0475cff3",
+        "candidate_messages_sha256": "8f14c1a5b7ce77e58964bb1a3a01f69e7b08a5b10f9b20f8de170f125a249a49"
+      },
+      {
+        "conversation_id": "p1-en-005",
+        "transcript_sha256": "bde6a6b1a4a1d69650fd053bb7a40c30ffa6fafea72a84095011961a897c9767",
+        "baseline_messages_sha256": "e302ac54ac868a82d850f71f75c3dcbe2cae0481372a865a1d7a19f646110227",
+        "candidate_messages_sha256": "17d061832d6126338f166a881891e9f9f97c6d84489fc9bd89a581be86e9fb84"
+      },
+      {
+        "conversation_id": "p1-en-006",
+        "transcript_sha256": "ce6267e97848c8bda6b9cef96dbbff9cab46cd735d55d503d66996ba2b22602b",
+        "baseline_messages_sha256": "08ace7916cee2c2f9b77e98e33c0c4a16707ebee58e29b8518ac17b9e03e3d16",
+        "candidate_messages_sha256": "61a232bbfc42bc82e86baef0bbbc963320746a4a7c44f156aa173c3dbd5f46a4"
+      },
+      {
+        "conversation_id": "p1-en-007",
+        "transcript_sha256": "e5855fd3ae5725cfbd6e19f2d7d819fd6827ca28b7305605d421b78c299de501",
+        "baseline_messages_sha256": "06a312c6eb9136f6c99d04de909a0285e11dbbd6f90cfb2b8266256490769cd9",
+        "candidate_messages_sha256": "5160f6a6d7307a59887aa3f022c5ceb16c6faa308dec774d238e8e115e3c64d2"
+      },
+      {
+        "conversation_id": "p1-en-008",
+        "transcript_sha256": "4c3c9e7581c6d95dbc07d8df6ffb9f3cf5cae7e033c8b481d68c3e08e4d5b616",
+        "baseline_messages_sha256": "ca57e765e5eeecd518974a87ac3dba78651cfa1b07820e8ec459b9e9e25a58f8",
+        "candidate_messages_sha256": "ba770168f7bc110aeb91eda51743111ac03c88509ca9f4bfbe62e239f64358cf"
+      },
+      {
+        "conversation_id": "p1-en-009",
+        "transcript_sha256": "203acba998eb61694a2950a92fc2714c71be9d0b236570f57ec0a93372dca32e",
+        "baseline_messages_sha256": "dec385256083edd807ba9de4eb7b162644959df2079cf7ee830cf24ea14bbe01",
+        "candidate_messages_sha256": "499a3093ba8281e1d78f4f28c991ababf6622591484ac5a9b55a86862c4f0e41"
+      },
+      {
+        "conversation_id": "p1-en-010",
+        "transcript_sha256": "6934d4e8e899ac18e4d4a655f9073c24649bbeeb96d7f732120b586af44c212c",
+        "baseline_messages_sha256": "f51f98efcc0fc350942fe6b88b0cdc4a401257f7d40e3564fa53b8ca7edc0e39",
+        "candidate_messages_sha256": "900aa1b6164f96c819819a2a6979c7a998803837dd7b71d801bf19ee3f00af56"
+      },
+      {
+        "conversation_id": "p1-en-011",
+        "transcript_sha256": "60e5eac08d28eec63e821454ac22b54e75110f49dcc4a3be71c2842aaabc9a2c",
+        "baseline_messages_sha256": "470e82cb2f199f185cf65d37e1ff88115a550a1219eab65952aab838b2004f88",
+        "candidate_messages_sha256": "c868bb9c9cecf9b3d47d3bfe8107b228c3a942d2ee509fdadbeb3def0b78f518"
+      },
+      {
+        "conversation_id": "p1-en-012",
+        "transcript_sha256": "4ae7df3d7c884081028e406a94fad9093c4e4de673897325cc0cbe70accb1c33",
+        "baseline_messages_sha256": "4584de670bd0c7b35204c5a34a1fe1407ae8fdf14e0f40e021bc092069d45f24",
+        "candidate_messages_sha256": "e9a14be542187f0e610b1c261120fa9111c1678c896c5a923c56021525e1ccca"
+      },
+      {
+        "conversation_id": "p1-en-013",
+        "transcript_sha256": "519db27828dab86e7f3e360b73d4cfbbb72a7d0bbd154b8263aa182a6277c71d",
+        "baseline_messages_sha256": "7d561870dc2b0d038538db1b04f4dd12dd53f0a086890cd97f683617f923af41",
+        "candidate_messages_sha256": "f2556cdd1bd111523ba9dce52f73bdacdaca169e9bb227f9411ebe7dd436649e"
+      },
+      {
+        "conversation_id": "p1-en-014",
+        "transcript_sha256": "7ede32e04b4ed5f8ad4c4d51cd24f61af066297da8ae61d942fa908e8b571180",
+        "baseline_messages_sha256": "5bef62f8e014c8ecccdd3cbb501efe85b1c98203e0ca34b802d384cfbe39ad3a",
+        "candidate_messages_sha256": "33d0f615e9e6403ae03d6c36ea6c29511bd4cf93fb8fbc0a68b479dcb73cb760"
+      },
+      {
+        "conversation_id": "p1-en-015",
+        "transcript_sha256": "7948da3991714b8ec9c391edcc947d51c1890dca58c6562c566fd01b15d0f5a1",
+        "baseline_messages_sha256": "65d2add4bc5bebb88cee6650fae11da2bbbd8f5d333db5361912b50a4ecfdc78",
+        "candidate_messages_sha256": "9a887557ec006ebdef1f5dc17e775e13a2f255a9a053ec382d7ad70220ca6216"
+      },
+      {
+        "conversation_id": "p4-ru-003",
+        "transcript_sha256": "477d8e1227f3a5c7734e91d3773826068c4cca37dbe240a56bfc74dc2fa31291",
+        "baseline_messages_sha256": "13027753c1a2b4a0572cbeaff7cf662ced044e2998df5cbd17b114cbebb7ebf5",
+        "candidate_messages_sha256": "c97cc8aca112095eb4037d5b3d91871e0b1931c2cc977d6dbc7a0c7173739390"
+      },
+      {
+        "conversation_id": "p4-ru-002",
+        "transcript_sha256": "beb49cf150b1769a2328af3a29a7dc7fa8ddde2da42859f983c1e98794e92b3b",
+        "baseline_messages_sha256": "d9c8087241032c175957479313f8c8a7841aba5081c78bb0246d24f103bbd5c1",
+        "candidate_messages_sha256": "e54c820b02cd96a18dd0cd89e6d881d1ca4a4d2d1c40855e030db6ed60085d21"
+      },
+      {
+        "conversation_id": "p4-ru-001",
+        "transcript_sha256": "2413fd98f2def52748d0d1cea7a066dc760a559e5edeb12583d90a953dc00ae6",
+        "baseline_messages_sha256": "4ba138581e2625a721edcc78d8335ac58edc266a293d41a95780d2aa5a222d0e",
+        "candidate_messages_sha256": "144f6cc273abb3d293fb49816255e972f38471d1983cc686d7806cab2942b198"
+      },
+      {
+        "conversation_id": "p4-ru-005",
+        "transcript_sha256": "b4bff05197d8d7b18dbdbe159d86d33676262a7e8489693498609b84c631e411",
+        "baseline_messages_sha256": "ee1f26527327c9a702e246f6727bda41490c2354830489ca0fb73994cea5c489",
+        "candidate_messages_sha256": "6f62c1dda5b1a7d9542edb5a949f74db9becebdce233acf6d0db8354aed58c2e"
+      },
+      {
+        "conversation_id": "p4-ru-004",
+        "transcript_sha256": "2d3e20b8c30b2d05b46677c3d6ad0b97251abd61a485fbf57bb4376ec17a6c56",
+        "baseline_messages_sha256": "5aa7c6d0f23555b5e1a4348147358eb5c5c38a28109b43e5c264b2403bc40ac4",
+        "candidate_messages_sha256": "dd7a43a969afca5fceaa93a29af102d3ba12c3932776eabe1591c9bd0b0890ec"
+      }
+    ],
+    "note": "Hashes only; no generations. Full population manifest, not an approved paid sample selection. Freeze budget and effective provider settings before execution."
+  },
+  "human_audio_reviews": "not_supplied",
+  "qa_security_approval": "pending",
+  "independent_human_test": "not_available"
+}

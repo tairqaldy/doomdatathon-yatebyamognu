@@ -1,0 +1,125 @@
+{
+  "run": "15f1835d2b10d83fb74b36d9a278dcacc05af711:data/evaluations/DEV.json",
+  "meta": {
+    "source_revision": "15f1835d2b10d83fb74b36d9a278dcacc05af711",
+    "prompt_version": "eval-v5.3",
+    "model": "openai:gpt-6-luna"
+  },
+  "gold_dialogs": 19,
+  "scored_dialogs": 19,
+  "draft_gold": 0,
+  "missing": [],
+  "overall": {
+    "n": 152,
+    "strict": 95.39,
+    "lenient": 98.68,
+    "scale_within_1": 94.59
+  },
+  "per_criterion": {
+    "c01": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c02": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c03": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c04": {
+      "n": 19,
+      "strict": 89.47,
+      "lenient": 94.74,
+      "scale_within_1": 94.44
+    },
+    "c05": {
+      "n": 19,
+      "strict": 94.74,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c06": {
+      "n": 19,
+      "strict": 78.95,
+      "lenient": 94.74,
+      "scale_within_1": 94.74
+    },
+    "c07": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    },
+    "c08": {
+      "n": 19,
+      "strict": 100,
+      "lenient": 100,
+      "scale_within_1": null
+    }
+  },
+  "per_language": {
+    "EN": {
+      "n": 40,
+      "strict": 100,
+      "lenient": 100
+    },
+    "KZ": {
+      "n": 40,
+      "strict": 97.5,
+      "lenient": 97.5
+    },
+    "RU": {
+      "n": 72,
+      "strict": 91.67,
+      "lenient": 98.61
+    }
+  },
+  "na": {
+    "precision": 100,
+    "recall": 100,
+    "gold": 28,
+    "model": 28
+  },
+  "gross_error": {
+    "tp": 7,
+    "fn": 0,
+    "fp": 0,
+    "recall": 100,
+    "precision": 100
+  },
+  "evidence": {
+    "hit_rate": 99.11,
+    "checked": 112,
+    "invalid_refs": 0,
+    "refs": 190
+  },
+  "total": {
+    "mae": 3.28,
+    "dialogs": 19,
+    "null_mismatch": 0
+  },
+  "disagreements": [
+    {
+      "conversation_id": "p1-kz-015",
+      "criterion_id": "c06",
+      "gold": 4,
+      "model": 10,
+      "note": "Client had to ask for the reason again."
+    },
+    {
+      "conversation_id": "p4-ru-001",
+      "criterion_id": "c04",
+      "gold": 10,
+      "model": 20,
+      "note": "Explained the support scope, not how to get a personal manager."
+    }
+  ]
+}

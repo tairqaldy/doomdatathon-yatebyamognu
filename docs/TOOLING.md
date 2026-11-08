@@ -95,6 +95,8 @@ Saved-run replay: `node eval/readiness/review-saved-run.mjs <immutable-ref> <eva
 Phone-app research (2026-11-07, #20): macOS iPhone Mirroring + `screencapture -l <windowId> -o -x` (2x Retina) in a 1.5 s loop that keeps changed frames only (md5), while the account owner taps through the app. Colors and edges read with small CoreGraphics Swift scripts (dominant color + far-from-background "ink" per region, run-length edges along a line). Raw frames stay out of git (real client data). Method and results: `docs/research/freedom-app.md`.
 
 ## 7. Research sources and external docs
+Citation investigation (2026-11-07): existing Node fs/crypto/child_process + pure `combineSamples()` only. Resolve committed v5.1 sample cache with the canonical Git source fingerprint, compare normalization diagnostics to original indices and trace vote provenance using in-memory audit tags. No inference, network or cache writes. Source excerpts are referenced by index/hash instead of copying potentially identifying call text.
+
 Five-case review (2026-11-07): Node built-ins only, offline v4 cache reconstruction and current v5.1 evidence regression; optional read-only GET audio resolver + HEAD audio metadata, no speech model. Output never stores signed audio URLs or raw audio. Reproduce `node eval/fairness/review-cases.mjs` and `node --test eval/fairness/review-cases.test.mjs`.
 
 N/A/cache compatibility (2026-11-07): existing Node built-ins and Python regression runner only. Versioned findings separate schema, evidence, transcription, applicability and publication; replay reads all existing cache files without rewriting or model calls. No new dependencies. Reproduce the compatibility tests and `eval/fairness/run-compatibility.py`.
@@ -119,3 +121,7 @@ Transcript fairness audit (2026-11-07): Python 3.14 standard library (`unittest`
 | Organizer Q&A from Telegram (collected by Nazar) | how we're judged, results files, checklist rulings, demo asks | `docs/case/telegram-qa.md`, `docs/research/organizer-rulings.md` |
 | https://fbroker.kz (HTML + `/_nuxt/*.css`, 2026-11-07) | colors, type, radii, shadows, motion, breakpoints, component patterns | `docs/research/design-system.md` |
 | Organizers' dataset API (signed URL in `.env`) | DEV dataset | `data/datasets/DEV.json`, `data/README.md` |
+
+| Pinned main offline checker | Git objects + upstream pure modules with throwing model/cache stubs; existing accuracy harness; no inference | lane-c | node eval/fairness/current-main-check.mjs | Free; known-gold saved metrics only | Verified on 15f1835, no deployment |
+
+| Human audio observation sidecars and validation v1 | Source-bound user listening findings, uncertainty preserved, C01-only offline overlay with no score overrides | lane-c | node eval/fairness/revalidate-human-audio.mjs [--ref origin/main]; node --test eval/fairness/human-audio-review.test.mjs | Free/offline; not an independent audio transcription or C08 approval | 8 regression tests pass |

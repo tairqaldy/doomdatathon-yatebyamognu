@@ -1,0 +1,12 @@
+diff --git a/lib/cache.js b/lib/cache.js
+--- a/lib/cache.js
++++ b/lib/cache.js
+@@ -35,7 +35,7 @@ export function logicFingerprint(ns) {
+   const h = createHash('sha1');
+   for (const rel of LOGIC[ns]) {
+-    try { h.update(readFileSync(new URL(rel, import.meta.url))); } catch { h.update(`missing:${rel}`); }
++    try { h.update(readFileSync(new URL(rel, import.meta.url), 'utf8').replace(/\r\n/g, '\n')); } catch { h.update(`missing:${rel}`); }
+   }
+   const fp = h.digest('hex').slice(0, 12);
+   fpCache.set(ns, fp);
+   return fp;

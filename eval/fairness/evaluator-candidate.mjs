@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { buildMessages, PROMPT_VERSION } from '../../lib/evaluator.js';
 import { score } from '../../prototype/scoring.js';
 import { fingerprint, validateEvaluation, validateProbe } from './validation.mjs';
+import { assessHumanAudioReview } from './human-audio-review.mjs';
 import { VALIDATION_VERSION, LEGACY_VERSIONS, riskStatus, isBlocking, finding, classifyEvaluation, classifyTranscript } from './policy.mjs';
 
 // Independent of the base evaluator version; record both when preparing a comparison.
@@ -38,6 +39,7 @@ export function reviewEvaluation(conversation, result, checklist, probe, options
   const findings = [...assessment.findings,
     ...classifyTranscript(validateProbe(conversation, probe), conversation, result, criteria, contact?.id),
     ...(options.contextFindings || [])];
+  if (options.humanAudioReview) findings.push(...assessHumanAudioReview(conversation, checklist, options.humanAudioReview).findings);
   if (contact && probe?.status === 'needs_review') {
     findings.push(finding('transcript_uncertainty', contact.id, 'transcription', 'needs_review', { turn_index: probe.message_index ?? null }));
   }

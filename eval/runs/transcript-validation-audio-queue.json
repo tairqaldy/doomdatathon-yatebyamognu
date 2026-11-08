@@ -8,11 +8,33 @@
     "audio_endpoint": "/api/audio?id=p4-ru-002",
     "verbatim_audio": null,
     "corrected_transcript": null,
-    "recording_start_complete": null,
+    "recording_start_complete": false,
     "reviewer": null,
     "decision": null,
     "score_effect": null,
-    "status": "awaiting_human_audio_review"
+    "status": "human_observations_recorded_final_c01_pending",
+    "human_review_reference": "eval/fairness/human-audio-findings.json",
+    "human_review_sha256": "c0b247371383849f12b7645b6cb5b7f6587e63924db5a9ae7956003f42b75df9",
+    "observation_status": "recorded",
+    "reviewer_provenance": {
+      "session_user": true,
+      "display_name": null,
+      "identity_independently_verified": false
+    },
+    "reviewed_at": null,
+    "audio_findings": {
+      "issues": [
+        "recording_start_missing"
+      ],
+      "greeting": "not_verifiable",
+      "company_introduction": "not_verifiable",
+      "personal_introduction": "not_verifiable",
+      "wording": {
+        "approximate_masked": null,
+        "verbatim_confirmed": false,
+        "uncertainty": "Beginning missing; greeting cannot be verified."
+      }
+    }
   },
   {
     "conversation_id": "p4-ru-005",
@@ -27,7 +49,30 @@
     "reviewer": null,
     "decision": null,
     "score_effect": null,
-    "status": "awaiting_human_audio_review"
+    "status": "human_observations_recorded_final_c01_pending",
+    "human_review_reference": "eval/fairness/human-audio-findings.json",
+    "human_review_sha256": "a904c393e5d1f3ffe9f21e46391e7a8d590c1c39a4eac621ca38a81d65675203",
+    "observation_status": "recorded",
+    "reviewer_provenance": {
+      "session_user": true,
+      "display_name": null,
+      "identity_independently_verified": false
+    },
+    "reviewed_at": null,
+    "audio_findings": {
+      "issues": [
+        "possible_asr_company_name_mismatch"
+      ],
+      "greeting": "confirmed",
+      "company_introduction": "audible_wording_uncertain",
+      "personal_introduction": "not_confirmed",
+      "wording": {
+        "approximate_masked": "Welcome to Freedom Bank.",
+        "later_greeting_reported": true,
+        "verbatim_confirmed": false,
+        "uncertainty": "Similar wording reported, company name requires verification; later greeting does not prove first-response compliance."
+      }
+    }
   },
   {
     "conversation_id": "p4-ru-004",
@@ -42,6 +87,28 @@
     "reviewer": null,
     "decision": null,
     "score_effect": null,
-    "status": "awaiting_human_audio_review"
+    "status": "human_observations_recorded_final_c01_pending",
+    "human_review_reference": "eval/fairness/human-audio-findings.json",
+    "human_review_sha256": "15822e95a80baa179c520476a091f397058b153e190bce785e27480218cce09c",
+    "observation_status": "recorded",
+    "reviewer_provenance": {
+      "session_user": true,
+      "display_name": null,
+      "identity_independently_verified": false
+    },
+    "reviewed_at": null,
+    "audio_findings": {
+      "issues": [
+        "fast_or_unclear_speech"
+      ],
+      "greeting": "confirmed",
+      "company_introduction": "audible_wording_uncertain",
+      "personal_introduction": "likely_confirmed",
+      "wording": {
+        "approximate_masked": "Freedom Broker, hello, my name is [personal name withheld].",
+        "verbatim_confirmed": false,
+        "uncertainty": "Approximate user wording; fast speech, personal introduction likely rather than certain. Personal name redacted in public artifact."
+      }
+    }
   }
 ]
