@@ -69,6 +69,7 @@ flowchart LR
 ### 1. Checklist setup
 
 Add, edit, replace or reorder a criterion; change its wording, weight, answer type (yes/no, scale with steps, flag), N/A rule. Each save is a new version, and «Сохранить vN и переоценить» evaluates every dialog again with it. Chats and calls have separate checklists ([`freedom-chat-v1.json`](data/checklists/freedom-chat-v1.json), [`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)).
+
 **Where:** `/admin/#/checklist` (Чек-лист).
 
 <img src="docs/media/checklist-editor.jpg" alt="Checklist editor with criteria, weights, answer types and N/A rules" width="720">
@@ -76,6 +77,7 @@ Add, edit, replace or reorder a criterion; change its wording, weight, answer ty
 ### 2. Getting dialogs
 
 Three ways in: the organizers' set by `group_id` through our `/api/dataset` proxy (the browser never meets the API's CORS limits); a pasted or uploaded transcript; and live chats from `/support/`, where AIM hands the client to an operator and the finished chat lands in «Живые чаты» for QA.
+
 **Where:** Загрузка диалогов (`/admin/#/import`): «Вставить текст», «JSON-файл», «Набор по group_id». Live chats: Живые чаты.
 
 <table>
@@ -88,11 +90,13 @@ Three ways in: the organizers' set by `group_id` through our `/api/dataset` prox
 ### 3. Evaluation
 
 GPT-6 Luna runs 3 samples per dialog: dialog facts first, then a check and an answer per criterion with the evidence turn. A guard rejects evidence that is not in the transcript, a majority vote picks each answer, and `prototype/scoring.js` computes the points. Only the operator is graded; bot and system lines are context.
+
 **Where:** card → «Оценить заново», or «Оценить AI-агентом» on an imported dialog. A chat takes about 30 s. Details: [How evaluation works](#how-evaluation-works).
 
 ### 4. Results
 
 Per criterion: answer, points, weight, explanation and evidence. A missed action points to the checked range, an N/A gives its reason. Section subtotals, the total, and a red gross-error banner. Click a deduction and the transcript scrolls to the line and highlights it; on calls the player jumps to that moment.
+
 **Where:** Диалоги → any row (analysis card). Обзор for averages and points lost per criterion; Диалоги → «Грубые ошибки» for every flagged dialog.
 
 <img src="docs/media/dialog-card.jpg" alt="Analysis card with transcript, score ring and deduction reasons" width="720">
@@ -107,11 +111,13 @@ Per criterion: answer, points, weight, explanation and evidence. A missed action
 ### 5. Appeal
 
 Pick a criterion, write a comment, save. The appeal goes to the «Апелляции» queue with the disputed answer, the comment and the dialog fragment.
+
 **Where:** analysis card → «Оспорить» on a criterion.
 
 ### 6. Manual re-evaluation
 
 The reviewer confirms or changes the answer with a reason. The same scoring function recomputes the total at once, no model call. The card shows the original score, the decision and the final score.
+
 **Where:** role switch «Проверяющий» → «Принять решение», in the card or in «Апелляции».
 
 <img src="docs/media/appeal-decision.jpg" alt="Reviewer decision on an appeal with the original answer, the decision and the new total" width="720">
