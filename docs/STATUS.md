@@ -562,3 +562,8 @@ Checks: 102/102 audit tests, 12/12 scoring, 921 tracked JSON parse, diff check. 
 Done: `eval/asr-compare.mjs` runs gpt-4o-transcribe, whisper-1 and Nemotron 3.5 on the 5 DEV calls and compares them with the organizer transcripts. Organizer text is outvoted (both strong engines agree on a different word) on 4.1% of words vs 2.5% gpt-4o and 2.1% Nemotron; worst in 3 of 5 calls. Meaning-changing errors: «продам» vs «подал» поручение, «домой/прямой счёт» vs «демо-счёт» (0 of 5 right), «через 02:00» vs «через два часа», «убить на жительство», OTC lost 3 of 5 times, Kazakh IVR greeting → «за кошки для нас» in 4 calls, name masking leaks in 2 calls. Raw WER vs gpt-4o is 46.6%, but most of it is coverage (organizer recording pauses on transfer); quote the outvoted rate. whisper-1 loops on long calls, not usable for this. Write-up: `docs/research/asr-quality.md`. Cost ≈ $0.47, cached.
 Contracts touched: none. No evaluator or UI change.
 How to verify: `node eval/asr-compare.mjs` (free from cache on this laptop), read `eval/runs/asr-compare-DEV.json`.
+
+### 2026-11-08 11:53 · lane-d · tair · stop code
+Done: final tagline, team rows (Dameli on par with Tair, UX lead), production smoke test on ee491ca: all pages 200, `/api/health` eval-v5.3, evaluate returns 8 answers (cached, 12 ms), operator-only transcript returns no_client, both results files valid (prod 10/10, dev 65/65).
+Not merged: Amina's PR #39 (fairness integration). It changes the `/api/evaluate` response and `vercel.json` includeFiles, and there was no time to test it end to end before stop code. It stays open for after the event.
+Next: tag `stop-code` on main at 11:58:30, no commits after.
