@@ -93,12 +93,12 @@ The card puts the score first, then «Как посчитан итог»: one sl
 
 **Where:** Диалоги → any row (analysis card); Обзор; Диалоги → «Грубые ошибки».
 
-<img src="docs/media/dialog-card.jpg" alt="Analysis card with transcript, score and deduction reasons" width="720">
+<img src="docs/media/dialog-card.jpg" alt="Analysis card for p1-ru-009: timeline, transcript, score 46 with a gross error and «Как посчитан итог»" width="720">
 
 <table>
 <tr>
 <td width="50%"><img src="docs/media/gross-errors.jpg" alt="List of dialogs with gross errors and the evidence line"><br><sub>Грубые ошибки: every flagged dialog with the reason and the operator line</sub></td>
-<td width="50%"><img src="docs/media/admin-overview.jpg" alt="Admin overview with KPIs and points lost per criterion"><br><sub>Обзор: KPIs, where points are lost, what to fix first</sub></td>
+<td width="50%"><img src="docs/media/admin-overview.jpg" alt="Admin overview with the jury scenario panel, KPIs, points lost per criterion and gross errors"><br><sub>Обзор: «Для жюри» panel, four KPIs, «Где теряем баллы», «Грубые ошибки»</sub></td>
 </tr>
 </table>
 
