@@ -4,6 +4,28 @@ import { send, preflight, body, fail } from '../lib/http.js';
 import { evaluateWithAudio as evaluate } from '../lib/tone.js'; // text criteria → lib/evaluator.js, audio criteria (calls) → lib/tone.js
 import { findConversation } from '../lib/data.js';
 
+const SPEAKERS = new Set(['client', 'operator', 'bot', 'system']);
+const ORGANIZER_AUDIO = /^https:\/\/[a-z0-9.-]+\.powerplatform\.com\//i;
+/** A dialog sent inline (pasted or uploaded in /admin «Загрузка»): check the shape and cap sizes, so any new transcript
+ *  can be evaluated without being in a bundled dataset. audio_url is kept only for the organizers' host (no open fetch). */
+export function cleanConversation(c) {
+  const bad = (m) => Object.assign(new Error(`conversation: ${m}`), { status: 400 });
+  if (!c || typeof c !== 'object') throw bad('object required');
+  const id = String(c.conversation_id || '').trim();
+  if (!id || id.length > 120) throw bad('conversation_id required (≤ 120 chars)');
+  if (!Array.isArray(c.transcript) || !c.transcript.length) throw bad('transcript must be a non-empty array');
+  if (c.transcript.length > 600) throw bad('transcript is too long (> 600 turns)');
+  const transcript = c.transcript.map((m, i) => {
+    const speaker = String(m?.speaker || '').toLowerCase();
+    if (!SPEAKERS.has(speaker)) throw bad(`turn ${i}: speaker must be client, operator, bot or system`);
+    const text = String(m?.text ?? '').slice(0, 6000);
+    return { timestamp: String(m?.timestamp ?? '').slice(0, 40), speaker, text };
+  });
+  if (!transcript.some((m) => m.speaker === 'operator')) throw bad('no operator turns to evaluate');
+  const audio = typeof c.audio_url === 'string' && ORGANIZER_AUDIO.test(c.audio_url) ? c.audio_url : null;
+  return { conversation_id: id, channel: String(c.channel || 'agent chat').slice(0, 40), language: String(c.language || 'RU').toUpperCase().slice(0, 4), transcript, audio_url: audio };
+}
+
 // 3 parallel samples: chats ≈ 30–60 s, long calls ≈ 2–2.5 min. Fluid compute allows 300 s.
 export const config = { maxDuration: 300 };
 
@@ -12,7 +34,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return send(res, 405, { error: 'POST only' });
   try {
     const b = await body(req);
-    const conv = b.conversation || (await findConversation(b.conversation_id, b.group || 'DEV'));
+    const conv = b.conversation ? cleanConversation(b.conversation) : await findConversation(b.conversation_id, b.group || 'DEV');
     if (!conv) return send(res, 404, { error: 'conversation not found' });
     if (!b.checklist?.criteria?.length) return send(res, 400, { error: 'checklist with criteria required' });
     const t0 = Date.now();
