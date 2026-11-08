@@ -1,0 +1,165 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился (имя Света) в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала — клиент чётко сформулировал вопрос о выборе счёта.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Запрос ясен с самого начала: «С какого покупать акции?»"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации — это общий вопрос о продуктах и навигации по счетам.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Общий вопрос о продуктах: «С какого покупать акции?»"
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Оба вопроса клиента решены: оператор объяснил, что D-счёт не используется для покупки бумаг, и подтвердил, что для торговой операции нужен торговый счёт. Клиент подтвердил понимание.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Понятно, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор вежлив, клиент не жаловался и не выражал недовольства.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Ответы ясные и связные, клиенту не пришлось переспрашивать, сбоев нет.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Да, для торговой операции ориентируйтесь на торговый счёт."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог, не назвал следующий шаг и не предложил дальнейшую помощь — только вежливая формула «Хорошего дня!».",
+   "deduction_reason": "В заключительной реплике нет итога, следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Света. Средства на D-счёте напрямую для покупки бумаг не используются."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент спросил, с какого счёта покупать акции и что делать, если деньги на D-счёте.",
+  "operator_actions": "Оператор объяснила, что D-счёт не используется для покупки бумаг, и подтвердила, что для торговой операции нужен торговый счёт.",
+  "outcome": "Клиент подтвердил понимание и поблагодарил; диалог завершён прощанием без итога или предложения дальнейшей помощи."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "С какого счёта покупать акции (D-счёт или торговый)?",
+    "status": "resolved"
+   },
+   {
+    "turn": 4,
+    "request": "Что делать, если деньги сейчас видны на D-счёте?",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "confirmation"
+   }
+  ],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 1,
+ "latency_ms": 19941,
+ "usage": {
+  "prompt_tokens": 5318,
+  "completion_tokens": 2715,
+  "cost": 0.007401
+ }
+}

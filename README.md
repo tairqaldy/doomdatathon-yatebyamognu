@@ -364,6 +364,19 @@ How to read it:
 
 **Confidence in the card.** The evaluator answers each dialog three times and votes. The card shows the vote per criterion: «3 из 3» quietly, «2 из 3 · проверьте» as a warning, and a count of split criteria in the header. A split is the signal that a human should look; the reviewer can appeal right there.
 
+**Open-weight comparison (architecture diversity).** The same eval-v5.3 prompt, 3 samples and vote, on the same labeled chats, with an open-weight model a bank can host on its own GPU. Production stays on `gpt-6-luna`; this shows the pipeline is not tied to one vendor. Any OpenAI-compatible server plugs in as `--model local:<id>` (`CQA_LOCAL_BASE_URL`, `CQA_LOCAL_API_KEY` in `lib/llm.js`).
+
+| Same 39 chats (18 gold + 21 blind; 3 of 42 failed for Qwen) | `gpt-6-luna` (production) | `qwen3.8-27b` (open weights, via OpenRouter) |
+|---|---|---|
+| Gold strict · κ | **97.1%** · 0.96 | 94.1% · 0.92 |
+| Blind consensus strict · κ | **97.1%** · 0.96 | 95.9% · 0.95 |
+| C6 κ, gold / blind | 0.66 / 0.57 | 0.59 / 0.36 |
+| Gross errors | 7/7, 0 false | 7/7, 0 false (same 7 chats) |
+| Invalid JSON after a retry | 0 | 3 of 42 chats |
+| Cost per chat · latency p50 | $0.0068 · ≈ 30 s | $0.034 · 61 s |
+
+The open model loses 1–3 points, mostly on the judgement scales (C4, C6), and finds the same gross errors. We also tried `alemllm`, a Kazakhstan-hosted model on llm.alem.ai, through the same route: it returned the facts and checks but left out the answers block, because that server does not enforce the JSON schema (0 of 33 chats usable). Fixing that needs a response adapter in the evaluator, so it waits until after the control run. Run file: [`eval/runs/*qwen38-27b*`](eval/runs/), numbers: [`agreement-qwen38-27b.json`](eval/runs/agreement-qwen38-27b.json).
+
 ```bash
 python3 -I eval/agreement.py                      # eval-v5.3 (data/evaluations/DEV.json)
 python3 -I eval/agreement.py v53=data/evaluations/DEV.json qwen=<run>.evaluations.json   # compare runs

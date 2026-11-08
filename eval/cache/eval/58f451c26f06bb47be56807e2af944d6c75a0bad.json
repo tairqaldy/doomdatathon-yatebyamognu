@@ -1,0 +1,173 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  },
+  "c02": {
+   "answer": "na",
+   "explanation": "Данных для ответа хватало с самого начала, поэтому выявление потребности не требовало дополнительных вопросов.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Почему опять не могу найти вход? На вашем сайте всё перелопатил."
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Запрос не требовал идентификации, так как касался навигации по сайту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Откройте tradernet.global, там вход в веб-версию."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Клиент получил конкретный сайт и подтвердил, что вошёл.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 11,
+     "quote": "Откройте tradernet.global, там вход в веб-версию."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Вошёл. Но со мной так говорить не надо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "no",
+   "explanation": "Оператор был груб и не отреагировал на жалобу клиента.",
+   "deduction_reason": "Оскорбление и отсутствие реакции на недовольство клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Вошёл. Но со мной так говорить не надо."
+    },
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "До свидания."
+    }
+   ]
+  },
+  "c06": {
+   "answer": 4,
+   "explanation": "Из-за игнорирования вопроса клиенту пришлось повторить, что он не понимает, куда перейти.",
+   "deduction_reason": "Клиенту пришлось переспросить из-за оператора.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    },
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Не понимаю, на какой сайт перейти."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил помощь.",
+   "deduction_reason": "В финале нет итога или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "До свидания."
+    }
+   ]
+  },
+  "c08": {
+   "answer": "yes",
+   "explanation": "Оператор оскорбил клиента.",
+   "deduction_reason": "Оскорбление клиента.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 9,
+     "quote": "Здравствуйте, я Алексей. Вы вообще читать умеете? Бот всё написал."
+    }
+   ]
+  }
+ },
+ "summary": {
+  "reason": "Клиент не мог найти вход на сайт.",
+  "operator_actions": "Оператор грубо ответил, затем назвал сайт tradernet.global.",
+  "outcome": "Клиент вошёл, но выразил недовольство тоном."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 9,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": 9,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 13,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "turn": 0,
+    "request": "Почему опять не могу найти вход? На вашем сайте всё перелопатил.",
+    "status": "resolved"
+   },
+   {
+    "turn": 10,
+    "request": "Не понимаю, на какой сайт перейти.",
+    "status": "resolved"
+   }
+  ],
+  "client_reasks": [
+   {
+    "turn": 10,
+    "cause": "operator_ignored_question"
+   }
+  ],
+  "client_dissatisfaction_turns": [
+   4,
+   12
+  ],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": null,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 69514,
+ "usage": {
+  "prompt_tokens": 5306,
+  "completion_tokens": 8440,
+  "cost": 0.021215
+ }
+}

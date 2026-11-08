@@ -1,0 +1,146 @@
+{
+ "answers": {
+  "c01": {
+   "answer": "yes",
+   "explanation": "Оператор поздоровался и представился в первом ответе.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте! Я Олег. Вы знаете точный тикер нужной бумаги или видите только название?"
+    }
+   ]
+  },
+  "c02": {
+   "answer": "yes",
+   "explanation": "Оператор уточнил недостающую деталь перед рекомендацией.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте! Я Олег. Вы знаете точный тикер нужной бумаги или видите только название?"
+    }
+   ]
+  },
+  "c03": {
+   "answer": "na",
+   "explanation": "Клиенту давалась общая навигационная подсказка, а не данные по счёту.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "na_condition",
+     "quote": "Попробуйте ввести точный тикер."
+    }
+   ]
+  },
+  "c04": {
+   "answer": 20,
+   "explanation": "Существенный запрос клиента решён.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 13,
+     "quote": "Нашёл одну нужную, спасибо."
+    }
+   ]
+  },
+  "c05": {
+   "answer": "yes",
+   "explanation": "Оператор сохранял вежливый тон.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Рад помочь. Хорошего дня!"
+    }
+   ]
+  },
+  "c06": {
+   "answer": 10,
+   "explanation": "Диалог был понятным и последовательным.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 12,
+     "quote": "Попробуйте ввести точный тикер. Откройте найденную бумагу и проверьте её перед заполнением параметров приказа на покупку."
+    }
+   ]
+  },
+  "c07": {
+   "answer": "no",
+   "explanation": "Оператор попрощался, но не подвёл итог и не предложил помощь.",
+   "deduction_reason": "В финале нет итога, следующего шага или предложения дальнейшей помощи.",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 14,
+     "quote": "Рад помочь. Хорошего дня!"
+    }
+   ]
+  },
+  "c08": {
+   "answer": "no",
+   "explanation": "Грубых ошибок не выявлено.",
+   "deduction_reason": "",
+   "evidence": [
+    {
+     "kind": "message",
+     "turn_index": 10,
+     "quote": "Здравствуйте! Я Олег. Вы знаете точный тикер нужной бумаги или видите только название?"
+    }
+   ]
+  }
+ },
+ "summary": {
+  "operator_actions": "Оператор уточнил наличие тикера и подсказал ввести точный тикер, проверить бумагу перед заказом.",
+  "outcome": "Клиент нашёл нужную бумагу и поблагодарил.",
+  "reason": "Клиент не понимал, как купить облигацию в приложении и видел несколько похожих бумаг в поиске."
+ },
+ "problems": [],
+ "facts": {
+  "operator_first_turn": 10,
+  "identity_verified_turn": null,
+  "account_data_before_verification_turn": null,
+  "insult_turn": null,
+  "off_company_offer_turn": null,
+  "last_client_question_ignored_turn": null,
+  "operator_goodbye_turn": 14,
+  "summary_or_next_step_turn": null,
+  "offer_more_help_turn": null,
+  "client_requests": [
+   {
+    "request": "Хочу купить облигацию, но не понимаю, куда нажимать в приложении.",
+    "status": "resolved",
+    "turn": 0
+   },
+   {
+    "request": "В поиске вижу несколько похожих, нужна помощь с выбором нужной бумаги.",
+    "status": "resolved",
+    "turn": 4
+   }
+  ],
+  "client_reasks": [],
+  "client_dissatisfaction_turns": [],
+  "ending": "operator_last_message",
+  "cut_before_operator_could_close": false,
+  "operator_clarifying_question_turn": 10,
+  "need_missed_kind": "none",
+  "need_missed_turn": null
+ },
+ "fact_notes": [],
+ "complete": true,
+ "model": "qwen/qwen3.8-27b",
+ "prompt_version": "eval-v5.3",
+ "attempts": 2,
+ "latency_ms": 89986,
+ "usage": {
+  "prompt_tokens": 10748,
+  "completion_tokens": 11618,
+  "cost": 0.02283
+ }
+}

@@ -1,0 +1,421 @@
+{
+  "group": "DEV",
+  "model": "qwen/qwen3.8-27b",
+  "prompt_version": "eval-v5.3",
+  "samples": 3,
+  "checklist": "freedom-chat",
+  "version": 1,
+  "at": "2026-11-08T05:41:46.281Z",
+  "n": 42,
+  "errors": 3,
+  "cached": 0,
+  "fresh_calls": 39,
+  "cost_usd_total": 1.32066,
+  "cost_usd_per_eval": 0.03386,
+  "latency_ms_p50": 61123,
+  "latency_ms_p95": 129576,
+  "rows": [
+    {
+      "id": "p1-ru-004",
+      "lang": "RU",
+      "cached": false,
+      "ms": 71657,
+      "model_ms": 39811,
+      "cost": 0.015258,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-003",
+      "lang": "RU",
+      "cached": false,
+      "ms": 80927,
+      "model_ms": 80903,
+      "cost": 0.047574,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-001",
+      "lang": "RU",
+      "cached": false,
+      "ms": 90025,
+      "model_ms": 74154,
+      "cost": 0.029157,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-006",
+      "lang": "RU",
+      "cached": false,
+      "ms": 90026,
+      "model_ms": 53636,
+      "cost": 0.021316,
+      "total": 100,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-007",
+      "error": "Model did not return valid JSON"
+    },
+    {
+      "id": "p1-ru-009",
+      "lang": "RU",
+      "cached": false,
+      "ms": 90026,
+      "model_ms": 49558,
+      "cost": 0.026015,
+      "total": 41,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-012",
+      "lang": "RU",
+      "cached": false,
+      "ms": 36696,
+      "model_ms": 36692,
+      "cost": 0.039563,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-011",
+      "lang": "RU",
+      "cached": false,
+      "ms": 135059,
+      "model_ms": 64839,
+      "cost": 0.017546,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-014",
+      "lang": "RU",
+      "cached": false,
+      "ms": 61125,
+      "model_ms": 61123,
+      "cost": 0.051572,
+      "total": 32.5,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-024",
+      "lang": "RU",
+      "cached": false,
+      "ms": 34591,
+      "model_ms": 34587,
+      "cost": 0.03957,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-005",
+      "lang": "RU",
+      "cached": false,
+      "ms": 148498,
+      "model_ms": 24585,
+      "cost": 0.007054,
+      "total": 93.08,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-022",
+      "lang": "RU",
+      "cached": false,
+      "ms": 85673,
+      "model_ms": 67047,
+      "cost": 0.060931,
+      "total": 20,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-017",
+      "lang": "RU",
+      "cached": false,
+      "ms": 108859,
+      "model_ms": 89986,
+      "cost": 0.02283,
+      "total": 93.75,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-020",
+      "lang": "RU",
+      "cached": false,
+      "ms": 117664,
+      "model_ms": 17902,
+      "cost": 0.006414,
+      "total": 84.62,
+      "problems": 1
+    },
+    {
+      "id": "p1-ru-025",
+      "lang": "RU",
+      "cached": false,
+      "ms": 75504,
+      "model_ms": 75500,
+      "cost": 0.032411,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-ru-028",
+      "lang": "RU",
+      "cached": false,
+      "ms": 90003,
+      "model_ms": 41136,
+      "cost": 0.033827,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-002",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 62621,
+      "model_ms": 17367,
+      "cost": 0.034913,
+      "total": 92.31,
+      "problems": 11
+    },
+    {
+      "id": "p1-ru-018",
+      "error": "This operation was aborted"
+    },
+    {
+      "id": "p1-ru-029",
+      "lang": "RU",
+      "cached": false,
+      "ms": 133131,
+      "model_ms": 69514,
+      "cost": 0.028426,
+      "total": 55.38,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-001",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 129579,
+      "model_ms": 129576,
+      "cost": 0.055943,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-006",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 77041,
+      "model_ms": 77037,
+      "cost": 0.027535,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-005",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 91465,
+      "model_ms": 81419,
+      "cost": 0.048021,
+      "total": 38.46,
+      "problems": 15
+    },
+    {
+      "id": "p1-kz-003",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 104549,
+      "model_ms": 52011,
+      "cost": 0.011353,
+      "total": 100,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-008",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 90005,
+      "model_ms": 60293,
+      "cost": 0.03355,
+      "total": 0,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-011",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 55345,
+      "model_ms": 55342,
+      "cost": 0.034551,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-010",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 97533,
+      "model_ms": 66199,
+      "cost": 0.033757,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-014",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 90001,
+      "model_ms": 38319,
+      "cost": 0.021022,
+      "total": 38.46,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-009",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 151567,
+      "model_ms": 151564,
+      "cost": 0.063377,
+      "total": 92.31,
+      "problems": 1
+    },
+    {
+      "id": "p1-kz-013",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 122252,
+      "model_ms": 87656,
+      "cost": 0.051204,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-006",
+      "lang": "EN",
+      "cached": false,
+      "ms": 68555,
+      "model_ms": 68550,
+      "cost": 0.030352,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-003",
+      "lang": "EN",
+      "cached": false,
+      "ms": 86969,
+      "model_ms": 47006,
+      "cost": 0.038551,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-001",
+      "lang": "EN",
+      "cached": false,
+      "ms": 118582,
+      "model_ms": 118580,
+      "cost": 0.057026,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-004",
+      "lang": "EN",
+      "cached": false,
+      "ms": 94791,
+      "model_ms": 94788,
+      "cost": 0.051175,
+      "total": 92.31,
+      "problems": 0
+    },
+    {
+      "id": "p1-kz-015",
+      "lang": "KZ",
+      "cached": false,
+      "ms": 139007,
+      "model_ms": 19746,
+      "cost": 0.012902,
+      "total": 42.35,
+      "problems": 1
+    },
+    {
+      "id": "p1-en-009",
+      "lang": "EN",
+      "cached": false,
+      "ms": 42134,
+      "model_ms": 42132,
+      "cost": 0.03099,
+      "total": 100,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-015",
+      "lang": "EN",
+      "cached": false,
+      "ms": 57155,
+      "model_ms": 53135,
+      "cost": 0.051687,
+      "total": 51.25,
+      "problems": 0
+    },
+    {
+      "id": "p1-en-011",
+      "lang": "EN",
+      "cached": false,
+      "ms": 105622,
+      "model_ms": 105617,
+      "cost": 0.056701,
+      "total": 92.31,
+      "problems": 11
+    },
+    {
+      "id": "p1-en-012",
+      "lang": "EN",
+      "cached": false,
+      "ms": 105572,
+      "model_ms": 101962,
+      "cost": 0.038095,
+      "total": 92.31,
+      "problems": 13
+    },
+    {
+      "id": "p1-en-014",
+      "lang": "EN",
+      "cached": false,
+      "ms": 90006,
+      "model_ms": 20630,
+      "cost": 0.012046,
+      "total": 24.71,
+      "problems": 1
+    },
+    {
+      "id": "p1-en-007",
+      "lang": "EN",
+      "cached": false,
+      "ms": 139795,
+      "model_ms": 78704,
+      "cost": 0.021921,
+      "total": 40,
+      "problems": 1
+    },
+    {
+      "id": "p1-en-008",
+      "error": "Model did not return valid JSON"
+    },
+    {
+      "id": "p1-en-013",
+      "lang": "EN",
+      "cached": false,
+      "ms": 106455,
+      "model_ms": 38781,
+      "cost": 0.02452,
+      "total": 62.31,
+      "problems": 1
+    }
+  ]
+}
