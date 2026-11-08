@@ -2,7 +2,22 @@
 // Freedom CQA demo video: a captioned, silent screen recording of the real product. Zero npm dependencies:
 // Node 22 (global fetch + WebSocket), Google Chrome, /usr/bin/swift (AVFoundation, macOS).
 //
-//   node scripts/demo/record.mjs
+//   node scripts/demo/record.mjs                 full tour (≈ 3 min)
+//   node scripts/demo/record.mjs --cut short     ≈ 58 s cut for a voiceover: hook → checklist → dialogs → evaluation →
+//                                                results → overview → appeal + reviewer decision → end card (8 blocks)
+//
+// Short cut with a real voiceover (read the 8 blocks with a ~1 s pause between blocks, shorter pauses inside them;
+// a .m4a voice memo first: afconvert -f WAVE -d LEI16 voice.m4a voice.wav):
+//   swift scripts/demo/pauses.swift voice.wav > /tmp/t.json \
+//     && node scripts/demo/record.mjs --cut short --timings /tmp/t.json --events /tmp/ev.json \
+//     && node scripts/demo/sfx.mjs --events /tmp/ev.json --voice voice.wav --out /tmp/mix.wav \
+//     && swift scripts/demo/mux.swift landing-tair/assets/demo.mp4 /tmp/mix.wav landing-tair/assets/demo.mp4
+// pauses.swift finds the 7 longest pauses and prints the 8 block lengths; --timings stretches or speeds up each scene
+// to its block (a scene that ends early holds its last frame); sfx.mjs mixes soft click / chime / alert sounds under
+// the voice; mux.swift adds the audio track (H.264 + AAC, ≤ 12 MB). Without a voice: skip sfx/mux, the video is silent.
+// The short cut also logs the cursor and zoom cues: encode.swift crops a Screen-Studio-style camera (≈ 1.6–1.7×,
+// eased, following the cursor) around typing, the AI answer, the evidence jump and the total, and draws the captions
+// itself so the zoom never crops them.
 //
 // 1. Uses the local mirror of production on :3201 (starts scripts/dev-server.mjs if nothing answers there).
 // 2. Launches headless Chrome and drives it over the DevTools Protocol (CDP) at 1440×900, DPR 1.
@@ -17,9 +32,12 @@
 //        --keep        keep the raw frames (path is printed)
 //        --no-encode   record and keep frames, skip the MP4
 //        --snaps <dir> also save a debug screenshot at every caption
+//        --cut short   the ≈ 1 minute cut (below); --timings <file.json | JSON> its 8 block lengths in seconds:
+//                      [4,7,5,10,11,5,11,5] or pauses.swift output { "blocks": [...] }. Without it: these defaults.
 // Paid AI calls per run: two AIM replies, one evaluation (≈ $0.008, ≈ 45 s), one analyst answer. Re-runs mostly hit the cache.
+// The short cut makes one paid evaluation (force re-run, ≈ $0.008) and no other AI call.
 import { spawn, spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,6 +48,18 @@ const has = (n) => argv.includes(`--${n}`);
 const opt = (n, d) => { const i = argv.indexOf(`--${n}`); return i >= 0 && argv[i + 1] ? argv[i + 1] : d; };
 const BASE = opt('base', 'http://localhost:3201').replace(/\/$/, '');
 const SNAPS = opt('snaps', '');
+const SHORT = opt('cut', 'full') === 'short';
+// short cut: one target length per voiceover block (hook, checklist, dialogs, evaluation, results, overview, appeal, end)
+const SHORT_DEFAULTS = [4, 7, 5, 10, 11, 5, 11, 5];
+function readTimings() {
+  const v = opt('timings', ''); if (!v) return SHORT_DEFAULTS;
+  let j; try { j = JSON.parse(existsSync(v) ? readFileSync(v, 'utf8') : v); } catch (e) { throw new Error(`--timings: not JSON (${e.message})`); }
+  const a = (Array.isArray(j) ? j : j?.blocks || []).map(Number);
+  if (a.length !== SHORT_DEFAULTS.length || a.some((x) => !(x > 0.3))) throw new Error(`--timings: need ${SHORT_DEFAULTS.length} positive durations in seconds, got ${JSON.stringify(a)}`);
+  return a;
+}
+const TIMINGS = SHORT ? readTimings() : null;
+const EVENTS = opt('events', path.join(os.tmpdir(), 'cqa-demo-events.json')); // short cut: sound cues + captions for sfx.mjs
 const W = 1440, H = 900, FPS = 24;
 const CDP_PORT = 9333;
 const MAX_BYTES = 12_000_000;         // hard limit for the landing page
@@ -91,13 +121,39 @@ const C = {
   analystCut: (s) => `Ответ готов через ${s} с, в видео ускорено`,
   analystAns: 'Ответ: что видно в данных и что исправить первым',
 };
+/* short cut captions: one line, ≤ 60 characters, the short form of each voiceover block (numbers come from the page) */
+const CS = {
+  hook: 'Freedom CQA проверяет каждый разговор по чек-листу',
+  checklist: 'Чек-лист — данные, не код: новый пункт прямо в интерфейсе',
+  saved: 'Сохранено как v2, чаты пересчитаны без AI',
+  dialogs: (n) => `${n} диалогов из API: чаты и звонки, RU · KZ · EN`,
+  eval: 'Оцениваю заново: 3 прогона, голосование, баллы считает код',
+  newCrit: (a) => (a === 'N/A' ? 'Новый пункт сразу получил ответ: N/A с причиной' : `Новый пункт сразу получил ответ «${a}» с цитатой`),
+  result: (t) => `Официальный чек-лист: ${t} из 100 и грубая ошибка`,
+  jump: 'Клик по цитате — и видна сама реплика',
+  overview: (n) => `На обзоре все грубые ошибки с причинами: ${n}`,
+  appeal: 'Апелляция: проверяющий меняет ответ с причиной',
+  after: (a, b) => `Итог пересчитан: ${a} → ${b}. Исходная оценка в карточке`,
+};
 function plural(n, [one, few, many]) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? few : many; }
 const readMs = (t) => Math.max(2000, 700 + t.length * 40);
 
 /* ── overlay injected into every page: cursor, click ripple, caption bar, smooth scrolling helpers ───────── */
-function overlay() {
+function overlay(opts = {}) {
   if (window.top !== window || window.__demo) return;
   const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+  // short cut: encode.swift draws the captions (so the camera zoom never crops them); bigger, high-contrast cursor with a halo
+  const big = opts.big ? `
+    #__demo-cap{display:none!important}
+    #__demo-cursor{width:40px;height:40px;margin:-4px 0 0 -7px;filter:drop-shadow(0 2px 4px rgba(14,21,28,.45))}
+    #__demo-cursor::before{content:"";position:absolute;left:-19px;top:-17px;width:52px;height:52px;border-radius:50%;
+      background:radial-gradient(circle,rgba(2,177,64,.30) 0,rgba(2,177,64,.14) 45%,rgba(2,177,64,0) 70%)}
+    #__demo-cursor svg{position:relative;width:40px;height:40px}
+    .__demo-ripple{width:62px;height:62px;margin:-31px 0 0 -31px;border-width:4px;background:rgba(2,177,64,.18)}
+    #__demo-badge{position:fixed;right:28px;top:22px;padding:9px 18px 10px;border-radius:999px;background:#0e151c;color:#fff;font:600 19px/1.2 "Onest",system-ui,sans-serif;
+      box-shadow:0 8px 26px rgba(14,21,28,.25);opacity:0;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease}
+    #__demo-badge.on{opacity:1;transform:none}
+    #__demo-badge i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#02b140;margin-right:9px;vertical-align:1px}` : '';
   const css = `
     #__demo{position:fixed;inset:0;pointer-events:none;z-index:2147483647}
     #__demo.is-hidden{display:none}
@@ -108,7 +164,7 @@ function overlay() {
       font:500 24px/1.35 "Onest",system-ui,-apple-system,sans-serif;letter-spacing:-.01em;text-align:center;text-wrap:balance;
       box-shadow:0 10px 36px rgba(14,21,28,.28);opacity:0;transform:translate(-50%,10px);transition:opacity .25s ease,transform .25s ease}
     #__demo-cap.on{opacity:1;transform:translate(-50%,0)}
-    .toast{bottom:104px!important}`;
+    .toast{bottom:104px!important}` + big;
   let pos = null; try { pos = JSON.parse(sessionStorage.getItem('__demo_pos')); } catch {}
   pos = pos || { x: 720, y: 450 };
   let cap = ''; try { cap = sessionStorage.getItem('__demo_cap') || ''; } catch {}
@@ -118,11 +174,16 @@ function overlay() {
     if (document.getElementById('__demo')) return;
     const st = document.createElement('style'); st.textContent = css;
     root = document.createElement('div'); root.id = '__demo';
-    root.innerHTML = '<div id="__demo-cursor"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M5 3v20.5l5.4-5 3.7 8.2 3.9-1.7-3.7-8.1h7.4z" fill="#fff" stroke="#0e151c" stroke-width="1.7" stroke-linejoin="round"/></svg></div><div id="__demo-cap"></div>';
+    root.innerHTML = `<div id="__demo-cursor"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M5 3v20.5l5.4-5 3.7 8.2 3.9-1.7-3.7-8.1h7.4z" fill="${opts.big ? '#0e151c' : '#fff'}" stroke="${opts.big ? '#fff' : '#0e151c'}" stroke-width="${opts.big ? 2 : 1.7}" stroke-linejoin="round"/></svg></div><div id="__demo-cap"></div><div id="__demo-badge"></div>`;
     document.documentElement.append(st, root);
     cur = root.querySelector('#__demo-cursor'); capEl = root.querySelector('#__demo-cap');
     place();
     if (cap) { capEl.textContent = cap; capEl.classList.add('on'); }
+  }
+  // small top-right pill, e.g. while a long AI wait is cut from the video
+  function badge(text) {
+    const b = root?.querySelector('#__demo-badge'); if (!b) return;
+    if (text) { b.innerHTML = '<i></i>'; b.append(text); b.classList.add('on'); } else b.classList.remove('on');
   }
   function caption(text) {
     cap = text || ''; try { sessionStorage.setItem('__demo_cap', cap); } catch {}
@@ -147,7 +208,7 @@ function overlay() {
     return new Promise((res) => {
       const from = sc.scrollTop; to = Math.max(0, Math.min(to, sc.scrollHeight - sc.clientHeight));
       if (Math.abs(to - from) < 2) return res();
-      ms = ms || Math.min(1400, Math.max(450, 350 + Math.abs(to - from) * 0.55));
+      ms = ms || (opts.big ? Math.min(600, Math.max(280, 220 + Math.abs(to - from) * 0.25)) : Math.min(1400, Math.max(450, 350 + Math.abs(to - from) * 0.55)));
       const prev = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto';
       const t0 = performance.now();
       const step = (now) => { const k = Math.min(1, (now - t0) / ms); sc.scrollTop = from + (to - from) * ease(k); if (k < 1) requestAnimationFrame(step); else { sc.style.scrollBehavior = prev; res(); } };
@@ -187,7 +248,7 @@ function overlay() {
     if (!root) return; const r = document.createElement('div'); r.className = '__demo-ripple';
     r.style.left = `${e.clientX}px`; r.style.top = `${e.clientY}px`; root.append(r); setTimeout(() => r.remove(), 700);
   }, true);
-  window.__demo = { caption, hide, reveal, scrollTo, mark };
+  window.__demo = { caption, hide, reveal, scrollTo, mark, badge };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true }); else mount();
 }
 
@@ -257,7 +318,9 @@ function cleanup() {
 let cdp = null;
 const rec = {
   dir: null, frames: [], base: 0, since: null, n: 0, lastT: -1e9, cut: 0,
+  events: [], cursor: [], // short cut: captions / zoom / sound cues and cursor samples on the recording clock
   clock() { return this.base + (this.since == null ? 0 : performance.now() - this.since); },
+  ev(type, data = {}) { this.events.push({ t: Math.round(this.clock()), type, ...data }); },
   add(b64, force = false) {
     if (this.since == null) return;
     const t = this.clock(); const last = this.frames.at(-1);
@@ -313,38 +376,46 @@ async function ready(prefix = '') {
 async function goto(url) { await cdp.send('Page.navigate', { url }); await ready(new URL(url).pathname); }
 async function moveTo(x, y, ms) {
   const x0 = mouse.x, y0 = mouse.y, dist = Math.hypot(x - x0, y - y0);
-  ms = ms ?? Math.min(950, Math.max(300, 220 + dist * 0.55));
+  ms = ms ?? (SHORT ? Math.min(330, 170 + dist * 0.12) : Math.min(950, Math.max(300, 220 + dist * 0.55)));
   const steps = Math.max(1, Math.round(ms / 16));
   for (let i = 1; i <= steps; i++) {
     const k = ease(i / steps); mouse.x = x0 + (x - x0) * k; mouse.y = y0 + (y - y0) * k;
     await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: mouse.x, y: mouse.y });
+    rec.cursor.push({ t: rec.clock(), x: mouse.x, y: mouse.y });
     await sleep(16);
   }
 }
 async function locate(sel) { const r = await js((s) => window.__demo.reveal(s), sel); if (!r) throw new Error(`not on the page: ${sel}`); return r; }
 async function hover(sel, { dx = 0.5, dy = 0.5, ms } = {}) { const r = await locate(sel); await moveTo(r.x + r.w * dx, r.y + r.h * dy, ms); return r; }
-async function click(sel, { pause = 350, dx = 0.5, dy = 0.5 } = {}) {
+async function click(sel, { pause = SHORT ? 120 : 350, dx = 0.5, dy = 0.5 } = {}) {
   const r = await locate(sel);
   const x = r.x + r.w * dx, y = r.y + r.h * dy;
-  await moveTo(x, y); await sleep(120);
+  await moveTo(x, y); await sleep(SHORT ? 60 : 120);
+  rec.ev('sfx', { s: 'click' });
   await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', buttons: 1, clickCount: 1 });
-  await sleep(80);
+  await sleep(SHORT ? 50 : 80);
   await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', buttons: 0, clickCount: 1 });
   await sleep(pause);
 }
 async function type(text, { cps = 22 } = {}) {
   for (const ch of text) { await cdp.send('Input.insertText', { text: ch }); await sleep((1000 / cps) * (0.55 + rnd() * 0.9)); }
 }
+/** Type a longer text in a few quick chunks (reads as fast typing, costs ~0.4 s instead of several seconds). */
+async function paste(text, { chunks = 5 } = {}) {
+  const n = Math.max(1, Math.ceil(text.length / chunks));
+  for (let i = 0; i < text.length; i += n) { await cdp.send('Input.insertText', { text: text.slice(i, i + n) }); await sleep(70); }
+}
 const selectAll = () => js(() => { document.execCommand('selectAll'); return true; });
 async function mark(sel, text, child) { const s = await js((a, b, c) => window.__demo.mark(a, b, c), sel, text, child || null); if (!s) throw new Error(`not found: ${sel} «${text}» ${child || ''}`); return s; }
 async function scroll(o) { await js((x) => window.__demo.scrollTo(x), o); await sleep(120); }
 async function say(text, hold) {
   log.push(text); console.log(`${stamp()}  ${text}`);
+  rec.ev('cap', { text });
   await js((t) => window.__demo?.caption(t), text);
   if (SNAPS) { await sleep(400); const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 70 }); writeFileSync(path.join(SNAPS, `${String(log.length).padStart(2, '0')}.jpg`), Buffer.from(data, 'base64')); }
   if (hold !== 0) await sleep(hold ?? readMs(text));
 }
-const quiet = () => js(() => window.__demo?.caption(''));
+const quiet = () => { rec.ev('cap', { text: '' }); return js(() => window.__demo?.caption('')); };
 async function still(name, { poster = false } = {}) {
   rec.pause();
   await js(() => window.__demo.hide(true)); await sleep(180);
@@ -641,6 +712,253 @@ async function sceneEnd() {
   await sleep(6400);
 }
 
+/* ── short cut: 8 blocks = the jury's cycle (checklist → dialogs → evaluation → results → appeal → manual re-evaluation) ─ */
+const marks = [];   // recording clock at the start of each short scene
+let pace = 1;       // idle-hold multiplier of the current scene: its block length / its default length
+const hold = (ms) => sleep(ms * pace);
+const cap = (t) => say(t, 0);
+const badge = (t) => js((x) => window.__demo?.badge(x), t || '');
+const zoom = (z) => rec.ev('zoom', { z });   // camera: encode.swift crops around the cursor, eased over ~450 ms
+const sfx = (s) => rec.ev('sfx', { s });     // sound cue for sfx.mjs: click | done | alert
+// The spec'd appeal is C2 → N/A; it only makes sense when C2 lost points. The committed v1 evaluation gives C2 «Да»,
+// so the fallback disputes the double penalty: the identification error is already scored in C3 and in the gross flag.
+const APPEALS = [
+  { title: 'Выявление потребности', to: 'na', comment: 'Клиент сразу описал проблему, уточнять было нечего.', reason: 'Согласен: данных хватало с начала, пункт не применим.' },
+  { title: 'Эмпатия', to: 'yes', comment: 'Ошибка с проверкой личности уже снята в пункте 3, здесь двойной штраф.', reason: 'Согласен: эта ошибка уже учтена в пункте 3, балл возвращаю.' },
+];
+async function poster() {
+  rec.pause();
+  await js(() => window.__demo.hide(true)); await sleep(180);
+  const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 76 }); writeFileSync(OUT_POSTER, Buffer.from(data, 'base64'));
+  await js(() => window.__demo.hide(false)); await sleep(60);
+  await rec.resume();
+}
+
+async function shortHook() {
+  await goto(`${BASE}/admin/#/overview`);
+  await waitFor('.kpis .kpi');
+  await sleep(600);
+  await rec.resume();
+  await cap(CS.hook);
+  await hover('.kpis .kpi:nth-child(2)', { dy: 0.45 }); await hold(1300);
+  await hover('.kpis .kpi:nth-child(3)', { dy: 0.45 }); await hold(2000);
+}
+
+async function shortChecklist() {
+  await cap(CS.checklist);
+  await click('#nav a[href="#/checklist"]', { pause: 0 });
+  await waitFor('.crit-edit');
+  await hold(250);
+  await click('#add', { pause: 150 });
+  await waitFor('.crit-edit.is-new');
+  await js(() => { const i = document.querySelector('.crit-edit.is-new input[data-k="title"]'); i.focus(); i.select(); return true; });
+  await hover('.crit-edit.is-new input[data-k="title"]', { dx: 0.12 });
+  zoom(1.7);
+  await type('Назвал срок ответа', { cps: 48 });
+  await click('.crit-edit.is-new input[data-k="weight"]', { pause: 60 });
+  await selectAll(); await type('5', { cps: 12 });
+  await click('.crit-edit.is-new textarea[data-k="description"]', { pause: 60, dx: 0.3 });
+  await selectAll(); await paste('Да — оператор сказал, когда клиент получит ответ или решение.');
+  await click('.crit-edit.is-new input[data-k="na_allowed"]', { pause: 150 });
+  await waitFor('.crit-edit.is-new input[data-k="na_condition"]');
+  await click('.crit-edit.is-new input[data-k="na_condition"]', { pause: 60, dx: 0.3 });
+  await paste('Клиент ничего не ждёт: вопрос закрыт в чате.', { chunks: 4 });
+  await hold(150);
+  zoom(1);
+  if (await js(() => !!document.querySelector('#mode button[data-v="mock"]'))) await click('#mode button[data-v="mock"]', { pause: 100 });
+  await click('#save', { pause: 0 });
+  await until(() => !!document.querySelector('.run-card--done'), { visible: 500, what: 'checklist re-run' });
+  sfx('done');
+  await cap(CS.saved);
+  await hover('.run-card--done .run-card__head', { dx: 0.35 });
+  await hold(900);
+}
+
+async function shortDialogs() {
+  await click('#nav a[href="#/dialogs"]', { pause: 0 });
+  await waitFor('#f-channel');
+  const n = await js(() => document.querySelectorAll('tbody tr').length);
+  await cap(CS.dialogs(n));
+  await hover('#f-lang', { dx: 0.55 }); await hold(800);
+  await click('#f-channel button[data-v="call"]', { pause: 0 }); await hold(1200);
+  await click('#f-channel button[data-v=""]', { pause: 0 }); await hold(1000);
+}
+
+async function shortEval() {
+  await cap(CS.eval);
+  await click('a.mono[href="#/dialog/p1-ru-009"]', { pause: 0 });
+  await waitFor('#reeval');
+  await hold(250);
+  await scroll({ sel: '.analysis', block: 'start' });
+  await click('#reeval', { pause: 100 });
+  await waitFor('.run--pending', { timeout: 5000 }).catch(() => {});
+  await badge('AI думает 30–60 с · в видео ускорено');
+  const r = await until(() => !!document.querySelector('.run--ok, .run--error'), { visible: 1400, timeout: 200000, what: 'AI evaluation' });
+  // a video that shows a failed evaluation is not a demo: stop before encoding, so the committed video stays
+  if (await js(() => !!document.querySelector('.run--error'))) throw new Error(`AI re-evaluation failed after ${Math.round(r.ms / 1000)} s (${await text('.run--error')}); run again`);
+  sfx('done');
+  await badge(r.cut ? `≈ ${Math.round(r.ms / 1000)} с ожидания AI вырезано` : '');
+  await hover('.run--ok', { dx: 0.4 }); await hold(1300);
+  await badge('');
+  const crit = await mark('.crit-card .crit', 'Назвал срок ответа');
+  await scroll({ sel: crit, block: 'center' });
+  const ans = await js((s) => document.querySelector(`${s} .ans`)?.textContent.trim() || '', crit);
+  await cap(CS.newCrit(ans));
+  await hover(`${crit} .crit__title`, { dx: 0.6 });
+  zoom(1.6);
+  await hold(900);
+  await hover(`${crit} .evidence, ${crit} .crit__why`, { dx: 0.4 });
+  await hold(2000);
+  zoom(1);
+}
+
+async function shortResults() {
+  // The measured result is the official checklist v1: make it active again and reload with the clock stopped (a cut).
+  // The reload also drops the "evaluated just now" box of the v2 run, which would be wrong next to the v1 score.
+  rec.pause();
+  await js(() => { const k = 'cqa-prototype-v2'; const s = JSON.parse(localStorage.getItem(k)); s.activeVersion = 1; localStorage.setItem(k, JSON.stringify(s)); window.__demo?.caption(''); return true; });
+  await cdp.send('Page.reload');
+  await ready('/admin/');
+  await waitFor(() => /v1/.test(document.querySelector('.dlg-head .meta-link')?.textContent || '') && !!document.querySelector('.banner--bad'), { what: 'card under checklist v1' });
+  await scroll({ sel: '.analysis', block: 'start' });
+  await sleep(900); // score ring animation
+  const t = await text('#total');
+  await rec.resume();
+  sfx('alert');
+  await cap(CS.result(t));
+  await hover('#ring-wrap'); await hold(1500);
+  await hover('.banner--bad b', { dx: 0.5 });
+  zoom(1.6);
+  await hold(1500);
+  await cap(CS.jump);
+  await click('.banner--bad .evidence--btn', { pause: 0, dx: 0.3 });
+  await hold(900);
+  await hover('.tx-row.is-evidence .tx-text', { dx: 0.35 });
+  await hold(2000);
+  zoom(1);
+  await poster();
+  await hold(900);
+}
+
+async function shortOverview() {
+  await click('#nav a[href="#/overview"]', { pause: 0 });
+  await waitFor('.kpis .kpi');
+  const n = Number(await text('.kpis a.kpi[href="#/dialogs?gross=1"] .kpi__value'));
+  await cap(CS.overview(n));
+  await hover('#ch-loss-box', { dx: 0.35, dy: 0.2 }); await hold(800);
+  await click('.kpis a.kpi[href="#/dialogs?gross=1"]', { pause: 0 });
+  await waitFor('.gross-list .gross');
+  await hover('.gross-list .gross:first-child .gross__why', { dx: 0.3 }); await hold(900);
+  await hover('.gross-list .gross:nth-child(2) .gross__why', { dx: 0.3 }); await hold(800);
+}
+
+async function shortAppeal() {
+  const item = await mark('.gross-list .gross', 'p1-ru-009');
+  await cap(CS.appeal);
+  await click(`${item} .gross__foot a.btn`, { pause: 0 });
+  await waitFor('#ring-wrap');
+  await sleep(150);
+  const before = await text('#total');
+  const titles = await js(() => [...document.querySelectorAll('.reasons-card .ded [data-appeal]')].map((b) => b.closest('.ded').querySelector('.ded__head b').textContent));
+  const plan = APPEALS.find((p) => titles.some((t) => t.includes(p.title)));
+  if (!plan) throw new Error(`no criterion to appeal among ${titles.join(', ')}`);
+  if (plan !== APPEALS[0]) notes.push(`C2 «${APPEALS[0].title}» has full points here, so the appeal disputes «${plan.title}» (${plan.to})`);
+  const ded = await mark('.reasons-card .ded', plan.title);
+  await scroll({ sel: ded, block: 'center' });
+  await click(`${ded} [data-appeal]`, { pause: 150 });
+  await waitFor('#ap-comment');
+  // let the drawer finish sliding in (and the textarea stop moving) before the click and the zoom land on it
+  await waitFor(() => { const el = document.querySelector('#ap-comment'); const x = Math.round(el.getBoundingClientRect().left); const same = window.__apx === x; window.__apx = x; return same; }, { what: 'appeal drawer settled' });
+  await sleep(120);
+  await click('#ap-comment', { pause: 60, dx: 0.2 });
+  zoom(1.7);
+  await paste(plan.comment);
+  await hold(300);
+  zoom(1);
+  await click('#ap-save', { pause: 200 });
+  await scroll({ y: 0 });
+  await click('#role-switch button[data-v="reviewer"]', { pause: 250 });
+  await click('.score-card [data-review]', { pause: 150 });
+  await waitFor('#rv-mode');
+  await click('#rv-mode button[data-m="change"]', { pause: 120 });
+  await click(`#rv-answer button[data-v="${plan.to}"]`, { pause: 120 });
+  await click('#rv-reason', { pause: 60, dx: 0.2 });
+  zoom(1.7);
+  await paste(plan.reason);
+  await hover('#rv-preview', { dx: 0.3 }); await hold(600);
+  zoom(1);
+  await click('#rv-save', { pause: 100 });
+  await waitFor('.history');
+  sfx('done');
+  await scroll({ sel: '.score-card', block: 'start' });
+  const after = await text('.history .history__step--final b');
+  await cap(CS.after(before, after));
+  await hover('#ring-wrap', { dx: 0.9 });
+  zoom(1.6);
+  await hold(900);
+  await hover('.history', { dx: 0.5 }); await hold(1200);
+  zoom(1);
+}
+
+async function shortEnd() {
+  await quiet();
+  await sleep(200);
+  // clock stopped while the end card loads: no blank frame and no cursor before the overlay is hidden
+  rec.pause();
+  await goto(`${BASE}/scripts/demo/end-card.html?cut=short`);
+  await js(() => window.__demo.hide(true));
+  await sleep(150);
+  await rec.resume();
+  await hold(4300);
+}
+
+/** Map each short scene onto its block: a long scene plays faster, a short one holds its last frame. */
+function retime(frames, end) {
+  const out = []; const rows = []; const segs = []; let B = 0;
+  for (let i = 0; i < TIMINGS.length; i++) {
+    const a = marks[i], b = marks[i + 1] ?? end, d = b - a, T = TIMINGS[i] * 1000;
+    const k = d > T ? T / d : 1;
+    segs.push({ a, b, B, T, k });
+    for (const f of frames) if (f.t >= a && (f.t < b || (i === TIMINGS.length - 1 && f.t <= b))) out.push({ t: Math.round(B + (f.t - a) * k), f: f.f });
+    rows.push(`  ${String(i + 1)}. ${SHORT_SCENES[i].name.replace('short', '').padEnd(10)} recorded ${(d / 1000).toFixed(1).padStart(5)} s → ${(T / 1000).toFixed(1).padStart(5)} s  ${k < 1 ? `×${(1 / k).toFixed(2)} faster` : d < T - 40 ? `holds last frame ${((T - d) / 1000).toFixed(1)} s` : 'as recorded'}`);
+    if (k < 0.45) notes.push(`${SHORT_SCENES[i].name} plays ×${(1 / k).toFixed(1)} faster than recorded: give its voice block more time`);
+    B += T;
+  }
+  console.log(`short cut blocks:\n${rows.join('\n')}`);
+  // recording clock → output time (an event exactly on a scene boundary belongs to the next scene)
+  const map = (t) => { const s = segs.findLast((x) => t >= x.a) || segs[0]; return Math.round(s.B + Math.min(s.T, Math.max(0, t - s.a) * s.k)); };
+  return { frames: out, duration: Math.round(B), map };
+}
+
+/** Per output frame: camera crop [x, y, w, h] (null = full frame), from zoom cues + the cursor, eased and clamped to the page. */
+function camera(map, duration) {
+  const zooms = rec.events.filter((e) => e.type === 'zoom').map((e) => ({ t: map(e.t), z: e.z }));
+  const cur = rec.cursor.map((c) => ({ t: map(c.t), x: c.x, y: c.y }));
+  const n = Math.ceil((duration / 1000) * FPS); const crops = [];
+  let zi = -1, ci = 0, from = 1, to = 1, t0 = 0, cx = W / 2, cy = H / 2;
+  for (let k = 0; k < n; k++) {
+    const t = (k * 1000) / FPS;
+    while (zi + 1 < zooms.length && zooms[zi + 1].t <= t) { zi++; const zNow = from + (to - from) * ease(Math.min(1, (zooms[zi].t - t0) / 450)); from = zNow; to = zooms[zi].z; t0 = zooms[zi].t; }
+    const z = from + (to - from) * ease(Math.min(1, (t - t0) / 450));
+    while (ci + 1 < cur.length && cur[ci + 1].t <= t) ci++;
+    const p = cur[ci] || { x: W / 2, y: H / 2 };
+    const a = z > 1.001 ? 0.16 : 1; cx += (p.x - cx) * a; cy += (p.y - cy) * a; // follow the cursor smoothly while zoomed
+    if (z <= 1.001) { crops.push(null); continue; }
+    const w = W / z, h = H / z;
+    const x = Math.max(0, Math.min(W - w, cx - w / 2)), y = Math.max(0, Math.min(H - h, cy - h * 0.45));
+    crops.push([+x.toFixed(1), +y.toFixed(1), +w.toFixed(1), +h.toFixed(1)]);
+  }
+  return crops;
+}
+/** Captions as [{start, end, text}] in output ms (encode.swift draws them on top, so zoom never crops them). */
+function captionTrack(map, duration) {
+  const caps = rec.events.filter((e) => e.type === 'cap').map((e) => ({ t: map(e.t), text: e.text }));
+  const out = [];
+  caps.forEach((c, i) => { if (!c.text) return; const end = caps[i + 1]?.t ?? duration; if (end - c.t > 120) out.push({ start: c.t, end, text: c.text }); });
+  return out;
+}
+const SHORT_SCENES = [shortHook, shortChecklist, shortDialogs, shortEval, shortResults, shortOverview, shortAppeal, shortEnd];
+
 /* ── main ────────────────────────────────────────────────────────────────────────────────────────────── */
 async function main() {
   mkdirSync(MEDIA, { recursive: true });
@@ -657,18 +975,19 @@ async function main() {
   await cdp.send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceScaleFactor: 1, mobile: false });
   await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }).catch(() => {});
   await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `try { if (location.pathname.startsWith('/admin')) sessionStorage.setItem('cqa-admin-token', ${JSON.stringify(token)}); } catch {}` });
-  await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${overlay})();` });
+  await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${overlay})(${JSON.stringify({ big: SHORT })});` });
   cdp.on('Page.screencastFrame', ({ data, sessionId }) => { cdp.send('Page.screencastFrameAck', { sessionId }).catch(() => {}); rec.add(data); });
   await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 90, maxWidth: W, maxHeight: H, everyNthFrame: 1 });
 
-  let scenes = [sceneLanding, sceneSupport, sceneOverview, sceneGross, sceneCard, sceneAppeal, sceneCall, sceneChecklist, sceneReevaluate, sceneAnalyst, sceneEnd];
-  const from = opt('from', ''); // debugging only: start at a later admin scene (e.g. --from call)
+  let scenes = SHORT ? SHORT_SCENES : [sceneLanding, sceneSupport, sceneOverview, sceneGross, sceneCard, sceneAppeal, sceneCall, sceneChecklist, sceneReevaluate, sceneAnalyst, sceneEnd];
+  const from = SHORT ? '' : opt('from', ''); // debugging only: start at a later admin scene (e.g. --from call)
   if (from) {
     scenes = scenes.slice(Math.max(0, scenes.findIndex((s) => s.name.toLowerCase() === `scene${from.toLowerCase()}`)));
     if (scenes[0] !== sceneLanding) { await goto(`${BASE}/admin/#/overview`); await waitFor('.kpis .kpi'); await rec.resume(); }
   }
-  for (const s of scenes) {
-    console.log(`${stamp()}  ── ${s.name.replace('scene', '')}`);
+  for (const [i, s] of scenes.entries()) {
+    console.log(`${stamp()}  ── ${s.name.replace(/^scene|^short/, '')}`);
+    if (SHORT) { marks.push(rec.clock()); pace = Math.max(0.6, Math.min(2.2, TIMINGS[i] / SHORT_DEFAULTS[i])); }
     try { await s(); }
     catch (e) {
       const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 70 });
@@ -678,13 +997,22 @@ async function main() {
   }
   rec.pause();
   await cdp.send('Page.stopScreencast').catch(() => {});
-  const duration = Math.round(rec.clock());
+  let duration = Math.round(rec.clock());
   console.log(`recorded ${(duration / 1000).toFixed(1)} s of video, ${rec.frames.length} frames, ${(rec.cut / 1000).toFixed(0)} s of waiting cut`);
   cleanup();
+  let extra = {};
+  if (SHORT) {
+    const r = retime(rec.frames, duration); rec.frames = r.frames; duration = r.duration;
+    extra = { crops: camera(r.map, duration), captions: captionTrack(r.map, duration) };
+    // sound cues for sfx.mjs, in output time
+    const sfxCues = rec.events.filter((e) => e.type === 'sfx').map((e) => ({ t: r.map(e.t), s: e.s }));
+    writeFileSync(EVENTS, JSON.stringify({ duration_ms: duration, sfx: sfxCues, captions: extra.captions }, null, 1));
+    console.log(`cues: ${sfxCues.length} sounds, ${extra.captions.length} captions, ${extra.crops.filter(Boolean).length} zoomed frames → ${EVENTS}`);
+  }
 
   let bitrate = Math.min(1_600_000, Math.floor((TARGET_BYTES * 8) / (duration / 1000)));
   const manifest = path.join(rec.dir, 'manifest.json');
-  const writeManifest = () => writeFileSync(manifest, JSON.stringify({ dir: rec.dir, fps: FPS, width: W, height: H, bitrate, keyframe_s: 10, duration_ms: duration, frames: rec.frames }));
+  const writeManifest = () => writeFileSync(manifest, JSON.stringify({ dir: rec.dir, fps: FPS, width: W, height: H, bitrate, keyframe_s: 10, duration_ms: duration, frames: rec.frames, ...extra }));
   if (has('no-encode')) { writeManifest(); console.log(`frames + manifest kept in ${rec.dir} (swift scripts/demo/encode.swift ${manifest} out.mp4)`); return; }
   const tmpOut = path.join(rec.dir, 'demo.mp4');
   for (let attempt = 1; ; attempt++) {

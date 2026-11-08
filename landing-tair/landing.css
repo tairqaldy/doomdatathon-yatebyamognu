@@ -593,3 +593,5 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .l .extra a { color: var(--l-green-ink); text-underline-offset: 3px; white-space: nowrap; }
 @media (max-width: 1080px) { .must { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .must, .extra { grid-template-columns: 1fr; } }
+.bar__admin { margin-right: 8px; }
+@media (max-width: 440px) { .bar__admin { display: none; } }
