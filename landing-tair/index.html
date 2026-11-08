@@ -447,17 +447,44 @@
       </div>
     </section>
 
-    <!-- Numbers: one big-number strip, measured on reviewed reference dialogs -->
-    <section class="sec numbers" aria-labelledby="numbers-title">
+    <!-- Accuracy: eval-v5.3 numbers and the version history (eval/runs/2026-11-07T16-05-00Z-v53-report.md, README "How we got here") -->
+    <section class="sec numbers acc" id="accuracy" aria-labelledby="accuracy-title">
       <div class="wrap">
-        <h2 id="numbers-title" class="numbers__title" data-reveal>Проверили на размеченных разговорах до того, как показывать вам.</h2>
+        <div class="sec-head">
+          <h2 id="accuracy-title" class="l-h2" data-reveal>Точность, как она есть.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Сравниваем ответ системы с разметкой по каждому пункту, как будут сравнивать организаторы. Версия оценщика <span class="l-mono">eval-v5.3</span>.</p>
+        </div>
         <dl class="stats">
-          <div class="stat" data-reveal style="--d:0"><dt>ответов по пунктам совпали с ручной разметкой 19 разговоров</dt><dd>95%</dd></div>
-          <div class="stat" data-reveal style="--d:80"><dt>совпадений с независимой разметкой ещё 24 чатов</dt><dd>97%</dd></div>
-          <div class="stat" data-reveal style="--d:160"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
-          <div class="stat" data-reveal style="--d:240"><dt>стоимость проверки одного чата, три независимые оценки</dt><dd>$0,006</dd></div>
+          <div class="stat" data-reveal style="--d:0"><dt>ответов совпали с нашей ручной разметкой 19 диалогов, 152 ответа</dt><dd>95,4%</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>на 7 отложенных диалогах, под которые промпт не правили</dt><dd>96,4%</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>совпадений с двумя независимыми ИИ-разметчиками на 24 других чатах</dt><dd>97,3%</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>грубых ошибок найдено, ложных тревог 0</dt><dd>7 из 7</dd></div>
         </dl>
-        <p class="numbers__note" data-reveal>Эталон: 19 разговоров, размеченных командой и проверенных вручную, плюс 24 чата, которые независимо разметили две отдельные ИИ-сессии, видевшие только чек-лист. Версия оценщика <span class="l-mono">eval-v5.3</span>. Главная проверка впереди: 10 новых чатов, которые оценят эксперты Freedom.</p>
+
+        <div class="acc__grid">
+          <figure class="hist" data-reveal aria-labelledby="hist-cap">
+            <figcaption id="hist-cap" class="hist__cap">Как росла точность: совпадение с разметкой на тех же 19 диалогах, по порядку попыток 7 ноября</figcaption>
+            <ol class="hist__rows">
+              <li class="hist__row" style="--v:61.8; --i:0"><span class="hist__name">Правила по словам, без ИИ</span><span class="hist__bar"><i></i></span><b>61,8%</b><span class="hist__note">исходная точка</span></li>
+              <li class="hist__row" style="--v:75.7; --i:1"><span class="hist__name">Claude Haiku 5.5 · v1</span><span class="hist__bar"><i></i></span><b>75,7%</b><span class="hist__note">проба модели, не выбрана</span></li>
+              <li class="hist__row" style="--v:86.2; --i:2"><span class="hist__name">GPT-6 Luna · v1</span><span class="hist__bar"><i></i></span><b>86,2%</b><span class="hist__note">модель выбрана</span></li>
+              <li class="hist__row hist__row--no" style="--v:89.5; --i:3"><span class="hist__name">GPT-6 Luna · v2</span><span class="hist__bar"><i></i></span><b>89,5%</b><span class="hist__note">отклонена: передачу специалисту оценивала в 5 из 20</span></li>
+              <li class="hist__row hist__row--no" style="--v:92.8; --i:4"><span class="hist__name">GPT-6 Luna · v3</span><span class="hist__bar"><i></i></span><b>92,8%</b><span class="hist__note">отклонена: ложные грубые ошибки на 2 настоящих звонках</span></li>
+              <li class="hist__row" style="--v:91.4; --i:5"><span class="hist__name">GPT-6 Luna · v4</span><span class="hist__bar"><i></i></span><b>91,4%</b><span class="hist__note">прежняя версия</span></li>
+              <li class="hist__row" style="--v:96.1; --i:6"><span class="hist__name">GPT-6 Luna · v5.1</span><span class="hist__bar"><i></i></span><b>96,1%</b><span class="hist__note">сначала факты, три прогона</span></li>
+              <li class="hist__row hist__row--now" style="--v:95.4; --i:7"><span class="hist__name">GPT-6 Luna · v5.3</span><span class="hist__bar"><i></i></span><b>95,4%</b><span class="hist__note">текущая: выше на отложенных и у разметчиков</span></li>
+            </ol>
+          </figure>
+          <div class="acc__text" data-reveal style="--d:120">
+            <h3 class="l-h3">Правило записали заранее, до запусков.</h3>
+            <p class="l-after">Новая версия принимается, только если не падают результаты на отложенных диалогах и у независимых разметчиков, а грубые ошибки остаются 7 из 7 без ложных тревог. Поэтому v5.2 отклонили, хотя у разметчиков она набрала на 2 ответа больше: на отложенных она потеряла 2.</p>
+            <ul class="l-points">
+              <li><b>Наша разметка.</b> 19 диалогов по 8 пунктов. Черновик сделал агент, каждую метку проверил человек.</li>
+              <li><b>Независимые разметчики.</b> Две отдельные сессии Claude, другая семья моделей. Видели только чек-лист и ответы организаторов. Это проверка согласованности, не эксперты.</li>
+              <li><b>Главная проверка впереди.</b> 10 контрольных чатов оценят эксперты Freedom. Их разметки у нас нет.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 

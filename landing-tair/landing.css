@@ -471,3 +471,29 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
   .pipe { grid-template-columns: 1fr; gap: 18px; }
   .pipe__node:not(:last-child)::after, .pipe__node:nth-child(3)::after { display: block; top: auto; bottom: -14px; right: auto; left: 28px; transform: rotate(135deg); }
 }
+
+/* accuracy: version history as horizontal bars that grow on reveal */
+.acc .stats { margin-top: var(--sec-gap); }
+.acc .stat dd { font-size: clamp(36px, 4vw, 58px); }
+.acc__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); margin-top: clamp(40px, 5vw, 64px); align-items: start; }
+.hist__cap { font-size: 14px; color: var(--l-ink-3); line-height: 1.5; max-width: 52ch; margin-bottom: 18px; }
+.hist__rows { display: grid; gap: 12px; }
+.hist__row { display: grid; grid-template-columns: 172px minmax(0, 1fr) 56px; grid-template-areas: "name bar val" "name note note"; gap: 2px 12px; align-items: center; }
+.hist__name { grid-area: name; font-size: 14px; font-weight: 500; color: var(--l-ink-2); line-height: 1.3; align-self: start; padding-top: 1px; }
+.hist__bar { grid-area: bar; position: relative; height: 12px; border-radius: 6px; background: var(--l-bg-soft); overflow: hidden; }
+.hist__bar i { position: absolute; inset: 0; border-radius: 6px; background: var(--l-line-strong); transform-origin: left center; transform: scaleX(calc(var(--v) / 100)); }
+.hist__row b { grid-area: val; font-size: 14px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; color: var(--l-ink); }
+.hist__note { grid-area: note; font-size: 13px; color: var(--l-ink-3); line-height: 1.4; }
+.hist__row--no .hist__bar i { background: repeating-linear-gradient(-45deg, var(--l-line-strong) 0 4px, #e9ece7 4px 8px); }
+.hist__row--no .hist__note { color: var(--l-amber); }
+.hist__row--now .hist__bar i { background: var(--l-green); }
+.hist__row--now .hist__name, .hist__row--now .hist__note { color: var(--l-green-ink); }
+.motion .hist__bar i { transition: transform 1.1s var(--l-ease); transition-delay: calc(var(--i) * 140ms + 200ms); }
+.motion .hist:not(.is-in) .hist__bar i { transform: scaleX(0); }
+.l .acc__text .l-h3 { max-width: 24ch; }
+.l .acc__text .l-after { margin-top: 14px; }
+.l .acc__text .l-points { margin-top: 20px; }
+@media (max-width: 900px) { .acc__grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) {
+  .hist__row { grid-template-columns: minmax(0, 1fr) 56px; grid-template-areas: "name val" "bar bar" "note note"; gap: 4px 12px; }
+}
