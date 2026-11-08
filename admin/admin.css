@@ -451,6 +451,7 @@ a.kpi:hover .kpi__go { color: var(--ink-2); transform: translateX(2px); }
 .cl-bar__spacer { flex: 1; }
 .cl-bar__mode { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .cl-bar .field--inline select { width: auto; max-width: 100%; }
+.cl-scope__ids { width: 260px; max-width: 100%; }
 .cl-sum { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .cl-sum__w { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
 .cl-sum__w.is-ok { color: var(--good-ink); } .cl-sum__w.is-warn { color: var(--mid-ink); }
