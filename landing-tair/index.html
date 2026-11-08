@@ -526,6 +526,145 @@
       </div>
     </section>
 
+    <!-- Integration: what is true in the code today (README "Architecture and Dynamics 365", api/evaluate.js, lib/cache.js) -->
+    <section class="sec integ" id="integration" aria-labelledby="integ-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="integ-title" class="l-h2" data-reveal>Как это встраивается в системы Freedom.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Бриф просит интерфейс, который потом станет HTML-ресурсом Dynamics 365. Ниже то, что уже сделано, и то, что ещё нет.</p>
+        </div>
+        <ul class="integ__grid">
+          <li class="ig" data-reveal style="--d:0">
+            <h3 class="ig__t">Dynamics 365</h3>
+            <p>Статические HTML, CSS и JS без сборки и фреймворка, ES-модули, маршруты через <span class="l-mono">#</span>. Рабочее место <span class="l-mono">/prototype/</span> живёт в одном корне <span class="l-mono">#cqa-root</span> и грузит файлы по относительным путям.</p>
+            <p class="ig__todo">Ещё не сделано: в <span class="l-mono">/admin/</span> пути абсолютные, внутри организации Dynamics 365 не проверяли.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:60">
+            <h3 class="ig__t">Чек-лист как данные</h3>
+            <p>Чек-лист хранится в JSON. Новый пункт или версия создаются в интерфейсе, код оценщика не знает пункты по номерам. У чатов и звонков свои чек-листы.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:120">
+            <h3 class="ig__t">API организаторов</h3>
+            <p>Наш сервер забирает набор по <span class="l-mono">group_id</span> и отдаёт браузеру, поэтому CORS не мешает. Записи звонков идут через <span class="l-mono">/api/audio</span>: ссылки на mp3 живут около часа.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:180">
+            <h3 class="ig__t">Формат JSON 1.0</h3>
+            <p><span class="l-mono">npm run results</span> выгружает официальный файл. Валидатор проверяет число записей, все 8 пунктов, номера реплик и заново считает итог с half-up.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:0">
+            <h3 class="ig__t">Кэш у каждого запроса</h3>
+            <p>Ключ: модель, версия промпта, транскрипт, чек-лист и отпечаток кода оценщика. Повторный вопрос бесплатен и приходит за миллисекунды, любое изменение даёт новый ответ.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:60">
+            <h3 class="ig__t">Общее состояние</h3>
+            <p>Upstash Redis хранит кэш ИИ и живые чаты между устройствами, Postgres подключается по желанию.</p>
+            <p class="ig__todo">Апелляции и версии чек-листа пока в браузере проверяющего.</p>
+          </li>
+          <li class="ig" data-reveal style="--d:120">
+            <h3 class="ig__t">Данные клиентов</h3>
+            <p>В репозитории только транскрипты организаторов, имена в них уже скрыты. Сырые расшифровки звонков с именами не сохраняем. Навигатор AIM маскирует номера карт и ИИН до модели и кэша.</p>
+          </li>
+          <li class="ig ig--code" data-reveal style="--d:180">
+            <h3 class="ig__t">Любая CRM пришлёт диалог</h3>
+            <pre class="ig__pre"><code>POST /api/evaluate
+{ "conversation": {
+    "conversation_id": "crm-1042",
+    "transcript": [{ "speaker": "client",
+                     "text": "…" }, …] },
+  "checklist": { "criteria": […] } }</code></pre>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Research → decisions (docs/research/*.md, README "Research findings") -->
+    <section class="sec sec--soft research" id="research" aria-labelledby="research-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="research-title" class="l-h2" data-reveal>Что узнали и что из этого построили.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Каждое решение в продукте опирается на источник или на наш замер. Полные страницы с ссылками лежат в <a href="https://github.com/tairqaldy/doomdatathon-yatebyamognu/tree/main/docs/research" target="_blank" rel="noopener">docs/research</a>.</p>
+        </div>
+        <ul class="rd" aria-label="Находки и решения">
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Модель как судья</span>
+            <div class="rd__learn"><p>Судья-модель смещена: один порядок ответов дал модели 66 побед из 80 сравнений. Запись доказательств до вердикта снижала смещение.</p><span class="rd__src">Wang et al., ACL 2024</span></div>
+            <p class="rd__did">Сначала факты и строка проверки, потом ответ. Цитаты не из транскрипта отклоняются, баллы считает код.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Разброс прогонов</span>
+            <div class="rd__learn"><p>Одна и та же модель отвечает по-разному от прогона к прогону. Голос большинства из трёх прогонов точнее одного.</p><span class="rd__src">Rating Roulette, 2025 · наш замер: 6,6% ответов менялись между двумя прогонами eval-v4</span></div>
+            <p class="rd__did">Три прогона и голосование по каждому пункту. Доля согласия возвращается по каждому пункту, спорные ответы можно отдать человеку первыми.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Точность по пунктам</span>
+            <div class="rd__learn"><p>Согласие модели с людьми сильно зависит от задачи: 11 моделей на 20 наборах данных.</p><span class="rd__src">Bavaresco et al., ACL 2025</span></div>
+            <p class="rd__did">Меряем каждый пункт отдельно. Управление диалогом (C6) было 57,9% в v4, получило свою процедуру и дошло до 78,9%.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Казахский, русский, английский</span>
+            <div class="rd__learn"><p>Казахский остаётся малоресурсным языком. Whisper без дообучения ошибался в 43,58% слов на казахской речи.</p><span class="rd__src">Togmanov et al., ACL 2025 · Li et al., Interspeech 2024</span></div>
+            <p class="rd__did">Одни правила для трёх языков, записанные через поведение, а не через слова. Цитаты на языке оригинала. Казахский считаем отдельно: 97,5% на 40 ответах.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Доверие к боту</span>
+            <div class="rd__learn"><p>64% из 5 728 клиентов предпочли бы поддержку без ИИ. Главный страх: не добраться до человека.</p><span class="rd__src">Gartner, 2024</span></div>
+            <p class="rd__did">AIM называет себя ассистентом. Вопросы о деньгах и счёте сразу идут специалисту, клиент видит, когда ему ответят.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Калибровка QA</span>
+            <div class="rd__learn"><p>Команды качества калибруются: несколько аналитиков оценивают один разговор и разбирают расхождения. ИИ советуют проверять на 20–30 размеченных звонках.</p><span class="rd__src">SQM Group · Aircall</span></div>
+            <p class="rd__did">Своя разметка 19 диалогов, отложенная часть, двойная слепая разметка 24 чатов и правило принятия новой версии.</p>
+          </li>
+          <li class="rd__row" data-reveal>
+            <span class="rd__topic">Цена и задержка</span>
+            <div class="rd__learn"><p>Проверка идёт после разговора, секунды допустимы. Живому голосу нужно около 500 мс.</p><span class="rd__src">Брифинг Freedom · наш замер моделей</span></div>
+            <p class="rd__did">GPT-6 Luna: 86,2% против 75,7% у Claude Haiku 5.5 на том же промпте и дешевле. Кэш на каждом запросе. Голос AIM начинает с первого предложения.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Features: the six must-haves from docs/case/brief.md with where to see each, plus the extras -->
+    <section class="sec feats" id="features" aria-labelledby="feats-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="feats-title" class="l-h2" data-reveal>Что проверить в продукте.</h2>
+          <p class="l-lead" data-reveal style="--d:100">Шесть обязательных функций из брифа и где их найти. Ссылки ведут в рабочие экраны.</p>
+        </div>
+        <ol class="must">
+          <li class="must__item" data-reveal style="--d:0"><span class="must__n">1</span><div><h3 class="must__t">Редактор чек-листа</h3><p>Текст, вес, тип ответа, шкала, правило N/A. Каждое сохранение становится новой версией.</p><a class="must__go" href="/admin/#/checklist">Чек-лист</a></div></li>
+          <li class="must__item" data-reveal style="--d:60"><span class="must__n">2</span><div><h3 class="must__t">Оценка диалога</h3><p>Русский, казахский, английский. Оценивается только оператор, бот и система служат контекстом.</p><a class="must__go" href="/admin/#/import">Загрузка диалогов</a></div></li>
+          <li class="must__item" data-reveal style="--d:120"><span class="must__n">3</span><div><h3 class="must__t">Результат по пунктам</h3><p>Ответ, баллы, вес, объяснение, цитата. Для N/A причина, для пропуска проверенный отрезок. Итог и итоги по секциям.</p><a class="must__go" href="/admin/#/dialogs">Диалоги</a></div></li>
+          <li class="must__item" data-reveal style="--d:0"><span class="must__n">4</span><div><h3 class="must__t">Карточка с переходом</h3><p>Клик по снижению прокручивает к реплике и подсвечивает её. В звонке плеер перематывает к моменту.</p><a class="must__go" href="/admin/#/dialogs">Любой диалог</a></div></li>
+          <li class="must__item" data-reveal style="--d:60"><span class="must__n">5</span><div><h3 class="must__t">Апелляция</h3><p>Пункт, комментарий, сохранение. Проверяющий видит оценку, комментарий и фрагмент диалога.</p><a class="must__go" href="/admin/#/appeals">Апелляции</a></div></li>
+          <li class="must__item" data-reveal style="--d:120"><span class="must__n">6</span><div><h3 class="must__t">Решение проверяющего</h3><p>Подтвердить или изменить с причиной. Итог пересчитывается, видны исходная оценка, решение и итог.</p><a class="must__go" href="/admin/#/appeals">Роль «Проверяющий»</a></div></li>
+        </ol>
+        <h3 class="feats__sub l-h3" data-reveal>Сверх обязательного</h3>
+        <ul class="extra" data-reveal>
+          <li><b>Грубые ошибки списком</b> с причиной и строкой оператора. <a href="/admin/#/overview">Обзор</a></li>
+          <li><b>AIM в поддержке</b>: называет себя ассистентом, передаёт специалисту всю переписку, просит оценку. <a href="/support/">/support/</a></li>
+          <li><b>Живые чаты</b>: оператор подхватывает разговор, после которого его работа проходит ту же проверку. <a href="/admin/#/live">Живые чаты</a></li>
+          <li><b>AI-аналитик</b> отвечает на вопросы по сводным данным качества. <a href="/admin/#/analyst">AI-аналитик</a></li>
+          <li><b>Голос</b>: микрофон через Whisper, ответ AIM голосом gpt-4o-mini-tts. <a href="/broker/">/broker/</a></li>
+          <li><b>Приложение на телефоне</b>: копия приложения Freedom с AIM внутри, запускается и как нативное через Expo Go. <a href="/phone/">/phone/</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Numbers: cost and speed per evaluation (README "Models, cost, latency", v5.3 report §6) -->
+    <section class="sec numbers" aria-labelledby="numbers-title">
+      <div class="wrap">
+        <h2 id="numbers-title" class="numbers__title" data-reveal>Сколько стоит и сколько ждать.</h2>
+        <dl class="stats">
+          <div class="stat" data-reveal style="--d:0"><dt>за проверку одного чата, три прогона и все вызовы модели</dt><dd>$0,006</dd></div>
+          <div class="stat" data-reveal style="--d:80"><dt>на чат, три прогона идут параллельно</dt><dd>≈ 30 с</dd></div>
+          <div class="stat" data-reveal style="--d:160"><dt>и $0,064 на 10 контрольных чатов в полной репетиции</dt><dd>79 с</dd></div>
+          <div class="stat" data-reveal style="--d:240"><dt>ответ из кэша на уже заданный вопрос</dt><dd>≈ 20 мс</dd></div>
+        </dl>
+        <p class="numbers__note" data-reveal>Звонок дороже и дольше: около $0,016 и 2 минуты, тон голоса ещё около $0,013. Источник: прогоны в <span class="l-mono">eval/runs/</span>, оценщик <span class="l-mono">eval-v5.3</span>, модель GPT-6 Luna.</p>
+      </div>
+    </section>
+
     <!-- Final call to action over the blue-hour field; the lamp glows on a slow loop -->
     <section class="cta" data-par-scope aria-labelledby="cta-title">
       <div class="cta__frame">

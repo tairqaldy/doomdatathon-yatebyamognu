@@ -524,3 +524,47 @@ section[id], .sec { scroll-margin-top: 72px; }               /* anchor jumps lan
 .call__ev-k { flex: none; font-size: 12.5px; color: var(--l-ink-3); font-family: var(--l-mono); }
 .l .call__foot { font-size: 13.5px; color: var(--l-ink-3); line-height: 1.5; }
 @media (max-width: 900px) { .calls__grid { grid-template-columns: 1fr; } }
+
+/* integration: 4 × 2 cards, one with the request shape */
+.integ__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: var(--sec-gap) !important; }
+.ig { display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: var(--l-r-md); background: var(--l-bg-soft); }
+.l .ig__t { font-size: 17px; letter-spacing: -0.01em; line-height: 1.25; }
+.l .ig p { font-size: 14.5px; line-height: 1.55; }
+.l .ig__todo { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--l-line-strong); color: var(--l-amber); font-size: 13.5px; }
+.ig--code { background: var(--l-ink); }
+.l .ig--code .ig__t { color: #fff; }
+.ig__pre { margin: 0; overflow-x: auto; font-family: var(--l-mono); font-size: 12px; line-height: 1.6; color: #cfe9d6; white-space: pre; }
+@media (max-width: 1080px) { .integ__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .integ__grid { grid-template-columns: 1fr; } }
+
+/* research: a table made of rows (topic | learned + source | built), stacks on phones */
+.rd { margin-top: var(--sec-gap) !important; border-top: 1px solid var(--l-line-strong); }
+.rd__row { display: grid; grid-template-columns: 180px minmax(0, 1fr) minmax(0, 1fr); gap: 12px clamp(20px, 3vw, 40px); padding: 22px 0; border-bottom: 1px solid var(--l-line); align-items: start; }
+.rd__topic { font-weight: 600; font-size: 16px; color: var(--l-ink); line-height: 1.35; }
+.l .rd__learn p { font-size: 15.5px; line-height: 1.55; }
+.rd__src { display: block; margin-top: 6px; font-size: 13px; color: var(--l-ink-3); }
+.l .rd__did { position: relative; padding-left: 30px; font-size: 15.5px; line-height: 1.55; color: var(--l-ink); }
+.rd__did::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--l-green-ink); font-weight: 600; }
+@media (max-width: 900px) {
+  .rd__row { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* features: six must-haves in a 3 × 2 grid, extras as a checked list */
+.must { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: var(--sec-gap) !important; }
+.must__item { display: flex; gap: 16px; padding: 22px; border-radius: var(--l-r-md); border: 1px solid var(--l-line); background: #fff; }
+.must__item > div { display: flex; flex-direction: column; gap: 8px; }
+.must__n { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--l-bg-mint); color: var(--l-green-ink); font-weight: 600; font-size: 15px; }
+.l .must__t { font-size: 17px; letter-spacing: -0.01em; line-height: 1.25; }
+.l .must__item p { font-size: 14.5px; line-height: 1.55; }
+.l .must__go { margin-top: auto; padding-top: 4px; font-size: 14px; font-weight: 500; color: var(--l-green-ink); text-decoration: none; }
+.must__go::after { content: " →"; }
+.must__go:hover { text-decoration: underline; text-underline-offset: 3px; }
+.l .feats__sub { margin-top: clamp(40px, 5vw, 56px); }
+.extra { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 40px; margin-top: 20px !important; }
+.extra li { position: relative; padding-left: 30px; font-size: 15.5px; line-height: 1.55; color: var(--l-ink-2); }
+.extra li::before { content: ""; position: absolute; left: 0; top: .3em; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--l-bg-mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.7' fill='none' stroke='%230a7a33' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; }
+.extra b { color: var(--l-ink); font-weight: 600; }
+.l .extra a { color: var(--l-green-ink); text-underline-offset: 3px; white-space: nowrap; }
+@media (max-width: 1080px) { .must { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .must, .extra { grid-template-columns: 1fr; } }
