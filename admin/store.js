@@ -58,7 +58,7 @@ function mergePre() {
   const pre = S.pre; if (!pre?.results || !S.checklists.length) return;
   const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
   for (const [id, r] of Object.entries(pre.results)) {
-    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage });
+    const v = () => ({ answers: r.answers, summary: r.summary, model: r.model || pre.model, usage: r.usage, agreement: r.agreement, samples: r.samples });
     if (!S.ai[`${id}|${k}`]) S.ai[`${id}|${k}`] = v();
     if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v();
   }
@@ -146,7 +146,7 @@ export async function mergeGroupEvaluations(group) {
     const k = clHash(S.checklists[0]); const kc = S.call.checklists.length ? clHash(S.call.checklists[0]) : null;
     for (const [id, x] of Object.entries(pre.results || {})) {
       if (!S.byId[id]?._source || !x?.answers) continue;
-      const v = { answers: x.answers, summary: x.summary, model: x.model || pre.model, usage: x.usage, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
+      const v = { answers: x.answers, summary: x.summary, model: x.model || pre.model, usage: x.usage, agreement: x.agreement, samples: x.samples, evaluated_at: pre.generated_at, from_file: `data/evaluations/${group}.json` };
       if (!S.ai[`${id}|${k}`]) { S.ai[`${id}|${k}`] = v; n++; }
       if (kc && isCall(S.byId[id]) && !S.ai[`${id}|${kc}`]) S.ai[`${id}|${kc}`] = v;
     }
@@ -188,6 +188,13 @@ export function evaluation(convId) {
   const evaluatedAt = base.evaluated_at || (src === 'ai' && isBaseHash ? S.pre?.generated_at : null);
   return { cl, kind: kindOf(conv), conv, src, model: base.model, base, answers: base.answers, summary: base.summary, aiScore: score(cl, aiAnswers), finalScore: score(cl, finalAnswers), finalAnswers, appeals, evaluatedAt, live: false };
 }
+/** How sure the AI was about one criterion: self-consistency votes that agree with the shown answer, e.g. { k: 2, n: 3 }.
+ *  null without AI answers or with a single sample. Low (< all) means the samples split: a human should look (issue #33). */
+export function confidenceOf(E, critId) {
+  const n = E.src === 'ai' ? Number(E.base?.samples) : 0; const v = E.base?.agreement?.[critId];
+  if (!(n > 1) || v == null) return null;
+  const k = Math.round(v * n); return { k, n, low: k < n };
+}
 /** A closed live session that has an evaluation (scored with the active checklist). */
 export function liveEvaluation(s) {
   const cl = checklist(); const conv = live.toConversation(s);
@@ -227,7 +234,7 @@ export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.by
   } finally { clearTimeout(timeout); }
   const j = await r.json().catch(() => ({}));
   if (!r.ok || !j.answers) throw Object.assign(new Error(j.error || `API ${r.status}`), { status: r.status });
-  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
+  S.ai[aiKey(convId, cl)] = { answers: j.answers, summary: j.summary, model: j.model, usage: j.usage, agreement: j.agreement, samples: j.samples, latency_ms: j.latency_ms, cached: j.cached, cache_tier: j.cache_tier, problems: j.problems,
     evaluated_at: new Date().toISOString(), wall_ms: Math.round(performance.now() - t0) };
   if (save) persist();
   return j;

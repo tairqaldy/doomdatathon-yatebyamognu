@@ -779,3 +779,6 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
 .imp-list .card__head { flex-wrap: wrap; }
 .imp-table { max-height: none; border: 0; box-shadow: none; border-radius: 0 0 var(--r) var(--r); }
 @media (max-width: 960px) { .imp-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* vote agreement chip in the criterion header (#33) */
+.conf { white-space: nowrap; font-size: 12px; }
