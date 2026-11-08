@@ -4,6 +4,7 @@
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
 import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
 import { annotateRoles, NO_CLIENT_MESSAGE } from '/lib/roles.js';
+import { loadFairness } from './fairness.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
   aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel, confidenceOf, markRecent } from './store.js';
 
@@ -156,7 +157,8 @@ export function viewCard(view, convId, query) {
 
       <div class="side">
         <section class="card score-card" aria-labelledby="score-h">
-          <header class="card__head"><h2 id="score-h">Итоговая оценка</h2><span class="l-chip ${E.src === 'ai' ? 'l-chip--ok' : ''}">${E.src === 'ai' ? 'AI' : 'Без AI'}</span></header>
+          <header class="card__head"><h2 id="score-h">${S.api.fairness && E.src === 'ai' && !R.no_client ? 'Предварительная оценка AI' : 'Итоговая оценка'}</h2><span class="l-chip ${E.src === 'ai' ? 'l-chip--ok' : ''}">${E.src === 'ai' ? 'AI' : 'Без AI'}</span></header>
+          ${S.api.fairness && E.src === 'ai' && !R.no_client ? '<div data-fairness-summary aria-live="polite">Оценка предварительная · проверка доказательств…</div>' : ''}
           <div class="score-head">
             <div class="ring-wrap" id="ring-wrap">${ring(prev ?? 0, tier(total))}<span class="ring-wrap__num num" id="total">${prev == null ? '—' : fmt(prev, 2)}</span><span class="ring-wrap__of">из 100</span></div>
             <div class="score-head__text">
@@ -215,6 +217,7 @@ export function viewCard(view, convId, query) {
                 <span class="crit__pts num">${c.type === 'flag' ? '<span class="muted">флаг</span>' : row?.points == null ? '<span class="muted">не учит.</span>' : `${fmt(row.points, 2)}<small> / ${fmt(row.effective_weight, 2)}</small>`}</span>
               </header>
               <p class="crit__why clamp">${esc(r.explanation || (a == null ? 'AI ещё не оценил этот критерий по текущей версии чек-листа: в итог не входит. Нажмите «Оценить заново».' : '—'))}</p>
+              ${S.api.fairness && E.src === 'ai' && !R.no_client ? `<div data-fairness-criterion="${esc(c.id)}"></div>` : ''}
               ${lost && r.deduction_reason ? `<p class="crit__lost"><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}
               ${a === 'na' ? `<p class="crit__na"><b>Условие N/A из чек-листа:</b> ${esc(c.na_condition || 'не задано')}${na?.quote && na.quote !== c.na_condition ? `<br><b>Основание:</b> «${esc(na.quote)}»` : ''}</p>` : ''}
               ${a != null && row?.error ? `<p class="crit__lost"><b>Ответ не по правилам чек-листа:</b> ${esc(row.error)}. В итог не входит, нажмите «Оценить заново».</p>` : ''}
@@ -226,6 +229,7 @@ export function viewCard(view, convId, query) {
       </div>
     </div>`;
 
+  if (S.api.fairness && E.src === 'ai' && !R.no_client) void loadFairness(view, E);
   animateScore(prev ?? 0, total);
   S.lastTotals[convId] = total;
 

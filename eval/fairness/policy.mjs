@@ -1,8 +1,8 @@
 // Policy validity is separate from independent semantic correctness.
 import { fingerprint } from './validation.mjs';
 
-export const VALIDATION_VERSION = 'transcript-validation-v3';
-export const LEGACY_VERSIONS = new Set([undefined, null, 'transcript-validation-v1', 'transcript-validation-v2']);
+export const VALIDATION_VERSION = 'transcript-validation-v4';
+export const LEGACY_VERSIONS = new Set([undefined, null, 'transcript-validation-v1', 'transcript-validation-v2', 'transcript-validation-v3']);
 const ranks = { valid: 0, warning: 1, needs_review: 2, invalid: 3 };
 export const riskStatus = findings => findings.reduce((status, finding) =>
   ranks[finding.severity] > ranks[status] ? finding.severity : status, 'valid');

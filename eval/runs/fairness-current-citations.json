@@ -1,0 +1,152 @@
+{
+  "prompt_version": "eval-v5.3",
+  "source_evaluator_sha256": "f7298f15f1b6ed98b381bc830094856410a009c1ee20083e9319d60181d1b2c8",
+  "cache": {
+    "git_lf_fingerprint": "7b97e37ca1c1",
+    "worktree_fingerprint": "5fb898b5dfb0",
+    "lf_hits": 195,
+    "worktree_hits": 0,
+    "expected": 195
+  },
+  "total_diagnostics": 12,
+  "selected": 3,
+  "unselected": 9,
+  "note": "The normalized cache replaces original model quotes with transcript prefixes. Exact offending strings cannot be recovered here. No verdict, evidence, cache or warning changes.",
+  "paid_calls": 0,
+  "cases": [
+    {
+      "conversation_id": "p4-ru-005",
+      "diagnostics": [
+        {
+          "sample": 1,
+          "criterion_id": "c02",
+          "turn_index": 57,
+          "speaker": "client",
+          "selected_sample": 1,
+          "selected": true,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "4b64df1840b589a0ed61f5860451185d866fd628f992d187d5af16d9ad9857da"
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c04",
+          "turn_index": 43,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": true,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "13d8351b4decb8aeae0444c3d6613bc69a900f5b6fb9029bddef23d925dc533a"
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c04",
+          "turn_index": 66,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": true,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "876f93b2c0dd4bd3675483f170b771c1937a0753ea142a37f69cb12d7e7b1b58"
+        }
+      ],
+      "replay_matches_saved_text_answers": true,
+      "warnings_cleared": false
+    },
+    {
+      "conversation_id": "p4-ru-004",
+      "diagnostics": [
+        {
+          "sample": 2,
+          "criterion_id": "c03",
+          "turn_index": 78,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "7dd06ac6e3b9bac9727b130355a800f807f308d8acce7ae727adfd12e6d071df"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c02",
+          "turn_index": 33,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "96d8a0d466db01eed347bfc30eb4f8ba31cbc2931ef30a31387802c3633fe62d"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c03",
+          "turn_index": 70,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "18ea31ec58d31bccf1373d6f6ea9524c4c967c0215cac8009cfcf1b182b41901"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c03",
+          "turn_index": 78,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "7dd06ac6e3b9bac9727b130355a800f807f308d8acce7ae727adfd12e6d071df"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c04",
+          "turn_index": 89,
+          "speaker": "operator",
+          "selected_sample": 2,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "a11ad6ba55e489894e64a1216543bad9fa6a06476636925486aec7a5754ac8ba"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c04",
+          "turn_index": 111,
+          "speaker": "operator",
+          "selected_sample": 2,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "7bcba90d31553242971b4588b2eadf70d13ab7cb5db5549383b95a201b4bcc7f"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c05",
+          "turn_index": 90,
+          "speaker": "client",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "d25e6ce650c14a82a56c24c1d2c7a4653f014879c52c4465dad4dc8f0b7805df"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c06",
+          "turn_index": 95,
+          "speaker": "client",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "677c5fbc909daa2a7f052701476e7bd17c3ea22f2d17f58650a76f166116c564"
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c08",
+          "turn_index": 78,
+          "speaker": "operator",
+          "selected_sample": 1,
+          "selected": false,
+          "original_model_quote_recoverable": false,
+          "message_sha256": "7dd06ac6e3b9bac9727b130355a800f807f308d8acce7ae727adfd12e6d071df"
+        }
+      ],
+      "replay_matches_saved_text_answers": true,
+      "warnings_cleared": false
+    }
+  ]
+}

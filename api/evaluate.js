@@ -4,6 +4,7 @@ import { send, preflight, body, fail } from '../lib/http.js';
 import { evaluateWithAudio as evaluate } from '../lib/tone.js'; // text criteria → lib/evaluator.js, audio criteria (calls) → lib/tone.js
 import { findConversation } from '../lib/data.js';
 import { annotateRoles, NO_CLIENT_MESSAGE } from '../lib/roles.js';
+import { attachFairness } from '../lib/fairness.js';
 
 const SPEAKERS = new Set(['client', 'operator', 'bot', 'system']);
 const ORGANIZER_AUDIO = /^https:\/\/[a-z0-9.-]+\.powerplatform\.com\//i;
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
     // Vote over every sample that finishes within 4 min (the evaluator's own Vercel default is 45 s, set for the old 60 s limit).
     const deadlineMs = Number(process.env.CQA_EVAL_DEADLINE_MS) || 240000;
     const r = await evaluate(conv, b.checklist, { model: b.model, force: Boolean(b.force), deadlineMs });
-    send(res, 200, { conversation_id: conv.conversation_id, cached: r.cached, cache_tier: r.tier, served_ms: Date.now() - t0, ...r.value, roles });
+    send(res, 200, { conversation_id: conv.conversation_id, cached: r.cached, cache_tier: r.tier, served_ms: Date.now() - t0,
+      ...attachFairness(conv, r.value, b.checklist, { legacy: Boolean(r.cached) }), roles });
   } catch (e) { fail(res, e); }
 }

@@ -154,3 +154,13 @@ type NavAction =
 `/broker` handoff reuses `LiveSession` (additive fields): session `source: "broker-agent"`, messages may carry `actions: string[]` (what AIM did on screen). Pre-handoff messages keep their real `at` / `timestamp`.
 
 **Not built (UI keeps these client-side for now):** appeals and checklist versions live in `localStorage` (prototype). If shared state is needed for the demo, Lane B adds `GET/POST /api/appeals` with the §4 shape (additive).
+
+### Optional transcript fairness validation (flagged integration)
+
+`CQA_TRANSCRIPT_FAIRNESS=1` enables an additive `fairness` sidecar on `/api/evaluate`; default is off. Existing answers, evidence, totals, usage and cache entries retain their original shapes and values. The sidecar is computed **after** generation/cache retrieval and is not included in generation keys.
+
+`POST /api/validate-evaluation { conversation, checklist, result }` revalidates a supplied saved result without invoking a model or writing caches. Disabled: `{ enabled:false }`; enabled: `{ enabled:true, fairness }`. This validates the supplied input; it does not authenticate its origin or approve its correctness. Call results must use the call checklist, including C09, and retain `audio_model` provenance.
+
+`fairness` contains `validation_version`, `status: valid|warning|needs_review|invalid`, `findings[]` (`reason`, `criterion_id`, `dimension`, `severity`), `criteria[]` (original answer/evidence/explanation plus validation state), `provisional_total`, `confirmed_total`, `publishable`, `gross_error`, `input_sha256`, and `verification: automated_validation_not_human_score_approval`. `confirmed_total` is null for blocked results. For nonblocked results it means automated validation passed, **not human QA approval**; the UI keeps the human-confirmed total empty unless a separate authorized decision exists. A positive gross flag stays visible even when the result is blocked. C08=no without source evidence has no approved legacy exception in this integration.
+
+Human audio observations are transcript-bound; applying them to a different checklist retains observations but adds a pending checklist-decision finding. They cannot change an answer, assign N/A or approve C08. Missing/stale transcript probes block confirmation for new/edited inputs rather than launching Python or paid inference at runtime. The current runtime can consume the existing source-bound DEV probes; runtime probe generation for new dialogs remains a separate integration task.

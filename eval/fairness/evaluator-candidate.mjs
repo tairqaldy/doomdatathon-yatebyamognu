@@ -1,4 +1,4 @@
-// Offline integration candidate. Production evaluator and API do not import it.
+// Validation sidecar. It never calls the model or changes generation cache keys.
 import { readFileSync } from 'node:fs';
 import { buildMessages, PROMPT_VERSION } from '../../lib/evaluator.js';
 import { score } from '../../prototype/scoring.js';
@@ -10,9 +10,10 @@ import { VALIDATION_VERSION, LEGACY_VERSIONS, riskStatus, isBlocking, finding, c
 export const CANDIDATE_VERSION = 'transcript-fairness-addendum-v1';
 const addendum = readFileSync(new URL('./prompt-addendum.txt', import.meta.url), 'utf8');
 const officialCriteria = JSON.parse(readFileSync(new URL('../../data/checklists/freedom-chat-v1.json', import.meta.url), 'utf8')).criteria;
+const callCriteria = JSON.parse(readFileSync(new URL('../../data/checklists/freedom-call-v1.json', import.meta.url), 'utf8')).criteria;
 const officialContact = officialCriteria.find(c => c.id === 'c01');
 const sameContactRule = criterion => criterion?.id === officialContact.id
-  && fingerprint(criterion) === fingerprint(officialContact);
+  && [officialContact, callCriteria.find(c => c.id === 'c01')].some(c => fingerprint(criterion) === fingerprint(c));
 
 export function buildFairnessMessages(conversation, checklist, baseVersion = PROMPT_VERSION) {
   const messages = buildMessages(conversation, checklist, baseVersion);
@@ -24,11 +25,11 @@ export function buildFairnessMessages(conversation, checklist, baseVersion = PRO
 
 export function reviewEvaluation(conversation, result, checklist, probe, options = {}) {
   const criteria = Array.isArray(checklist?.criteria) ? checklist.criteria.filter(c => c && typeof c.id === 'string') : [];
-  const matches = id => criteria.some(c => c.id === id && fingerprint(c) === fingerprint(officialCriteria.find(o => o.id === id)));
+  const matches = id => criteria.some(c => c.id === id && [...officialCriteria, ...callCriteria].some(o => o.id === id && fingerprint(c) === fingerprint(o)));
   const mode = options.mode === 'legacy' ? 'legacy' : 'current';
   const contact = criteria.find(sameContactRule);
   const validated = validateEvaluation(conversation, result, checklist, {
-    operatorCriteria: ['c01', 'c04', 'c05', 'c06', 'c08'].filter(matches),
+    operatorCriteria: [...['c01', 'c04', 'c05', 'c06', 'c08'].filter(matches), ...criteria.filter(c => c.input === 'audio').map(c => c.id)],
     contactId: matches('c01') ? 'c01' : null, identityId: matches('c03') ? 'c03' : null,
   });
   const { answers } = validated;
@@ -39,7 +40,21 @@ export function reviewEvaluation(conversation, result, checklist, probe, options
   const findings = [...assessment.findings,
     ...classifyTranscript(validateProbe(conversation, probe), conversation, result, criteria, contact?.id),
     ...(options.contextFindings || [])];
-  if (options.humanAudioReview) findings.push(...assessHumanAudioReview(conversation, checklist, options.humanAudioReview).findings);
+  const humanAssessment = options.humanAudioReview
+    ? assessHumanAudioReview(conversation, checklist, options.humanAudioReview, { observationsOnly: true }) : null;
+  if (humanAssessment) findings.push(...humanAssessment.findings);
+  for (const c of criteria.filter(c => c.input === 'audio')) {
+    if (result?.answers?.[c.id]?.answer !== 'na' && !(typeof result?.audio_model === 'string' && result.audio_model.trim())) {
+      findings.push(finding('audio_source_unverified', c.id, 'provenance', 'needs_review'));
+    }
+  }
+  if (options.requireLegacyC08Approval && mode === 'legacy') {
+    for (const issue of validated.issues) if (issue.reason === 'missing_original_reference'
+      && issue.criterion_id === 'c08' && result?.answers?.c08?.answer === 'no') {
+      findings.push(finding('legacy_c08_security_approval_pending', 'c08', 'provenance', 'needs_review'));
+      break;
+    }
+  }
   if (contact && probe?.status === 'needs_review') {
     findings.push(finding('transcript_uncertainty', contact.id, 'transcription', 'needs_review', { turn_index: probe.message_index ?? null }));
   }
@@ -75,7 +90,7 @@ export function reviewEvaluation(conversation, result, checklist, probe, options
       schema_validation: dimension('schema'),
       verdict_validation: dimension('verdict'),
       evidence_validity: dimension('evidence'),
-      transcription_reliability: { ...dimension('transcription'), audio_reviewed: false },
+      transcription_reliability: { ...dimension('transcription'), audio_reviewed: humanAssessment?.observation_status === 'recorded' },
       provenance: dimension('provenance'),
       evaluation_correctness: { status: findings.some(f => f.reason === 'invalid_na_verdict') ? 'contradicted_by_applicability_review' : 'not_independently_verified' },
       publication_readiness: { status, publishable },

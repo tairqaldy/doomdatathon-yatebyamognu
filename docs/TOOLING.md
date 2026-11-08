@@ -136,3 +136,6 @@ Transcript fairness audit (2026-11-07): Python 3.14 standard library (`unittest`
 | Pinned main offline checker | Git objects + upstream pure modules with throwing model/cache stubs; existing accuracy harness; no inference | lane-c | node eval/fairness/current-main-check.mjs | Free; known-gold saved metrics only | Verified on 15f1835, no deployment |
 
 | Human audio observation sidecars and validation v1 | Source-bound user listening findings, uncertainty preserved, C01-only offline overlay with no score overrides | lane-c | node eval/fairness/revalidate-human-audio.mjs [--ref origin/main]; node --test eval/fairness/human-audio-review.test.mjs | Free/offline; not an independent audio transcription or C08 approval | 8 regression tests pass |
+
+| Local fairness integration | Flagged post-generation sidecar + read-only validation endpoint; Node test runner and current saved-result replay | lane-c | CQA_TRANSCRIPT_FAIRNESS=1; node eval/fairness/final-replay.mjs | Offline validation has no inference; flag defaults off | Integration tests pass |
+| Headless Chrome + built-in Node WebSocket/CDP | Local-only analytics smoke check, temporary isolated browser profile; server rejects external fetch | lane-c | Installed Chrome, no npm dependencies | Free, no paid calls; no production access | Local verification |
