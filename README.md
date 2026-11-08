@@ -78,7 +78,12 @@ Add, edit, replace or reorder a criterion; change its wording, weight, answer ty
 Three ways in: the organizers' set by `group_id` through our `/api/dataset` proxy (the browser never meets the API's CORS limits); a pasted or uploaded transcript; and live chats from `/support/`, where AIM hands the client to an operator and the finished chat lands in «Живые чаты» for QA.
 **Where:** Загрузка диалогов (`/admin/#/import`): «Вставить текст», «JSON-файл», «Набор по group_id». Live chats: Живые чаты.
 
-<img src="docs/media/support-handoff.jpg" alt="Customer chat: AIM says it is AI and hands off to a live operator" width="720">
+<table>
+<tr>
+<td width="50%"><img src="docs/media/import-dialog.jpg" alt="Загрузка диалогов: a pasted RU transcript ready for «Оценить AI-агентом»"><br><sub>Загрузка диалогов: paste a transcript, upload JSON or load a set by group_id</sub></td>
+<td width="50%"><img src="docs/media/support-handoff.jpg" alt="Customer chat: AIM says it is AI and hands off to a live operator"><br><sub>/support/: AIM says it is AI and hands off with the whole chat and an expected wait</sub></td>
+</tr>
+</table>
 
 ### 3. Evaluation
 
@@ -117,7 +122,7 @@ Also in `/admin/`: «AI-аналитик» answers questions about the aggregate
 
 ## Evaluate your own transcript
 
-The top teams will be asked to evaluate transcripts live ([telegram-qa.md](docs/case/telegram-qa.md)). Nothing is replayed: a new text is never in the cache, so every request goes to the model.
+The top teams will be asked to evaluate transcripts live ([telegram-qa.md](docs/case/telegram-qa.md)). Nothing is replayed: a new text is never in the cache, so a new dialog always goes to the model.
 
 ### In the product
 
