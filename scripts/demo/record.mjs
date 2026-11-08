@@ -867,6 +867,9 @@ async function shortAppeal() {
   await scroll({ sel: ded, block: 'center' });
   await click(`${ded} [data-appeal]`, { pause: 150 });
   await waitFor('#ap-comment');
+  // let the drawer finish sliding in (and the textarea stop moving) before the click and the zoom land on it
+  await waitFor(() => { const el = document.querySelector('#ap-comment'); const x = Math.round(el.getBoundingClientRect().left); const same = window.__apx === x; window.__apx = x; return same; }, { what: 'appeal drawer settled' });
+  await sleep(120);
   await click('#ap-comment', { pause: 60, dx: 0.2 });
   zoom(1.7);
   await paste(plan.comment);
@@ -900,9 +903,12 @@ async function shortAppeal() {
 async function shortEnd() {
   await quiet();
   await sleep(200);
+  // clock stopped while the end card loads: no blank frame and no cursor before the overlay is hidden
+  rec.pause();
   await goto(`${BASE}/scripts/demo/end-card.html?cut=short`);
   await js(() => window.__demo.hide(true));
-  await sleep(150); await rec.grab();
+  await sleep(150);
+  await rec.resume();
   await hold(4300);
 }
 
