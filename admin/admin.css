@@ -959,3 +959,5 @@ body:has(.drawer) { overflow: hidden; } /* the page behind an open drawer stays 
   #rows .crit-edit__top > * { grid-column: 1 !important; grid-row: auto !important; }
   #rows .crit-edit { padding: 8px 12px; }
 }
+.calc-note { margin: 6px 20px 0 !important; color: var(--ink-3) !important; }
+@media (max-width: 700px) { .calc-note { margin-left: 16px !important; margin-right: 16px !important; } }

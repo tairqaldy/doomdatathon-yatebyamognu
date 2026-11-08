@@ -225,7 +225,7 @@ export function evidenceIdx(E, c) {
   const e = E.answers[c.id]?.evidence?.find((x) => x.kind === 'message' || x.kind === 'range');
   return e ? (e.kind === 'message' ? e.turn_index : e.range[0]) : null;
 }
-export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Да (нарушение)' : 'Да') : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
+export const answerText = (c, a) => (a == null ? '—' : a === 'na' ? 'N/A' : a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' && c.type === 'flag' ? 'Нет нарушения' : a === 'no' ? 'Нет' : `${a} из ${maxStep(c)}`);
 
 /* ---------- AI calls ---------- */
 export async function aiEvaluate(convId, { force = false, cl = checklistFor(S.byId[convId]), save = true } = {}) {

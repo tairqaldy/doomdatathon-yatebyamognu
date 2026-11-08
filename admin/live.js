@@ -22,7 +22,7 @@ const opName = () => { try { return sessionStorage.getItem(NAME_KEY) || 'Айг�
 const setOpName = (v) => { try { sessionStorage.setItem(NAME_KEY, v); } catch {} };
 const chip = (s) => { const st = STATUS[s.status] || STATUS.bot; return `<span class="st ${st.cls}">${s.status === 'waiting_operator' ? '<span class="pulse" aria-hidden="true"></span>' : ''}${st.label}</span>`; };
 const since = (s) => (s.status === 'waiting_operator' && s.handoff?.at ? `<span class="timer mono" data-since="${esc(s.handoff.at)}" aria-label="Время ожидания">${clock(Date.now() - new Date(s.handoff.at))}</span>` : '');
-const ansLabel = (c, a) => (a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' ? (c.type === 'flag' ? 'Нет нарушений' : 'Нет') : a === 'na' ? 'N/A' : a == null ? '—' : `${a} из ${maxStep(c)}`);
+const ansLabel = (c, a) => (a === 'yes' ? (c.type === 'flag' ? 'Нарушение' : 'Да') : a === 'no' ? (c.type === 'flag' ? 'Нет нарушения' : 'Нет') : a === 'na' ? 'N/A' : a == null ? '—' : `${a} из ${maxStep(c)}`);
 const ansCls = (c, a, row) => (a === 'na' || a == null ? 'ans--na' : c.type === 'flag' ? (a === 'yes' ? 'ans--gross' : 'ans--ok') : row?.points != null && row.points >= row.effective_weight - 0.001 ? 'ans--ok' : row?.points > 0 ? 'ans--mid' : 'ans--bad');
 
 export function viewLive(view, id) {

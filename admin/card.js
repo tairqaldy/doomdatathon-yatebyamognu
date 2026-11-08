@@ -12,7 +12,7 @@ let ticker = null;
 
 function answerBadge(c, a) {
   if (a == null) return '<span class="ans ans--none">не оценён</span>';
-  if (c.type === 'flag') return a === 'yes' ? `<span class="ans ans--gross">${icon('alert')}Нарушение</span>` : `<span class="ans ans--ok">${icon('check')}Нет нарушений</span>`;
+  if (c.type === 'flag') return a === 'yes' ? `<span class="ans ans--gross">${icon('alert')}Нарушение</span>` : `<span class="ans ans--ok">${icon('check')}Нет нарушения</span>`;
   if (a === 'na') return `<span class="ans ans--na">${icon('dash')}N/A</span>`;
   if (a === 'yes') return `<span class="ans ans--ok">${icon('check')}Да</span>`;
   if (a === 'no') return `<span class="ans ans--bad">${icon('x')}Нет</span>`;
@@ -87,6 +87,10 @@ export function viewCard(view, convId, query) {
   // each criterion is explained once: point deductions in «Причина снижения», the fired gross flag in its red banner,
   // everything else (full points, N/A, not evaluated) in «Остальные критерии»
   const ddPts = dd.filter((d) => !d.gross);
+  // calls: the audio criteria (c09 tone) are our extension; results.json scores the 8 official criteria only
+  // (eval/export-results.mjs drops input: "audio"), so show that number too when it differs
+  const audioCrits = cl.criteria.filter((c) => c.input === 'audio');
+  const noTone = call && audioCrits.length ? score({ ...cl, criteria: cl.criteria.filter((c) => c.input !== 'audio') }, finalAnswers).total : null;
   const restCrits = crits.filter((c) => !ddPts.some((d) => d.c.id === c.id) && !(c.type === 'flag' && finalAnswers[c.id] === 'yes'));
   const clLabel = checklistLabel(cl);
   setHead('Анализ диалога', `${conv.conversation_id} · ${clLabel}`);
@@ -159,6 +163,7 @@ export function viewCard(view, convId, query) {
             </div>
           </div>
           ${calcHTML(crits, finalScore, finalAnswers, total)}
+          ${noTone != null && total != null && Math.abs(noTone - total) >= 0.005 ? `<p class="calc-note small" title="Официальный формат results.json содержит 8 критериев чек-листа; тон по записи звонка — наше дополнение">В results.json без тона (8 критериев): <b class="num">${fmt(noTone, 2)}</b></p>` : ''}
           ${secs.length ? `<div class="secs" aria-label="Итоги по секциям">${secs.map((s) => `
             <div class="sec" title="${esc(s.title)}: ${fmt(s.points, 2)} из ${fmt(s.max, 2)}"><span class="sec__t">${esc(s.title)}</span><b class="num">${fmt(s.points, 1)}<small> / ${fmt(s.max, 1)}</small></b><span class="meter meter--s" aria-hidden="true"><span style="width:${s.score ?? 0}%;background:${tierVar(tier(s.score))}"></span></span></div>`).join('')}</div>` : ''}
           <ol class="path" aria-label="Путь оценки">
@@ -381,7 +386,7 @@ export function openReview(appealId) {
   if (!c) { toast('Критерий апелляции отсутствует в активной версии чек-листа', 'warn'); return; }
   const r = E.answers[c.id] || {}; const orig = r.answer;
   const options = c.type === 'scale' ? [...c.scale.map((s) => s.value), ...(c.na_allowed ? ['na'] : [])] : ['yes', 'no', ...(c.na_allowed ? ['na'] : [])];
-  const label = (v) => (v === 'yes' ? 'Да' : v === 'no' ? 'Нет' : v === 'na' ? 'N/A' : String(v));
+  const label = (v) => (c.type === 'flag' ? (v === 'yes' ? 'Нарушение' : v === 'no' ? 'Нет нарушения' : String(v)) : v === 'yes' ? 'Да' : v === 'no' ? 'Нет' : v === 'na' ? 'N/A' : String(v));
   let pick = orig, mode = 'confirm';
   const w = drawer(`Решение по апелляции · ${conv.conversation_id}`, `
     <div class="note">
