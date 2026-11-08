@@ -12,6 +12,7 @@ import { viewChecklist } from './checklist.js';
 import { viewLive } from './live.js';
 import { viewAnalyst } from './analyst.js';
 import { viewImport } from './import.js';
+import { mountTourButton, autoStart as autoStartTour } from './tour.js';
 
 const ROUTES = {
   overview: { render: viewOverview, nav: 'overview' },
@@ -100,6 +101,7 @@ async function enterApp() {
   }
   if (!location.hash || location.hash === '#') history.replaceState(null, '', '#/overview');
   route();
+  autoStartTour(); // once per browser (localStorage cqa-tour-done), only from Обзор
 }
 
 function showLogin(reason = '') {
@@ -131,6 +133,7 @@ $('#login-form').addEventListener('submit', async (e) => {
   finally { btn.disabled = false; btn.textContent = 'Войти'; }
 });
 
+mountTourButton();
 $$('[data-logout]').forEach((b) => b.addEventListener('click', () => auth.logout()));
 addEventListener('cqa:logout', (e) => showLogin(e.detail?.reason || ''));
 addEventListener('hashchange', () => {

@@ -547,6 +547,12 @@ Done: `pitch/jury-qa.md` section 14 filled with the FBroker control run (10 chat
 Contracts touched: none. Docs only.
 How to verify: read `pitch/jury-qa.md` sections 0 and 14.
 
+### 2026-11-08 11:30 +05:00 · team · tair/claude · #18 · FINAL HANDOFF before stop code
+**Submitted:** `results/prod/results.json`: 10 FBroker control chats, run 10:52 (67 s, $0.061, 0 errors, valid). Average 73,44 (RU 60,95 · KZ 77,03 · EN 91,25), gross errors in p2-ru-004 and p2-kz-003. `results/dev/results.json` valid 65/65. SWAP (3 chats) saved in `data/datasets/Swap.json` and pre-evaluated with the official checklist → a live run answers from cache (≈ 0,5 s); «Оценить заново» forces a fresh run. Not in results/prod, as the organizers asked.
+**On main:** evaluator eval-v5.3 · admin rounds 1–3 (calm overview with a one-line summary, jury scenario panel, filters by language/channel/source, sortable lists, AI analyst chat, compact checklist editor, stale-answer guard, re-evaluate chosen dialogs) · onboarding tour («Как пользоваться», 10 steps) · operator-to-operator handling (`lib/roles.js`: named operators, internal remarks as context, no-client dialogs skipped) · landing cut to the essentials (Dynamics described as an integration path) · two-voice 49 s demo video (Dameli + Tair) · jury guide `docs/guide/freedom-cqa-guide.pdf` (12 pages) · slides `pitch/freedom-cqa-slides.pdf` (+ `pitch/slides.html`, speaker notes in `pitch/README.md`) · README jury box with passcode `freedom-agent`.
+**Production caveat:** Vercel's free plan hit 100 deployments/day at 10:55, so https://freedom-cqa.vercel.app stayed on commit 59b0db3 until the team upgrades the plan; then redeploy `main` (no new commit needed).
+**For the defense:** open `/admin/` (passcode `freedom-agent`), the tour starts once; re-evaluate a chat live (≈ 30 s), not a call; weight changes recompute instantly; SWAP via «Загрузка диалогов → group_id Swap».
+
 ### 2026-11-08 · lane-c · resolve audit branch conflicts with main
 User requested conflict resolution after authorizing pull/push. Merged origin/main 14a53ee into audit/na-cache-compatibility; STATUS conflict resolved by retaining both complete blocks. TOOLING auto-merged. Incoming production/UI/data changes are preserved as main supplied them; no manual production changes.
 Fixed merge-exposed test coupling: historical v5.1 citation replay and evidence proposals now use pinned 965f782 source/results; the historical replay has throwing model/cache stubs. Identity uncertainty fixture no longer assumes message-shaped cached evidence; C01 deduction fixture explicitly supplies a text-only failed verdict without depending on current DEV generation. No evidence/scoring rules weakened.
@@ -565,3 +571,11 @@ Next: owner review/rendered browser test; final C01 decisions and separate C08 s
 
 ### 2026-11-08 · lane-c · fairness integration publication requested
 User now authorizes usual pull/push and conflict resolution. Pull completed against audit upstream. Prepare a commit of the reviewed feature-flag integration, then merge origin/main into audit/na-cache-compatibility, preserving both sides and rerunning tests. No merge into main or production deployment; feature flag remains default off. Earlier no-publish statements describe the preceding task phase.
+
+### 2026-11-08 11:47 +05:00 · lane-c · Nazar/claude · #37 · c/37-asr-wer
+Done: `eval/asr-compare.mjs` runs gpt-4o-transcribe, whisper-1 and Nemotron 3.5 on the 5 DEV calls and compares them with the organizer transcripts. Organizer text is outvoted (both strong engines agree on a different word) on 4.1% of words vs 2.5% gpt-4o and 2.1% Nemotron; worst in 3 of 5 calls. Meaning-changing errors: «продам» vs «подал» поручение, «домой/прямой счёт» vs «демо-счёт» (×5), «убить на жительство», OTC lost 5 times, Kazakh IVR greeting → «за кошки для нас» in 4 calls, name masking leaks in 2 calls. Raw WER vs gpt-4o is 46.6%, but most of it is coverage (organizer recording pauses on transfer); quote the outvoted rate. whisper-1 loops on long calls, not usable for this. Write-up: `docs/research/asr-quality.md`. Cost ≈ $0.47, cached.
+Contracts touched: none. No evaluator or UI change.
+How to verify: `node eval/asr-compare.mjs` (free from cache on this laptop), read `eval/runs/asr-compare-DEV.json`.
+
+### 2026-11-08 · lane-c · integration sync and conflict resolution
+User authorized pull/push/merge-conflict workflow. Committed feature-flag integration as b78144d, merged origin/main 0e17312 into audit/na-cache-compatibility only. STATUS conflict resolved retaining both sides; TOOLING auto-merged. Incoming README/tour/ASR work preserved. Verification after sync: 113/113 fairness Node tests, 12/12 scoring, Python guard 16/16 self-test and 8/8 unittest, tracked JSON and diff checks. No paid calls, no merge into main, no production deployment; fairness flag remains default off.
