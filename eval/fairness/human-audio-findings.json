@@ -1,0 +1,105 @@
+{
+  "record_type": "human_audio_observations_not_final_scores",
+  "review_version": "human-audio-observations-v1",
+  "provenance": "User explicitly reported manual listening in this conversation; assistant did not listen. Review time, audio offsets and reviewer real name were not supplied.",
+  "c08_security_approval": "not_granted",
+  "reviews": [
+    {
+      "conversation_id": "p4-ru-002",
+      "reference_turn_index": 2,
+      "issues": [
+        "recording_start_missing"
+      ],
+      "recording_start_complete": false,
+      "greeting": "not_verifiable",
+      "company_introduction": "not_verifiable",
+      "personal_introduction": "not_verifiable",
+      "wording": {
+        "approximate_masked": null,
+        "verbatim_confirmed": false,
+        "uncertainty": "Beginning missing; greeting cannot be verified."
+      },
+      "recommendation": "No automatic penalty; provisional C01 until incomplete-recording policy is applied.",
+      "source": "user_reported_manual_audio_listening",
+      "observation_status": "recorded",
+      "received_on": "2026-11-08",
+      "reviewed_at": null,
+      "audio_time_range": null,
+      "reviewer": {
+        "session_user": true,
+        "display_name": null,
+        "identity_independently_verified": false
+      },
+      "transcript_sha256": "beb49cf150b1769a2328af3a29a7dc7fa8ddde2da42859f983c1e98794e92b3b",
+      "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+      "final_c01_verdict": null,
+      "score_effect": null,
+      "security_approval": false
+    },
+    {
+      "conversation_id": "p4-ru-005",
+      "reference_turn_index": 16,
+      "issues": [
+        "possible_asr_company_name_mismatch"
+      ],
+      "recording_start_complete": null,
+      "greeting": "confirmed",
+      "company_introduction": "audible_wording_uncertain",
+      "personal_introduction": "not_confirmed",
+      "wording": {
+        "approximate_masked": "Welcome to Freedom Bank.",
+        "later_greeting_reported": true,
+        "verbatim_confirmed": false,
+        "uncertainty": "Similar wording reported, company name requires verification; later greeting does not prove first-response compliance."
+      },
+      "recommendation": "Separate ASR mismatch from staff error; no automatic full C01 without required personal introduction.",
+      "source": "user_reported_manual_audio_listening",
+      "observation_status": "recorded",
+      "received_on": "2026-11-08",
+      "reviewed_at": null,
+      "audio_time_range": null,
+      "reviewer": {
+        "session_user": true,
+        "display_name": null,
+        "identity_independently_verified": false
+      },
+      "transcript_sha256": "b4bff05197d8d7b18dbdbe159d86d33676262a7e8489693498609b84c631e411",
+      "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+      "final_c01_verdict": null,
+      "score_effect": null,
+      "security_approval": false
+    },
+    {
+      "conversation_id": "p4-ru-004",
+      "reference_turn_index": 14,
+      "issues": [
+        "fast_or_unclear_speech"
+      ],
+      "recording_start_complete": null,
+      "greeting": "confirmed",
+      "company_introduction": "audible_wording_uncertain",
+      "personal_introduction": "likely_confirmed",
+      "wording": {
+        "approximate_masked": "Freedom Broker, hello, my name is [personal name withheld].",
+        "verbatim_confirmed": false,
+        "uncertainty": "Approximate user wording; fast speech, personal introduction likely rather than certain. Personal name redacted in public artifact."
+      },
+      "recommendation": "Do not penalize solely for ASR failure; preserve uncertainty and obtain final reviewer confidence.",
+      "source": "user_reported_manual_audio_listening",
+      "observation_status": "recorded",
+      "received_on": "2026-11-08",
+      "reviewed_at": null,
+      "audio_time_range": null,
+      "reviewer": {
+        "session_user": true,
+        "display_name": null,
+        "identity_independently_verified": false
+      },
+      "transcript_sha256": "2d3e20b8c30b2d05b46677c3d6ad0b97251abd61a485fbf57bb4376ec17a6c56",
+      "checklist_sha256": "20618a6cde72a0117b6f8d6026f58c86c2474375a66a491288f835cb603d1392",
+      "final_c01_verdict": null,
+      "score_effect": null,
+      "security_approval": false
+    }
+  ]
+}

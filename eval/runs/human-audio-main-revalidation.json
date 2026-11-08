@@ -1,0 +1,295 @@
+{
+  "scope": "Offline candidate revalidation of user-reported audio findings; not an applied production decision",
+  "source_revision": "7552abff086751930871096565b74437282ee249",
+  "validator_scope": "Offline fairness candidate, not the deployed evaluator",
+  "human_audio_validation_version": "human-audio-validation-v1",
+  "compatibility_note": "Full candidate validation may be invalid for upstream calls containing C09 outside this eight-criterion checklist. Human C01 assessment is reported separately; it does not clear unrelated findings or imply an application defect.",
+  "source_reviews_sha256": "086e268519810751a3e61cfdebe3c080a9469b9de4cca92382bd0d164649f02b",
+  "paid_calls": 0,
+  "score_changes": 0,
+  "c08_approval": "separate_pending_process",
+  "rows": [
+    {
+      "conversation_id": "p4-ru-002",
+      "prompt_version": "eval-v5.3",
+      "source_result_sha256": "871dc33828897916a7f4450f734420ed496e5e6342ea194a8d992854a4bc7f74",
+      "existing_c01": "no",
+      "audio": {
+        "status": "needs_review",
+        "observation_status": "recorded",
+        "findings": [
+          {
+            "reason": "human_confirmed_recording_start_missing",
+            "criterion_id": "c01",
+            "dimension": "transcription",
+            "severity": "needs_review"
+          },
+          {
+            "reason": "human_audio_final_c01_decision_pending",
+            "criterion_id": "c01",
+            "dimension": "verdict",
+            "severity": "needs_review"
+          }
+        ],
+        "greeting": "not_verifiable",
+        "personal_introduction": "not_verifiable",
+        "do_not_penalize_for_source_error": true,
+        "operator_error_established": false,
+        "score_override": null,
+        "na_override": false,
+        "policy_followup": "Organizer Q&A #2978 permits C01 N/A for calls without recorded greeting; reconcile official chat checklist na_allowed=false through explicit call-policy decision before applying.",
+        "security_approval": "not_granted_by_audio_review"
+      },
+      "candidate_validation_status": "invalid",
+      "full_candidate_findings": [
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09",
+          "dimension": "schema",
+          "severity": "invalid"
+        },
+        {
+          "reason": "human_confirmed_recording_start_missing",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_audio_final_c01_decision_pending",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 2
+        }
+      ],
+      "c01_findings": [
+        {
+          "reason": "human_confirmed_recording_start_missing",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_audio_final_c01_decision_pending",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 2
+        }
+      ],
+      "source_result_unchanged": true,
+      "confirmed_score": null,
+      "final_c01_verdict": null
+    },
+    {
+      "conversation_id": "p4-ru-005",
+      "prompt_version": "eval-v5.3",
+      "source_result_sha256": "5ba86ef6bd73cc200acfadd5f0db4421ba1441c6bcc07e301284d5a5b5d9510b",
+      "existing_c01": "yes",
+      "audio": {
+        "status": "needs_review",
+        "observation_status": "recorded",
+        "findings": [
+          {
+            "reason": "human_reported_asr_uncertainty",
+            "criterion_id": "c01",
+            "dimension": "transcription",
+            "severity": "needs_review"
+          },
+          {
+            "reason": "personal_introduction_not_confirmed_not_proven_absent",
+            "criterion_id": "c01",
+            "dimension": "verdict",
+            "severity": "needs_review"
+          }
+        ],
+        "greeting": "confirmed",
+        "personal_introduction": "not_confirmed",
+        "do_not_penalize_for_source_error": true,
+        "operator_error_established": false,
+        "score_override": null,
+        "na_override": false,
+        "policy_followup": "C01 requires greeting and personal introduction in the first response; uncertain wording or later greeting alone cannot establish full compliance.",
+        "security_approval": "not_granted_by_audio_review"
+      },
+      "candidate_validation_status": "invalid",
+      "full_candidate_findings": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null,
+          "dimension": "evidence",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09",
+          "dimension": "schema",
+          "severity": "invalid"
+        },
+        {
+          "reason": "evidence_speaker_mismatch",
+          "criterion_id": "c05",
+          "dimension": "evidence",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_reported_asr_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "personal_introduction_not_confirmed_not_proven_absent",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 16
+        }
+      ],
+      "c01_findings": [
+        {
+          "reason": "human_reported_asr_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "personal_introduction_not_confirmed_not_proven_absent",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 16
+        }
+      ],
+      "source_result_unchanged": true,
+      "confirmed_score": null,
+      "final_c01_verdict": null
+    },
+    {
+      "conversation_id": "p4-ru-004",
+      "prompt_version": "eval-v5.3",
+      "source_result_sha256": "25af0dfdb613a44018a26ed683039a85ab94f63b9b1a8ba51154e8748b8c0372",
+      "existing_c01": "yes",
+      "audio": {
+        "status": "needs_review",
+        "observation_status": "recorded",
+        "findings": [
+          {
+            "reason": "human_reported_asr_uncertainty",
+            "criterion_id": "c01",
+            "dimension": "transcription",
+            "severity": "needs_review"
+          },
+          {
+            "reason": "human_audio_final_c01_decision_pending",
+            "criterion_id": "c01",
+            "dimension": "verdict",
+            "severity": "needs_review"
+          }
+        ],
+        "greeting": "confirmed",
+        "personal_introduction": "likely_confirmed",
+        "do_not_penalize_for_source_error": true,
+        "operator_error_established": false,
+        "score_override": null,
+        "na_override": false,
+        "policy_followup": "C01 requires greeting and personal introduction in the first response; uncertain wording or later greeting alone cannot establish full compliance.",
+        "security_approval": "not_granted_by_audio_review"
+      },
+      "candidate_validation_status": "invalid",
+      "full_candidate_findings": [
+        {
+          "reason": "evaluator_validation_problems",
+          "criterion_id": null,
+          "dimension": "evidence",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "unexpected_criterion",
+          "criterion_id": "c09",
+          "dimension": "schema",
+          "severity": "invalid"
+        },
+        {
+          "reason": "evidence_speaker_mismatch",
+          "criterion_id": "c05",
+          "dimension": "evidence",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "evidence_speaker_mismatch",
+          "criterion_id": "c06",
+          "dimension": "evidence",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_reported_asr_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_audio_final_c01_decision_pending",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 14
+        }
+      ],
+      "c01_findings": [
+        {
+          "reason": "human_reported_asr_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "human_audio_final_c01_decision_pending",
+          "criterion_id": "c01",
+          "dimension": "verdict",
+          "severity": "needs_review"
+        },
+        {
+          "reason": "transcript_uncertainty",
+          "criterion_id": "c01",
+          "dimension": "transcription",
+          "severity": "needs_review",
+          "turn_index": 14
+        }
+      ],
+      "source_result_unchanged": true,
+      "confirmed_score": null,
+      "final_c01_verdict": null
+    }
+  ]
+}

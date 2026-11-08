@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { applyEvidenceProposal, validateCurrentCase } from './review-cases-lib.mjs';
 import { fingerprint } from './validation.mjs';
 import { buildMessages, schemaFor } from '../../lib/evaluator.js';
@@ -8,7 +9,8 @@ import { buildFairnessMessages, CANDIDATE_VERSION } from './evaluator-candidate.
 
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
 const conversations = read('data/datasets/DEV.json').data.records;
-const current = read('data/evaluations/DEV.json');
+// Evidence-only proposals were reviewed against v5.1, not moving DEV generations.
+const current = JSON.parse(execFileSync('git', ['show', '965f782:data/evaluations/DEV.json'], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }));
 const checklist = read('data/checklists/freedom-chat-v1.json');
 const historic = read('eval/runs/transcript-compat-audit.json');
 function fixture(id) {
@@ -22,14 +24,14 @@ function fixture(id) {
   return { c, result, p };
 }
 
-test('upstream c08=no now cites checked operator range, not na_condition', () => {
+test('reviewed v5.1 c08=no cites checked operator range, not na_condition', () => {
   const c = conversations.find(c => c.conversation_id === 'p1-ru-010');
   assert.equal(validateCurrentCase(c, current.results[c.conversation_id], 'c08'), true);
   assert.ok(!current.results[c.conversation_id].answers.c08.evidence.some(e => e.kind === 'na_condition'));
   assert.equal(c.transcript[14].speaker, 'system');
 });
 
-test('upstream full c06 points now cite the actual operator response', () => {
+test('reviewed v5.1 full c06 points cite the actual operator response', () => {
   const c = conversations.find(c => c.conversation_id === 'p1-en-010');
   assert.equal(validateCurrentCase(c, current.results[c.conversation_id], 'c06'), true);
 });

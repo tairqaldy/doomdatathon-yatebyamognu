@@ -1,0 +1,353 @@
+{
+  "scope": "Offline investigation of persisted diagnostics; not human audio review or score correction.",
+  "paid_calls": 0,
+  "total_diagnostics": 17,
+  "selected_sample_diagnostics": 5,
+  "unselected_sample_diagnostics": 12,
+  "unique_message_anchors": 10,
+  "cache_provenance": {
+    "canonical_git_lf_fingerprint": "922804e74184",
+    "current_worktree_fingerprint": "3ff35e9372a5",
+    "expected_v51_samples": 195,
+    "canonical_file_hits": 195,
+    "current_worktree_file_hits": 0
+  },
+  "evidence_loss": "normalize() checks the original model quote, then stores the transcript prefix instead. The original mismatching quote is not retained in these sample cache entries.",
+  "score_implication": "A quote mismatch is not proof that the criterion answer is wrong. No diagnostics are cleared and no answers or N/A values are changed.",
+  "cases": [
+    {
+      "conversation_id": "p4-ru-005",
+      "cache_files": [
+        "eval/cache/eval/8b467b4782dcf38f1bcdd0c8b82e90f8eb5abbe0.json",
+        "eval/cache/eval/de5356bf173e5f74e575bc23fbbaffd6f5e291a1.json",
+        "eval/cache/eval/e8c36cae568a6428435dd3b4615f0a950813a76f.json"
+      ],
+      "cache_file_sha256": [
+        "b6e2c6ac776a328d49a239d3394cc29f041f36b4c66d5afc854426023dc96692",
+        "4ce038e08095cf8eac06d89da71a765d5a9e3e5417a5c5ed829a1da2c37a78d9",
+        "19061040009972d21a4e59725ef061b83f63e20f4332fec38796e571bed67b23"
+      ],
+      "sample_attempts": [
+        2,
+        2,
+        1
+      ],
+      "replay_matches_stored_answers": true,
+      "cache_unchanged": true,
+      "diagnostics": [
+        {
+          "sample": 2,
+          "criterion_id": "c02",
+          "turn_index": 63,
+          "source_speaker": "client",
+          "original_message_sha256": "b7312e7b7cb03ac6e23945810fdc45d23e40a36d5aea5821302909ded9dfeaa8",
+          "raw_diagnostic": "c02: quote not found in turn 63",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c02",
+          "turn_index": 66,
+          "source_speaker": "operator",
+          "original_message_sha256": "5b5a3331cbb925b9efd0ee901b77a9421a1d6ff67f133b6d5c8e77baf2e47cf2",
+          "raw_diagnostic": "c02: quote not found in turn 66",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c04",
+          "turn_index": 43,
+          "source_speaker": "operator",
+          "original_message_sha256": "93b8c4beec73458cc44ad7084d761a5a12ba5f158958cd12de6726c75932fa66",
+          "raw_diagnostic": "c04: quote not found in turn 43",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c08",
+          "turn_index": 28,
+          "source_speaker": "operator",
+          "original_message_sha256": "e27e895fd96a147d37e941184ec7311eae31555165e5ca6269319cdc7c0e03d4",
+          "raw_diagnostic": "c08: quote not found in turn 28",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "client",
+            "operator",
+            "system"
+          ],
+          "sample_attempts": 2
+        }
+      ],
+      "selected_sample_diagnostics": 0,
+      "unselected_sample_diagnostics": 4,
+      "raw_model_quotes_available": false,
+      "diagnostics_cleared": false,
+      "scores_changed": false
+    },
+    {
+      "conversation_id": "p4-ru-004",
+      "cache_files": [
+        "eval/cache/eval/387f52f905e052cc34aa6bdbbc1157add0930384.json",
+        "eval/cache/eval/15b6ecbaeb388304be95d785ee48a94b6fae9aa0.json",
+        "eval/cache/eval/33858bb2c4210b770deda85323aa2f191979446c.json"
+      ],
+      "cache_file_sha256": [
+        "e2896eb42cd9df60da739998b16b84f007076aee615d030e30e36998f8327cdf",
+        "dd897db1e8c9f6258dbbcb53ad694a0e5e7d2a08a61ec38e687657228d8491ca",
+        "164b34b2c9d55e0a652252dcb8d144790077c4850e20f64aed534db8eca3a046"
+      ],
+      "sample_attempts": [
+        2,
+        2,
+        2
+      ],
+      "replay_matches_stored_answers": true,
+      "cache_unchanged": true,
+      "diagnostics": [
+        {
+          "sample": 1,
+          "criterion_id": "c02",
+          "turn_index": 33,
+          "source_speaker": "operator",
+          "original_message_sha256": "1a69a804b0b8bbed76384a84c728f77aaae0e8884b7ac5bfff03b59a7e5d4c44",
+          "raw_diagnostic": "c02: quote not found in turn 33",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": true,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c03",
+          "turn_index": 78,
+          "source_speaker": "operator",
+          "original_message_sha256": "e314465ac0f92dabb5eccfce38a594bd59a47af4304ec269175e2636e363d326",
+          "raw_diagnostic": "c03: quote not found in turn 78",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": true,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c04",
+          "turn_index": 111,
+          "source_speaker": "operator",
+          "original_message_sha256": "5fec0a25fc36ae07c2e9f2184f5406f22e183c6fb8bf804fc3198c6b67b1927c",
+          "raw_diagnostic": "c04: quote not found in turn 111",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": true,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c05",
+          "turn_index": 90,
+          "source_speaker": "client",
+          "original_message_sha256": "3127362aa2e75ffbde548646be17a8668c8b333557549e59c84807bf1d98ff76",
+          "raw_diagnostic": "c05: quote not found in turn 90",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": true,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 1,
+          "criterion_id": "c08",
+          "turn_index": 78,
+          "source_speaker": "operator",
+          "original_message_sha256": "e314465ac0f92dabb5eccfce38a594bd59a47af4304ec269175e2636e363d326",
+          "raw_diagnostic": "c08: quote not found in turn 78",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": true,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c03",
+          "turn_index": 78,
+          "source_speaker": "operator",
+          "original_message_sha256": "e314465ac0f92dabb5eccfce38a594bd59a47af4304ec269175e2636e363d326",
+          "raw_diagnostic": "c03: quote not found in turn 78",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c05",
+          "turn_index": 90,
+          "source_speaker": "client",
+          "original_message_sha256": "3127362aa2e75ffbde548646be17a8668c8b333557549e59c84807bf1d98ff76",
+          "raw_diagnostic": "c05: quote not found in turn 90",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 2,
+          "criterion_id": "c08",
+          "turn_index": 78,
+          "source_speaker": "operator",
+          "original_message_sha256": "e314465ac0f92dabb5eccfce38a594bd59a47af4304ec269175e2636e363d326",
+          "raw_diagnostic": "c08: quote not found in turn 78",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c02",
+          "turn_index": 33,
+          "source_speaker": "operator",
+          "original_message_sha256": "1a69a804b0b8bbed76384a84c728f77aaae0e8884b7ac5bfff03b59a7e5d4c44",
+          "raw_diagnostic": "c02: quote not found in turn 33",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c02",
+          "turn_index": 37,
+          "source_speaker": "operator",
+          "original_message_sha256": "c62e52df80563bb8af0f0478486f6b1cfffea2308ce1165986904b60b603c355",
+          "raw_diagnostic": "c02: quote not found in turn 37",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c03",
+          "turn_index": 78,
+          "source_speaker": "operator",
+          "original_message_sha256": "e314465ac0f92dabb5eccfce38a594bd59a47af4304ec269175e2636e363d326",
+          "raw_diagnostic": "c03: quote not found in turn 78",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c03",
+          "turn_index": 70,
+          "source_speaker": "operator",
+          "original_message_sha256": "c7fb62f5ca4d96da9c83098e63e1dff029e671e0a3b32087aaf94743c759b830",
+          "raw_diagnostic": "c03: quote not found in turn 70",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "operator"
+          ],
+          "sample_attempts": 2
+        },
+        {
+          "sample": 3,
+          "criterion_id": "c05",
+          "turn_index": 90,
+          "source_speaker": "client",
+          "original_message_sha256": "3127362aa2e75ffbde548646be17a8668c8b333557549e59c84807bf1d98ff76",
+          "raw_diagnostic": "c05: quote not found in turn 90",
+          "original_model_quote_recoverable": false,
+          "stored_quote_substrings_match_source": true,
+          "final_selected_sample": 1,
+          "belongs_to_selected_sample": false,
+          "final_row_source_roles": [
+            "client",
+            "operator"
+          ],
+          "sample_attempts": 2
+        }
+      ],
+      "selected_sample_diagnostics": 5,
+      "unselected_sample_diagnostics": 8,
+      "raw_model_quotes_available": false,
+      "diagnostics_cleared": false,
+      "scores_changed": false
+    }
+  ]
+}
