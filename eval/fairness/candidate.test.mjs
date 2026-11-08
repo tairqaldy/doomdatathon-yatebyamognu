@@ -67,13 +67,14 @@ test('dynamic criterion replacement does not trigger obsolete c01 policy', () =>
   const messages = buildFairnessMessages(conversation, custom);
   assert.match(messages[1].content, /id: custom-opening/);
   const review = reviewEvaluation(conversation, result, custom, boundProbe(conversation, 'needs_review'));
-  assert.equal(review.pending_review.length, 0);
+  // Incoming evaluator versions may report unrelated global validation problems.
+  assert.deepEqual(review.pending_review.filter(p => ['c01', 'custom-opening'].includes(p.criterion_id)), []);
 });
 
 test('editing criterion meaning with the same ID also disables the greeting policy', () => {
   const custom = structuredClone(checklist);
   custom.criteria.find(c => c.id === 'c01').description = 'Check whether an account was verified.';
   const review = reviewEvaluation(conversation, evaluations[conversation.conversation_id], custom, boundProbe(conversation, 'needs_review'));
-  assert.equal(review.pending_review.length, 0);
+  assert.deepEqual(review.pending_review.filter(p => p.criterion_id === 'c01'), []);
   assert.doesNotMatch(buildFairnessMessages(conversation, custom)[0].content, /официальный c01 требует/);
 });

@@ -102,6 +102,8 @@ Phone-app research (2026-11-07, #20): macOS iPhone Mirroring + `screencapture -l
 Expo Go phone demo (2026-11-07, #24): `npx create-expo-app@5.0.0 mobile --template blank-typescript`, deps through `npx expo install` (SDK-matched), `npx expo-doctor` 20/20. Run: `cd mobile && npm install && npx expo start`, scan the QR with Expo Go (`--tunnel` on restrictive Wi-Fi). iOS Simulator: `npx expo start --ios`. The template's `.claude/settings.json` (enables an Expo plugin) was removed so teammates' agent config isn't changed; its `AGENTS.md` was kept with a pointer to the root rules.
 
 ## 7. Research sources and external docs
+Five-case review (2026-11-07): Node built-ins only, offline v4 cache reconstruction and current v5.1 evidence regression; optional read-only GET audio resolver + HEAD audio metadata, no speech model. Output never stores signed audio URLs or raw audio. Reproduce `node eval/fairness/review-cases.mjs` and `node --test eval/fairness/review-cases.test.mjs`.
+
 N/A/cache compatibility (2026-11-07): existing Node built-ins and Python regression runner only. Versioned findings separate schema, evidence, transcription, applicability and publication; replay reads all existing cache files without rewriting or model calls. No new dependencies. Reproduce the compatibility tests and `eval/fairness/run-compatibility.py`.
 
 Transcript validation hardening (2026-11-07): existing Python unittest and Node node:test/crypto/fs only; provenance-bound transcript probes, strict saved-result validation and offline cache replay. No dependencies or paid inference. Reproduce `python -m unittest discover -s eval/fairness -p test_guard.py` and `node --test eval/fairness/*.test.mjs`; all-65 audit `node eval/fairness/audit-validation.mjs`.
