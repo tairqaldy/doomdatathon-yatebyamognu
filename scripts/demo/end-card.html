@@ -27,7 +27,16 @@
       font-size: 26px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; }
     .url i { width: 10px; height: 10px; border-radius: 50%; background: var(--l-green); }
     .end__note { font-size: 16px; color: var(--l-ink-3); max-width: 40ch; text-align: right; }
+    /* ?cut=short: the ≈ 1 minute voiceover cut shows three bigger numbers */
+    .end__grid--short { display: none; }
+    .is-short .end__grid--full { display: none; }
+    .is-short .end__grid--short { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .is-short .stat { padding: 30px 28px 26px; }
+    .is-short .stat b { font-size: 60px; }
+    .is-short .stat span { font-size: 20px; }
+    .is-short .stat small { font-size: 16px; }
   </style>
+  <script>if (new URLSearchParams(location.search).get('cut') === 'short') document.documentElement.classList.add('is-short');</script>
 </head>
 <body class="l">
   <main class="end">
@@ -39,7 +48,12 @@
       <h1 class="end__title">Freedom CQA</h1>
       <p class="end__lead">Проверяет чаты и звонки поддержки по чек-листу, объясняет каждый балл и ведёт апелляции.</p>
     </div>
-    <div class="end__grid">
+    <div class="end__grid end__grid--short">
+      <div class="stat"><b>95%</b><span>совпадений с ручной разметкой</span><small>145 из 152 ответов, 19 диалогов</small></div>
+      <div class="stat"><b>7 из 7</b><span>грубых ошибок найдено</span><small>ложных срабатываний нет</small></div>
+      <div class="stat"><b>&lt; 1 ¢</b><span>за оценку одного чата</span><small>GPT-6 Luna, 3 прогона с голосованием</small></div>
+    </div>
+    <div class="end__grid end__grid--full">
       <div class="stat"><b>96,1%</b><span>совпадений с нашей ручной проверкой</span><small>19 диалогов</small></div>
       <div class="stat"><b>96,8%</b><span>совпадений с двумя независимыми разметчиками</span><small>ещё 24 диалога, разметка вслепую</small></div>
       <div class="stat"><b>7 из 7</b><span>грубых ошибок найдено, ложных срабатываний нет</span><small>те же 19 диалогов</small></div>
