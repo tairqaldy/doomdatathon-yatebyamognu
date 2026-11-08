@@ -24,7 +24,7 @@
 
 [![Демо-видео Freedom CQA, 49 секунд с озвучкой](landing-tair/assets/demo-poster.jpg)](landing-tair/assets/demo.mp4)
 
-[▶ Смотреть демо, 49 секунд](landing-tair/assets/demo.mp4) · [Панель качества](https://freedom-cqa.vercel.app/admin/) · [Клиентский чат](https://freedom-cqa.vercel.app/support/) · [Руководство для жюри, PDF](docs/guide/freedom-cqa-guide.pdf) · [Презентация, PDF](pitch/freedom-cqa-slides.pdf)
+[▶ Смотреть демо, 49 секунд](landing-tair/assets/demo.mp4) · [Панель качества](https://freedom-cqa.vercel.app/admin/) · [Клиентский чат](https://freedom-cqa.vercel.app/support/) · [Руководство для жюри, 12 страниц, PDF](docs/guide/freedom-cqa-guide.pdf) · [Презентация, 9 слайдов, PDF](pitch/freedom-cqa-slides.pdf)
 
 **Демо-код панели:** `freedom-agent`. На экране «Обзор» раздел «Для жюри · Сценарий проверки» ведёт по всему циклу:
 
@@ -173,7 +173,7 @@ scripts/check.sh                 # общие проверки перед сли
 
 Поддерживаются несколько операторов с указанием имён; внутренние реплики между коллегами отмечаются как контекст и не оцениваются. Диалог без реплики клиента не отправляется модели, итог не рассчитывается. [Пример запроса к API и полный формат данных](README.en.md#evaluate-your-own-transcript).
 
-Результаты: [65 диалогов DEV](results/dev/results.json) · [10 контрольных диалогов](results/prod/results.json) · [Формат результатов и проверка](docs/case/results-format.md). Набор [SWAP](data/datasets/Swap.json) содержит три чата с заранее сохранёнными оценками; «Оценить заново» запускает свежую оценку.
+Результаты: [65 диалогов DEV](results/dev/results.json) · [10 контрольных диалогов](results/prod/results.json) · [Формат результатов и проверка](docs/case/results-format.md). Набор [SWAP](data/datasets/Swap.json) содержит три чата с заранее сохранёнными оценками: по данным команды, ответ из кеша занимает около 0,5 секунды; «Оценить заново» запускает свежую оценку.
 
 ## Ограничения прототипа
 
