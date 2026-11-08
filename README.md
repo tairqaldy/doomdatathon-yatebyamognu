@@ -68,7 +68,7 @@ flowchart LR
 
 ### 1. Checklist setup
 
-Add, edit, replace or reorder a criterion; change its wording, weight, answer type (yes/no, scale with steps, flag), N/A rule. Each save is a new version, and «Сохранить vN и переоценить» evaluates every dialog again with it. Chats and calls have separate checklists ([`freedom-chat-v1.json`](data/checklists/freedom-chat-v1.json), [`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)).
+Add, edit, replace or reorder a criterion; change its wording, weight, answer type (yes/no, scale with steps, flag), N/A rule. Each save is a new version. A weight-only change recomputes every total at once; a changed criterion needs new model answers, and the save bar asks «Что переоценить»: «Все» (every dialog of that checklist's kind), «Загруженные» (control set, pasted) or «По ID». Two chats take about 35 s; the rest are marked «Без AI» until «Оценить остальные AI». Chats and calls have separate checklists ([`freedom-chat-v1.json`](data/checklists/freedom-chat-v1.json), [`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)).
 
 **Where:** `/admin/#/checklist` (Чек-лист).
 
@@ -211,7 +211,7 @@ The organizers listed what they will ask for in the live demo ([telegram-qa.md](
 | Show all dialogs with gross errors and why | Обзор → KPI «Грубые ошибки», or Диалоги → «Грубые ошибки» | A list of every flagged dialog with the AI explanation and the operator line that proves it. On DEV, eval-v5.3 flags 8 of 65 dialogs |
 | Send a result to appeal | Card → «Оспорить» on a criterion → comment → save | The appeal goes to «Апелляции» with the disputed answer, the comment and the dialog fragment |
 | Reviewer decision | Role switch «Проверяющий» → «Принять решение» | Confirm or change the answer with a reason. `prototype/scoring.js` recomputes the total; the card shows the original score, the decision and the final score |
-| Change the checklist and re-evaluate | Чек-лист → add, edit, replace, reorder a criterion or change a weight → «Сохранить vN и переоценить» | A new checklist version is saved and every dialog is evaluated again with it. Chats and calls have separate checklists |
+| Change the checklist and re-evaluate | Чек-лист → add, edit, replace, reorder a criterion or change a weight → «Что переоценить» («Все», «Загруженные», «По ID») → save | A new checklist version is saved. A weight change recomputes at once; a changed criterion gets fresh model answers for the chosen dialogs (about 35 s for two chats). Chats and calls have separate checklists |
 | Justify one dialog's score | Диалоги → any row | Per criterion: answer, points, weight, explanation, evidence. Click a deduction to scroll to and highlight the line; on calls the player jumps to that moment |
 | Evaluate a new transcript | Загрузка диалогов → «Вставить текст» → «Оценить AI-агентом» | A fresh model call, about 30 s for a chat; see [Evaluate your own transcript](#evaluate-your-own-transcript) |
 
@@ -303,7 +303,7 @@ From the Q&A chat ([telegram-qa.md](docs/case/telegram-qa.md)); where each one l
 
 **Calls use the same logic, adapted to speech** (organizer ruling). The 5 DEV calls are real recordings with organizer transcripts. The call card has a per-speaker timeline and a player; clicking evidence seeks the recording to that moment. Organizer audio links expire after about 1 h, so the player goes through [`/api/audio`](lib/audio.js), which resolves a fresh mp3 link. Calls are graded on the organizer transcripts, and the operator is never penalised for garbled ASR words. The call checklist ([`freedom-call-v1.json`](data/checklists/freedom-call-v1.json)) allows N/A where a recording can miss things, such as C1 when the greeting is not recorded.
 
-**Tone of voice: criterion c09 «Тон и подача речи».** Intonation is not in a transcript, so a model listens to the recording itself ([`lib/tone.js`](lib/tone.js), decision logged in [DECISIONS.md](docs/DECISIONS.md), #23).
+**Tone of voice: criterion c09 «Тон и подача речи».** The brief says diction and intonation need audio («Для оценки дикции и интонации нужен звук»), and a transcript does not show them, so a model listens to the recording itself ([`lib/tone.js`](lib/tone.js), decision in [DECISIONS.md](docs/DECISIONS.md), #23). Why we score it and how far to trust it: [call-tone.md](docs/research/call-tone.md).
 
 | | |
 |---|---|
@@ -311,7 +311,8 @@ From the Q&A chat ([telegram-qa.md](docs/case/telegram-qa.md)); where each one l
 | Model | **Gemini 3.8 Flash** (`google/gemini-3.8-flash` via OpenRouter), prompt `tone-v4`. It quoted a known stretch of p4-ru-002 word for word; `gpt-audio-mini` invented it in the same "what is said at 03:00" check, so it was dropped |
 | Same split as the text evaluator | The model picks the scale step, an explanation and operator turns as evidence; `scoring.js` computes the points. Plain arithmetic on the transcript timestamps adds voice metrics: operator speaking rate (median words per minute) and long waits (≥ 20 s that the operator's own words don't explain) |
 | DEV result | 1 of 5 calls lowered: p4-ru-001 → 4/10, a cold, detached tone the client remarks on. ≈ $0.013 per call ($0.011–0.018), 10–17 s per call ([`eval/runs/*-DEV-tone.json`](eval/runs/2026-11-07T15-29-59-107Z-DEV-tone.json)) |
-| Official results | **Left out of the results file.** The official format has exactly the 8 checklist criteria, so [`eval/export-results.mjs`](eval/export-results.mjs) drops every `input: "audio"` criterion. In the app a call's total includes c09 |
+| Official results | **Left out of the results file.** The official format has exactly the 8 checklist criteria, so [`eval/export-results.mjs`](eval/export-results.mjs) drops every `input: "audio"` criterion. In the app a call's total includes c09, so a call's card total differs from its official total |
+| Limits | No accuracy number: there are no expert labels for tone, and the 5 DEV calls are all Russian. c09 uses one sample, no 3-way vote, and p4-ru-001 got 7 on one run and 4 on another. Every deduction cites operator turns, jumps to the audio and can be appealed; a QA lead can set the weight to 0 in the checklist editor |
 
 ## Accuracy
 
