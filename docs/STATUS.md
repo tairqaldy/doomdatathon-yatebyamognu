@@ -492,3 +492,10 @@ Done: `docs/research/call-tone.md`: why c09 «Тон и подача речи» 
 Next (optional, after control): team listens to 5 DEV calls and labels c09 by hand; check p4-ru-002 long silences (31/66/55 s, scored 10).
 Contracts touched: none. No code or prompt change.
 How to verify: read `docs/research/call-tone.md`.
+
+### 2026-11-08 10:40 +05:00 · lane-c · Nazar/claude · #33 · c/33-metrics-confidence-qwen
+Done: `eval/agreement.py` (kappa, 95% CI, labeler A vs B ceiling, unanimous votes; free) with eval-v5.3 numbers in README «Beyond percent agreement» and `eval/runs/agreement-v53.*`. Admin card (lane A files `admin/card.js`, `admin/store.js`, `admin/admin.css`, additive) shows the vote per criterion: «3 из 3», warning «2 из 3 · проверьте», split count in the header. `lib/llm.js` `local:<model>` → any OpenAI-compatible server (`CQA_LOCAL_BASE_URL`, `CQA_LOCAL_API_KEY`); `lib/evaluator.js` untouched, eval cache valid, OpenAI path smoke-tested.
+In progress: comparison runs on 42 labeled chats: `qwen/qwen3.8-27b` (OpenRouter) and `local:alemllm` (llm.alem.ai). Measured only; production stays eval-v5.3 / gpt-6-luna.
+Next: control at 11:00 from main as planned. Numbers for the two open models go to README after the runs.
+Contracts touched: none.
+How to verify: /admin → Диалоги → p1-ru-014 → C05 «2 из 3 · проверьте»; `python3 -I eval/agreement.py`.
