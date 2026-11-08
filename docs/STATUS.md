@@ -19,6 +19,12 @@ Append a new entry at the **top** at the end of each session (format in AGENTS.m
 
 ## Log
 
+### 2026-11-08 · lane-d · Nazar/claude · no issue (docs-only ruling)
+Done: organizer ruling logged in `docs/case/telegram-qa.md` and AGENTS.md §1.1: C8 never zeroes the total, a gross-error dialog can score 100 with `critical_flag: true` (experts check per-criterion scores and gross-error detection separately).
+Code already matches: `prototype/scoring.js` (self-test "gross flag never adds points"), `eval/export-results.mjs` (`final_score` = total, `critical_flag` separate), `eval/validate-results.mjs`, admin card (verdict "Грубая ошибка" + red banner, score kept).
+Contracts touched: none.
+How to verify: `node eval/validate-results.mjs results/dev/results.json`; 8 flagged DEV dialogs keep their totals (e.g. p1-ru-023 = 92.31).
+
 ### 2026-11-07 21:15 · lane-a · claude · #24 · branch a/24-expo-go
 Done: `mobile/`, an Expo SDK 58 Expo Go wrapper that shows `/phone/` full screen as a native app (WebView, edge to edge on iOS, loading and error screens, mic allowed, outside links open in the browser). Run: `cd mobile && npm install && npx expo start`, scan the QR with Expo Go. README, TOOLING and DECISIONS updated.
 Verified: `tsc --noEmit` clean, `expo-doctor` 20/20, page checked in the iOS 26 Simulator WebKit. On a real iPhone, Metro logged `iOS Bundled index.ts` after Expo Go first asked for an Expo CLI login (`npx expo login`). The simulator Expo Go download was too slow over a hotspot, so there's no simulator run.

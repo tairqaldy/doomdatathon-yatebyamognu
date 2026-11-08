@@ -24,6 +24,7 @@ Collected by Nazar Akanov on 2026-11-07 ~18:30 (T+6.5h). Only questions the orga
 | C4 correctness | Freedom has a knowledge base (not given); the system is an indicator of off-script moments for appeals and script rework (#2978) |
 | Rounding | **Half-up to 2 decimals**, 50.625 → 50.63 (#2978) |
 | Replacing a criterion on the control set | Our design; **re-evaluate: yes** (#2978) |
+| C8 gross error and the total | **Never zeroes the total**: a dialog can get 100 and `critical_flag: true` at the same time. Kept apart on purpose so the experts can check per-criterion scoring and gross-error detection separately (2026-11-08) |
 | 3-minute first reply | It's an SLA (#3088), out of scope for scoring per checklist |
 | Calls | Same logic, adapted to speech. C6 for calls: logic, clarity, no inappropriate expressions, correct wording, pause management (+ tempo/diction if audio). C4: answered questions, no wrong info, explained actions. **A flexible system that creates and applies different checklists, including for calls** (#2343) |
 
