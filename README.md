@@ -1,6 +1,8 @@
 <div align="center">
 
-# Freedom CQA
+# YaTebyaMognu — Team
+
+## Freedom CQA
 
 **Ни один разговор без проверки. Ни одна оценка без доказательства.**
 

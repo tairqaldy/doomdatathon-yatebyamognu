@@ -1,4 +1,6 @@
-# Freedom CQA
+# YaTebyaMognu — Team
+
+## Freedom CQA
 
 **No conversation goes unchecked. No score goes unproven.**
 
