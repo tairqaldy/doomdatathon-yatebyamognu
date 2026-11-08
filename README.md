@@ -338,6 +338,36 @@ The organizers pick the top 50 mainly by **per-criterion agreement with expert l
 - **Held-out** means "no prompt change was made in response to these 7 dialogs", not "never seen". The split (12 tuning, 7 held-out, stratified by language and case type) was frozen before the first eval-v5 call ([split.md](docs/playbook/split.md)), but eval-v4 and the v5 rules were written after reading all 19. With 56 answers, one answer is 1.8 points.
 - **Blind double labeling** checks that we did not just fit our own reading. Two independent AI labelers (separate Claude sessions, a different model family from our GPT evaluator) saw only the checklist and the organizer rulings, no playbook and no model output, and labeled 24 non-gold DEV chats. They agreed with each other on 185 of 192 answers (96.4%); we score against those 185. They are not people and not Freedom's experts: a consistency check, not ground truth ([`blind-24.json`](eval/blind/blind-24.json)).
 - **The real test** is the 10 control chats graded by Freedom's experts. We have no labels for them.
+- **Twins.** DEV tells most stories three times (RU / KZ / EN). Every held-out case family has a twin in the tuning set (for example p1-kz-003 ↔ p1-ru-006 / p1-en-006), so held-out tells us little about stories we have never seen. The control chats will be new stories.
+
+### Beyond percent agreement: kappa, intervals, a human ceiling
+
+Percent agreement flatters an evaluator when one answer dominates: C3 is N/A and C8 is "no" in every blind chat, so 100% there proves little. [`eval/agreement.py`](eval/agreement.py) adds Cohen's kappa (agreement corrected for chance), 95% Wilson intervals and a ceiling: how well the two blind labelers agree with each other. Chats only (the control set has no calls); it reads committed files and makes no model calls.
+
+| Criterion | Gold, 18 chats: % (95% CI) · κ | Blind consensus, 24 chats: % · κ | Ceiling, labeler A vs B: % · κ | All 3 AI samples agree |
+|---|---|---|---|---|
+| C1 contact | 100 (82–100) · 1.00 | 100 · 1.00 | 100 · 1.00 | 100% |
+| C2 discovery | 100 (82–100) · 1.00 | 95.8 · 0.78 | 100 · 1.00 | 100% |
+| C3 identification | 100 (82–100) · 1.00 | 100 · n/a | 100 · n/a | 100% |
+| C4 consultation | 94.4 (74–99) · 0.91 | 95.7 · 0.88 | 95.8 · 0.90 | 93% |
+| C5 empathy | 100 (82–100) · 1.00 | 100 · 1.00 | 95.8 · 0.78 | 93% |
+| **C6 dialog management** | **83.3 (61–94) · 0.68** | **85.7 · 0.57** | **87.5 · 0.61** | **88%** |
+| C7 closing | 100 (82–100) · 1.00 | 100 · 1.00 | 91.7 · 0.47 | 100% |
+| C8 gross errors | 100 (82–100) · 1.00 | 100 · n/a | 100 · n/a | 98% |
+| **All** | **97.2 (93–99)** | **97.3 (94–99)** | **96.4** | **97%** |
+
+How to read it:
+- **We agree with each labeler about as often as they agree with each other** (95.3% with A, 95.3% with B, 96.4% A with B). On this data the evaluator is at the level of a second careful reader, not above it.
+- **C6 is the weak criterion for everyone**, people-style labelers included (κ 0.61 between A and B). It is a judgement scale, so the card shows when the AI samples split (below) and the appeal flow is the fix.
+- **C7 is a bet on the literal reading** (summary or offer of help **and** a goodbye, rulings #2814 / #3024): 45 of 60 DEV chats get "no". If Freedom's experts read a polite goodbye after a solved request as "yes", this is where we lose answers. The rule sits in one function (`closingAnswer` in `lib/evaluator.js`).
+- **Intervals are wide**: on 18 chats a criterion at 100% is only known to be above ~82%.
+
+**Confidence in the card.** The evaluator answers each dialog three times and votes. The card shows the vote per criterion: «3 из 3» quietly, «2 из 3 · проверьте» as a warning, and a count of split criteria in the header. A split is the signal that a human should look; the reviewer can appeal right there.
+
+```bash
+python3 -I eval/agreement.py                      # eval-v5.3 (data/evaluations/DEV.json)
+python3 -I eval/agreement.py v53=data/evaluations/DEV.json qwen=<run>.evaluations.json   # compare runs
+```
 
 ### Where eval-v5.3 still disagrees with gold
 

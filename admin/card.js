@@ -4,7 +4,7 @@
 // Evidence jump/highlight, audio seek, appeal drawer, reviewer decision, live re-evaluation via /api/evaluate.
 import { $, $$, esc, fmt, signed, plural, icon, toast, drawer, closeDrawer, ring, tierVar, reduced, setHead, LANG, dateTime } from './ui.js';
 import { S, evaluation, deductions, reasonOf, evidenceIdx, answerText, offsetSec, mmss, duration, isCall, SPK, score, tier, maxStep,
-  aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel } from './store.js';
+  aiEvaluate, aiReady, modelLabel, addAppeal, decideAppeal, sortedCrits, strHash, refresh, emit, checklistLabel, confidenceOf } from './store.js';
 
 let audioEl = null;
 export const SOURCE_LABEL = (src) => (src === 'paste' ? 'вставлен текстом' : src === 'file' ? 'из JSON' : src.startsWith('group:') ? `группа ${src.slice(6)}` : src);
@@ -155,7 +155,7 @@ export function viewCard(view, convId, query) {
         </section>
 
         <section class="card crit-card" aria-labelledby="crit-h">
-          <header class="card__head"><h2 id="crit-h">Обоснование по каждому критерию</h2><span class="muted small">баллы / вес</span></header>
+          <header class="card__head"><h2 id="crit-h">Обоснование по каждому критерию</h2><span class="muted small">${(() => { const low = crits.filter((c) => confidenceOf(E, c.id)?.low).length; return low ? `<span class="l-chip l-chip--warn" title="AI оценивает диалог ${E.base.samples} раза независимо и голосует. Где оценки разошлись, ответ стоит проверить человеку.">голоса AI разошлись: ${low}</span> · ` : ''; })()}баллы / вес</span></header>
           <div class="crit-list">${crits.map((c) => {
             const row = finalScore.criteria.find((x) => x.criterion_id === c.id); const a = finalAnswers[c.id]; const r = answers[c.id] || {};
             const ap = lastAppeal(c.id); const ev = (r.evidence || []).find((e) => e.kind === 'message' || e.kind === 'range'); const na = (r.evidence || []).find((e) => e.kind === 'na_condition');
@@ -164,7 +164,7 @@ export function viewCard(view, convId, query) {
             return `<article class="crit ${ap?.status === 'open' ? 'is-appealed' : ap?.status === 'changed' ? 'is-overridden' : ''}">
               <header class="crit__head">
                 <button type="button" class="crit__title" data-open="${c.id}"><span class="crit__n mono">${String(c.order).padStart(2, '0')}</span>${esc(c.title)}</button>
-                ${answerBadge(c, a)}
+                ${answerBadge(c, a)}${confChip(E, c.id)}
                 <span class="crit__pts num">${c.type === 'flag' ? '<span class="muted">флаг</span>' : row?.points == null ? '<span class="muted">не учит.</span>' : `${fmt(row.points, 2)}<small> / ${fmt(row.effective_weight, 2)}</small>`}</span>
               </header>
               <p class="crit__why">${esc(r.explanation || '—')}</p>
@@ -280,12 +280,20 @@ function fragment(conv, evid) {
   return `<div class="tx tx--mini">${conv.transcript.slice(lo, hi + 1).map((m, k) => { const i = lo + k; return `<div class="tx-row tx-row--${esc(m.speaker)} ${ids.includes(i) ? 'is-evidence' : ''}"><span class="tx-time mono">#${i}</span><span class="tx-spk"><i class="spk spk--${esc(m.speaker)}"></i>${SPK[m.speaker] || esc(m.speaker)}</span><span class="tx-text">${esc(m.text)}</span></div>`; }).join('')}</div>`;
 }
 
+/** Vote agreement chip: «3 из 3» quietly, «2 из 3 · проверьте» as a warning (samples split). */
+function confChip(E, critId, long = false) {
+  const cf = confidenceOf(E, critId); if (!cf) return '';
+  const tip = `Независимых оценок AI: ${cf.n}, с этим ответом согласны ${cf.k}.${cf.low ? ' Оценки разошлись: проверьте вручную или оспорьте.' : ''}`;
+  return cf.low ? `<span class="l-chip l-chip--warn conf" title="${esc(tip)}">${cf.k} из ${cf.n}${long ? ' · голоса AI разошлись, проверьте' : ' · проверьте'}</span>`
+    : `<span class="muted small conf" title="${esc(tip)}">${cf.k} из ${cf.n}</span>`;
+}
+
 function openCriterion(conv, critId) {
   const E = evaluation(conv.conversation_id); const c = E.cl.criteria.find((x) => x.id === critId); const r = E.answers[critId] || {};
   const row = E.finalScore.criteria.find((x) => x.criterion_id === critId); const ap = E.appeals.filter((a) => a.criterion_id === critId);
   const hasEv = (r.evidence || []).some((e) => e.kind !== 'na_condition');
   const w = drawer(`${String(c.order).padStart(2, '0')} · ${c.title}`, `
-    <div class="spread">${answerBadge(c, E.finalAnswers[critId])}<span class="num"><b>${row.points == null ? '—' : fmt(row.points, 2)}</b> / ${row.effective_weight == null ? '—' : fmt(row.effective_weight, 2)} <span class="muted small">(вес ${c.weight})</span></span></div>
+    <div class="spread">${answerBadge(c, E.finalAnswers[critId])}${confChip(E, critId, true)}<span class="num"><b>${row.points == null ? '—' : fmt(row.points, 2)}</b> / ${row.effective_weight == null ? '—' : fmt(row.effective_weight, 2)} <span class="muted small">(вес ${c.weight})</span></span></div>
     <p class="muted small">${esc(c.description)}</p>
     <div class="note"><span class="kicker">${E.src === 'ai' ? 'Объяснение AI' : 'Объяснение (без AI)'}</span><p>${esc(r.explanation || '—')}</p>${r.deduction_reason ? `<p><b>За что снижено:</b> ${esc(r.deduction_reason)}</p>` : ''}</div>
     ${c.input === 'audio' ? `<p class="muted small">Оценено по записи звонка, не по тексту${r.audio_metrics ? ` · темп оператора ≈ ${r.audio_metrics.op_wpm_median ?? '—'} слов/мин · долгое молчание: ${r.audio_metrics.long_waits.length ? r.audio_metrics.long_waits.map((w) => `${w.at} (${w.wait_s} с)`).join(', ') : 'нет'}` : ''}</p>` : ''}
